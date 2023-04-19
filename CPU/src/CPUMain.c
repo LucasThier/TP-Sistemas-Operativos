@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "../include/CPUMain.h"
 
 int main(void)
 {
