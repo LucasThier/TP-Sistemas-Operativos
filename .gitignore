@@ -56,3 +56,6 @@ dkms.conf
 .project
 .cproject
 .settings
+
+#Visual
+.vs
