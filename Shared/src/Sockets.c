@@ -12,8 +12,5 @@ void iniciar_servidor(char* ip, char* puerto)
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
 
-    
-
-
 
 }
