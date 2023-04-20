@@ -74,7 +74,7 @@ int esperar_cliente_sin_logger(int socket_servidor)
  * @param puerto puerto de escucha del servidor
  * @return Devuelve el socket del nuevo servidor
  */
-    int crear_conexion_sin_logger(char* ip, char* puerto)
+int crear_conexion_sin_logger(char* ip, char* puerto)
 {
     struct addrinfo hints, *infoServer;
 
@@ -114,16 +114,16 @@ void liberar_conexion(int* socket_cliente)
 }
 
 //envia un int (Temporal para probar las conexiones)
-void enviar_int(int socket_destino, const int* int_a_enviar)
+void enviar_int(int socket_destino, const int int_a_enviar)
 {
     send(socket_destino, int_a_enviar, sizeof(int), 0);
 }
 
-//recibe un int (Temporal para probar las conexiones)
-void recibir_int(int socket_origen)
+//recibe un int (Temporal para probar las conexiones) y lo imprime
+int recibir_int(int socket_origen)
 {
     int int_recibido;
     recv(socket_origen, &int_recibido, sizeof(size_t), 0);
 
-    printf("El valor es %d\n", int_recibido);
+    return int_recibido;
 }
