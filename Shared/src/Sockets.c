@@ -6,7 +6,8 @@
  * @param puerto puerto de escucha del nuevo servidor
  * @return Devuelve el socket del nuevo servidor
  */
-int iniciar_servidor_sin_logger(char* ip, char* puerto){
+int iniciar_servidor_sin_logger(char* ip, char* puerto)
+{
     bool conectado;
     int socket_servidor;
     struct addrinfo hints, *infoServer;
@@ -57,7 +58,8 @@ int iniciar_servidor_sin_logger(char* ip, char* puerto){
  * @param socket_servidor el socket del servidor que va a escuchar
  * @return Devuelve el socket del nuevo cliente
  */
-int esperar_cliente_sin_logger(int socket_servidor) {
+int esperar_cliente_sin_logger(int socket_servidor)
+{
     struct sockaddr_in dir_cliente;
     socklen_t tam_direccion = sizeof(struct sockaddr_in);
 
@@ -72,7 +74,8 @@ int esperar_cliente_sin_logger(int socket_servidor) {
  * @param puerto puerto de escucha del servidor
  * @return Devuelve el socket del nuevo servidor
  */
-int crear_conexion_sin_logger(char* ip, char* puerto) {
+int crear_conexion_sin_logger(char* ip, char* puerto)
+{
     struct addrinfo hints, *infoServer;
 
     // setear las hints
@@ -104,7 +107,8 @@ int crear_conexion_sin_logger(char* ip, char* puerto) {
 }
 
 // Cierra la coneccion con el servidor y libera toda la memoria utilizada
-void liberar_conexion(int* socket_cliente) {
+void liberar_conexion(int* socket_cliente)
+{
     close(*socket_cliente);
     *socket_cliente = -1;
 }
