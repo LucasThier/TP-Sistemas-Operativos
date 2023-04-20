@@ -1,6 +1,5 @@
 #include "../include/KernelMain.h"
 
-
 int main(void)
 {
 	int SocketServidor = iniciar_servidor_sin_logger("0.0.0.0", "3568");
