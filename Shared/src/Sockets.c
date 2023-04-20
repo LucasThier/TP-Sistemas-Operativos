@@ -39,15 +39,6 @@ void iniciar_servidor(char* ip, char* puerto)
         conectado = true;
         break;
     }
-
-    if(true){
-
-    }
-
-    if(!conectado){
-
-        
-    }
     
     if(!conectado)
     {
