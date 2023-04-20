@@ -11,6 +11,11 @@
 #include <netdb.h>
 #include <string.h>
 
-void Iniciar_Servidor(void);
+int iniciar_servidor_sin_logger(char* ip, char* puerto);
+int esperar_cliente_sin_logger(int socket_servidor);
+int crear_conexion_sin_logger(char* ip, char* puerto);
+void liberar_conexion(int* socket_cliente);
+void enviar_int(int socket_destino, const int* int_a_enviar);
+void recibir_int(int socket_origen);
 
 #endif
