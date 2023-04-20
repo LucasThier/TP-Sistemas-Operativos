@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200112L
+
 #ifndef CONEXIONES_H_
 #define CONEXIONES_H_
 

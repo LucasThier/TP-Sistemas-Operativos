@@ -1,14 +1,12 @@
-#define _POSIX_C_SOURCE 200112L
-
 #include "../include/Sockets.h"
 
-
-void main(){
-    
-}
-
-void iniciar_servidor(char* ip, char* puerto)
-{
+/**
+ * Crea un servidor escucha sin logear
+ * @param ip ip de escucha del nuevo servidor
+ * @param puerto puerto de escucha del nuevo servidor
+ * @return Devuelve el socket del nuevo servidor
+ */
+int iniciar_servidor_sin_logger(char* ip, char* puerto){
     bool conectado;
     int socket_servidor;
     struct addrinfo hints, *infoServer;
@@ -19,20 +17,20 @@ void iniciar_servidor(char* ip, char* puerto)
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
 
-    //buscar direccion del servidor siguiendo las hints
+    //establece la direccion del servidor siguiendo las hints
     getaddrinfo(ip, puerto, &hints, &infoServer);
     
     //intentar conectar a cada direccion encontrada hasta
-    for (struct addrinfo *p = infoServer; p != NULL; p = p->ai_next)
+    for (struct addrinfo *aux = infoServer; aux != NULL; aux = aux->ai_next)
     {
-        if (socket(p->ai_family, p->ai_socktype, p->ai_protocol) == -1){
-            //LOGUEAR ERROR AL CREAR EL SOCKET
+        if (socket(aux->ai_family, aux->ai_socktype, aux->ai_protocol) == -1){
+            //ERROR AL CREAR EL SOCKET
             continue;
         }
 
-        if (bind(socket_servidor, p->ai_addr, p->ai_addrlen) == -1)
+        if (bind(socket_servidor, aux->ai_addr, aux->ai_addrlen) == -1)
         {
-            //LOGUEAR ERROR EN EL BIND
+            //ERROR EN EL BIND
             close(socket_servidor);
             continue;
         }
@@ -42,6 +40,71 @@ void iniciar_servidor(char* ip, char* puerto)
     
     if(!conectado)
     {
-
+        free(infoServer);
+        return 0;
     }
+
+    listen(socket_servidor, SOMAXCONN);
+
+    freeaddrinfo(infoServer);
+
+    return socket_servidor;
+}
+
+/**
+ * Esperar a que llegue una conexion de un cliente sin logear
+ * [BLOQUEANTE]
+ * @param socket_servidor el socket del servidor que va a escuchar
+ * @return Devuelve el socket del nuevo cliente
+ */
+int esperar_cliente_sin_logger(int socket_servidor) {
+    struct sockaddr_in dir_cliente;
+    socklen_t tam_direccion = sizeof(struct sockaddr_in);
+
+    int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
+
+    return socket_cliente;
+}
+
+/**
+ * Intenta conectar con un servidor escucha sin logear
+ * @param ip ip de escucha del servidor
+ * @param puerto puerto de escucha del servidor
+ * @return Devuelve el socket del nuevo servidor
+ */
+int crear_conexion_sin_logger(char* ip, char* puerto) {
+    struct addrinfo hints, *infoServer;
+
+    // setear las hints
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
+
+    //establece la direccion del servidor a conectarse siguiendo las hints
+    getaddrinfo(ip, puerto, &hints, &infoServer);
+
+    // Crea un socket con la informacion obtenida
+    int socket_cliente = socket(infoServer->ai_family, infoServer->ai_socktype, infoServer->ai_protocol);
+
+    // Error al crear el socket
+    if(socket_cliente == -1) {
+        return 0;
+    }
+
+    // Error al conectar con el servidor
+    if(connect(socket_cliente, infoServer->ai_addr, infoServer->ai_addrlen) == -1) {
+        freeaddrinfo(infoServer);
+        return 0;
+    } else
+
+    freeaddrinfo(infoServer);
+
+    return socket_cliente;
+}
+
+// Cierra la coneccion con el servidor y libera toda la memoria utilizada
+void liberar_conexion(int* socket_cliente) {
+    close(*socket_cliente);
+    *socket_cliente = -1;
 }
