@@ -1,4 +1,6 @@
 #include "../include/ConsolaMain.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 int main(void)
 {
@@ -8,7 +10,7 @@ int main(void)
 
 	do
 	{
-		leido = readline("> ");
+		leido = readline(">");
 		enviar_int(SocketServidor, leido);
 		printf("El valor enviado es %d\n", leido);
 
