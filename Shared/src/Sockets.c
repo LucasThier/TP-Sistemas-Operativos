@@ -24,13 +24,17 @@ int iniciar_servidor_sin_logger(char* ip, char* puerto)
     //intentar conectar a cada direccion encontrada hasta
     for (struct addrinfo *aux = infoServer; aux != NULL; aux = aux->ai_next)
     {
-        if (socket(aux->ai_family, aux->ai_socktype, aux->ai_protocol) == -1){
+		socket_servidor = socket(aux->ai_family, aux->ai_socktype, aux->ai_protocol);
+        
+		if (socket_servidor == -1){
             //ERROR AL CREAR EL SOCKET
+			printf("ERROR AL CREAR EL SOCKET\n");
             continue;
         }
 
         if (bind(socket_servidor, aux->ai_addr, aux->ai_addrlen) == -1)
         {
+			printf("ERROR BIND%d\n", socket_servidor);
             //ERROR EN EL BIND
             close(socket_servidor);
             continue;
@@ -92,11 +96,13 @@ int crear_conexion_sin_logger(char* ip, char* puerto)
 
     // Error al crear el socket
     if(socket_cliente == -1) {
+		printf("ERROR AL CREAR EL SOCKET\n");
         return 0;
     }
 
     // Error al conectar con el servidor
     if(connect(socket_cliente, infoServer->ai_addr, infoServer->ai_addrlen) == -1) {
+		printf("ERROR AL conectar con el servidor\n");
         freeaddrinfo(infoServer);
         return 0;
     } else
@@ -116,7 +122,7 @@ void liberar_conexion(int* socket_cliente)
 //envia un int (Temporal para probar las conexiones)
 void enviar_int(int socket_destino, const int int_a_enviar)
 {
-    send(socket_destino, int_a_enviar, sizeof(int), 0);
+    send(socket_destino, &int_a_enviar, sizeof(int), 0);
 }
 
 //recibe un int (Temporal para probar las conexiones) y lo imprime
