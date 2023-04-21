@@ -12,7 +12,7 @@ int main(void)
 
 	do
 	{
-		scanf("%d", &leido);
+		scanf("Introduce el entero a enviar: %d", &leido);
 		log_info(ConexionesLogger, "Numero leido: %d\n", leido);
 		enviar_int(ConexionesLogger, NOMBRE_PROCESO, SocketServidor, leido);
 	} while (leido > -1);
