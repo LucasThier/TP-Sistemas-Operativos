@@ -87,7 +87,7 @@ int crear_conexion_sin_logger(char* ip, char* puerto)
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
-
+    
     //establece la direccion del servidor a conectarse siguiendo las hints
     getaddrinfo(ip, puerto, &hints, &infoServer);
 
