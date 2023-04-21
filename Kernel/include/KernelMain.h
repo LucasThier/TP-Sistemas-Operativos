@@ -5,4 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+const char NOMBRE_PROCESO[7] = "KERNEL";
+
+
 #endif
