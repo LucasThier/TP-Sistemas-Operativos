@@ -4,7 +4,7 @@
 
 int main(void)
 {
-	t_log* ConexionesLogger = log_create("Consola.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
+	t_log *ConexionesLogger = log_create("Consola.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 
 	int SocketServidor = crear_conexion(ConexionesLogger, "Kernel", "0.0.0.0", "33668");
 
@@ -16,7 +16,7 @@ int main(void)
 		enviar_int(ConexionesLogger, NOMBRE_PROCESO, SocketServidor, leido);
 	} while (leido > -1);
 
-	//liberar_conexion(SocketServidor);
+	// liberar_conexion(SocketServidor);
 
 	return EXIT_SUCCESS;
 }

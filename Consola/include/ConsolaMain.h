@@ -7,6 +7,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-const char NOMBRE_PROCESO[7] = "CONSOLA";
+char NOMBRE_PROCESO[7] = "CONSOLA";
 
 #endif
