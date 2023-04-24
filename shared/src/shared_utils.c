@@ -1,21 +1,5 @@
-#include <commons/log.h>
-#include <commons/string.h>
-#include <commons/config.h>
-#include <commons/process.h>
-#include <commons/txt.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <unistd.h>
+#include "../include/shared_utils.h"
 
-#include <string.h>
-#include <commons/collections/list.h>
-#include <assert.h>
-#include <readline/readline.h>
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
 
 typedef enum
 {
@@ -55,30 +39,6 @@ void *serializar_paquete(t_paquete *paquete, int bytes)
     desplazamiento += paquete->buffer->size;
 
     return magic;
-}
-
-int crear_conexion(char *ip, char *puerto)
-{
-    struct addrinfo hints;
-    struct addrinfo *server_info;
-
-    memset(&hints, 0, sizeof(hints));
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
-
-    getaddrinfo(ip, puerto, &hints, &server_info);
-
-    // Ahora vamos a crear el socket.
-
-    int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
-
-    // Ahora que tenemos el socket, vamos a conectarlo
-    connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen);
-
-    freeaddrinfo(server_info);
-
-    return socket_cliente;
 }
 
 void enviar_mensaje(char *mensaje, int socket_cliente)
@@ -218,46 +178,7 @@ void terminar_programa(int conexion, t_log *nuevo_logger, t_config *config)
       con las funciones de las commons y del TP mencionadas en el enunciado */
 }
 
-int iniciar_servidor(void)
-{
-    int socket_servidor;
-
-    struct addrinfo hints, *servinfo, *p;
-
-    memset(&hints, 0, sizeof(hints));
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
-
-    getaddrinfo(IP, PUERTO, &hints, &servinfo);
-
-    // Creamos el socket de escucha del servidor
-    socket_servidor = socket(servinfo->ai_family,
-                             servinfo->ai_socktype,
-                             servinfo->ai_protocol);
-
-    // Asociamos el socket a un puerto
-    bind(socket_servidor, servinfo->ai_addr, servinfo->ai_addrlen);
-
-    // Escuchamos las conexiones entrantes
-    listen(socket_servidor, SOMAXCONN);
-
-    freeaddrinfo(servinfo);
-    log_trace(logger, "Listo para escuchar a mi cliente");
-
-    return socket_servidor;
-}
-
-int esperar_cliente(int socket_servidor)
-{
-    // Aceptamos un nuevo cliente
-    int socket_cliente = accept(socket_servidor, NULL, NULL);
-
-    log_info(logger, "Se conecto un cliente!");
-
-    return socket_cliente;
-}
-
+/*
 int recibir_operacion(int socket_cliente)
 {
     int cod_op;
@@ -268,7 +189,7 @@ int recibir_operacion(int socket_cliente)
         close(socket_cliente);
         return -1;
     }
-}
+}*/
 
 void *recibir_buffer(int *size, int socket_cliente)
 {
@@ -285,7 +206,7 @@ void recibir_mensaje(int socket_cliente)
 {
     int size;
     char *buffer = recibir_buffer(&size, socket_cliente);
-    log_info(logger, "Me llego el mensaje %s", buffer);
+    //log_info(logger, "Me llego el mensaje %s", buffer);
     free(buffer);
 }
 
