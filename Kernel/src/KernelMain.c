@@ -15,6 +15,7 @@ int main(void)
 	t_log* ConexionesLogger = log_create("Kernel.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 
 	SocketServidor = iniciar_servidor(ConexionesLogger, NOMBRE_PROCESO, "0.0.0.0", "33668");
+	
 	if(SocketServidor != 0)
 	{
 		SocketCliente = esperar_cliente(ConexionesLogger, NOMBRE_PROCESO, SocketServidor);
