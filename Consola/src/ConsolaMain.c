@@ -6,7 +6,7 @@ int main(void)
 {
 	t_log *ConexionesLogger = log_create("Consola.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 
-	int SocketServidor = crear_conexion(ConexionesLogger, "Kernel", "0.0.0.0", "33668");
+	int SocketServidor = conectar_servidor(ConexionesLogger, "Kernel", "0.0.0.0", "33668");
 
 	int leido;
 

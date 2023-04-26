@@ -40,10 +40,55 @@ typedef struct
 	t_buffer* buffer;
 } t_paquete;
 
-
+#pragma region SOCKETS
+/**
+ * Intenta crear un servidor escucha.
+ * @param ip ip de escucha del servidor
+ * @param puerto puerto de escucha del servidor
+ * @return Devuelve el socket del servidor escucha o 0 en caso de error.
+ */
 int iniciar_servidor(t_log* logger, const char* name, char* ip, char* puerto);
+
+/**
+ * Esperar a que llegue una conexion de un cliente.
+ * [BLOQUEANTE]
+ * @param socket_servidor el socket del servidor que va a escuchar
+ * @return Devuelve el socket del nuevo cliente o 0 en caso de error.
+ */
 int esperar_cliente(t_log* logger, const char* nombreProceso, int socket_servidor);
-int crear_conexion(t_log* logger, const char* nobre_servidor, char* ip, char* puerto);
+
+/**
+ * Intenta conectar con un servidor escucha.
+ * @param ip ip de escucha del servidor
+ * @param puerto puerto de escucha del servidor
+ * @return Devuelve el socket del servidor al que se conecto o 0 en caso de error.
+ */
+int conectar_servidor(t_log* logger, const char* nobre_servidor, char* ip, char* puerto);
+#pragma endregion
+
+
+#pragma region MENSAJES
+typedef enum
+{
+	ABRIRPROGRAMA,
+	OTROS
+} tipo_operacion;
+
+typedef struct
+{
+	int size;
+	void* bytes;
+} contenido_paquete;
+
+typedef struct
+{
+	tipo_operacion codigo_operacion;
+	t_buffer* buffer;
+} paquete;
+
+
+#pragma endregion
+
 void enviar_mensaje(char* mensaje, int socket_cliente);
 void enviar_int(t_log* logger, const char* name, int socket_destino, int int_a_enviar);
 int recibir_int(t_log* logger, const char* name, int socket_origen);
