@@ -91,7 +91,7 @@ typedef struct
 
 void enviar_mensaje(char* mensaje, int socket_cliente);
 void enviar_int(t_log* logger, const char* name, int socket_destino, int int_a_enviar);
-int recibir_int(t_log* logger, const char* name, int socket_origen);
+int recibir_int(int socket_origen);
 t_paquete* crear_paquete(void);
 void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio);
 void enviar_paquete(t_paquete* paquete, int socket_cliente);

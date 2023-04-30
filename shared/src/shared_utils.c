@@ -1,7 +1,6 @@
 #include "../include/shared_utils.h"
 
 
-#pragma region SOCKETS
 int iniciar_servidor(t_log* logger, const char* nombreProceso, char* ip, char* puerto)
 {
     bool conectado = false;
@@ -70,7 +69,7 @@ int esperar_cliente(t_log* logger, const char* nombreProceso, int socket_servido
 }
 
 
-int conectar_servidor(t_log* logger, const char* nobre_servidor, char* ip, char* puerto)
+int conectar_servidor(t_log* logger, const char* nombre_servidor, char* ip, char* puerto)
 {
     struct addrinfo hints, *infoServer;
 
@@ -94,25 +93,17 @@ int conectar_servidor(t_log* logger, const char* nobre_servidor, char* ip, char*
 
     // Error al conectar con el servidor
     if(connect(socket_servidor, infoServer->ai_addr, infoServer->ai_addrlen) == -1) {
-		log_error(logger, "Error al conectar (a %s)\n", nobre_servidor);
+		log_error(logger, "Error al conectar (a %s)\n", nombre_servidor);
         freeaddrinfo(infoServer);
         return 0;
     } else
-        log_info(logger, "Cliente conectado en %s:%s (a %s)\n", ip, puerto, nobre_servidor);
+        log_info(logger, "Cliente conectado en %s:%s (a %s)\n", ip, puerto, nombre_servidor);
 
 
     freeaddrinfo(infoServer);
 
     return socket_servidor;
 }
-#pragma endregion
-
-
-#pragma region MENSAJES
-
-
-
-#pragma endregion
 
 
 //envia un int (Temporal para probar las conexiones)
@@ -123,11 +114,10 @@ void enviar_int(t_log* logger, const char* nombreProceso, int socket_destino, in
 }
 
 //recibe un int (Temporal para probar las conexiones) y lo imprime
-int recibir_int(t_log* logger, const char* nombreProceso, int socket_origen)
+int recibir_int(int socket_origen)
 {
     int int_recibido;
-    recv(socket_origen, &int_recibido, sizeof(int), 0);
-    //printf(int_recibido);
+    recv(socket_origen, &int_recibido, sizeof(int), MSG_WAITALL);
     return int_recibido;
 }
 
@@ -246,7 +236,7 @@ void leer_consola(t_log *logger)
     free(linea);
 }
 
-void paquete(int conexion)
+/*void paquete(int conexion)
 {
     char *leido;
 
@@ -267,7 +257,7 @@ void paquete(int conexion)
     // ¡No te olvides de liberar las líneas y el paquete antes de regresar!
     free(leido);
     eliminar_paquete(paquete);
-}
+}*/
 
 void terminar_programa(int conexion, t_log *nuevo_logger, t_config *config)
 {

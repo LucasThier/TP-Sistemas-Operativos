@@ -1,38 +1,99 @@
 #include "../include/KernelMain.h"
 
-int SocketServidor;
-int SocketCliente;
+t_log* Kernel_Logger;
 
+typedef void (*t_CallbackAdministradorMensajes)(void*);
+
+typedef struct
+{
+	t_CallbackAdministradorMensajes Callback;
+	t_log* logger;
+	int SocketConectado;
+	//Resto de parametros
+
+} t_ArgsConexiones;
+
+
+int SocketServidor;
 
 void sighandler(int s) {
 	liberar_conexion(SocketServidor);
-	liberar_conexion(SocketCliente);
 	exit(0);
 }
 
 int main(void)
 {
-	t_log* ConexionesLogger = log_create("Kernel.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
+	signal(SIGINT, sighandler);
 
-	SocketServidor = iniciar_servidor(ConexionesLogger, NOMBRE_PROCESO, "0.0.0.0", "33668");
+	Kernel_Logger = log_create("Kernel.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
+
+	InicializarConexiones();
+
+	while(true){
+		log_info(Kernel_Logger, "hilo principal esta ejecutando");
+		sleep(10);
+	}
+
+	liberar_conexion(SocketServidor);
+}
+
+
+int InicializarConexiones()
+{
+	pthread_t HiloAdministradorDeConexiones;
+
+    if (pthread_create(&HiloAdministradorDeConexiones, NULL, AdministradorDeConexiones, NULL) != 0) {
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+void* AdministradorDeConexiones()
+{
+	SocketServidor = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "0.0.0.0", "33668");
 	
 	if(SocketServidor != 0)
 	{
-		SocketCliente = esperar_cliente(ConexionesLogger, NOMBRE_PROCESO, SocketServidor);
-
-		if(SocketCliente != 0)
+		while(true)
 		{
-			int recibido = 100;
-			do
-			{
-				recibido = recibir_int(ConexionesLogger, NOMBRE_PROCESO, SocketCliente);
-				log_info(ConexionesLogger, "Numero recibido: %d\n", recibido);
+			log_info(Kernel_Logger, "hilo CONEXIONES esta ejecutando");
 
-			}while(recibido != 0);
+			int SocketCliente = esperar_cliente(Kernel_Logger, NOMBRE_PROCESO, SocketServidor);
+
+			if(SocketCliente != 0)
+			{	
+				printf("Socket del cliente 1 %d \n", SocketCliente);
+
+				pthread_t HiloAdministradorDeMensajes;
+				if (pthread_create(&HiloAdministradorDeMensajes, NULL, AdministradorDeMensajes, (void*)&SocketCliente) != 0) {
+					exit(EXIT_FAILURE);
+				}
+			}
 		}
 	}
-	
+
 	liberar_conexion(SocketServidor);
-	liberar_conexion(SocketCliente);
-	return EXIT_SUCCESS;
+	return EXIT_FAILURE;
+}
+
+void* AdministradorDeMensajes(void* arg)
+{
+	int* SocketClienteConectado = (int*)arg;
+	printf("\nSocket del cliente %d \n", *SocketClienteConectado);
+
+	//Acciones a realizar para cada cliente conectado
+	
+	//Ejemplo:
+	int recibido = 100;
+	do
+	{
+		log_info(Kernel_Logger, "hilo MENSAJES esta ejecutando");
+		sleep(5);
+		recibido = recibir_int(*SocketClienteConectado);
+		log_info(Kernel_Logger, "Numero recibido: %d\n", recibido);
+	}while(recibido != 0);
+	//Fin ejemplo
+
+	liberar_conexion(SocketClienteConectado);
+	return;
 }

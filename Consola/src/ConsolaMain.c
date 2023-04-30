@@ -12,9 +12,10 @@ int main(void)
 
 	do
 	{
-		scanf("Introduce el entero a enviar: %d", &leido);
+    	printf("Ingresa un entero a enviar: ");
+		scanf("%d", &leido);
 		enviar_int(ConexionesLogger, NOMBRE_PROCESO, SocketServidor, leido);
-	} while (leido > -1);
+	} while (leido != 0);
 
 	// liberar_conexion(SocketServidor);
 
