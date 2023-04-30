@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <pthread.h>
+
 
 char NOMBRE_PROCESO[7] = "CONSOLA";
 

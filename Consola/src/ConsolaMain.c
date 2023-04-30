@@ -4,9 +4,9 @@
 
 int main(void)
 {
-	t_log *ConexionesLogger = log_create("Consola.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
+	t_log* Consola_Logger = log_create("Consola.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 
-	int SocketServidor = conectar_servidor(ConexionesLogger, "Kernel", "0.0.0.0", "33668");
+	int SocketServidor = conectar_servidor(Consola_Logger, "Kernel", "0.0.0.0", "33668");
 
 	int leido;
 
@@ -14,7 +14,7 @@ int main(void)
 	{
     	printf("Ingresa un entero a enviar: ");
 		scanf("%d", &leido);
-		enviar_int(ConexionesLogger, NOMBRE_PROCESO, SocketServidor, leido);
+		enviar_int(Consola_Logger, NOMBRE_PROCESO, SocketServidor, leido);
 	} while (leido != 0);
 
 	// liberar_conexion(SocketServidor);
