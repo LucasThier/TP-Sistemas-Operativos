@@ -9,6 +9,6 @@
 int InicializarConexiones();
 void* AdministradorDeConexion();
 
-char NOMBRE_PROCESO[3] = "CPU";
+char NOMBRE_PROCESO[4] = "CPU";
 
 #endif

@@ -45,6 +45,9 @@ int main(void)
 int InicializarConexiones()
 {
 	SocketCPU = conectar_servidor(Kernel_Logger, "CPU", "0.0.0.0", "35001");
+	SocketFileSystem = conectar_servidor(Kernel_Logger, "FileSystem", "0.0.0.0", "35002");
+	SocketMemoria = conectar_servidor(Kernel_Logger, "Memoria", "0.0.0.0", "35003");
+
 
 	pthread_t HiloAdministradorDeConexiones;
 
@@ -90,6 +93,9 @@ void* AdministradorDeMensajes(void* arg)
 		recibido = recibir_int(*SocketClienteConectado);
 		log_info(Kernel_Logger, "Numero recibido: %d\n", recibido);
 		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketCPU, recibido);
+		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketFileSystem, recibido);
+		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketMemoria, recibido);
+
 	}while(recibido != 0);
 
 	liberar_conexion(SocketClienteConectado);

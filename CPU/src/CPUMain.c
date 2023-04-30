@@ -1,7 +1,7 @@
 #include "../include/CPUMain.h"
 
 
-t_log* CPU_Logger;
+t_log* Memoria_Logger;
 int SocketCPU;
 
 void sighandler(int s) {
@@ -14,12 +14,12 @@ int main(void)
 {
 	signal(SIGINT, sighandler);
 
-	CPU_Logger = log_create("CPU.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
+	Memoria_Logger = log_create("CPU.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 	
 	InicializarConexiones();
 
 	while(true){
-		log_info(CPU_Logger, "hilo principal esta ejecutando");
+		log_info(Memoria_Logger, "hilo principal esta ejecutando");
 		sleep(10);
 	}
 
@@ -39,11 +39,11 @@ int InicializarConexiones()
 
 void* AdministradorDeConexion()
 {
-	SocketCPU = iniciar_servidor(CPU_Logger, NOMBRE_PROCESO, "0.0.0.0", "35001");
+	SocketCPU = iniciar_servidor(Memoria_Logger, NOMBRE_PROCESO, "0.0.0.0", "35001");
 	
 	if(SocketCPU != 0)
 	{
-		int SocketKernel = esperar_cliente(CPU_Logger, NOMBRE_PROCESO, SocketCPU);
+		int SocketKernel = esperar_cliente(Memoria_Logger, NOMBRE_PROCESO, SocketCPU);
 
 		if(SocketKernel != 0)
 		{	
@@ -52,7 +52,7 @@ void* AdministradorDeConexion()
 			do
 			{
 				recibido = recibir_int(SocketKernel);
-				log_info(CPU_Logger, "Numero recibido: %d\n", recibido);
+				log_info(Memoria_Logger, "Numero recibido: %d\n", recibido);
 			}while(recibido != 0);
 
 			liberar_conexion(SocketKernel);
