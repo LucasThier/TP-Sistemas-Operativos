@@ -11,7 +11,7 @@ int main(void)
 	int leido;
 
 	do
-	{
+	{		
     	printf("Ingresa un entero a enviar: ");
 		scanf("%d", &leido);
 		enviar_int(Consola_Logger, NOMBRE_PROCESO, SocketServidor, leido);

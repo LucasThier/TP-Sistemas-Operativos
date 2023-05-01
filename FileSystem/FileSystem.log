@@ -1,45 +1,23 @@
-[INFO] 22:34:21:476 FileSystem/(10852:10852): hilo principal esta ejecutando
-[INFO] 22:34:21:477 FileSystem/(10852:10853): Escuchando en 0.0.0.0:35002 (FileSystem)
+[INFO] 20:18:04:629 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:18:04:630 FileSystem/(2794:2795): Escuchando en 0.0.0.0:35002 (FileSystem)
 
-[INFO] 22:34:21:477 FileSystem/(10852:10853): Esperando cliente... (FileSystem)
+[INFO] 20:18:04:630 FileSystem/(2794:2795): Esperando cliente... (FileSystem)
 
-[INFO] 22:34:31:478 FileSystem/(10852:10852): hilo principal esta ejecutando
-[INFO] 22:34:52:549 FileSystem/(10870:10870): hilo principal esta ejecutando
-[INFO] 22:34:52:549 FileSystem/(10870:10871): Escuchando en 0.0.0.0:35002 (FileSystem)
+[INFO] 20:18:14:630 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:18:24:630 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:18:34:632 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:18:44:633 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:18:51:471 FileSystem/(2794:2795): Nuevo Cliente conectado! (FileSystem) 5
 
-[INFO] 22:34:52:549 FileSystem/(10870:10871): Esperando cliente... (FileSystem)
+[INFO] 20:18:54:634 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:19:04:634 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:19:10:119 FileSystem/(2794:2795): Numero recibido: 123
 
-[INFO] 22:35:02:549 FileSystem/(10870:10870): hilo principal esta ejecutando
-[INFO] 22:35:06:595 FileSystem/(10870:10871): Nuevo Cliente conectado! (FileSystem) 5
+[INFO] 20:19:14:635 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:19:24:635 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:19:34:636 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:19:44:636 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:19:54:637 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 20:20:02:081 FileSystem/(2794:2795): Numero recibido: 0
 
-[INFO] 22:35:12:551 FileSystem/(10870:10870): hilo principal esta ejecutando
-[INFO] 22:35:18:982 FileSystem/(10870:10871): Numero recibido: 321
-
-[INFO] 22:35:22:551 FileSystem/(10870:10870): hilo principal esta ejecutando
-[INFO] 22:35:32:552 FileSystem/(10870:10870): hilo principal esta ejecutando
-[INFO] 22:35:42:552 FileSystem/(10870:10870): hilo principal esta ejecutando
-[INFO] 22:35:47:510 FileSystem/(10870:10871): Numero recibido: 789
-
-[INFO] 22:35:52:552 FileSystem/(10870:10870): hilo principal esta ejecutando
-[INFO] 22:36:02:553 FileSystem/(10870:10870): hilo principal esta ejecutando
-[INFO] 22:42:15:966 FileSystem/(11428:11428): hilo principal esta ejecutando
-[INFO] 22:42:15:966 FileSystem/(11428:11429): Escuchando en 0.0.0.0:35002 (FileSystem)
-
-[INFO] 22:42:15:966 FileSystem/(11428:11429): Esperando cliente... (FileSystem)
-
-[INFO] 22:42:23:790 FileSystem/(11428:11429): Nuevo Cliente conectado! (FileSystem) 5
-
-[INFO] 22:42:25:966 FileSystem/(11428:11428): hilo principal esta ejecutando
-[INFO] 22:42:35:968 FileSystem/(11428:11428): hilo principal esta ejecutando
-[INFO] 22:42:43:557 FileSystem/(11428:11429): Numero recibido: 321
-
-[INFO] 22:42:45:968 FileSystem/(11428:11428): hilo principal esta ejecutando
-[INFO] 22:42:55:969 FileSystem/(11428:11428): hilo principal esta ejecutando
-[INFO] 22:43:05:969 FileSystem/(11428:11428): hilo principal esta ejecutando
-[INFO] 22:43:12:604 FileSystem/(11428:11429): Numero recibido: 788
-
-[INFO] 22:43:15:969 FileSystem/(11428:11428): hilo principal esta ejecutando
-[INFO] 22:43:21:960 FileSystem/(11428:11429): Numero recibido: 0
-
-[INFO] 22:43:25:970 FileSystem/(11428:11428): hilo principal esta ejecutando
-[INFO] 22:43:35:970 FileSystem/(11428:11428): hilo principal esta ejecutando
+[INFO] 20:20:04:637 FileSystem/(2794:2794): hilo principal esta ejecutando

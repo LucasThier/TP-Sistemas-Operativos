@@ -1,41 +1,28 @@
-[INFO] 22:34:57:746 CPU/(10879:10879): hilo principal esta ejecutando
-[INFO] 22:34:57:747 CPU/(10879:10880): Escuchando en 0.0.0.0:35001 (CPU)
+[INFO] 20:16:45:731 CPU/(2767:2767): hilo principal esta ejecutando
+[INFO] 20:16:45:731 CPU/(2767:2768): Escuchando en 0.0.0.0:35001 (CPU)
 
-[INFO] 22:34:57:747 CPU/(10879:10880): Esperando cliente... (CPU)
+[INFO] 20:16:45:732 CPU/(2767:2768): Esperando cliente... (CPU)
 
-[INFO] 22:35:06:594 CPU/(10879:10880): Nuevo Cliente conectado! (CPU) 5
+[INFO] 20:18:09:553 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:18:09:553 CPU/(2798:2799): Escuchando en 0.0.0.0:35001 (CPU)
 
-[INFO] 22:35:07:747 CPU/(10879:10879): hilo principal esta ejecutando
-[INFO] 22:35:17:748 CPU/(10879:10879): hilo principal esta ejecutando
-[INFO] 22:35:18:982 CPU/(10879:10880): Numero recibido: 321
+[INFO] 20:18:09:553 CPU/(2798:2799): Esperando cliente... (CPU)
 
-[INFO] 22:35:27:749 CPU/(10879:10879): hilo principal esta ejecutando
-[INFO] 22:35:37:750 CPU/(10879:10879): hilo principal esta ejecutando
-[INFO] 22:35:47:510 CPU/(10879:10880): Numero recibido: 789
+[INFO] 20:18:19:553 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:18:29:553 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:18:39:554 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:18:49:555 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:18:51:470 CPU/(2798:2799): Nuevo Cliente conectado! (CPU) 5
 
-[INFO] 22:35:47:751 CPU/(10879:10879): hilo principal esta ejecutando
-[INFO] 22:35:57:752 CPU/(10879:10879): hilo principal esta ejecutando
-[INFO] 22:36:07:753 CPU/(10879:10879): hilo principal esta ejecutando
-[INFO] 22:41:58:792 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:41:58:792 CPU/(11419:11420): Escuchando en 0.0.0.0:35001 (CPU)
+[INFO] 20:18:59:555 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:19:09:555 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:19:10:119 CPU/(2798:2799): Numero recibido: 123
 
-[INFO] 22:41:58:792 CPU/(11419:11420): Esperando cliente... (CPU)
+[INFO] 20:19:19:556 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:19:29:557 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:19:39:558 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:19:49:559 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:19:59:559 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 20:20:02:081 CPU/(2798:2799): Numero recibido: 0
 
-[INFO] 22:42:08:792 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:42:18:792 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:42:23:789 CPU/(11419:11420): Nuevo Cliente conectado! (CPU) 5
-
-[INFO] 22:42:28:793 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:42:38:796 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:42:43:557 CPU/(11419:11420): Numero recibido: 321
-
-[INFO] 22:42:48:797 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:42:58:797 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:43:08:798 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:43:12:604 CPU/(11419:11420): Numero recibido: 788
-
-[INFO] 22:43:18:798 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:43:21:960 CPU/(11419:11420): Numero recibido: 0
-
-[INFO] 22:43:28:798 CPU/(11419:11419): hilo principal esta ejecutando
-[INFO] 22:43:38:799 CPU/(11419:11419): hilo principal esta ejecutando
+[INFO] 20:20:09:559 CPU/(2798:2798): hilo principal esta ejecutando

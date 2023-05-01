@@ -48,12 +48,12 @@ int InicializarConexiones()
 	SocketFileSystem = conectar_servidor(Kernel_Logger, "FileSystem", "0.0.0.0", "35002");
 	SocketMemoria = conectar_servidor(Kernel_Logger, "Memoria", "0.0.0.0", "35003");
 
-
 	pthread_t HiloAdministradorDeConexiones;
 
     if (pthread_create(&HiloAdministradorDeConexiones, NULL, AdministradorDeConexiones, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
+
 
 }
 

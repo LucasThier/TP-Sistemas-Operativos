@@ -36,7 +36,7 @@ int InicializarConexiones()
 }
 
 
-
+//Crea un servidor y espera al kernel. Recibe infinitamente mensajes del kernel
 void* AdministradorDeConexion()
 {
 	SocketCPU = iniciar_servidor(Memoria_Logger, NOMBRE_PROCESO, "0.0.0.0", "35001");
@@ -46,7 +46,7 @@ void* AdministradorDeConexion()
 		int SocketKernel = esperar_cliente(Memoria_Logger, NOMBRE_PROCESO, SocketCPU);
 
 		if(SocketKernel != 0)
-		{	
+		{
 			//Acciones a realizar para cada consola conectado
 			int recibido;
 			do

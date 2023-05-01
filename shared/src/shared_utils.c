@@ -236,28 +236,28 @@ void leer_consola(t_log *logger)
     free(linea);
 }
 
-/*void paquete(int conexion)
+void paquete(int conexion)
 {
     char *leido;
 
-    t_paquete *paquete = crear_paquete();
+    t_paquete *paquete2 = crear_paquete();
 
     leido = readline(">");
 
     // Leemos y esta vez agregamos las lineas al paquete
     while (strcmp(leido, "\0"))
     {
-        agregar_a_paquete(paquete, leido, strlen(leido) + 1);
+        agregar_a_paquete(paquete2, leido, strlen(leido) + 1);
         free(leido);
         leido = readline(">");
     }
 
-    enviar_paquete(paquete, conexion);
+    enviar_paquete(paquete2, conexion);
 
     // ¡No te olvides de liberar las líneas y el paquete antes de regresar!
     free(leido);
-    eliminar_paquete(paquete);
-}*/
+    eliminar_paquete(paquete2);
+}
 
 void terminar_programa(int conexion, t_log *nuevo_logger, t_config *config)
 {

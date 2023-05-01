@@ -1,23 +1,21 @@
-[INFO] 22:41:54:775 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:41:54:776 Memoria/(11417:11418): Escuchando en 0.0.0.0:35003 (Memoria)
+[INFO] 20:18:31:803 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:18:31:805 Memoria/(2804:2805): Escuchando en 0.0.0.0:35003 (Memoria)
 
-[INFO] 22:41:54:776 Memoria/(11417:11418): Esperando cliente... (Memoria)
+[INFO] 20:18:31:805 Memoria/(2804:2805): Esperando cliente... (Memoria)
 
-[INFO] 22:42:04:777 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:42:14:777 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:42:23:791 Memoria/(11417:11418): Nuevo Cliente conectado! (Memoria) 5
+[INFO] 20:18:41:805 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:18:51:471 Memoria/(2804:2805): Nuevo Cliente conectado! (Memoria) 5
 
-[INFO] 22:42:24:778 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:42:34:778 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:42:43:557 Memoria/(11417:11418): Numero recibido: 321
+[INFO] 20:18:51:806 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:19:01:806 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:19:10:119 Memoria/(2804:2805): Numero recibido: 123
 
-[INFO] 22:42:44:778 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:42:54:779 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:43:04:779 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:43:12:604 Memoria/(11417:11418): Numero recibido: 788
+[INFO] 20:19:11:806 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:19:21:809 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:19:31:811 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:19:41:813 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:19:51:813 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:20:01:814 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 20:20:02:081 Memoria/(2804:2805): Numero recibido: 0
 
-[INFO] 22:43:14:779 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:43:21:960 Memoria/(11417:11418): Numero recibido: 0
-
-[INFO] 22:43:24:780 Memoria/(11417:11417): hilo principal esta ejecutando
-[INFO] 22:43:34:780 Memoria/(11417:11417): hilo principal esta ejecutando
+[INFO] 20:20:11:814 Memoria/(2804:2804): hilo principal esta ejecutando
