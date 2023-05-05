@@ -1,6 +1,6 @@
 #include "../include/shared_utils.h"
 
-
+#pragma region Sockets
 int iniciar_servidor(t_log* logger, const char* nombreProceso, char* ip, char* puerto)
 {
     bool conectado = false;
@@ -120,6 +120,8 @@ int recibir_int(int socket_origen)
     recv(socket_origen, &int_recibido, sizeof(int), MSG_WAITALL);
     return int_recibido;
 }
+
+#pragma endregion
 
 void eliminar_paquete(t_paquete *paquete)
 {

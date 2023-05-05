@@ -7,8 +7,8 @@
 #include <pthread.h>
 
 int InicializarConexiones();
-void* AdministradorDeConexiones();
-void* AdministradorDeMensajes(void* arg);
+void* EscucharConexiones();
+void* AdministradorDeModulo(void* arg);
 
 
 

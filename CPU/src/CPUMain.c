@@ -2,7 +2,10 @@
 
 
 t_log* Memoria_Logger;
+
 int SocketCPU;
+int SocketMemoria;
+
 
 void sighandler(int s) {
 	liberar_conexion(SocketCPU);
@@ -26,18 +29,21 @@ int main(void)
 	return EXIT_SUCCESS;
 }
 
+//Crea un hilo de escucha para el kernel
 int InicializarConexiones()
 {
-	pthread_t HiloAdministradorDeConexiones;
+	SocketMemoria = conectar_servidor(Memoria_Logger, "Memoria", "0.0.0.0", "35003");
 
-    if (pthread_create(&HiloAdministradorDeConexiones, NULL, AdministradorDeConexion, NULL) != 0) {
+	pthread_t HiloEscucha;
+
+    if (pthread_create(&HiloEscucha, NULL, EscuchaKernel, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
 }
 
 
-//Crea un servidor y espera al kernel. Recibe infinitamente mensajes del kernel
-void* AdministradorDeConexion()
+//Crea un servidor y espera al kernel, luego recibe mensajes del mismo
+void* EscuchaKernel()
 {
 	SocketCPU = iniciar_servidor(Memoria_Logger, NOMBRE_PROCESO, "0.0.0.0", "35001");
 	
@@ -47,7 +53,9 @@ void* AdministradorDeConexion()
 
 		if(SocketKernel != 0)
 		{
-			//Acciones a realizar para cada consola conectado
+			//--------------------------------------------------------------------------------------------------------------------------------------------------
+			//Acciones a realizar cuando se conecta el kernel:
+
 			int recibido;
 			do
 			{
@@ -55,6 +63,7 @@ void* AdministradorDeConexion()
 				log_info(Memoria_Logger, "Numero recibido: %d\n", recibido);
 			}while(recibido != 0);
 
+			//--------------------------------------------------------------------------------------------------------------------------------------------------
 			liberar_conexion(SocketKernel);
 			return;
 		}

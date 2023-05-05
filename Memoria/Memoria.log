@@ -19,3 +19,18 @@
 [INFO] 20:20:02:081 Memoria/(2804:2805): Numero recibido: 0
 
 [INFO] 20:20:11:814 Memoria/(2804:2804): hilo principal esta ejecutando
+[INFO] 13:33:11:151 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:33:11:151 Memoria/(35449:35450): Escuchando en 0.0.0.0:33668 (Memoria)
+
+[INFO] 13:33:11:151 Memoria/(35449:35450): Esperando cliente... (Memoria)
+
+[INFO] 13:33:21:152 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:33:31:152 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:33:41:153 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:33:51:154 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:34:01:156 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:34:11:156 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:34:21:157 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:34:31:157 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:34:41:158 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 13:34:51:161 Memoria/(35449:35449): hilo principal esta ejecutando

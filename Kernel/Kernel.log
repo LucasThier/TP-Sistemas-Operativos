@@ -37,3 +37,17 @@
 [INFO] 20:20:02:081 KERNEL/(2810:2816): Numero enviado: 0
 
 [INFO] 20:20:11:474 KERNEL/(2810:2810): hilo principal esta ejecutando
+[INFO] 13:33:43:923 KERNEL/(35484:35484): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[INFO] 13:33:43:924 KERNEL/(35484:35484): Cliente conectado en 0.0.0.0:35002 (a FileSystem)
+
+[ERROR] 13:33:43:924 KERNEL/(35484:35484): Error al conectar (a Memoria)
+
+[INFO] 13:33:43:924 KERNEL/(35484:35484): hilo principal esta ejecutando
+[ERROR] 13:33:43:924 KERNEL/(35484:35485): Error al bindear el socket servidor (KERNEL)
+
+[INFO] 13:33:53:925 KERNEL/(35484:35484): hilo principal esta ejecutando
+[INFO] 13:34:03:926 KERNEL/(35484:35484): hilo principal esta ejecutando
+[INFO] 13:34:13:926 KERNEL/(35484:35484): hilo principal esta ejecutando
+[INFO] 13:34:23:927 KERNEL/(35484:35484): hilo principal esta ejecutando
+[INFO] 13:34:33:927 KERNEL/(35484:35484): hilo principal esta ejecutando

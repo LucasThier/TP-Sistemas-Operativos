@@ -7,7 +7,8 @@
 #include <pthread.h>
 
 int InicializarConexiones();
-void* AdministradorDeConexion();
+void* EscucharConexiones();
+void* AdministradorDeModulo(void* arg);
 
 char NOMBRE_PROCESO[8] = "Memoria";
 

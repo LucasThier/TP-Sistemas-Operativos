@@ -26,3 +26,20 @@
 [INFO] 20:20:02:081 CPU/(2798:2799): Numero recibido: 0
 
 [INFO] 20:20:09:559 CPU/(2798:2798): hilo principal esta ejecutando
+[INFO] 13:33:23:704 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 13:33:23:704 CPU/(35460:35461): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 13:33:23:705 CPU/(35460:35461): Esperando cliente... (CPU)
+
+[INFO] 13:33:33:705 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 13:33:43:705 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 13:33:43:923 CPU/(35460:35461): Nuevo Cliente conectado! (CPU) 5
+
+[INFO] 13:33:53:706 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 13:34:03:710 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 13:34:13:710 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 13:34:23:710 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 13:34:33:711 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 13:34:41:005 CPU/(35460:35461): Numero recibido: 0
+
+[INFO] 13:34:43:716 CPU/(35460:35460): hilo principal esta ejecutando

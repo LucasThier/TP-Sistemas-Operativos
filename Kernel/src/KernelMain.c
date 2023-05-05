@@ -17,7 +17,7 @@ typedef struct
 int SocketKernel;
 int SocketCPU;
 int SocketMemoria;
-int SocketFileSystem;
+int SocketMemoria;
 
 void sighandler(int s) {
 	liberar_conexion(SocketKernel);
@@ -41,37 +41,38 @@ int main(void)
 	liberar_conexion(SocketKernel);
 }
 
-
+//Conecta con los modulos (CPU, FS, Mem) y luego crea un Hilo que escucha conexiones de consolas
 int InicializarConexiones()
 {
+	//Conectar con los modulos
 	SocketCPU = conectar_servidor(Kernel_Logger, "CPU", "0.0.0.0", "35001");
-	SocketFileSystem = conectar_servidor(Kernel_Logger, "FileSystem", "0.0.0.0", "35002");
+	SocketMemoria = conectar_servidor(Kernel_Logger, "FileSystem", "0.0.0.0", "35002");
 	SocketMemoria = conectar_servidor(Kernel_Logger, "Memoria", "0.0.0.0", "35003");
 
-	pthread_t HiloAdministradorDeConexiones;
-
-    if (pthread_create(&HiloAdministradorDeConexiones, NULL, AdministradorDeConexiones, NULL) != 0) {
+	//Crear hilo escucha
+	pthread_t HiloEscucha;
+    if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
-
-
 }
 
-
-void* AdministradorDeConexiones()
+//Inicia un servidor en el que escucha consolas permanentemente y crea un hilo que la administre cuando recibe una
+void* EscucharConexiones()
 {
 	SocketKernel = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "0.0.0.0", "33668");
 	
 	if(SocketKernel != 0)
 	{
+		//Escuchar por consolas en bucle
 		while(true)
 		{
 			int SocketCliente = esperar_cliente(Kernel_Logger, NOMBRE_PROCESO, SocketKernel);
 
 			if(SocketCliente != 0)
 			{	
+				//Crea un hilo para la consola conectada
 				pthread_t HiloAdministradorDeMensajes;
-				if (pthread_create(&HiloAdministradorDeMensajes, NULL, AdministradorDeMensajes, (void*)&SocketCliente) != 0) {
+				if (pthread_create(&HiloAdministradorDeMensajes, NULL, AdministradorDeModulo, (void*)&SocketCliente) != 0) {
 					exit(EXIT_FAILURE);
 				}
 			}
@@ -82,22 +83,26 @@ void* AdministradorDeConexiones()
 	return EXIT_FAILURE;
 }
 
-void* AdministradorDeMensajes(void* arg)
+//Funcion que se ejecuta para cada consola conectada
+void* AdministradorDeModulo(void* arg)
 {
 	int* SocketClienteConectado = (int*)arg;
 
-	//Acciones a realizar para cada consola conectado
+	//--------------------------------------------------------------------------------------------------------------------------------------------------
+	//Acciones a realizar para cada consola conectado:
+
 	int recibido;
 	do
 	{
 		recibido = recibir_int(*SocketClienteConectado);
 		log_info(Kernel_Logger, "Numero recibido: %d\n", recibido);
 		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketCPU, recibido);
-		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketFileSystem, recibido);
+		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketMemoria, recibido);
 		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketMemoria, recibido);
 
 	}while(recibido != 0);
 
+	//--------------------------------------------------------------------------------------------------------------------------------------------------
 	liberar_conexion(SocketClienteConectado);
 	return;
 }

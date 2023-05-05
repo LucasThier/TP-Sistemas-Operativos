@@ -2,6 +2,7 @@
 
 
 t_log* Memoria_Logger;
+
 int SocketMemoria;
 
 void sighandler(int s) {
@@ -26,40 +27,59 @@ int main(void)
 	return EXIT_SUCCESS;
 }
 
-
+//Crea un Hilo que escucha conexiones de los modulos
 int InicializarConexiones()
 {
-	pthread_t HiloAdministradorDeConexiones;
-
-    if (pthread_create(&HiloAdministradorDeConexiones, NULL, AdministradorDeConexion, NULL) != 0) {
+	//Crear hilo escucha
+	pthread_t HiloEscucha;
+    if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
 }
 
-
-
-void* AdministradorDeConexion()
+//Inicia un servidor en el que escucha por modulos permanentemente y cuando recibe uno crea un hilo para administrar esaa conexion
+void* EscucharConexiones()
 {
 	SocketMemoria = iniciar_servidor(Memoria_Logger, NOMBRE_PROCESO, "0.0.0.0", "35003");
 	
 	if(SocketMemoria != 0)
 	{
-		int SocketKernel = esperar_cliente(Memoria_Logger, NOMBRE_PROCESO, SocketMemoria);
+		//Escuchar por modulos en bucle
+		while(true)
+		{
+			int SocketCliente = esperar_cliente(Memoria_Logger, NOMBRE_PROCESO, SocketMemoria);
 
-		if(SocketKernel != 0)
-		{	
-			//Acciones a realizar para cada consola conectado
-			int recibido;
-			do
-			{
-				recibido = recibir_int(SocketKernel);
-				log_info(Memoria_Logger, "Numero recibido: %d\n", recibido);
-			}while(recibido != 0);
-
-			liberar_conexion(SocketKernel);
-			return;
+			if(SocketCliente != 0)
+			{	
+				//Crea un hilo para el modulo conectado
+				pthread_t HiloAdministradorDeMensajes;
+				if (pthread_create(&HiloAdministradorDeMensajes, NULL, AdministradorDeModulo, (void*)&SocketCliente) != 0) {
+					exit(EXIT_FAILURE);
+				}
+			}
 		}
 	}
+
 	liberar_conexion(SocketMemoria);
 	return EXIT_FAILURE;
+}
+
+//Funcion que se ejecuta para cada consola conectada
+void* AdministradorDeModulo(void* arg)
+{
+	int* SocketClienteConectado = (int*)arg;
+
+	//--------------------------------------------------------------------------------------------------------------------------------------------------
+	//Acciones a realizar para cada modulo conectado:
+
+	int recibido;
+	do
+	{
+		recibido = recibir_int(*SocketClienteConectado);
+		log_info(Memoria_Logger, "Numero recibido: %d\n", recibido);
+	}while(recibido != 0);
+
+	//--------------------------------------------------------------------------------------------------------------------------------------------------
+	liberar_conexion(SocketClienteConectado);
+	return;
 }

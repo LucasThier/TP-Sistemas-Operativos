@@ -21,3 +21,18 @@
 [INFO] 20:20:02:081 FileSystem/(2794:2795): Numero recibido: 0
 
 [INFO] 20:20:04:637 FileSystem/(2794:2794): hilo principal esta ejecutando
+[INFO] 13:33:34:245 FileSystem/(35474:35474): hilo principal esta ejecutando
+[INFO] 13:33:34:245 FileSystem/(35474:35475): Escuchando en 0.0.0.0:35002 (FileSystem)
+
+[INFO] 13:33:34:247 FileSystem/(35474:35475): Esperando cliente... (FileSystem)
+
+[INFO] 13:33:43:924 FileSystem/(35474:35475): Nuevo Cliente conectado! (FileSystem) 5
+
+[INFO] 13:33:44:247 FileSystem/(35474:35474): hilo principal esta ejecutando
+[INFO] 13:33:54:248 FileSystem/(35474:35474): hilo principal esta ejecutando
+[INFO] 13:34:04:248 FileSystem/(35474:35474): hilo principal esta ejecutando
+[INFO] 13:34:14:249 FileSystem/(35474:35474): hilo principal esta ejecutando
+[INFO] 13:34:24:249 FileSystem/(35474:35474): hilo principal esta ejecutando
+[INFO] 13:34:34:250 FileSystem/(35474:35474): hilo principal esta ejecutando
+[INFO] 13:34:41:005 FileSystem/(35474:35475): Numero recibido: 0
+

@@ -7,7 +7,7 @@
 #include <pthread.h>
 
 int InicializarConexiones();
-void* AdministradorDeConexion();
+void* EscuchaKernel();
 
 char NOMBRE_PROCESO[4] = "CPU";
 
