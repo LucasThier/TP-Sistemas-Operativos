@@ -36,3 +36,92 @@
 [INFO] 13:34:34:250 FileSystem/(35474:35474): hilo principal esta ejecutando
 [INFO] 13:34:41:005 FileSystem/(35474:35475): Numero recibido: 0
 
+[INFO] 20:11:19:286 FileSystem/(39553:39553): Cliente conectado en 0.0.0.0:35003 (a Memoria)
+
+[INFO] 20:11:19:287 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:11:19:287 FileSystem/(39553:39555): Escuchando en 0.0.0.0:35002 (FileSystem)
+
+[INFO] 20:11:19:287 FileSystem/(39553:39555): Esperando cliente... (FileSystem)
+
+[ERROR] 20:11:19:287 FileSystem/(39553:39555): Error al aceptar cliente (FileSystem)
+
+[INFO] 20:11:29:287 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:11:39:289 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:11:49:289 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:11:59:290 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:12:09:290 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:12:19:291 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:12:29:293 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:12:39:294 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:12:49:295 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:12:59:296 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:13:09:297 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:13:19:297 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:13:29:299 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:13:39:300 FileSystem/(39553:39553): hilo principal esta ejecutando
+[INFO] 20:14:08:229 FileSystem/(39642:39642): Cliente conectado en 0.0.0.0:35003 (a Memoria)
+
+[INFO] 20:14:08:230 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:14:08:230 FileSystem/(39642:39644): Escuchando en 0.0.0.0:35002 (FileSystem)
+
+[INFO] 20:14:08:230 FileSystem/(39642:39644): Esperando cliente... (FileSystem)
+
+[ERROR] 20:14:08:230 FileSystem/(39642:39644): Error al aceptar cliente (FileSystem)
+
+[INFO] 20:14:18:230 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:14:28:231 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:14:38:231 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:14:48:232 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:14:58:232 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:15:08:233 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:15:18:234 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:15:28:235 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:15:38:236 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:15:48:237 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:15:58:237 FileSystem/(39642:39642): hilo principal esta ejecutando
+[INFO] 20:17:24:706 FileSystem/(39876:39876): Cliente conectado en 0.0.0.0:35003 (a Memoria)
+
+[INFO] 20:17:24:707 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:17:24:707 FileSystem/(39876:39878): Escuchando en 0.0.0.0:35002 (FileSystem)
+
+[INFO] 20:17:24:707 FileSystem/(39876:39878): Esperando cliente... (FileSystem)
+
+[INFO] 20:17:34:707 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:17:44:708 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:17:54:709 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:18:04:710 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:18:14:710 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:18:24:710 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:18:34:711 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:18:44:713 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:18:54:714 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:19:04:714 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:19:14:714 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:19:17:559 FileSystem/(39876:39878): Nuevo Cliente conectado! (FileSystem) 6
+
+[INFO] 20:19:24:714 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:19:34:717 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:19:44:717 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:19:54:718 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:20:04:719 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:20:14:720 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:20:24:721 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:20:34:721 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:20:44:721 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:20:54:728 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:21:04:729 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:21:14:730 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:21:24:731 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:21:34:732 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:21:44:746 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:21:54:747 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:22:04:747 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:22:14:748 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:22:24:752 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:22:34:753 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:22:44:753 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:22:54:754 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:23:04:760 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:23:14:768 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:23:24:769 FileSystem/(39876:39876): hilo principal esta ejecutando
+[INFO] 20:23:34:774 FileSystem/(39876:39876): hilo principal esta ejecutando

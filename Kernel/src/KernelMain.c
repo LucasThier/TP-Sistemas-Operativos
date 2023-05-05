@@ -17,7 +17,7 @@ typedef struct
 int SocketKernel;
 int SocketCPU;
 int SocketMemoria;
-int SocketMemoria;
+int SocketFileSystem;
 
 void sighandler(int s) {
 	liberar_conexion(SocketKernel);
@@ -47,7 +47,7 @@ int InicializarConexiones()
 	//Conectar con los modulos
 	SocketCPU = conectar_servidor(Kernel_Logger, "CPU", "0.0.0.0", "35001");
 	SocketMemoria = conectar_servidor(Kernel_Logger, "FileSystem", "0.0.0.0", "35002");
-	SocketMemoria = conectar_servidor(Kernel_Logger, "Memoria", "0.0.0.0", "35003");
+	SocketFileSystem = conectar_servidor(Kernel_Logger, "Memoria", "0.0.0.0", "35003");
 
 	//Crear hilo escucha
 	pthread_t HiloEscucha;
@@ -98,7 +98,7 @@ void* AdministradorDeModulo(void* arg)
 		log_info(Kernel_Logger, "Numero recibido: %d\n", recibido);
 		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketCPU, recibido);
 		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketMemoria, recibido);
-		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketMemoria, recibido);
+		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketFileSystem, recibido);
 
 	}while(recibido != 0);
 

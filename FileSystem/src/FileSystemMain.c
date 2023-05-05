@@ -45,9 +45,9 @@ void* EscuchaKernel()
 {
 	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "0.0.0.0", "35002");
 	
-	if(SocketMemoria != 0)
+	if(SocketFileSystem != 0)
 	{
-		int SocketKernel = esperar_cliente(FS_Logger, NOMBRE_PROCESO, SocketMemoria);
+		int SocketKernel = esperar_cliente(FS_Logger, NOMBRE_PROCESO, SocketFileSystem);
 
 		if(SocketKernel != 0)
 		{	
@@ -66,6 +66,6 @@ void* EscuchaKernel()
 			return;
 		}
 	}
-	liberar_conexion(SocketMemoria);
+	liberar_conexion(SocketFileSystem);
 	return EXIT_FAILURE;
 }

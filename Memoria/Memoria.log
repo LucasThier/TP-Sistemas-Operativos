@@ -34,3 +34,133 @@
 [INFO] 13:34:31:157 Memoria/(35449:35449): hilo principal esta ejecutando
 [INFO] 13:34:41:158 Memoria/(35449:35449): hilo principal esta ejecutando
 [INFO] 13:34:51:161 Memoria/(35449:35449): hilo principal esta ejecutando
+[INFO] 20:10:58:775 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:10:58:775 Memoria/(39523:39524): Escuchando en 0.0.0.0:35003 (Memoria)
+
+[INFO] 20:10:58:775 Memoria/(39523:39524): Esperando cliente... (Memoria)
+
+[INFO] 20:11:08:776 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:11:10:169 Memoria/(39523:39524): Nuevo Cliente conectado! (Memoria) 5
+
+[INFO] 20:11:10:169 Memoria/(39523:39524): Esperando cliente... (Memoria)
+
+[INFO] 20:11:18:777 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:11:19:286 Memoria/(39523:39524): Nuevo Cliente conectado! (Memoria) 6
+
+[INFO] 20:11:19:286 Memoria/(39523:39524): Esperando cliente... (Memoria)
+
+[INFO] 20:11:19:288 Memoria/(39523:39554): Numero recibido: 0
+
+[INFO] 20:11:28:777 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:11:38:778 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:11:48:778 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:11:58:780 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:12:08:781 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:12:18:781 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:12:28:782 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:12:38:783 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:12:48:785 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:12:58:785 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:13:08:786 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:13:18:788 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:13:28:797 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:13:38:798 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:13:48:624 Memoria/(39523:39543): Numero recibido: 0
+
+[INFO] 20:13:48:799 Memoria/(39523:39523): hilo principal esta ejecutando
+[INFO] 20:13:54:360 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:13:54:361 Memoria/(39633:39634): Escuchando en 0.0.0.0:35003 (Memoria)
+
+[INFO] 20:13:54:361 Memoria/(39633:39634): Esperando cliente... (Memoria)
+
+[INFO] 20:13:59:877 Memoria/(39633:39634): Nuevo Cliente conectado! (Memoria) 5
+
+[INFO] 20:13:59:877 Memoria/(39633:39634): Esperando cliente... (Memoria)
+
+[INFO] 20:14:04:361 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:14:08:229 Memoria/(39633:39634): Nuevo Cliente conectado! (Memoria) 6
+
+[INFO] 20:14:08:229 Memoria/(39633:39634): Esperando cliente... (Memoria)
+
+[INFO] 20:14:08:230 Memoria/(39633:39643): Numero recibido: 0
+
+[INFO] 20:14:14:361 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:14:24:361 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:14:34:361 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:14:44:361 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:14:54:362 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:15:04:363 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:15:14:363 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:15:24:364 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:15:34:364 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:15:44:367 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:15:54:371 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:16:04:372 Memoria/(39633:39633): hilo principal esta ejecutando
+[INFO] 20:17:15:782 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:17:15:783 Memoria/(39861:39862): Escuchando en 0.0.0.0:35003 (Memoria)
+
+[INFO] 20:17:15:783 Memoria/(39861:39862): Esperando cliente... (Memoria)
+
+[INFO] 20:17:21:625 Memoria/(39861:39862): Nuevo Cliente conectado! (Memoria) 5
+
+[INFO] 20:17:21:625 Memoria/(39861:39862): Esperando cliente... (Memoria)
+
+[INFO] 20:17:24:705 Memoria/(39861:39862): Nuevo Cliente conectado! (Memoria) 6
+
+[INFO] 20:17:24:706 Memoria/(39861:39862): Esperando cliente... (Memoria)
+
+[INFO] 20:17:25:783 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:17:35:783 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:17:45:784 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:17:55:785 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:18:05:786 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:18:15:786 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:18:25:788 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:18:35:789 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:18:45:790 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:18:55:791 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:19:05:791 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:19:15:792 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:19:17:559 Memoria/(39861:39862): Nuevo Cliente conectado! (Memoria) 7
+
+[INFO] 20:19:17:560 Memoria/(39861:39862): Esperando cliente... (Memoria)
+
+[INFO] 20:19:25:793 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:19:27:901 Memoria/(39861:39894): Numero recibido: 123
+
+[INFO] 20:19:27:901 Memoria/(39861:39894): Numero recibido: 123
+
+[INFO] 20:19:35:793 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:19:45:794 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:19:55:794 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:20:05:795 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:20:15:796 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:20:25:797 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:20:35:797 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:20:45:798 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:20:55:799 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:21:05:799 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:21:15:800 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:21:25:800 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:21:35:801 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:21:45:801 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:21:51:306 Memoria/(39861:39894): Numero recibido: 111
+
+[INFO] 20:21:51:306 Memoria/(39861:39894): Numero recibido: 111
+
+[INFO] 20:21:55:802 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:22:05:803 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:22:15:803 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:22:25:803 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:22:35:804 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:22:45:804 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:22:55:804 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:23:05:805 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:23:15:807 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:23:25:807 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:23:35:808 Memoria/(39861:39861): hilo principal esta ejecutando
+[INFO] 20:23:42:674 Memoria/(39861:39877): Numero recibido: 0
+
+[INFO] 20:24:41:495 Memoria/(40354:40354): hilo principal esta ejecutando
+[ERROR] 20:24:41:496 Memoria/(40354:40355): Error al bindear el socket servidor (Memoria)
+

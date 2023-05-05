@@ -51,3 +51,60 @@
 [INFO] 13:34:13:926 KERNEL/(35484:35484): hilo principal esta ejecutando
 [INFO] 13:34:23:927 KERNEL/(35484:35484): hilo principal esta ejecutando
 [INFO] 13:34:33:927 KERNEL/(35484:35484): hilo principal esta ejecutando
+[INFO] 20:19:17:558 KERNEL/(39893:39893): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[INFO] 20:19:17:559 KERNEL/(39893:39893): Cliente conectado en 0.0.0.0:35002 (a FileSystem)
+
+[INFO] 20:19:17:560 KERNEL/(39893:39893): Cliente conectado en 0.0.0.0:35003 (a Memoria)
+
+[INFO] 20:19:17:560 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:19:17:560 KERNEL/(39893:39895): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 20:19:17:560 KERNEL/(39893:39895): Esperando cliente... (KERNEL)
+
+[INFO] 20:19:24:333 KERNEL/(39893:39895): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 20:19:24:333 KERNEL/(39893:39895): Esperando cliente... (KERNEL)
+
+[INFO] 20:19:27:560 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:19:27:901 KERNEL/(39893:39905): Numero recibido: 123
+
+[INFO] 20:19:27:901 KERNEL/(39893:39905): Numero enviado: 123
+
+[INFO] 20:19:27:901 KERNEL/(39893:39905): Numero enviado: 123
+
+[INFO] 20:19:27:901 KERNEL/(39893:39905): Numero enviado: 123
+
+[INFO] 20:19:37:560 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:19:47:560 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:19:57:561 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:20:07:561 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:20:17:562 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:20:27:565 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:20:37:566 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:20:47:566 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:20:57:567 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:21:07:567 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:21:17:568 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:21:27:569 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:21:37:569 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:21:47:570 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:21:51:306 KERNEL/(39893:39905): Numero recibido: 111
+
+[INFO] 20:21:51:306 KERNEL/(39893:39905): Numero enviado: 111
+
+[INFO] 20:21:51:306 KERNEL/(39893:39905): Numero enviado: 111
+
+[INFO] 20:21:51:306 KERNEL/(39893:39905): Numero enviado: 111
+
+[INFO] 20:21:57:571 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:22:07:571 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:22:17:572 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:22:27:574 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:22:37:574 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:22:47:575 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:22:57:575 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:23:07:576 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:23:17:576 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:23:27:577 KERNEL/(39893:39893): hilo principal esta ejecutando
+[INFO] 20:23:37:578 KERNEL/(39893:39893): hilo principal esta ejecutando

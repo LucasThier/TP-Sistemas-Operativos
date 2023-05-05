@@ -43,3 +43,96 @@
 [INFO] 13:34:41:005 CPU/(35460:35461): Numero recibido: 0
 
 [INFO] 13:34:43:716 CPU/(35460:35460): hilo principal esta ejecutando
+[INFO] 20:11:10:169 CPU/(39542:39542): Cliente conectado en 0.0.0.0:35003 (a Memoria)
+
+[INFO] 20:11:10:170 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:11:10:170 CPU/(39542:39544): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 20:11:10:170 CPU/(39542:39544): Esperando cliente... (CPU)
+
+[INFO] 20:11:20:170 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:11:30:171 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:11:40:171 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:11:50:171 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:12:00:172 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:12:10:172 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:12:20:173 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:12:30:173 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:12:40:174 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:12:50:174 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:13:00:175 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:13:10:175 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:13:20:176 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:13:30:177 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:13:40:178 CPU/(39542:39542): hilo principal esta ejecutando
+[INFO] 20:13:59:877 CPU/(39637:39637): Cliente conectado en 0.0.0.0:35003 (a Memoria)
+
+[INFO] 20:13:59:877 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:13:59:877 CPU/(39637:39639): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 20:13:59:877 CPU/(39637:39639): Esperando cliente... (CPU)
+
+[INFO] 20:14:09:877 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:14:19:878 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:14:29:882 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:14:39:883 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:14:49:885 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:14:59:886 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:15:09:887 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:15:19:888 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:15:29:888 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:15:39:889 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:15:49:890 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:15:59:900 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:16:09:902 CPU/(39637:39637): hilo principal esta ejecutando
+[INFO] 20:17:21:625 CPU/(39865:39865): Cliente conectado en 0.0.0.0:35003 (a Memoria)
+
+[INFO] 20:17:21:625 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:17:21:625 CPU/(39865:39867): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 20:17:21:625 CPU/(39865:39867): Esperando cliente... (CPU)
+
+[INFO] 20:17:31:625 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:17:41:626 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:17:51:627 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:18:01:628 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:18:11:629 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:18:21:633 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:18:31:633 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:18:41:633 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:18:51:634 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:19:01:634 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:19:11:635 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:19:17:558 CPU/(39865:39867): Nuevo Cliente conectado! (CPU) 6
+
+[INFO] 20:19:21:635 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:19:27:901 CPU/(39865:39867): Numero recibido: 123
+
+[INFO] 20:19:31:636 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:19:41:636 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:19:51:637 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:20:01:637 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:20:11:638 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:20:21:639 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:20:31:640 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:20:41:640 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:20:51:641 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:21:01:641 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:21:11:642 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:21:21:642 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:21:31:643 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:21:41:644 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:21:51:306 CPU/(39865:39867): Numero recibido: 111
+
+[INFO] 20:21:51:644 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:22:01:644 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:22:11:645 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:22:21:646 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:22:31:648 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:22:41:650 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:22:51:652 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:23:01:653 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:23:11:653 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:23:21:654 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:23:31:655 CPU/(39865:39865): hilo principal esta ejecutando
+[INFO] 20:23:41:657 CPU/(39865:39865): hilo principal esta ejecutando
