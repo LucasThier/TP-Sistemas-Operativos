@@ -21,8 +21,6 @@ char* PUERTO_CPU;
 char* PUERTO_ESCUCHA;
 void LeerConfigs(char* path);
 
-
-
 typedef struct
 {
     char AX[5];
@@ -52,7 +50,6 @@ typedef struct
 {
     char* pathArchivoAbierto;
     int posicionPuntero;
-
 } t_tablaArchivosAbiertos;
 
 typedef struct

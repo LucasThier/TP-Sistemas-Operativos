@@ -123,6 +123,7 @@ int recibir_int(int socket_origen)
 
 #pragma endregion
 
+#pragma region Paquetes
 void eliminar_paquete(t_paquete *paquete)
 {
     free(paquete->buffer->stream);
@@ -325,3 +326,4 @@ t_list *recibir_paquete(int socket_cliente)
     return valores;
 }
 
+#pragma endregion

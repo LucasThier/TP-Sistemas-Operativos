@@ -22,24 +22,8 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
-typedef enum
-{
-	MENSAJE,
-	PAQUETE
-} op_code;
 
-typedef struct
-{
-	int size;
-	void* stream;
-} t_buffer;
-
-typedef struct
-{
-	op_code codigo_operacion;
-	t_buffer* buffer;
-} t_paquete;
-
+#pragma region Sockets
 /**
  * Intenta crear un servidor escucha.
  * @param ip ip de escucha del servidor
@@ -64,6 +48,28 @@ int esperar_cliente(t_log* logger, const char* nombreProceso, int socket_servido
  */
 int conectar_servidor(t_log* logger, const char* nobre_servidor, char* ip, char* puerto);
 
+#pragma endregion
+
+
+#pragma region Paquetes
+
+typedef enum
+{
+	MENSAJE,
+	PAQUETE
+} op_code;
+
+typedef struct
+{
+	int size;
+	void* stream;
+} t_buffer;
+
+typedef struct
+{
+	op_code codigo_operacion;
+	t_buffer* buffer;
+} t_paquete;
 
 typedef enum
 {
@@ -77,26 +83,22 @@ typedef struct
 	void* bytes;
 } contenido_paquete;
 
-typedef struct
-{
-	tipo_operacion codigo_operacion;
-	t_buffer* buffer;
-} pqt;
-
 
 void enviar_mensaje(char* mensaje, int socket_cliente);
-void enviar_int(t_log* logger, const char* name, int socket_destino, int int_a_enviar);
-int recibir_int(int socket_origen);
 t_paquete* crear_paquete(void);
 void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio);
 void enviar_paquete(t_paquete* paquete, int socket_cliente);
 void liberar_conexion(int socket_cliente);
 void eliminar_paquete(t_paquete* paquete);
 void crear_buffer(t_paquete* paquete);
-
-int iniciar_servidor(t_log* logger, const char* name, char* ip, char* puerto);
-int esperar_cliente(t_log* logger, const char* nombreProceso, int socket_servidor);
-int crear_conexion(t_log* logger, const char* nobre_servidor, char* ip, char* puerto);
 void paquete(int);
 t_paquete* crear_super_paquete(void);
+
+#pragma endregion
+
+//temporal
+void enviar_int(t_log* logger, const char* name, int socket_destino, int int_a_enviar);
+int recibir_int(int socket_origen);
+
+
 #endif
