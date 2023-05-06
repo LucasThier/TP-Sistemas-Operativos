@@ -85,7 +85,10 @@ void* AdministradorDeModulo(void* arg)
 
 	//--------------------------------------------------------------------------------------------------------------------------------------------------
 	//Acciones a realizar para cada consola conectado:
-
+	//creo el PCB y meto el socket y las instrucciones a la lista de new PCB
+	//y si tengo grado de multiprogramacion lo paso a ready;
+	//crear listas globales con mutex para cada estado de los procesos
+	 
 	int recibido;
 	do
 	{
@@ -102,6 +105,7 @@ void* AdministradorDeModulo(void* arg)
 	return NULL;
 }
 
+//borrar ifs de todos los archivos
 void LeerConfigs(char* path)
 {
     config = config_create(path);
