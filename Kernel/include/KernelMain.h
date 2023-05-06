@@ -19,7 +19,6 @@ char* PUERTO_FILESYSTEM;
 char* IP_CPU;
 char* PUERTO_CPU;
 char* PUERTO_ESCUCHA;
-
 void LeerConfigs(char* path);
 
 char NOMBRE_PROCESO[7] = "KERNEL";
