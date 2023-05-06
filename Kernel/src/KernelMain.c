@@ -2,35 +2,29 @@
 
 t_log* Kernel_Logger;
 
-typedef void (*t_CallbackAdministradorMensajes)(void*);
-
-typedef struct
-{
-	t_CallbackAdministradorMensajes Callback;
-	t_log* logger;
-	int SocketConectado;
-	//Resto de parametros
-
-} t_ArgsConexiones;
-
-
 int SocketKernel;
 int SocketCPU;
 int SocketMemoria;
 int SocketFileSystem;
 
-void sighandler(int s) {
+t_config* config;
+
+
+void sighandler(int s) 
+{
 	liberar_conexion(SocketKernel);
-	exit(0);
+	exit(0);	
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
 	signal(SIGINT, sighandler);
 	Kernel_Logger = log_create("Kernel.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 
-	InicializarConexiones();
+	//leer las config
+	LeerConfigs(argv[1]);
 
+	InicializarConexiones();
 
 	//temporal
 	while(true){
@@ -45,21 +39,22 @@ int main(void)
 int InicializarConexiones()
 {
 	//Conectar con los modulos
-	SocketCPU = conectar_servidor(Kernel_Logger, "CPU", "0.0.0.0", "35001");
-	SocketMemoria = conectar_servidor(Kernel_Logger, "FileSystem", "0.0.0.0", "35002");
-	SocketFileSystem = conectar_servidor(Kernel_Logger, "Memoria", "0.0.0.0", "35003");
+	SocketCPU = conectar_servidor(Kernel_Logger, "CPU", IP_CPU, PUERTO_CPU);
+	SocketMemoria = conectar_servidor(Kernel_Logger, "FileSystem", IP_MEMORIA, PUERTO_MEMORIA);
+	SocketFileSystem = conectar_servidor(Kernel_Logger, "Memoria", IP_FILESYSTEM, PUERTO_FILESYSTEM);
 
 	//Crear hilo escucha
 	pthread_t HiloEscucha;
     if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
+	return 0;
 }
 
 //Inicia un servidor en el que escucha consolas permanentemente y crea un hilo que la administre cuando recibe una
 void* EscucharConexiones()
 {
-	SocketKernel = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "0.0.0.0", "33668");
+	SocketKernel = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	
 	if(SocketKernel != 0)
 	{
@@ -80,7 +75,7 @@ void* EscucharConexiones()
 	}
 
 	liberar_conexion(SocketKernel);
-	return EXIT_FAILURE;
+	return (void*)EXIT_FAILURE;
 }
 
 //Funcion que se ejecuta para cada consola conectada
@@ -104,5 +99,31 @@ void* AdministradorDeModulo(void* arg)
 
 	//--------------------------------------------------------------------------------------------------------------------------------------------------
 	liberar_conexion(SocketClienteConectado);
-	return;
+	return NULL;
+}
+
+void LeerConfigs(char* path)
+{
+    config = config_create(path);
+
+    if(config_has_property(config, "IP_MEMORIA"))
+        IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
+
+    if(config_has_property(config, "PUERTO_MEMORIA"))
+        PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
+
+    if(config_has_property(config, "IP_FILESYSTEM"))
+        IP_FILESYSTEM = config_get_string_value(config, "IP_FILESYSTEM");
+
+    if(config_has_property(config, "PUERTO_FILESYSTEM"))
+        PUERTO_FILESYSTEM = config_get_string_value(config, "PUERTO_FILESYSTEM");
+
+    if(config_has_property(config, "IP_CPU"))
+        IP_CPU = config_get_string_value(config, "IP_CPU");
+
+    if(config_has_property(config, "PUERTO_CPU"))
+        PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
+
+    if(config_has_property(config, "PUERTO_ESCUCHA"))
+        PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 }

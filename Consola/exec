@@ -2,5 +2,5 @@
 FILE=Consola
 make $FILE
 if test -f "./$FILE"; then
-    ./$FILE
+    ./$FILE Consola.cfg pseudocodigo.txt
 fi

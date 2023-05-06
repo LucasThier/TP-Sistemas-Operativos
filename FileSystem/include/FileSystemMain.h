@@ -9,6 +9,14 @@
 int InicializarConexiones();
 void* EscuchaKernel();
 
+t_config* config;
+
+char* IP_MEMORIA;
+char* PUERTO_MEMORIA;
+char* PUERTO_ESCUCHA;
+
+void LeerConfigs(char* path);
+
 char NOMBRE_PROCESO[11] = "FileSystem";
 
 #endif

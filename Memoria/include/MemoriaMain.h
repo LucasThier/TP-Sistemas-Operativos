@@ -10,6 +10,11 @@ int InicializarConexiones();
 void* EscucharConexiones();
 void* AdministradorDeModulo(void* arg);
 
+t_config* config;
+char* PUERTO_ESCUCHA;
+void LeerConfigs(char* path);
+
+
 char NOMBRE_PROCESO[8] = "Memoria";
 
 #endif

@@ -9,6 +9,12 @@
 int InicializarConexiones();
 void* EscuchaKernel();
 
+void LeerConfigs(char* path);
+t_config* config;
+char* IP_MEMORIA;
+char* PUERTO_MEMORIA;
+char* PUERTO_ESCUCHA;
+
 char NOMBRE_PROCESO[4] = "CPU";
 
 #endif

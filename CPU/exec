@@ -2,5 +2,5 @@
 FILE=CPU
 make $FILE
 if test -f "./$FILE"; then
-    ./$FILE
+    ./$FILE CPU.cfg
 fi

@@ -11,12 +11,14 @@ void sighandler(int s) {
 }
 
 
-int main(void)
+int main(int argc, char* argv[])
 {
 	signal(SIGINT, sighandler);
 
 	Memoria_Logger = log_create("Memoria.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 	
+	LeerConfigs(argv[1]);
+
 	InicializarConexiones();
 
 	while(true){
@@ -40,7 +42,7 @@ int InicializarConexiones()
 //Inicia un servidor en el que escucha por modulos permanentemente y cuando recibe uno crea un hilo para administrar esaa conexion
 void* EscucharConexiones()
 {
-	SocketMemoria = iniciar_servidor(Memoria_Logger, NOMBRE_PROCESO, "0.0.0.0", "35003");
+	SocketMemoria = iniciar_servidor(Memoria_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	
 	if(SocketMemoria != 0)
 	{
@@ -82,4 +84,12 @@ void* AdministradorDeModulo(void* arg)
 	//--------------------------------------------------------------------------------------------------------------------------------------------------
 	liberar_conexion(SocketClienteConectado);
 	return;
+}
+
+void LeerConfigs(char* path)
+{
+    config = config_create(path);
+
+    if(config_has_property(config, "PUERTO_ESCUCHA"))
+        PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 }

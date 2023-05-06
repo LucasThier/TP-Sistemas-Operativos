@@ -12,12 +12,15 @@ void sighandler(int s) {
 }
 
 
-int main(void)
+int main(int argc, char* argv[])
 {
 	signal(SIGINT, sighandler);
 
 	FS_Logger = log_create("FileSystem.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 	
+	//leer las config
+	LeerConfigs(argv[1]);
+
 	InicializarConexiones();
 
 	while(true){
@@ -31,7 +34,7 @@ int main(void)
 //Crea un hilo de escucha para el kernel
 int InicializarConexiones()
 {
-	SocketMemoria = conectar_servidor(FS_Logger, "Memoria", "0.0.0.0", "35003");
+	SocketMemoria = conectar_servidor(FS_Logger, "Memoria", IP_MEMORIA , PUERTO_MEMORIA);
 
 	pthread_t HiloEscucha;
 
@@ -43,7 +46,7 @@ int InicializarConexiones()
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
 void* EscuchaKernel()
 {
-	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "0.0.0.0", "35002");
+	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	
 	if(SocketFileSystem != 0)
 	{
@@ -68,4 +71,18 @@ void* EscuchaKernel()
 	}
 	liberar_conexion(SocketFileSystem);
 	return EXIT_FAILURE;
+}
+
+void LeerConfigs(char* path)
+{
+    config = config_create(path);
+
+    if(config_has_property(config, "IP_MEMORIA"))
+        IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
+
+    if(config_has_property(config, "PUERTO_MEMORIA"))
+        PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
+
+    if(config_has_property(config, "PUERTO_ESCUCHA"))
+        PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 }

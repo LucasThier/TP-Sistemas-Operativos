@@ -136,3 +136,83 @@
 [INFO] 20:23:21:654 CPU/(39865:39865): hilo principal esta ejecutando
 [INFO] 20:23:31:655 CPU/(39865:39865): hilo principal esta ejecutando
 [INFO] 20:23:41:657 CPU/(39865:39865): hilo principal esta ejecutando
+[ERROR] 00:07:08:174 CPU/(53374:53374): Error al conectar (a Memoria)
+
+[INFO] 00:07:08:175 CPU/(53374:53374): hilo principal esta ejecutando
+[INFO] 00:07:08:175 CPU/(53374:53375): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:07:08:175 CPU/(53374:53375): Esperando cliente... (CPU)
+
+[INFO] 00:07:18:175 CPU/(53374:53374): hilo principal esta ejecutando
+[INFO] 00:07:28:176 CPU/(53374:53374): hilo principal esta ejecutando
+[INFO] 00:07:38:176 CPU/(53374:53374): hilo principal esta ejecutando
+[INFO] 00:07:48:178 CPU/(53374:53374): hilo principal esta ejecutando
+[ERROR] 00:07:50:413 CPU/(53436:53436): Error al conectar (a Memoria)
+
+[INFO] 00:07:50:413 CPU/(53436:53436): hilo principal esta ejecutando
+[INFO] 00:07:50:413 CPU/(53436:53437): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:07:50:413 CPU/(53436:53437): Esperando cliente... (CPU)
+
+[INFO] 00:08:00:414 CPU/(53436:53436): hilo principal esta ejecutando
+[ERROR] 00:08:05:695 CPU/(53467:53467): Error al conectar (a Memoria)
+
+[INFO] 00:08:05:695 CPU/(53467:53467): hilo principal esta ejecutando
+[INFO] 00:08:05:695 CPU/(53467:53468): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:08:05:695 CPU/(53467:53468): Esperando cliente... (CPU)
+
+[ERROR] 00:08:15:280 CPU/(53494:53494): Error al conectar (a Memoria)
+
+[INFO] 00:08:15:280 CPU/(53494:53494): hilo principal esta ejecutando
+[INFO] 00:08:15:280 CPU/(53494:53495): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:08:15:280 CPU/(53494:53495): Esperando cliente... (CPU)
+
+[INFO] 00:08:25:280 CPU/(53494:53494): hilo principal esta ejecutando
+[ERROR] 00:10:00:331 CPU/(53562:53562): Error al conectar (a Memoria)
+
+[INFO] 00:10:00:332 CPU/(53562:53562): hilo principal esta ejecutando
+[INFO] 00:10:00:332 CPU/(53562:53563): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:10:00:332 CPU/(53562:53563): Esperando cliente... (CPU)
+
+[INFO] 00:10:10:332 CPU/(53562:53562): hilo principal esta ejecutando
+[INFO] 00:10:20:333 CPU/(53562:53562): hilo principal esta ejecutando
+[INFO] 00:10:30:336 CPU/(53562:53562): hilo principal esta ejecutando
+[ERROR] 00:10:35:089 CPU/(53626:53626): Error al conectar (a Memoria)
+
+[INFO] 00:10:35:089 CPU/(53626:53626): hilo principal esta ejecutando
+[INFO] 00:10:35:089 CPU/(53626:53627): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:10:35:089 CPU/(53626:53627): Esperando cliente... (CPU)
+
+[ERROR] 00:10:41:812 CPU/(53649:53649): Error al conectar (a Memoria)
+
+[INFO] 00:10:41:813 CPU/(53649:53649): hilo principal esta ejecutando
+[INFO] 00:10:41:813 CPU/(53649:53650): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:10:41:813 CPU/(53649:53650): Esperando cliente... (CPU)
+
+[INFO] 00:10:51:814 CPU/(53649:53649): hilo principal esta ejecutando
+[INFO] 00:11:01:814 CPU/(53649:53649): hilo principal esta ejecutando
+[INFO] 00:11:11:815 CPU/(53649:53649): hilo principal esta ejecutando
+[INFO] 00:11:21:816 CPU/(53649:53649): hilo principal esta ejecutando
+[INFO] 00:11:31:816 CPU/(53649:53649): hilo principal esta ejecutando
+[ERROR] 00:11:43:515 CPU/(53749:53749): Error al conectar (a Memoria)
+
+[INFO] 00:11:43:515 CPU/(53749:53749): hilo principal esta ejecutando
+[INFO] 00:11:43:515 CPU/(53749:53750): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:11:43:515 CPU/(53749:53750): Esperando cliente... (CPU)
+
+[INFO] 00:11:53:515 CPU/(53749:53749): hilo principal esta ejecutando
+[INFO] 00:12:03:516 CPU/(53749:53749): hilo principal esta ejecutando
+[INFO] 00:12:13:516 CPU/(53749:53749): hilo principal esta ejecutando
+[ERROR] 00:12:22:567 CPU/(53803:53803): Error al conectar (a Memoria)
+
+[INFO] 00:12:22:567 CPU/(53803:53803): hilo principal esta ejecutando
+[INFO] 00:12:22:567 CPU/(53803:53804): Escuchando en 0.0.0.0:35001 (CPU)
+
+[INFO] 00:12:22:568 CPU/(53803:53804): Esperando cliente... (CPU)
+
