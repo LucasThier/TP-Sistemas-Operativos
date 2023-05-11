@@ -49441,3 +49441,808 @@
 [INFO] 02:49:18:482 KERNEL/(5835:5835): hilo principal esta ejecutando
 [INFO] 02:49:28:482 KERNEL/(5835:5835): hilo principal esta ejecutando
 [INFO] 02:49:38:484 KERNEL/(5835:5835): hilo principal esta ejecutando
+[ERROR] 13:12:15:366 KERNEL/(2147:2147): Error al conectar (a CPU)
+
+[ERROR] 13:12:15:366 KERNEL/(2147:2147): Error al conectar (a FileSystem)
+
+[ERROR] 13:12:15:366 KERNEL/(2147:2147): Error al conectar (a Memoria)
+
+[INFO] 13:12:15:366 KERNEL/(2147:2147): hilo principal esta ejecutando
+[INFO] 13:12:15:367 KERNEL/(2147:2148): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:12:15:367 KERNEL/(2147:2148): Esperando cliente... (KERNEL)
+
+[INFO] 13:12:20:068 KERNEL/(2147:2148): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:12:20:068 KERNEL/(2147:2148): Esperando cliente... (KERNEL)
+
+[INFO] 13:12:20:071 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:20:072 KERNEL/(2147:2155): Instruccion recibida: 
+
+[INFO] 13:12:25:367 KERNEL/(2147:2147): hilo principal esta ejecutando
+[INFO] 13:12:35:367 KERNEL/(2147:2147): hilo principal esta ejecutando
+[INFO] 13:12:45:367 KERNEL/(2147:2147): hilo principal esta ejecutando
+[ERROR] 13:13:56:848 KERNEL/(2265:2265): Error al conectar (a CPU)
+
+[ERROR] 13:13:56:849 KERNEL/(2265:2265): Error al conectar (a FileSystem)
+
+[ERROR] 13:13:56:849 KERNEL/(2265:2265): Error al conectar (a Memoria)
+
+[INFO] 13:13:56:849 KERNEL/(2265:2265): hilo principal esta ejecutando
+[INFO] 13:13:56:849 KERNEL/(2265:2266): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:13:56:849 KERNEL/(2265:2266): Esperando cliente... (KERNEL)
+
+[INFO] 13:14:06:849 KERNEL/(2265:2265): hilo principal esta ejecutando
+[INFO] 13:14:16:850 KERNEL/(2265:2265): hilo principal esta ejecutando
+[INFO] 13:14:19:733 KERNEL/(2265:2266): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:14:19:733 KERNEL/(2265:2266): Esperando cliente... (KERNEL)
+
+[ERROR] 13:14:36:459 KERNEL/(2328:2328): Error al conectar (a CPU)
+
+[ERROR] 13:14:36:460 KERNEL/(2328:2328): Error al conectar (a FileSystem)
+
+[ERROR] 13:14:36:460 KERNEL/(2328:2328): Error al conectar (a Memoria)
+
+[INFO] 13:14:36:460 KERNEL/(2328:2328): hilo principal esta ejecutando
+[INFO] 13:14:36:460 KERNEL/(2328:2329): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:14:36:460 KERNEL/(2328:2329): Esperando cliente... (KERNEL)
+
+[INFO] 13:14:37:549 KERNEL/(2328:2329): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:14:37:549 KERNEL/(2328:2329): Esperando cliente... (KERNEL)
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:551 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:552 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:552 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:552 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:552 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:37:552 KERNEL/(2328:2336): Instruccion recibida: 
+
+[INFO] 13:14:46:461 KERNEL/(2328:2328): hilo principal esta ejecutando
+[INFO] 13:14:56:462 KERNEL/(2328:2328): hilo principal esta ejecutando
+[INFO] 13:15:06:463 KERNEL/(2328:2328): hilo principal esta ejecutando
+[INFO] 13:15:16:464 KERNEL/(2328:2328): hilo principal esta ejecutando
+[ERROR] 13:15:20:439 KERNEL/(2388:2388): Error al conectar (a CPU)
+
+[ERROR] 13:15:20:439 KERNEL/(2388:2388): Error al conectar (a FileSystem)
+
+[ERROR] 13:15:20:439 KERNEL/(2388:2388): Error al conectar (a Memoria)
+
+[INFO] 13:15:20:439 KERNEL/(2388:2388): hilo principal esta ejecutando
+[INFO] 13:15:20:439 KERNEL/(2388:2389): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:15:20:439 KERNEL/(2388:2389): Esperando cliente... (KERNEL)
+
+[INFO] 13:15:23:821 KERNEL/(2388:2389): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:15:23:821 KERNEL/(2388:2389): Esperando cliente... (KERNEL)
+
+[ERROR] 13:15:31:429 KERNEL/(2420:2420): Error al conectar (a CPU)
+
+[ERROR] 13:15:31:429 KERNEL/(2420:2420): Error al conectar (a FileSystem)
+
+[ERROR] 13:15:31:429 KERNEL/(2420:2420): Error al conectar (a Memoria)
+
+[INFO] 13:15:31:429 KERNEL/(2420:2420): hilo principal esta ejecutando
+[INFO] 13:15:31:429 KERNEL/(2420:2421): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:15:31:429 KERNEL/(2420:2421): Esperando cliente... (KERNEL)
+
+[INFO] 13:15:32:878 KERNEL/(2420:2421): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:15:32:878 KERNEL/(2420:2421): Esperando cliente... (KERNEL)
+
+[INFO] 13:15:32:880 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:882 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:882 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:882 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:882 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:882 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:882 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:882 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:883 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:883 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:887 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:888 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:888 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:888 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:888 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:32:888 KERNEL/(2420:2435): Instruccion recibida: 
+
+[INFO] 13:15:41:429 KERNEL/(2420:2420): hilo principal esta ejecutando
+[ERROR] 13:15:43:286 KERNEL/(2456:2456): Error al conectar (a CPU)
+
+[ERROR] 13:15:43:287 KERNEL/(2456:2456): Error al conectar (a FileSystem)
+
+[ERROR] 13:15:43:287 KERNEL/(2456:2456): Error al conectar (a Memoria)
+
+[INFO] 13:15:43:287 KERNEL/(2456:2456): hilo principal esta ejecutando
+[INFO] 13:15:43:287 KERNEL/(2456:2457): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:15:43:287 KERNEL/(2456:2457): Esperando cliente... (KERNEL)
+
+[INFO] 13:15:44:749 KERNEL/(2456:2457): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:15:44:749 KERNEL/(2456:2457): Esperando cliente... (KERNEL)
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:751 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:752 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:752 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:44:752 KERNEL/(2456:2464): Instruccion recibida: 
+
+[INFO] 13:15:53:288 KERNEL/(2456:2456): hilo principal esta ejecutando
+[ERROR] 13:15:55:514 KERNEL/(2508:2508): Error al conectar (a CPU)
+
+[ERROR] 13:15:55:514 KERNEL/(2508:2508): Error al conectar (a FileSystem)
+
+[ERROR] 13:15:55:514 KERNEL/(2508:2508): Error al conectar (a Memoria)
+
+[INFO] 13:15:55:514 KERNEL/(2508:2508): hilo principal esta ejecutando
+[INFO] 13:15:55:515 KERNEL/(2508:2509): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:15:55:515 KERNEL/(2508:2509): Esperando cliente... (KERNEL)
+
+[INFO] 13:15:57:132 KERNEL/(2508:2509): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:15:57:132 KERNEL/(2508:2509): Esperando cliente... (KERNEL)
+
+[INFO] 13:15:57:134 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:136 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:137 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:137 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:15:57:137 KERNEL/(2508:2516): Instruccion recibida: 
+
+[INFO] 13:16:05:514 KERNEL/(2508:2508): hilo principal esta ejecutando
+[INFO] 13:16:15:515 KERNEL/(2508:2508): hilo principal esta ejecutando
+[INFO] 13:16:25:515 KERNEL/(2508:2508): hilo principal esta ejecutando
+[ERROR] 13:33:48:876 KERNEL/(3060:3060): Error al conectar (a CPU)
+
+[ERROR] 13:33:48:877 KERNEL/(3060:3060): Error al conectar (a FileSystem)
+
+[ERROR] 13:33:48:877 KERNEL/(3060:3060): Error al conectar (a Memoria)
+
+[INFO] 13:33:48:877 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:33:48:877 KERNEL/(3060:3061): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:33:48:877 KERNEL/(3060:3061): Esperando cliente... (KERNEL)
+
+[INFO] 13:33:58:877 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:34:08:878 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:34:18:878 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:34:28:878 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:34:38:879 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:34:48:879 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:34:58:880 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:35:08:880 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:35:18:881 KERNEL/(3060:3060): hilo principal esta ejecutando
+[INFO] 13:35:28:882 KERNEL/(3060:3060): hilo principal esta ejecutando
+[ERROR] 13:35:38:863 KERNEL/(3282:3282): Error al conectar (a CPU)
+
+[ERROR] 13:35:38:863 KERNEL/(3282:3282): Error al conectar (a FileSystem)
+
+[ERROR] 13:35:38:863 KERNEL/(3282:3282): Error al conectar (a Memoria)
+
+[INFO] 13:35:38:863 KERNEL/(3282:3282): hilo principal esta ejecutando
+[INFO] 13:35:38:863 KERNEL/(3282:3283): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:35:38:863 KERNEL/(3282:3283): Esperando cliente... (KERNEL)
+
+[INFO] 13:35:40:928 KERNEL/(3282:3283): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:35:40:929 KERNEL/(3282:3283): Esperando cliente... (KERNEL)
+
+[INFO] 13:35:40:932 KERNEL/(3282:3287): 
+[INFO] 13:35:40:932 KERNEL/(3282:3287): 
+[INFO] 13:35:40:932 KERNEL/(3282:3287): 
+[INFO] 13:35:40:932 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:40:933 KERNEL/(3282:3287): 
+[INFO] 13:35:48:864 KERNEL/(3282:3282): hilo principal esta ejecutando
+[INFO] 13:35:58:866 KERNEL/(3282:3282): hilo principal esta ejecutando
+[INFO] 13:36:08:866 KERNEL/(3282:3282): hilo principal esta ejecutando
+[INFO] 13:36:18:867 KERNEL/(3282:3282): hilo principal esta ejecutando
+[INFO] 13:36:28:867 KERNEL/(3282:3282): hilo principal esta ejecutando
+[INFO] 13:36:38:869 KERNEL/(3282:3282): hilo principal esta ejecutando
+[INFO] 13:36:48:869 KERNEL/(3282:3282): hilo principal esta ejecutando
+[ERROR] 13:36:59:756 KERNEL/(3359:3359): Error al conectar (a CPU)
+
+[ERROR] 13:36:59:757 KERNEL/(3359:3359): Error al conectar (a FileSystem)
+
+[ERROR] 13:36:59:757 KERNEL/(3359:3359): Error al conectar (a Memoria)
+
+[INFO] 13:36:59:757 KERNEL/(3359:3359): hilo principal esta ejecutando
+[INFO] 13:36:59:757 KERNEL/(3359:3360): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:36:59:757 KERNEL/(3359:3360): Esperando cliente... (KERNEL)
+
+[INFO] 13:37:02:624 KERNEL/(3359:3360): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:37:02:624 KERNEL/(3359:3360): Esperando cliente... (KERNEL)
+
+[INFO] 13:37:02:628 KERNEL/(3359:3367): SET AX HOLA
+
+
+[INFO] 13:37:02:628 KERNEL/(3359:3367): MOV_OUT 120 AX
+
+
+[INFO] 13:37:02:628 KERNEL/(3359:3367): WAIT DISCO
+
+
+[INFO] 13:37:02:631 KERNEL/(3359:3367): I/O 10
+
+
+[INFO] 13:37:02:631 KERNEL/(3359:3367): SIGNAL DISCO
+
+
+[INFO] 13:37:02:631 KERNEL/(3359:3367): MOV_IN BX 120
+
+
+[INFO] 13:37:02:631 KERNEL/(3359:3367): F_OPEN ARCHIVO
+
+
+[INFO] 13:37:02:631 KERNEL/(3359:3367): YIELD
+
+
+[INFO] 13:37:02:632 KERNEL/(3359:3367): F_TRUNCATE ARCHIVO 64
+
+
+[INFO] 13:37:02:632 KERNEL/(3359:3367): F_SEEK ARCHIVO 10
+
+
+[INFO] 13:37:02:632 KERNEL/(3359:3367): CREATE_SEGMENT 1 128
+
+
+[INFO] 13:37:02:632 KERNEL/(3359:3367): F_WRITE ARCHIVO 4 4
+
+
+[INFO] 13:37:02:632 KERNEL/(3359:3367): F_READ ARCHIVO 16 4
+
+
+[INFO] 13:37:02:632 KERNEL/(3359:3367): DELETE_SEGMENT 1
+
+
+[INFO] 13:37:02:632 KERNEL/(3359:3367): F_CLOSE ARCHIVO
+
+
+[INFO] 13:37:02:632 KERNEL/(3359:3367): EXIT
+
+
+[INFO] 13:37:09:757 KERNEL/(3359:3359): hilo principal esta ejecutando
+[INFO] 13:37:19:758 KERNEL/(3359:3359): hilo principal esta ejecutando
+[INFO] 13:37:29:758 KERNEL/(3359:3359): hilo principal esta ejecutando
+[INFO] 13:37:39:759 KERNEL/(3359:3359): hilo principal esta ejecutando
+[INFO] 13:37:49:759 KERNEL/(3359:3359): hilo principal esta ejecutando
+[INFO] 13:37:59:760 KERNEL/(3359:3359): hilo principal esta ejecutando
+[INFO] 13:38:09:761 KERNEL/(3359:3359): hilo principal esta ejecutando
+[ERROR] 13:38:17:712 KERNEL/(3489:3489): Error al conectar (a CPU)
+
+[ERROR] 13:38:17:712 KERNEL/(3489:3489): Error al conectar (a FileSystem)
+
+[ERROR] 13:38:17:712 KERNEL/(3489:3489): Error al conectar (a Memoria)
+
+[INFO] 13:38:17:713 KERNEL/(3489:3489): hilo principal esta ejecutando
+[INFO] 13:38:17:713 KERNEL/(3489:3490): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:38:17:713 KERNEL/(3489:3490): Esperando cliente... (KERNEL)
+
+[INFO] 13:38:20:618 KERNEL/(3489:3490): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:38:20:618 KERNEL/(3489:3490): Esperando cliente... (KERNEL)
+
+[INFO] 13:38:20:619 KERNEL/(3489:3497): FOREACH: SET AX HOLA
+
+
+[INFO] 13:38:20:619 KERNEL/(3489:3497): FOREACH: MOV_OUT 120 AX
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: WAIT DISCO
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: I/O 10
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: SIGNAL DISCO
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: MOV_IN BX 120
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: F_OPEN ARCHIVO
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: YIELD
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: F_TRUNCATE ARCHIVO 64
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: F_SEEK ARCHIVO 10
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: CREATE_SEGMENT 1 128
+
+
+[INFO] 13:38:20:622 KERNEL/(3489:3497): FOREACH: F_WRITE ARCHIVO 4 4
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): FOREACH: F_READ ARCHIVO 16 4
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): FOREACH: DELETE_SEGMENT 1
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): FOREACH: F_CLOSE ARCHIVO
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): FOREACH: EXIT
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): Instruccion recibida FOR: SET AX HOLA
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): Instruccion recibida FOR: MOV_OUT 120 AX
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): Instruccion recibida FOR: WAIT DISCO
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): Instruccion recibida FOR: I/O 10
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): Instruccion recibida FOR: SIGNAL DISCO
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): Instruccion recibida FOR: MOV_IN BX 120
+
+
+[INFO] 13:38:20:623 KERNEL/(3489:3497): Instruccion recibida FOR: F_OPEN ARCHIVO
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: YIELD
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: F_TRUNCATE ARCHIVO 64
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: F_SEEK ARCHIVO 10
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: CREATE_SEGMENT 1 128
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: F_WRITE ARCHIVO 4 4
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: F_READ ARCHIVO 16 4
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: DELETE_SEGMENT 1
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: F_CLOSE ARCHIVO
+
+
+[INFO] 13:38:20:624 KERNEL/(3489:3497): Instruccion recibida FOR: EXIT
+
+
+[INFO] 13:38:27:713 KERNEL/(3489:3489): hilo principal esta ejecutando
+[INFO] 13:38:37:714 KERNEL/(3489:3489): hilo principal esta ejecutando
+[INFO] 13:38:47:715 KERNEL/(3489:3489): hilo principal esta ejecutando
+[INFO] 13:38:57:716 KERNEL/(3489:3489): hilo principal esta ejecutando
+[INFO] 13:39:07:716 KERNEL/(3489:3489): hilo principal esta ejecutando
+[ERROR] 13:39:17:317 KERNEL/(3567:3567): Error al conectar (a CPU)
+
+[ERROR] 13:39:17:317 KERNEL/(3567:3567): Error al conectar (a FileSystem)
+
+[ERROR] 13:39:17:317 KERNEL/(3567:3567): Error al conectar (a Memoria)
+
+[INFO] 13:39:17:317 KERNEL/(3567:3567): hilo principal esta ejecutando
+[INFO] 13:39:17:317 KERNEL/(3567:3568): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:39:17:317 KERNEL/(3567:3568): Esperando cliente... (KERNEL)
+
+[INFO] 13:39:19:175 KERNEL/(3567:3568): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:39:19:175 KERNEL/(3567:3568): Esperando cliente... (KERNEL)
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: SET AX HOLA
+
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: MOV_OUT 120 AX
+
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: WAIT DISCO
+
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: I/O 10
+
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: SIGNAL DISCO
+
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: MOV_IN BX 120
+
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: F_OPEN ARCHIVO
+
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: YIELD
+
+
+[INFO] 13:39:19:182 KERNEL/(3567:3572): FOREACH: F_TRUNCATE ARCHIVO 64
+
+
+[INFO] 13:39:19:183 KERNEL/(3567:3572): FOREACH: F_SEEK ARCHIVO 10
+
+
+[INFO] 13:39:19:183 KERNEL/(3567:3572): FOREACH: CREATE_SEGMENT 1 128
+
+
+[INFO] 13:39:19:183 KERNEL/(3567:3572): FOREACH: F_WRITE ARCHIVO 4 4
+
+
+[INFO] 13:39:19:183 KERNEL/(3567:3572): FOREACH: F_READ ARCHIVO 16 4
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): FOREACH: DELETE_SEGMENT 1
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): FOREACH: F_CLOSE ARCHIVO
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): FOREACH: EXIT
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): Instruccion recibida FOR: SET AX HOLA
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): Instruccion recibida FOR: MOV_OUT 120 AX
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): Instruccion recibida FOR: WAIT DISCO
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): Instruccion recibida FOR: I/O 10
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): Instruccion recibida FOR: SIGNAL DISCO
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): Instruccion recibida FOR: MOV_IN BX 120
+
+
+[INFO] 13:39:19:184 KERNEL/(3567:3572): Instruccion recibida FOR: F_OPEN ARCHIVO
+
+
+[INFO] 13:39:19:185 KERNEL/(3567:3572): Instruccion recibida FOR: YIELD
+
+
+[INFO] 13:39:19:185 KERNEL/(3567:3572): Instruccion recibida FOR: F_TRUNCATE ARCHIVO 64
+
+
+[INFO] 13:39:19:185 KERNEL/(3567:3572): Instruccion recibida FOR: F_SEEK ARCHIVO 10
+
+
+[INFO] 13:39:19:185 KERNEL/(3567:3572): Instruccion recibida FOR: CREATE_SEGMENT 1 128
+
+
+[INFO] 13:39:19:185 KERNEL/(3567:3572): Instruccion recibida FOR: F_WRITE ARCHIVO 4 4
+
+
+[INFO] 13:39:19:185 KERNEL/(3567:3572): Instruccion recibida FOR: F_READ ARCHIVO 16 4
+
+
+[INFO] 13:39:19:186 KERNEL/(3567:3572): Instruccion recibida FOR: DELETE_SEGMENT 1
+
+
+[INFO] 13:39:19:186 KERNEL/(3567:3572): Instruccion recibida FOR: F_CLOSE ARCHIVO
+
+
+[INFO] 13:39:19:186 KERNEL/(3567:3572): Instruccion recibida FOR: EXIT
+
+
+[INFO] 13:39:27:317 KERNEL/(3567:3567): hilo principal esta ejecutando
+[INFO] 13:39:37:318 KERNEL/(3567:3567): hilo principal esta ejecutando
+[INFO] 13:39:47:319 KERNEL/(3567:3567): hilo principal esta ejecutando
+[ERROR] 13:39:52:797 KERNEL/(3628:3628): Error al conectar (a CPU)
+
+[ERROR] 13:39:52:797 KERNEL/(3628:3628): Error al conectar (a FileSystem)
+
+[ERROR] 13:39:52:797 KERNEL/(3628:3628): Error al conectar (a Memoria)
+
+[INFO] 13:39:52:797 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:39:52:797 KERNEL/(3628:3629): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 13:39:52:797 KERNEL/(3628:3629): Esperando cliente... (KERNEL)
+
+[INFO] 13:39:55:186 KERNEL/(3628:3629): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 13:39:55:186 KERNEL/(3628:3629): Esperando cliente... (KERNEL)
+
+[INFO] 13:39:55:187 KERNEL/(3628:3633): FOREACH: SET AX HOLA
+
+
+[INFO] 13:39:55:187 KERNEL/(3628:3633): FOREACH: MOV_OUT 120 AX
+
+
+[INFO] 13:39:55:187 KERNEL/(3628:3633): FOREACH: WAIT DISCO
+
+
+[INFO] 13:39:55:187 KERNEL/(3628:3633): FOREACH: I/O 10
+
+
+[INFO] 13:39:55:187 KERNEL/(3628:3633): FOREACH: SIGNAL DISCO
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: MOV_IN BX 120
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: F_OPEN ARCHIVO
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: YIELD
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: F_TRUNCATE ARCHIVO 64
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: F_SEEK ARCHIVO 10
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: CREATE_SEGMENT 1 128
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: F_WRITE ARCHIVO 4 4
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: F_READ ARCHIVO 16 4
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: DELETE_SEGMENT 1
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: F_CLOSE ARCHIVO
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): FOREACH: EXIT
+
+
+[INFO] 13:39:55:188 KERNEL/(3628:3633): Instruccion recibida FOR: SET AX HOLA
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: MOV_OUT 120 AX
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: WAIT DISCO
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: I/O 10
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: SIGNAL DISCO
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: MOV_IN BX 120
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: F_OPEN ARCHIVO
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: YIELD
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: F_TRUNCATE ARCHIVO 64
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: F_SEEK ARCHIVO 10
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: CREATE_SEGMENT 1 128
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: F_WRITE ARCHIVO 4 4
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: F_READ ARCHIVO 16 4
+
+
+[INFO] 13:39:55:189 KERNEL/(3628:3633): Instruccion recibida FOR: DELETE_SEGMENT 1
+
+
+[INFO] 13:39:55:190 KERNEL/(3628:3633): Instruccion recibida FOR: F_CLOSE ARCHIVO
+
+
+[INFO] 13:39:55:190 KERNEL/(3628:3633): Instruccion recibida FOR: EXIT
+
+
+[INFO] 13:40:02:797 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:40:12:798 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:40:22:798 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:40:32:799 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:40:42:799 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:40:52:800 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:41:02:800 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:41:12:803 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:41:22:804 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:41:32:804 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:41:42:804 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:41:52:805 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:42:02:805 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:42:12:806 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:42:22:807 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:42:32:808 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:42:42:810 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:42:52:812 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:43:02:812 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:43:12:813 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:43:22:816 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:43:32:817 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:43:42:818 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:43:52:819 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:44:02:820 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:44:12:821 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:44:22:822 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:44:32:822 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:44:42:823 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:44:52:824 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:45:02:824 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:45:12:825 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:45:22:827 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:45:32:828 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:45:42:830 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:45:52:831 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:46:02:831 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:46:12:832 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:46:22:833 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:46:32:834 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:46:42:836 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:46:52:836 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:47:02:837 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:47:12:839 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:47:22:840 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:47:32:841 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:47:42:843 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:47:52:844 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:48:02:845 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:48:12:847 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:48:22:847 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:48:32:848 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:48:42:850 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:48:52:850 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:49:02:851 KERNEL/(3628:3628): hilo principal esta ejecutando
+[INFO] 13:49:12:851 KERNEL/(3628:3628): hilo principal esta ejecutando

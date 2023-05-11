@@ -9,6 +9,8 @@
 int InicializarConexiones();
 void* EscucharConexiones();
 void* AdministradorDeModulo(void* arg);
+void ForEach_Instrucciones(char* value);
+void LeerConfigs(char* path);
 
 t_config* config;
 

@@ -201,9 +201,7 @@ t_list* recibir_paquete(int socket_cliente)
                 char *valor = malloc(tamanio);
                 memcpy(valor, buffer + desplazamiento, tamanio);
                 desplazamiento += tamanio;
-                printf("Intruccion agregada a la lista: %s\n", valor);
                 list_add(valores, valor);
-                free(valor);
             }
             free(buffer);
             return valores;    

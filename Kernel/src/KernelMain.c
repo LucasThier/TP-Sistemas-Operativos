@@ -91,34 +91,27 @@ void* AdministradorDeModulo(void* arg)
 	 
 	t_list* instruccionesRecibidas = recibir_paquete(*SocketClienteConectado);
 
+	printf("Cantidad de instrucciones recibidas: %d\n", list_size(instruccionesRecibidas));
 
-
-	printf("Instrucciones recibidas: %d\n", list_size(instruccionesRecibidas));
-
-	printf("Primer instruccion recibida: %s\n", instruccionesRecibidas->head->data);
+	//las dos hacen lo mismo, ver cual es la menos confusa para el resto----------------------------------
+	list_iterate(instruccionesRecibidas, (void*) ForEach_Instrucciones);
 
 	for(int i=0; i < list_size(instruccionesRecibidas); i++)
 	{
-		log_info(Kernel_Logger, "Instruccion recibida: %s\n", (char*)list_get(instruccionesRecibidas, i));
+		log_info(Kernel_Logger, "Instruccion recibida: %s", (char*)list_get(instruccionesRecibidas, i));
 	}
+	//Ver Cual es la menos confusa para el resto^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
-
-	/*
-	//Temporal
-	int recibido;
-	do
-	{
-		recibido = recibir_int(*SocketClienteConectado);
-		log_info(Kernel_Logger, "Numero recibido: %d\n", recibido);
-		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketCPU, recibido);
-		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketMemoria, recibido);
-		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketFileSystem, recibido);
-
-	}while(recibido != 0);*/
+	eliminar_paquete(instruccionesRecibidas);
 	//--------------------------------------------------------------------------------------------------------------------------------------------------
 	liberar_conexion(*SocketClienteConectado);
 	return NULL;
+}
+
+//Repite en contenido de la funcion para cada instruccion en la lista
+void ForEach_Instrucciones(char* value)
+{
+	log_info(Kernel_Logger,"Instruccion Recibida: %s", value);
 }
 
 //borrar ifs de todos los archivos
