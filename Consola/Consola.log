@@ -36480,3 +36480,42 @@
 
 [INFO] 23:55:12:682 CONSOLA/(51913:51913): Numero enviado: 123
 
+[ERROR] 02:16:23:606 CONSOLA/(4861:4861): Error al conectar (a Kernel)
+
+[ERROR] 02:16:23:607 CONSOLA/(4861:4861): No se pudo conectar con el Kernel
+[INFO] 02:16:36:055 CONSOLA/(4868:4868): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:18:26:509 CONSOLA/(4903:4903): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:19:47:800 CONSOLA/(4932:4932): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:21:08:542 CONSOLA/(4980:4980): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:22:23:154 CONSOLA/(5038:5038): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:22:36:619 CONSOLA/(5063:5063): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:24:53:922 CONSOLA/(5165:5165): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:26:06:418 CONSOLA/(5192:5192): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:27:14:452 CONSOLA/(5247:5247): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:28:31:319 CONSOLA/(5283:5283): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:29:13:122 CONSOLA/(5305:5305): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:31:00:387 CONSOLA/(5342:5342): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:31:51:736 CONSOLA/(5378:5378): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:35:51:810 CONSOLA/(5515:5515): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:40:56:504 CONSOLA/(5668:5668): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:42:36:133 CONSOLA/(5732:5732): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:45:00:036 CONSOLA/(5820:5820): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:45:19:468 CONSOLA/(5839:5839): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+

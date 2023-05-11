@@ -86,9 +86,26 @@ void* AdministradorDeModulo(void* arg)
 	//--------------------------------------------------------------------------------------------------------------------------------------------------
 	//Acciones a realizar para cada consola conectado:
 	//creo el PCB y meto el socket y las instrucciones a la lista de new PCB
-	//y si tengo grado de multiprogramacion lo paso a ready;
+	//y si el grado de multiprogramacion lo permite, lo paso a ready;
 	//crear listas globales con mutex para cada estado de los procesos
 	 
+	t_list* instruccionesRecibidas = recibir_paquete(*SocketClienteConectado);
+
+
+
+	printf("Instrucciones recibidas: %d\n", list_size(instruccionesRecibidas));
+
+	printf("Primer instruccion recibida: %s\n", instruccionesRecibidas->head->data);
+
+	for(int i=0; i < list_size(instruccionesRecibidas); i++)
+	{
+		log_info(Kernel_Logger, "Instruccion recibida: %s\n", (char*)list_get(instruccionesRecibidas, i));
+	}
+
+
+
+	/*
+	//Temporal
 	int recibido;
 	do
 	{
@@ -98,10 +115,9 @@ void* AdministradorDeModulo(void* arg)
 		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketMemoria, recibido);
 		enviar_int(Kernel_Logger, NOMBRE_PROCESO, SocketFileSystem, recibido);
 
-	}while(recibido != 0);
-
+	}while(recibido != 0);*/
 	//--------------------------------------------------------------------------------------------------------------------------------------------------
-	liberar_conexion(SocketClienteConectado);
+	liberar_conexion(*SocketClienteConectado);
 	return NULL;
 }
 

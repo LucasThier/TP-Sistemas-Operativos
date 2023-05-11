@@ -48,6 +48,12 @@ int esperar_cliente(t_log* logger, const char* nombreProceso, int socket_servido
  */
 int conectar_servidor(t_log* logger, const char* nobre_servidor, char* ip, char* puerto);
 
+
+/**
+ * Libera todos los recursos usados para el socket.
+ * @param socket el socket a liberar.
+ */
+void liberar_conexion(int socket);
 #pragma endregion
 
 
@@ -55,8 +61,9 @@ int conectar_servidor(t_log* logger, const char* nobre_servidor, char* ip, char*
 
 typedef enum
 {
-	MENSAJE,
-	PAQUETE
+	INSTRUCCIONES,
+	PCB,
+	KILL
 } op_code;
 
 typedef struct
@@ -71,28 +78,12 @@ typedef struct
 	t_buffer* buffer;
 } t_paquete;
 
-typedef enum
-{
-	ABRIRPROGRAMA,
-	OTROS
-} tipo_operacion;
-
-typedef struct
-{
-	int size;
-	void* bytes;
-} contenido_paquete;
-
-
-void enviar_mensaje(char* mensaje, int socket_cliente);
-t_paquete* crear_paquete(void);
-void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio);
-void enviar_paquete(t_paquete* paquete, int socket_cliente);
-void liberar_conexion(int socket_cliente);
-void eliminar_paquete(t_paquete* paquete);
-void crear_buffer(t_paquete* paquete);
-void paquete(int);
-t_paquete* crear_super_paquete(void);
+t_paquete* crear_paquete(op_code tipoDeOperacion);
+void agregar_a_paquete(t_paquete *paquete, void *valor, int tamanio);
+void enviar_paquete(t_paquete *paquete, int socket_cliente);
+void *serializar_paquete(t_paquete *paquete, int bytes);
+t_list* recibir_paquete(int socket_cliente);
+void eliminar_paquete(t_paquete *paquete);
 
 #pragma endregion
 

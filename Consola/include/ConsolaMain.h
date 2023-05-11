@@ -8,12 +8,14 @@
 #include <readline/history.h>
 #include <pthread.h>
 
+t_log* Consola_Logger;
 t_config* config;
 
 char* IP_KERNEL;
 char* PUERTO_KERNEL;
 
-
 char NOMBRE_PROCESO[7] = "CONSOLA";
+
+int ConectarConKernel();
 
 #endif
