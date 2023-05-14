@@ -176,20 +176,21 @@ void *serializar_paquete(t_paquete *paquete, int bytes)
 }
 
 
-t_list* recibir_paquete(int socket_cliente)
+void* recibir_paquete(int socket_cliente)
 {
-    op_code cod_op;
+    op_code cod_op = 0;
     int size;
     int desplazamiento = 0;
     void* buffer;
     t_list* valores = list_create();
     int tamanio;
 
-    recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL);
+    if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) == -1)
+        printf("Error al recibir el codigo de operacion\n");
 
     switch (cod_op)
     {
-    case INSTRUCCIONES:
+    case INSTRUCCIONES:    
             recv(socket_cliente, &size, sizeof(int), MSG_WAITALL);
             buffer = malloc(size);
             recv(socket_cliente, buffer, size, MSG_WAITALL);
@@ -204,15 +205,44 @@ t_list* recibir_paquete(int socket_cliente)
                 list_add(valores, valor);
             }
             free(buffer);
-            return valores;    
+            return (void*)valores;    
 
-    case KILL:
-        //matar proceso consola
+    case MENSAGE:
+            char *mensage;
+            recv(socket_cliente, &size, sizeof(int), MSG_WAITALL);
+            buffer = malloc(size);
+            recv(socket_cliente, buffer, size, MSG_WAITALL);
+
+            memcpy(&tamanio, buffer + desplazamiento, sizeof(int));
+            desplazamiento += sizeof(int);
+            mensage = malloc(tamanio);
+            memcpy(mensage, buffer + desplazamiento, tamanio);
+            free(buffer);
+            return mensage;
+
         break;
+
+    case CPU_PCB:
+            recv(socket_cliente, &size, sizeof(int), MSG_WAITALL);
+            buffer = malloc(size);
+            recv(socket_cliente, buffer, size, MSG_WAITALL);
+
+            while (desplazamiento < size)
+            {
+                memcpy(&tamanio, buffer + desplazamiento, sizeof(int));
+                desplazamiento += sizeof(int);
+                void* valor = malloc(tamanio);
+                memcpy(valor, buffer + desplazamiento, tamanio);
+                desplazamiento += tamanio;
+                list_add(valores, valor);
+            }
+            free(buffer);
+            return (void*)valores;  
+
     default:
         break;
     }
-    return valores;
+    return 0;
 }
 
 void eliminar_paquete(t_paquete *paquete)

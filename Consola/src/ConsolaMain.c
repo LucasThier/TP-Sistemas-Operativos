@@ -36,10 +36,10 @@ int main(int argc, char* argv[])
     while (fgets(linea, 1024, archivo))
 	{
 		//agregar un \n al final de cada linea que no termine en \n
-		if (linea[strlen(linea)] != '\n'){
+		if (strcmp(&linea[strlen(linea)-1], "\n") != 0){
+			printf("linea sin /n");
 			strcat(linea, "\n");
 		}
-
 		//agregar la linea al paquete
 		agregar_a_paquete(paquete, linea, strlen(linea) + 1);
 
@@ -49,18 +49,14 @@ int main(int argc, char* argv[])
 
 	//enviar el paquete al kernel
 	enviar_paquete(paquete, SocketKernel);
+	eliminar_paquete(paquete);
 
-	/*//temporal enviar ints al kernel(realmente habria que enviar el pseudocodigo)
-	int leido;
-	do
-	{		
-    	printf("Ingresa un entero a enviar: ");
-		scanf("%d", &leido);
-		enviar_int(Consola_Logger, NOMBRE_PROCESO, SocketKernel, leido);
-	} while (leido != 0);*/
+	char* respuesta = (char*) recibir_paquete(SocketKernel);
+	printf("Respuesta de Kernel: %s", respuesta);
+
+
 
 	liberar_conexion(SocketKernel);
-
 	return EXIT_SUCCESS;
 }
 

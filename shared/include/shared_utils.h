@@ -3,23 +3,29 @@
 #ifndef SHAREDUTILS_H_
 #define SHAREDUTILS_H_
 
+//seguro que se usan:
+#include <stdio.h>
+#include <stdlib.h>
 #include <commons/log.h>
 #include <commons/string.h>
 #include <commons/config.h>
+#include <signal.h>
+#include <commons/collections/list.h>
+#include <sys/socket.h>
+#include <semaphore.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
+#include <sys/time.h>
+#include <fcntl.h>
+
+//El resto no se si se usan(habria que chequear):
 #include <commons/process.h>
 #include <commons/txt.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
 #include <unistd.h>
-
 #include <string.h>
-#include <commons/collections/list.h>
 #include <assert.h>
 #include <readline/readline.h>
-
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <netdb.h>
 
 
@@ -62,7 +68,8 @@ void liberar_conexion(int socket);
 typedef enum
 {
 	INSTRUCCIONES,
-	PCB,
+	MENSAGE,
+	CPU_PCB,
 	KILL
 } op_code;
 
@@ -82,7 +89,7 @@ t_paquete* crear_paquete(op_code tipoDeOperacion);
 void agregar_a_paquete(t_paquete *paquete, void *valor, int tamanio);
 void enviar_paquete(t_paquete *paquete, int socket_cliente);
 void *serializar_paquete(t_paquete *paquete, int bytes);
-t_list* recibir_paquete(int socket_cliente);
+void* recibir_paquete(int socket_cliente);
 void eliminar_paquete(t_paquete *paquete);
 
 #pragma endregion

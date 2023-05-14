@@ -6,13 +6,29 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+int InicializarPlanificadores();
+void* PlanificadorLargoPlazo();
+void* PlanificadorCortoPlazo(void* arg);
+
+void PlanificadorCortoPlazoFIFO();
+void RealizarRespuestaDelCPU(char* respuesta);
+
+
+void InicializarAdministradorDeCPU();
+
+//Administrar Sockets/Conecciones-----------------
 int InicializarConexiones();
 void* EscucharConexiones();
 void* AdministradorDeModulo(void* arg);
-void ForEach_Instrucciones(char* value);
-void LeerConfigs(char* path);
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+void ForEach_Instrucciones(char* value);
+
+
+//Configuracion-----------------------------
 t_config* config;
+
+void LeerConfigs(char* path);
 
 char* IP_MEMORIA;
 char* PUERTO_MEMORIA;
@@ -21,24 +37,30 @@ char* PUERTO_FILESYSTEM;
 char* IP_CPU;
 char* PUERTO_CPU;
 char* PUERTO_ESCUCHA;
+int GRADO_MULTIPROGRAMACION;
 void LeerConfigs(char* path);
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//PCB---------------------------------
+
+int g_PIDCounter = 0;
 
 typedef struct
 {
-    char AX[5];
-    char BX[5];
-    char CX[5];
-    char DX[5];
+    char AX[4];
+    char BX[4];
+    char CX[4];
+    char DX[4];
 
-    char EAX[9];
-    char EBX[9];
-    char ECX[9];
-    char EDX[9];
+    char EAX[8];
+    char EBX[8];
+    char ECX[8];
+    char EDX[8];
 
-    char RAX[17];
-    char RBX[17];
-    char RCX[17];
-    char RDX[17];
+    char RAX[16];
+    char RBX[16];
+    char RCX[16];
+    char RDX[16];
 } t_registrosCPU;
 
 typedef struct
@@ -56,15 +78,49 @@ typedef struct
 
 typedef struct
 {
+    int socketConsolaAsociada;
     int PID;
-    void* listaInstrucciones;
     int programCounter;
-    t_registrosCPU registrosCPU;
-    int estimacionProximaRafaga;
+    t_registrosCPU* registrosCPU;
     t_list* tablaDeSegmentos;
     unsigned int tiempoLlegadaRedy;
     t_list* tablaArchivosAbiertos;
+    t_list* listaInstrucciones;
 } t_PCB;
+
+t_list* g_Lista_NEW;
+t_list* g_Lista_READY;
+t_PCB* g_EXEC;
+t_list* g_Lista_BLOCKED;
+t_list* g_Lista_EXIT;
+
+t_PCB* CrearPCB(t_list* instrucciones, int socketConsola);
+
+void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR);
+t_registrosCPU* CrearRegistrosCPU();
+t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista);
+void Recibir_Y_Actualizar_PCB();
+void ImprimirRegistrosPCB(t_PCB* PCB_Registos_A_Imprimir);
+//---------------------------------------------
+
+//Semaforos------------------------------------
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//PARA EVITAR DEADLOCK HACER LOS WAIT A LOS MUTEX EN EL ORDEN QUE ESTAN DECLARADOS ABAJO
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+void InicializarSemaforos();
+sem_t m_PIDCounter;
+sem_t m_NEW;
+sem_t m_READY;
+sem_t m_EXEC;
+sem_t m_BLOCKED;
+sem_t m_EXIT;
+sem_t c_MultiProg;
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+void TerminarModulo();
 
 char NOMBRE_PROCESO[7] = "KERNEL";
 

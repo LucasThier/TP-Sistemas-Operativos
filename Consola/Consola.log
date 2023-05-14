@@ -36543,3 +36543,324 @@
 
 [INFO] 13:39:55:186 CONSOLA/(3632:3632): Cliente conectado en 0.0.0.0:33668 (a Kernel)
 
+[INFO] 00:45:37:398 CONSOLA/(2329:2329): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:48:01:817 CONSOLA/(13709:13709): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:48:41:250 CONSOLA/(13768:13768): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:49:58:302 CONSOLA/(13879:13879): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:51:55:749 CONSOLA/(13971:13971): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:53:32:505 CONSOLA/(14177:14177): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:54:16:961 CONSOLA/(14264:14264): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:54:52:775 CONSOLA/(14300:14300): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:55:25:291 CONSOLA/(14365:14365): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:56:19:810 CONSOLA/(14449:14449): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:58:04:045 CONSOLA/(14538:14538): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:58:35:726 CONSOLA/(14615:14615): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 02:59:07:796 CONSOLA/(14687:14687): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:01:06:012 CONSOLA/(14871:14871): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:03:09:097 CONSOLA/(14980:14980): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:04:34:102 CONSOLA/(15030:15030): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:21:00:317 CONSOLA/(15425:15425): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:22:10:955 CONSOLA/(15575:15575): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:24:01:483 CONSOLA/(15678:15678): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:25:20:274 CONSOLA/(15806:15806): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:27:25:825 CONSOLA/(15884:15884): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:28:53:963 CONSOLA/(16036:16036): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:30:57:179 CONSOLA/(16207:16207): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:33:12:089 CONSOLA/(16371:16371): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:34:33:859 CONSOLA/(16510:16510): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:35:54:979 CONSOLA/(16605:16605): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:40:15:949 CONSOLA/(16964:16964): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:42:12:250 CONSOLA/(17114:17114): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:46:15:870 CONSOLA/(17380:17380): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:50:48:040 CONSOLA/(17659:17659): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:52:00:943 CONSOLA/(17772:17772): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:53:09:088 CONSOLA/(17904:17904): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:55:25:719 CONSOLA/(18070:18070): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:56:44:263 CONSOLA/(18215:18215): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:58:00:107 CONSOLA/(18301:18301): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:59:57:796 CONSOLA/(18446:18446): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:01:57:920 CONSOLA/(18580:18580): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:02:59:263 CONSOLA/(18657:18657): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:09:42:308 CONSOLA/(19033:19033): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[ERROR] 04:14:36:267 CONSOLA/(19309:19309): Error al conectar (a Kernel)
+
+[ERROR] 04:14:36:267 CONSOLA/(19309:19309): No se pudo conectar con el Kernel
+[INFO] 04:14:45:736 CONSOLA/(19334:19334): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:15:56:943 CONSOLA/(19416:19416): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:17:14:233 CONSOLA/(19520:19520): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:19:24:362 CONSOLA/(19739:19739): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:07:10:897 CONSOLA/(2246:2246): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:09:03:517 CONSOLA/(2438:2438): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:10:55:111 CONSOLA/(2595:2595): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:14:17:847 CONSOLA/(2750:2750): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:15:45:346 CONSOLA/(2908:2908): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:18:28:025 CONSOLA/(3203:3203): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:19:21:185 CONSOLA/(3297:3297): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:19:58:615 CONSOLA/(3384:3384): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:20:46:141 CONSOLA/(3463:3463): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:21:56:406 CONSOLA/(3585:3585): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:24:04:775 CONSOLA/(3679:3679): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:25:56:019 CONSOLA/(3834:3834): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:30:23:170 CONSOLA/(4542:4542): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:32:52:665 CONSOLA/(5170:5170): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:33:20:848 CONSOLA/(5235:5235): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:34:45:034 CONSOLA/(5382:5382): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:36:44:206 CONSOLA/(5512:5512): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:38:31:787 CONSOLA/(5617:5617): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:41:04:049 CONSOLA/(5857:5857): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:54:41:728 CONSOLA/(6589:6589): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 14:58:46:004 CONSOLA/(6959:6959): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:01:09:956 CONSOLA/(7165:7165): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:04:01:817 CONSOLA/(7375:7375): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:38:32:036 CONSOLA/(9838:9838): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:41:57:155 CONSOLA/(10193:10193): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:45:27:221 CONSOLA/(10437:10437): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:46:24:144 CONSOLA/(10460:10460): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:46:25:884 CONSOLA/(10464:10464): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:51:51:784 CONSOLA/(10709:10709): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 15:51:52:353 CONSOLA/(10713:10713): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:04:38:807 CONSOLA/(11128:11128): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:04:39:018 CONSOLA/(11133:11133): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:06:35:346 CONSOLA/(11246:11246): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:06:35:591 CONSOLA/(11250:11250): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:10:03:085 CONSOLA/(11379:11379): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:10:03:252 CONSOLA/(11383:11383): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[ERROR] 16:12:12:010 CONSOLA/(11569:11569): Error al conectar (a Kernel)
+
+[ERROR] 16:12:12:010 CONSOLA/(11569:11569): No se pudo conectar con el Kernel
+[ERROR] 16:12:12:252 CONSOLA/(11572:11572): Error al conectar (a Kernel)
+
+[ERROR] 16:12:12:252 CONSOLA/(11572:11572): No se pudo conectar con el Kernel
+[INFO] 16:13:21:724 CONSOLA/(11608:11608): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:13:21:987 CONSOLA/(11612:11612): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:15:34:224 CONSOLA/(11779:11779): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:15:35:445 CONSOLA/(11783:11783): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:15:59:190 CONSOLA/(11787:11787): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:15:59:913 CONSOLA/(11791:11791): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:16:14:221 CONSOLA/(11795:11795): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:16:14:534 CONSOLA/(11799:11799): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:18:23:287 CONSOLA/(11860:11860): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:18:23:728 CONSOLA/(11864:11864): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:18:37:151 CONSOLA/(11868:11868): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:18:37:488 CONSOLA/(11872:11872): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:18:56:917 CONSOLA/(11876:11876): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:18:57:234 CONSOLA/(11880:11880): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:19:10:577 CONSOLA/(11884:11884): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 16:19:10:910 CONSOLA/(11888:11888): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:34:06:425 CONSOLA/(12265:12265): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:34:07:608 CONSOLA/(12269:12269): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:34:20:003 CONSOLA/(12273:12273): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:34:20:283 CONSOLA/(12277:12277): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:37:57:206 CONSOLA/(12335:12335): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:37:57:448 CONSOLA/(12339:12339): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:38:12:051 CONSOLA/(12344:12344): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:38:12:279 CONSOLA/(12348:12348): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:41:54:223 CONSOLA/(12358:12358): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:41:56:689 CONSOLA/(12362:12362): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:42:44:088 CONSOLA/(12366:12366): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 17:42:44:414 CONSOLA/(12370:12370): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 18:02:31:739 CONSOLA/(12582:12582): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 18:02:32:029 CONSOLA/(12586:12586): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 18:02:47:526 CONSOLA/(12590:12590): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 18:05:29:743 CONSOLA/(12713:12713): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 18:05:41:313 CONSOLA/(12717:12717): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 22:07:59:613 CONSOLA/(23490:23490): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 00:20:33:667 CONSOLA/(24180:24180): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 01:03:02:224 CONSOLA/(27161:27161): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 01:03:02:557 CONSOLA/(27165:27165): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 01:06:21:487 CONSOLA/(27270:27270): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 01:08:06:555 CONSOLA/(27397:27397): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 01:09:43:540 CONSOLA/(27519:27519): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 01:12:50:456 CONSOLA/(27680:27680): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:43:30:175 CONSOLA/(29450:29450): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:45:35:551 CONSOLA/(29639:29639): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:50:49:703 CONSOLA/(30087:30087): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 03:58:46:852 CONSOLA/(30451:30451): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:00:59:563 CONSOLA/(30543:30543): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:07:12:183 CONSOLA/(30800:30800): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:15:24:628 CONSOLA/(31427:31427): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:15:24:955 CONSOLA/(31431:31431): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:19:53:042 CONSOLA/(31758:31758): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:19:53:321 CONSOLA/(31762:31762): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:25:42:778 CONSOLA/(32067:32067): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:25:43:101 CONSOLA/(32071:32071): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:31:29:635 CONSOLA/(32247:32247): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:31:29:975 CONSOLA/(32251:32251): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:35:23:760 CONSOLA/(32476:32476): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:41:16:415 CONSOLA/(32933:32933): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 04:42:35:758 CONSOLA/(33065:33065): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:02:11:512 CONSOLA/(33337:33337): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:04:21:003 CONSOLA/(33394:33394): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:07:27:507 CONSOLA/(33645:33645): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:08:20:662 CONSOLA/(33716:33716): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:10:15:350 CONSOLA/(33787:33787): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:11:44:335 CONSOLA/(33934:33934): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:13:09:798 CONSOLA/(34072:34072): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:16:05:586 CONSOLA/(34247:34247): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:20:08:094 CONSOLA/(34637:34637): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:24:51:679 CONSOLA/(34885:34885): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:28:02:856 CONSOLA/(35051:35051): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:30:08:034 CONSOLA/(35189:35189): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:32:36:259 CONSOLA/(35273:35273): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:33:55:126 CONSOLA/(35329:35329): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:36:05:203 CONSOLA/(35420:35420): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:37:40:935 CONSOLA/(35557:35557): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:37:57:362 CONSOLA/(35606:35606): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:38:17:170 CONSOLA/(35610:35610): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
+[INFO] 05:38:17:501 CONSOLA/(35614:35614): Cliente conectado en 0.0.0.0:33668 (a Kernel)
+
