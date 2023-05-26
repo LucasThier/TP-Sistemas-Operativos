@@ -21,8 +21,6 @@ int main(int argc, char* argv[])
 
 	//leer las config
 	LeerConfigs(argv[1],argv[2]);
-	log_info(FS_Logger,"%s",argv[2]);
-	log_info(FS_Logger,"%s",BLOCK_SIZE);
 
 	InicializarConexiones();
 
