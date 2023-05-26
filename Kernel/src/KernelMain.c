@@ -6,6 +6,7 @@ int SocketKernel;
 int SocketCPU;
 int SocketMemoria;
 int SocketFileSystem;
+bool planificadorFIFO;
 
 t_config* config;
 
@@ -60,7 +61,13 @@ void LeerConfigs(char* path)
 
     PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 
-	GRADO_MULTIPROGRAMACION = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");	
+	GRADO_MULTIPROGRAMACION = config_get_int_value(config, "GRADO_MAX_MULTIPROGRAMACION");
+
+	ALGORITMO_PLANIFICACION = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
+	
+	ESTIMACION_INICIAL = config_get_int_value(config, "ESTIMACION_INICIAL");
+	
+	HRRN_ALFA = config_get_double_value(config, "HRRN_ALFA");
 }
 
 //Inicializa los semaforos
@@ -86,12 +93,13 @@ int InicializarPlanificadores()
 
 	pthread_t HiloPlanificadorDeLargoPlazo;//FIFO
 	if (pthread_create(&HiloPlanificadorDeLargoPlazo, NULL, PlanificadorLargoPlazo, NULL) != 0) {
-		printf("ERROR Creando Planificador de largo plazo\n");
 		return 0;
 	}
 
+	planificadorFIFO = strcmp(ALGORITMO_PLANIFICACION, "HRRN") != 0;
+
 	pthread_t HiloPlanificadorDeCortoPlazo;
-	if (pthread_create(&HiloPlanificadorDeCortoPlazo, NULL, PlanificadorCortoPlazo, (void*) 1/*bool EsFifo*/) != 0) {
+	if (pthread_create(&HiloPlanificadorDeCortoPlazo, NULL, PlanificadorCortoPlazo, NULL)) {
 		return 0;
 	}
 
@@ -101,21 +109,18 @@ int InicializarPlanificadores()
 //Planificador de largo plazo FIFO (New -> Ready)
 void* PlanificadorLargoPlazo()
 {
-	printf("Planificador de largo plazo\n");
 	while(true)
 	{
+		//Si hay espacio en la cola de READY y hay procesos esperando en NEW,
+		//obtener el primero de la cola de NEW y mandarlo a READY
 		if(list_size(g_Lista_NEW) != 0)
 		{
 			sem_wait(&c_MultiProg);
 
 			sem_wait(&m_NEW);
 			sem_wait(&m_READY);
-
-			//Obtener PCB de la cola de NEW
 			t_PCB* PCB = (t_PCB*) list_remove(g_Lista_NEW, 0);
-			//Agregar PCB a la cola de READY
-			list_add(g_Lista_READY, PCB);
-
+			AgregarAReady(PCB);
 			sem_post(&m_NEW);
 			sem_post(&m_READY);
 		}
@@ -124,17 +129,15 @@ void* PlanificadorLargoPlazo()
 }
 
 //Planificador de corto plazo (Ready -> Exec)
-void* PlanificadorCortoPlazo(void* arg)
-{
-	bool EsFifo = (bool) arg;
-	
-	if(EsFifo)
+void* PlanificadorCortoPlazo()
+{	
+	if(planificadorFIFO)
 	{
 		PlanificadorCortoPlazoFIFO();
 	}
 	else
 	{
-		//HRRN
+		PlanificadorCortoPlazoHRRN();
 	}
 
 	return (void*) EXIT_FAILURE;
@@ -158,6 +161,67 @@ void PlanificadorCortoPlazoFIFO()
 			sem_post(&m_READY);
 			sem_post(&m_EXEC);
 
+			//Enviar PCB a CPU
+			Enviar_PCB_A_CPU(PCB);
+
+			//Recibir respuesta de CPU
+			printf("PID del proceso enviado a la CPU: %d\n", g_EXEC->PID);
+			char* respuesta = (char*) recibir_paquete(SocketCPU);
+			printf("Respuesta de CPU: %s\n", respuesta);
+			
+			RealizarRespuestaDelCPU(respuesta);
+		}
+	}
+}
+
+void PlanificadorCortoPlazoHRRN()
+{
+	while(true)
+	{
+		//Si no hay ningun proceso ejecutando y hay procesos esperando en ready,
+		//Calcular el proximo que deberia ejecutar
+		if(g_EXEC == NULL && list_size(g_Lista_READY) != 0){
+
+			double RatioMasAlto = 0;
+			int IndiceListaRatioMasAlto = 0;
+
+			sem_wait(&m_READY);
+			for(int i = 0; i < list_size(g_Lista_READY); i++)
+			{				
+				t_PCB* aux = (t_PCB*) list_get(g_Lista_READY, i);
+
+				//si nunca ejecuto, entonces tomo la estimacion inicial
+				if(aux->programCounter == 0 && RatioMasAlto < ESTIMACION_INICIAL)
+				{
+					RatioMasAlto = ESTIMACION_INICIAL;
+					IndiceListaRatioMasAlto = i;
+				}
+				//si ya ejecuto al menos una vez entonces calculo el ratio
+				else
+				{
+					//calculo el ratio
+					double Ratio = (TiempoEsperadoEnReady(aux) + EstimacionProximaRafaga(aux)) / EstimacionProximaRafaga(aux);
+					
+					//guardo la estimacion de la ultima rafaga para la proxima que calcule el ratio
+					aux->estimacionUltimaRafaga = EstimacionProximaRafaga(aux);
+
+					//si el ratio es mas alto que el mas alto encontrado hasta ahora,
+					// entonces lo reemplazo por este
+					if(Ratio > RatioMasAlto)
+					{
+						RatioMasAlto = Ratio;
+						IndiceListaRatioMasAlto = i;
+					}
+				}
+			}
+
+			sem_wait(&m_EXEC);
+			//obtener PCB de la cola de READY
+			t_PCB* PCB = (t_PCB*) list_remove(g_Lista_READY, IndiceListaRatioMasAlto);
+			//Agregar PCB a la cola de EXEC
+			g_EXEC = PCB;
+			sem_post(&m_READY);
+			sem_post(&m_EXEC);
 
 			//Enviar PCB a CPU
 			Enviar_PCB_A_CPU(PCB);
@@ -172,12 +236,27 @@ void PlanificadorCortoPlazoFIFO()
 	}
 }
 
+//devuelve el tiempo que paso desde que el proceso llego a ready
+double TiempoEsperadoEnReady(t_PCB * PCB)
+{
+	return difftime(time(NULL), PCB->tiempoLlegadaRedy);
+}
+
+//calcula y devuelve la estimacion de la proxima rafaga de un PCB
+double EstimacionProximaRafaga(t_PCB* PCB)
+{
+	return (HRRN_ALFA * PCB->tiempoUltimaRafaga) + ((1 - HRRN_ALFA) * PCB->estimacionUltimaRafaga);
+}
+
+
 void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR)
 {
 	t_paquete* Paquete_PCB_Actual = crear_paquete(CPU_PCB);
 
+	//Agrega el Program Counter
 	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->programCounter), sizeof(int));
 
+	//Agrega los registros de la CPU
 	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->AX), sizeof(g_EXEC->registrosCPU->AX));
 	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->BX), sizeof(g_EXEC->registrosCPU->BX));
 	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->CX), sizeof(g_EXEC->registrosCPU->CX));
@@ -193,6 +272,7 @@ void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR)
 	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->RCX), sizeof(g_EXEC->registrosCPU->RCX));
 	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->RDX), sizeof(g_EXEC->registrosCPU->RDX));
 
+	//Agrega las instrucciones
 	//como pueden ser n instrucciones, las agrego ultimas;
 	for(int i=0; i < list_size(g_EXEC->listaInstrucciones); i++)
 	{
@@ -205,6 +285,15 @@ void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR)
 	eliminar_paquete(Paquete_PCB_Actual);
 }
 
+//agrega un PCB a la cola de READY y actualiza su tiempo de llegada a ready,
+// asume que ya se hicieron los wait y signal correspondientes
+void AgregarAReady(t_PCB* PCB)
+{
+	PCB->tiempoLlegadaRedy = time(NULL);
+	list_add(g_Lista_READY, PCB);
+}
+
+//Realiza la Accion correspondiente a la respuesta del CPU
 void RealizarRespuestaDelCPU(char* respuesta)
 {
 	if(strcmp(respuesta, "YIELD\n")== 0)
@@ -214,13 +303,13 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		//Agregar PCB a la cola de READY
 		sem_wait(&m_READY);
 		sem_wait(&m_EXEC);
-		list_add(g_Lista_READY, g_EXEC);
+		AgregarAReady(g_EXEC);
 		g_EXEC = NULL;
 		sem_post(&m_READY);
 		sem_post(&m_EXEC);
 	}
 
-	if(strcmp(respuesta, "EXIT\n")== 0)
+	else if(strcmp(respuesta, "EXIT\n")== 0)
 	{
 		Recibir_Y_Actualizar_PCB();
 
@@ -262,12 +351,13 @@ void ImprimirRegistrosPCB(t_PCB* PCB_Registos_A_Imprimir)
 }
 
 //recibe el paquete conteniendo el nuevo pcb y lo actualiza
-//!!SOLO ACTUALIZA EL PCB EN EJECUCION!!
+//!!SOLO ACTUALIZA EL PCB DEL PROCESO EN EJECUCION!!
 void Recibir_Y_Actualizar_PCB()
 {
 	t_list* PCB_A_Actualizar = recibir_paquete(SocketCPU);
 	g_EXEC->programCounter = *(int*) list_remove(PCB_A_Actualizar, 0);
 	g_EXEC->registrosCPU = ObtenerRegistrosDelPaquete(PCB_A_Actualizar);
+	g_EXEC->tiempoUltimaRafaga = *(double*) list_remove(PCB_A_Actualizar, 0);
 }
 
 t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
@@ -275,7 +365,6 @@ t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
 	t_registrosCPU* Registros = malloc(sizeof(t_registrosCPU));
 
 	strncpy(Registros->AX, (char*)list_remove(Lista, 0), sizeof(Registros->AX));
-	//printf("AX: %s\n", Registros->AX);
 	strncpy(Registros->BX, (char*)list_remove(Lista, 0), sizeof(Registros->BX));
 	strncpy(Registros->CX, (char*)list_remove(Lista, 0), sizeof(Registros->CX));
 	strncpy(Registros->DX, (char*)list_remove(Lista, 0), sizeof(Registros->DX));
@@ -363,6 +452,7 @@ void* AdministradorDeModulo(void* arg)
 	//Verificar si el grado de multiprogramacion lo permite, si lo permite, pasar a ready directamente
 	if(sem_trywait(&c_MultiProg) == 0)
 	{
+		printf("agregando a ready ya que el grado de multiprogramacion lo permite");
 		sem_wait(&m_READY);
 		list_add(g_Lista_READY, PCBConsola);
 		sem_post(&m_READY);
@@ -370,6 +460,7 @@ void* AdministradorDeModulo(void* arg)
 	//pasar a new
 	else
 	{
+		printf("agregando a new ya que el grado de multiprogramacion no lo permite");
 		sem_wait(&m_NEW);
 		list_add(g_Lista_NEW, PCBConsola);
 		sem_post(&m_NEW);

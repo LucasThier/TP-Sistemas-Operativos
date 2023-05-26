@@ -17,6 +17,7 @@
 #include <netinet/tcp.h>
 #include <sys/time.h>
 #include <fcntl.h>
+#include <time.h>
 
 //El resto no se si se usan(habria que chequear):
 #include <commons/process.h>

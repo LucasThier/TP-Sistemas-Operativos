@@ -6,14 +6,6 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-int InicializarPlanificadores();
-void* PlanificadorLargoPlazo();
-void* PlanificadorCortoPlazo(void* arg);
-
-void PlanificadorCortoPlazoFIFO();
-void RealizarRespuestaDelCPU(char* respuesta);
-
-
 void InicializarAdministradorDeCPU();
 
 //Administrar Sockets/Conecciones-----------------
@@ -38,6 +30,9 @@ char* IP_CPU;
 char* PUERTO_CPU;
 char* PUERTO_ESCUCHA;
 int GRADO_MULTIPROGRAMACION;
+char* ALGORITMO_PLANIFICACION;
+int ESTIMACION_INICIAL;
+float HRRN_ALFA;
 void LeerConfigs(char* path);
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -83,7 +78,9 @@ typedef struct
     int programCounter;
     t_registrosCPU* registrosCPU;
     t_list* tablaDeSegmentos;
-    unsigned int tiempoLlegadaRedy;
+    double tiempoUltimaRafaga;
+    double estimacionUltimaRafaga;
+    time_t tiempoLlegadaRedy;
     t_list* tablaArchivosAbiertos;
     t_list* listaInstrucciones;
 } t_PCB;
@@ -119,6 +116,23 @@ sem_t m_EXIT;
 sem_t c_MultiProg;
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//PLANIFICADORES--------------------------------
+int InicializarPlanificadores();
+
+void* PlanificadorLargoPlazo();
+void* PlanificadorCortoPlazo();
+
+void PlanificadorCortoPlazoFIFO();
+
+void PlanificadorCortoPlazoHRRN();
+
+double TiempoEsperadoEnReady(t_PCB* PCB);
+double EstimacionProximaRafaga(t_PCB* PCB);
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+void AgregarAReady(t_PCB* PCB);
+void RealizarRespuestaDelCPU(char* respuesta);
 
 void TerminarModulo();
 

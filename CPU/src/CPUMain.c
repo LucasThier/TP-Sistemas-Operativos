@@ -5,6 +5,8 @@ t_log* CPU_Logger;
 
 int SocketCPU;
 int SocketMemoria;
+time_t tiempoInicio;
+time_t tiempoFinal;
 
 void sighandler(int s) {
 	liberar_conexion(SocketCPU);
@@ -61,6 +63,9 @@ void* EscuchaKernel()
 			{
 				bool SeguirEjecutando = true;
 				t_list* DatosRecibidos = (t_list*)recibir_paquete(SocketKernel);
+
+				time(&tiempoInicio);
+
 				printf("Datos recibidos:\n");
 
 				int PC = *(int*)list_remove(DatosRecibidos, 0);
@@ -74,7 +79,7 @@ void* EscuchaKernel()
 					
 					printf("Linea a ejecutar: %s", Linea_A_Ejecutar);
 
-					printf("PC Actual: %d | Valor de BX: %.*s\n\n", PC, (int) sizeof(Registros->BX), Registros->BX);
+					printf("PC Actual: %d\n\n", PC);
 
 					char* Instruccion_A_Ejecutar = strtok(Linea_A_Ejecutar, " ");
 
@@ -86,7 +91,7 @@ void* EscuchaKernel()
 						SeguirEjecutando = false;
 					}
 
-					if(strcmp(Instruccion_A_Ejecutar, "SET")==0)
+					else if(strcmp(Instruccion_A_Ejecutar, "SET")==0)
 					{
 						PC++;
 						char* Reg_A_Setear = strtok(NULL, " ");
@@ -94,12 +99,77 @@ void* EscuchaKernel()
 						strncpy(ObrenerRegistro(Reg_A_Setear, Registros), Valor_A_Setear, strlen(Valor_A_Setear)-1);	
 					}
 
-					if(strcmp(Instruccion_A_Ejecutar, "EXIT\n")==0)
+					else if(strcmp(Instruccion_A_Ejecutar, "EXIT\n")==0)
 					{
 						PC++;
 						EnviarMensageKernel("EXIT\n", SocketKernel);
 						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 						SeguirEjecutando = false;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "I/O\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "WAIT\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "SIGNAL\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "MOV_IN\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "MOV_OUT\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "F_OPEN\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "F_CLOSE\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "F_SEEK\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "F_READ\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "F_WRITE\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "F_TRUNCATE\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "CREATE_SEGMENT\n")==0)
+					{
+						PC++;
+					}
+
+					else if(strcmp(Instruccion_A_Ejecutar, "DELETE_SEGMENT\n")==0)
+					{
+						PC++;
 					}
 				}
 				list_destroy(DatosRecibidos);
@@ -157,11 +227,17 @@ void Enviar_PCB_A_Kernel(int ProgramCounter, t_registrosCPU* Registros_A_Enviar,
 	agregar_a_paquete(Paquete_Actualizado_PCB, &(Registros_A_Enviar->RCX), sizeof(Registros_A_Enviar->RCX));
 	agregar_a_paquete(Paquete_Actualizado_PCB, &(Registros_A_Enviar->RDX), sizeof(Registros_A_Enviar->RDX));
 
+	time(&tiempoFinal);
 	
+	double diferenciaTiempo = difftime(tiempoFinal, tiempoInicio);
+
+	agregar_a_paquete(Paquete_Actualizado_PCB, &diferenciaTiempo, sizeof(double));
+
 	enviar_paquete(Paquete_Actualizado_PCB, SocketKernel);
 	eliminar_paquete(Paquete_Actualizado_PCB);
 }
 
+//devuelve un puntero a un registro por su nombre
 char* ObrenerRegistro(char* NombreRegistro, t_registrosCPU* Registros)
 {
 	if(strcmp(NombreRegistro, "AX")==0)
