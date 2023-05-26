@@ -62,25 +62,30 @@ void* EscuchaKernel()
 			while(true)
 			{
 				bool SeguirEjecutando = true;
+				//recive una lista con todos los datos del PCB
 				t_list* DatosRecibidos = (t_list*)recibir_paquete(SocketKernel);
 
+				//guarda el tiempo en que empezo a ejecutar para calcular el tiempo de ejecucion mas tarde
 				time(&tiempoInicio);
 
 				printf("Datos recibidos:\n");
-
+				//"pop" del Program Counter
 				int PC = *(int*)list_remove(DatosRecibidos, 0);
 				printf("PC: %d\n", PC);
 
+				//guarda los registros en una estructura
 				t_registrosCPU* Registros = ObtenerRegistrosDelPaquete(DatosRecibidos);
 				
+				//loopea por las instrucciones y las realiza una por una hasta que alguna requiera desalojar
 				while (SeguirEjecutando)
 				{
+					//obtiene la instruccion a ejecutar
 					char* Linea_A_Ejecutar = (char*)list_get(DatosRecibidos, PC);
 					
 					printf("Linea a ejecutar: %s", Linea_A_Ejecutar);
-
 					printf("PC Actual: %d\n\n", PC);
 
+					//divide la linea en instruccion y los parametros
 					char* Instruccion_A_Ejecutar = strtok(Linea_A_Ejecutar, " ");
 
 					if(strcmp(Instruccion_A_Ejecutar, "YIELD\n")==0)
@@ -94,8 +99,11 @@ void* EscuchaKernel()
 					else if(strcmp(Instruccion_A_Ejecutar, "SET")==0)
 					{
 						PC++;
+
+						//obtengo los parametros del 
 						char* Reg_A_Setear = strtok(NULL, " ");
 						char* Valor_A_Setear = strtok(NULL, " ");
+						
 						strncpy(ObrenerRegistro(Reg_A_Setear, Registros), Valor_A_Setear, strlen(Valor_A_Setear)-1);	
 					}
 
@@ -185,6 +193,7 @@ void* EscuchaKernel()
 }
 
 
+//funcion que recibe una lista con los datos del PCB y los guarda en una estructura
 t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
 {
 	t_registrosCPU* Registros = malloc(sizeof(t_registrosCPU));
