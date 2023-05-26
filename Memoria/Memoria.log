@@ -28538,3 +28538,34 @@
 
 [INFO] 23:55:23:526 Memoria/(51498:51903): Numero recibido: 123
 
+[INFO] 21:59:35:083 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 21:59:35:083 Memoria/(2573:2574): Escuchando en 0.0.0.0:35002 (Memoria)
+
+[INFO] 21:59:35:083 Memoria/(2573:2574): Esperando cliente... (Memoria)
+
+[INFO] 21:59:45:084 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 21:59:55:086 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:00:05:086 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:00:15:086 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:00:25:096 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:00:35:100 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:00:45:100 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:00:55:101 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:01:00:617 Memoria/(2573:2574): Nuevo Cliente conectado! (Memoria) 5
+
+[INFO] 22:01:00:617 Memoria/(2573:2574): Esperando cliente... (Memoria)
+
+[INFO] 22:01:05:101 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:01:15:102 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:01:25:102 Memoria/(2573:2573): hilo principal esta ejecutando
+[INFO] 22:01:26:856 Memoria/(2573:2593): Numero recibido: 0
+
+[INFO] 22:08:29:899 Memoria/(2690:2690): hilo principal esta ejecutando
+[INFO] 22:08:29:900 Memoria/(2690:2691): Escuchando en 0.0.0.0:35002 (Memoria)
+
+[INFO] 22:08:29:900 Memoria/(2690:2691): Esperando cliente... (Memoria)
+
+[INFO] 22:08:32:136 Memoria/(2690:2691): Nuevo Cliente conectado! (Memoria) 5
+
+[INFO] 22:08:32:136 Memoria/(2690:2691): Esperando cliente... (Memoria)
+

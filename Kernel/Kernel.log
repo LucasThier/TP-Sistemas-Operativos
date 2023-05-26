@@ -69906,3 +69906,38 @@
 [INFO] 02:02:35:458 KERNEL/(23645:23645): hilo principal esta ejecutando
 [INFO] 02:02:45:458 KERNEL/(23645:23645): hilo principal esta ejecutando
 [INFO] 02:02:55:460 KERNEL/(23645:23645): hilo principal esta ejecutando
+[ERROR] 22:01:00:617 KERNEL/(2589:2589): Error al conectar (a CPU)
+
+[INFO] 22:01:00:617 KERNEL/(2589:2589): Cliente conectado en 0.0.0.0:35002 (a FileSystem)
+
+[ERROR] 22:01:00:617 KERNEL/(2589:2589): Error al conectar (a Memoria)
+
+[INFO] 22:01:00:617 KERNEL/(2589:2589): hilo principal esta ejecutando
+[INFO] 22:01:00:617 KERNEL/(2589:2592): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 22:01:00:617 KERNEL/(2589:2592): Esperando cliente... (KERNEL)
+
+[INFO] 22:01:10:617 KERNEL/(2589:2589): hilo principal esta ejecutando
+[INFO] 22:01:20:618 KERNEL/(2589:2589): hilo principal esta ejecutando
+[ERROR] 22:08:32:136 KERNEL/(2697:2697): Error al conectar (a CPU)
+
+[INFO] 22:08:32:136 KERNEL/(2697:2697): Cliente conectado en 0.0.0.0:35002 (a FileSystem)
+
+[ERROR] 22:08:32:136 KERNEL/(2697:2697): Error al conectar (a Memoria)
+
+[INFO] 22:08:32:136 KERNEL/(2697:2697): hilo principal esta ejecutando
+[INFO] 22:08:32:136 KERNEL/(2697:2701): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 22:08:32:136 KERNEL/(2697:2701): Esperando cliente... (KERNEL)
+
+[ERROR] 22:40:18:474 KERNEL/(3352:3352): Error al conectar (a CPU)
+
+[ERROR] 22:40:18:474 KERNEL/(3352:3352): Error al conectar (a FileSystem)
+
+[INFO] 22:40:18:474 KERNEL/(3352:3352): Cliente conectado en 0.0.0.0:35003 (a Memoria)
+
+[INFO] 22:40:18:474 KERNEL/(3352:3352): hilo principal esta ejecutando
+[INFO] 22:40:18:474 KERNEL/(3352:3355): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 22:40:18:474 KERNEL/(3352:3355): Esperando cliente... (KERNEL)
+

@@ -60898,3 +60898,300 @@
 
 [INFO] 23:55:24:444 FileSystem/(51620:51622): Numero recibido: 123
 
+[ERROR] 22:40:15:098 FileSystem/(3344:3344): Error al conectar (a Memoria)
+
+[INFO] 22:40:15:098 FileSystem/(3344:3344): hilo principal esta ejecutando
+[INFO] 22:40:15:098 FileSystem/(3344:3345): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:40:15:098 FileSystem/(3344:3345): Esperando cliente... (FileSystem)
+
+[INFO] 22:40:18:474 FileSystem/(3344:3345): Nuevo Cliente conectado! (FileSystem) 6
+
+[INFO] 22:40:24:120 FileSystem/(3344:3345): Numero recibido: 0
+
+[INFO] 22:40:25:102 FileSystem/(3344:3344): hilo principal esta ejecutando
+[ERROR] 22:40:28:533 FileSystem/(3360:3360): Error al conectar (a Memoria)
+
+[INFO] 22:40:28:533 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:40:28:533 FileSystem/(3360:3361): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:40:28:533 FileSystem/(3360:3361): Esperando cliente... (FileSystem)
+
+[INFO] 22:40:38:534 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:40:48:534 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:40:58:534 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:41:08:535 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:41:18:543 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:41:28:549 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:41:38:553 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:41:48:553 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:41:58:553 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:42:08:554 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:42:18:554 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:42:28:563 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:42:38:564 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:42:48:568 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:42:58:569 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:43:08:571 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:43:18:572 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:43:28:572 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:43:38:572 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:43:48:573 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:43:58:577 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:44:08:577 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:44:18:577 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:44:28:578 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:44:38:579 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:44:48:579 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:44:58:581 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:45:08:582 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:45:18:583 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:45:28:583 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:45:38:587 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:45:48:587 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:45:58:588 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:46:08:592 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:46:18:597 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:46:28:600 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:46:38:600 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:46:48:601 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:46:58:606 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:47:08:607 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:47:18:608 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:47:28:609 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:47:38:609 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:47:48:611 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:47:58:613 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:48:08:614 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:48:18:616 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:48:28:616 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:48:38:618 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:48:48:618 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:48:58:619 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:49:08:619 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:49:18:619 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:49:28:620 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:49:38:630 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:49:48:630 FileSystem/(3360:3360): hilo principal esta ejecutando
+[INFO] 22:49:58:632 FileSystem/(3360:3360): hilo principal esta ejecutando
+[ERROR] 22:50:06:397 FileSystem/(3529:3529): Error al conectar (a Memoria)
+
+[INFO] 22:50:06:397 FileSystem/(3529:3529): hilo principal esta ejecutando
+[INFO] 22:50:06:397 FileSystem/(3529:3530): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:50:06:397 FileSystem/(3529:3530): Esperando cliente... (FileSystem)
+
+[ERROR] 22:51:39:756 FileSystem/(3539:3539): Error al conectar (a Memoria)
+
+[INFO] 22:51:39:757 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:51:39:757 FileSystem/(3539:3540): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:51:39:757 FileSystem/(3539:3540): Esperando cliente... (FileSystem)
+
+[INFO] 22:51:49:757 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:51:59:757 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:52:09:760 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:52:19:763 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:52:29:764 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:52:39:765 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:52:49:766 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:52:59:768 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:53:09:769 FileSystem/(3539:3539): hilo principal esta ejecutando
+[INFO] 22:53:19:772 FileSystem/(3539:3539): hilo principal esta ejecutando
+[ERROR] 22:53:28:019 FileSystem/(3554:3554): Error al conectar (a Memoria)
+
+[INFO] 22:53:28:019 FileSystem/(3554:3554): hilo principal esta ejecutando
+[INFO] 22:53:28:019 FileSystem/(3554:3555): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:53:28:019 FileSystem/(3554:3555): Esperando cliente... (FileSystem)
+
+[INFO] 22:53:38:021 FileSystem/(3554:3554): hilo principal esta ejecutando
+[INFO] 22:53:48:024 FileSystem/(3554:3554): hilo principal esta ejecutando
+[ERROR] 23:04:40:965 FileSystem/(3670:3670): Error al conectar (a Memoria)
+
+[INFO] 23:04:40:965 FileSystem/(3670:3670): hilo principal esta ejecutando
+[INFO] 23:04:40:965 FileSystem/(3670:3671): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 23:04:40:965 FileSystem/(3670:3671): Esperando cliente... (FileSystem)
+
+[INFO] 23:04:50:976 FileSystem/(3670:3670): hilo principal esta ejecutando
+[INFO] 23:05:00:978 FileSystem/(3670:3670): hilo principal esta ejecutando
+[INFO] 23:05:10:978 FileSystem/(3670:3670): hilo principal esta ejecutando
+[INFO] 23:05:20:979 FileSystem/(3670:3670): hilo principal esta ejecutando
+[ERROR] 23:05:33:349 FileSystem/(3681:3681): Error al conectar (a Memoria)
+
+[INFO] 23:05:33:350 FileSystem/(3681:3681): hilo principal esta ejecutando
+[INFO] 23:05:33:350 FileSystem/(3681:3682): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 23:05:33:350 FileSystem/(3681:3682): Esperando cliente... (FileSystem)
+
+[ERROR] 23:06:03:739 FileSystem/(3693:3693): Error al conectar (a Memoria)
+
+[INFO] 23:06:03:739 FileSystem/(3693:3693): hilo principal esta ejecutando
+[ERROR] 23:06:03:739 FileSystem/(3693:3694): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:06:13:742 FileSystem/(3693:3693): hilo principal esta ejecutando
+[ERROR] 23:07:03:212 FileSystem/(3730:3730): Error al conectar (a Memoria)
+
+[INFO] 23:07:03:212 FileSystem/(3730:3730): hilo principal esta ejecutando
+[ERROR] 23:07:03:212 FileSystem/(3730:3731): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:07:13:217 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:07:23:217 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:07:33:218 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:07:43:221 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:07:53:221 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:08:03:222 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:08:13:223 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:08:23:223 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:08:33:223 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:08:43:223 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:08:53:224 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:09:03:224 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:09:13:226 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:09:23:226 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:09:33:226 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:09:43:226 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:09:53:227 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:10:03:227 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:10:13:227 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:10:23:227 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:10:33:228 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:10:43:228 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:10:53:228 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:11:03:229 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:11:13:229 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:11:23:231 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:11:33:233 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:11:43:234 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:11:53:234 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:12:03:235 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:12:13:236 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:12:23:236 FileSystem/(3730:3730): hilo principal esta ejecutando
+[INFO] 23:12:33:247 FileSystem/(3730:3730): hilo principal esta ejecutando
+[ERROR] 23:12:47:169 FileSystem/(3774:3774): Error al conectar (a Memoria)
+
+[INFO] 23:12:47:169 FileSystem/(3774:3774): hilo principal esta ejecutando
+[ERROR] 23:12:47:170 FileSystem/(3774:3775): Error al bindear el socket servidor (FileSystem)
+
+[ERROR] 23:12:59:118 FileSystem/(3781:3781): Error al conectar (a Memoria)
+
+[INFO] 23:12:59:118 FileSystem/(3781:3781): hilo principal esta ejecutando
+[ERROR] 23:12:59:119 FileSystem/(3781:3782): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:13:09:119 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:13:19:120 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:13:29:122 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:13:39:127 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:13:49:128 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:13:59:128 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:14:09:130 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:14:19:131 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:14:29:132 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:14:39:132 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:14:49:134 FileSystem/(3781:3781): hilo principal esta ejecutando
+[INFO] 23:14:59:135 FileSystem/(3781:3781): hilo principal esta ejecutando
+[ERROR] 23:17:13:951 FileSystem/(3818:3818): Error al conectar (a Memoria)
+
+[INFO] 23:17:13:951 FileSystem/(3818:3818): hilo principal esta ejecutando
+[ERROR] 23:17:13:951 FileSystem/(3818:3819): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:17:23:952 FileSystem/(3818:3818): hilo principal esta ejecutando
+[INFO] 23:17:33:955 FileSystem/(3818:3818): hilo principal esta ejecutando
+[INFO] 23:17:43:956 FileSystem/(3818:3818): hilo principal esta ejecutando
+[ERROR] 23:17:51:676 FileSystem/(3850:3850): Error al conectar (a Memoria)
+
+[INFO] 23:17:51:676 FileSystem/(3850:3850): hilo principal esta ejecutando
+[ERROR] 23:17:51:676 FileSystem/(3850:3851): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:18:01:676 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:18:11:677 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:18:21:679 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:18:31:681 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:18:41:685 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:18:51:686 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:19:01:693 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:19:11:696 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:19:21:696 FileSystem/(3850:3850): hilo principal esta ejecutando
+[INFO] 23:19:31:697 FileSystem/(3850:3850): hilo principal esta ejecutando
+[ERROR] 23:19:37:194 FileSystem/(3873:3873): Error al conectar (a Memoria)
+
+[INFO] 23:19:37:194 FileSystem/(3873:3873): hilo principal esta ejecutando
+[ERROR] 23:19:37:194 FileSystem/(3873:3874): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:19:47:195 FileSystem/(3873:3873): hilo principal esta ejecutando
+[ERROR] 23:20:25:439 FileSystem/(3899:3899): Error al conectar (a Memoria)
+
+[INFO] 23:20:25:439 FileSystem/(3899:3899): hilo principal esta ejecutando
+[ERROR] 23:20:25:439 FileSystem/(3899:3900): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:20:35:441 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:20:45:441 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:20:55:449 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:21:05:450 FileSystem/(3899:3899): hilo principal esta ejecutando
+[ERROR] 23:21:14:359 FileSystem/(3918:3918): Error al conectar (a Memoria)
+
+[INFO] 23:21:14:359 FileSystem/(3918:3918): hilo principal esta ejecutando
+[ERROR] 23:21:14:359 FileSystem/(3918:3919): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:21:15:451 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:21:24:360 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:21:25:451 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:21:34:361 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:21:35:452 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:21:44:361 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:21:45:452 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:21:54:365 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:21:55:452 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:22:04:372 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:22:05:455 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:22:14:372 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:22:15:457 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:22:24:373 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:22:25:460 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:22:34:377 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:22:35:463 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:22:44:377 FileSystem/(3918:3918): hilo principal esta ejecutando
+[INFO] 23:22:45:468 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:22:55:468 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:23:05:471 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:23:15:472 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:23:25:478 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:23:35:486 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:23:45:486 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:23:55:487 FileSystem/(3899:3899): hilo principal esta ejecutando
+[ERROR] 23:24:04:181 FileSystem/(3959:3959): Error al conectar (a Memoria)
+
+[INFO] 23:24:04:181 FileSystem/(3959:3959): hilo principal esta ejecutando
+[ERROR] 23:24:04:181 FileSystem/(3959:3960): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:24:05:488 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:24:14:182 FileSystem/(3959:3959): hilo principal esta ejecutando
+[INFO] 23:24:15:488 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:24:25:491 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:24:35:492 FileSystem/(3899:3899): hilo principal esta ejecutando
+[INFO] 23:27:40:320 FileSystem/(3986:3986): Superbloque.cfg
+[ERROR] 23:27:40:320 FileSystem/(3986:3986): Error al conectar (a Memoria)
+
+[INFO] 23:27:40:320 FileSystem/(3986:3986): hilo principal esta ejecutando
+[ERROR] 23:27:40:320 FileSystem/(3986:3987): Error al bindear el socket servidor (FileSystem)
+
+[INFO] 23:27:50:321 FileSystem/(3986:3986): hilo principal esta ejecutando
+[INFO] 23:28:16:904 FileSystem/(3996:3996): Superbloque.cfg
+[ERROR] 23:28:16:904 FileSystem/(3996:3996): Error al conectar (a Memoria)
+
+[INFO] 23:28:16:904 FileSystem/(3996:3996): hilo principal esta ejecutando
+[INFO] 23:28:16:904 FileSystem/(3996:3997): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 23:28:16:904 FileSystem/(3996:3997): Esperando cliente... (FileSystem)
+
+[INFO] 23:28:26:908 FileSystem/(3996:3996): hilo principal esta ejecutando
+[INFO] 23:28:59:570 FileSystem/(4016:4016): Superbloque.cfg
+[INFO] 23:28:59:570 FileSystem/(4016:4016): 64
+[ERROR] 23:28:59:570 FileSystem/(4016:4016): Error al conectar (a Memoria)
+
+[INFO] 23:28:59:570 FileSystem/(4016:4016): hilo principal esta ejecutando
+[INFO] 23:28:59:570 FileSystem/(4016:4017): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 23:28:59:570 FileSystem/(4016:4017): Esperando cliente... (FileSystem)
+

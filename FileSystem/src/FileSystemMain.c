@@ -17,9 +17,12 @@ int main(int argc, char* argv[])
 	signal(SIGINT, sighandler);
 
 	FS_Logger = log_create("FileSystem.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
-	
+
+
 	//leer las config
-	LeerConfigs(argv[1]);
+	LeerConfigs(argv[1],argv[2]);
+	log_info(FS_Logger,"%s",argv[2]);
+	log_info(FS_Logger,"%s",BLOCK_SIZE);
 
 	InicializarConexiones();
 
@@ -73,7 +76,7 @@ void* EscuchaKernel()
 	return EXIT_FAILURE;
 }
 
-void LeerConfigs(char* path)
+void LeerConfigs(char* path, char* path_superbloque)
 {
     config = config_create(path);
 
@@ -85,4 +88,13 @@ void LeerConfigs(char* path)
 
     if(config_has_property(config, "PUERTO_ESCUCHA"))
         PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
+
+   configSB = config_create(path_superbloque);
+
+	if(config_has_property(configSB, "BLOCK_SIZE"))
+		BLOCK_SIZE = config_get_string_value(configSB, "BLOCK_SIZE");
+
+	if(config_has_property(configSB, "BLOCK_COUNT"))
+		BLOCK_COUNT = config_get_string_value(configSB, "BLOCK_COUNT");
+
 }

@@ -2,5 +2,5 @@
 FILE=FileSystem
 make $FILE
 if test -f "./$FILE"; then
-    ./$FILE FileSystem.cfg
+    ./$FILE FileSystem.cfg Superbloque.cfg
 fi
