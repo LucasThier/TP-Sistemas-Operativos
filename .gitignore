@@ -61,5 +61,5 @@ dkms.conf
 .vs
 .vscode
 
-.log
-.json
+*.log
+*.json
