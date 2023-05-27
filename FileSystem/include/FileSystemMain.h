@@ -5,9 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <sys/mman.h>
 
-int InicializarConexiones();
+
+void InicializarConexiones();
 void* EscuchaKernel();
+void LeerConfigs(char* p, char* p2);
+void LevantarArchivos();
+void LiberarMemoria();
 
 t_config *config, *configSB;
 
@@ -17,8 +22,10 @@ char* PUERTO_MEMORIA;
 char* PUERTO_ESCUCHA;
 char* BLOCK_SIZE;
 char* BLOCK_COUNT;
+FILE* BLOQUES;
+FILE* BITMAP;
 
-void LeerConfigs(char* path, char* path2);
+
 
 char NOMBRE_PROCESO[11] = "FileSystem";
 

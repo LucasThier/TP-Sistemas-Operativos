@@ -61195,3 +61195,141 @@
 
 [INFO] 23:28:59:570 FileSystem/(4016:4017): Esperando cliente... (FileSystem)
 
+[INFO] 22:32:53:677 FileSystem/(2662:2662): Superbloque.cfg
+[INFO] 22:32:53:677 FileSystem/(2662:2662): 64
+[ERROR] 22:32:53:677 FileSystem/(2662:2662): Error al conectar (a Memoria)
+
+[INFO] 22:32:53:677 FileSystem/(2662:2662): hilo principal esta ejecutando
+[INFO] 22:32:53:677 FileSystem/(2662:2663): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:32:53:677 FileSystem/(2662:2663): Esperando cliente... (FileSystem)
+
+[INFO] 22:33:24:293 FileSystem/(2681:2681): Superbloque.cfg
+[INFO] 22:33:24:293 FileSystem/(2681:2681): 64
+[ERROR] 22:33:24:293 FileSystem/(2681:2681): Error al conectar (a Memoria)
+
+[INFO] 22:33:24:293 FileSystem/(2681:2681): hilo principal esta ejecutando
+[INFO] 22:33:24:294 FileSystem/(2681:2682): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:33:24:294 FileSystem/(2681:2682): Esperando cliente... (FileSystem)
+
+[INFO] 22:37:12:426 FileSystem/(2749:2749): Superbloque.cfg
+[INFO] 22:37:12:426 FileSystem/(2749:2749): 64
+[ERROR] 22:37:12:426 FileSystem/(2749:2749): Error al conectar (a Memoria)
+
+[INFO] 22:37:12:426 FileSystem/(2749:2749): hilo principal esta ejecutando
+[INFO] 22:37:12:426 FileSystem/(2749:2750): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:37:12:427 FileSystem/(2749:2750): Esperando cliente... (FileSystem)
+
+[INFO] 22:44:26:436 FileSystem/(3039:3039): valor: 
+[ERROR] 22:44:26:436 FileSystem/(3039:3039): Error al conectar (a Memoria)
+
+[INFO] 22:44:26:436 FileSystem/(3039:3039): hilo principal esta ejecutando
+[INFO] 22:44:26:436 FileSystem/(3039:3040): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:44:26:436 FileSystem/(3039:3040): Esperando cliente... (FileSystem)
+
+[INFO] 22:44:36:437 FileSystem/(3039:3039): hilo principal esta ejecutando
+[INFO] 22:44:46:439 FileSystem/(3039:3039): hilo principal esta ejecutando
+[INFO] 22:46:23:057 FileSystem/(3058:3058): valor: 
+[ERROR] 22:46:23:057 FileSystem/(3058:3058): Error al conectar (a Memoria)
+
+[INFO] 22:46:23:057 FileSystem/(3058:3058): hilo principal esta ejecutando
+[INFO] 22:46:23:057 FileSystem/(3058:3059): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:46:23:057 FileSystem/(3058:3059): Esperando cliente... (FileSystem)
+
+[INFO] 22:46:33:064 FileSystem/(3058:3058): hilo principal esta ejecutando
+[INFO] 22:50:56:968 FileSystem/(3751:3751): valor: 
+[ERROR] 22:50:56:968 FileSystem/(3751:3751): Error al conectar (a Memoria)
+
+[INFO] 22:50:56:968 FileSystem/(3751:3751): hilo principal esta ejecutando
+[INFO] 22:50:56:968 FileSystem/(3751:3752): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:50:56:968 FileSystem/(3751:3752): Esperando cliente... (FileSystem)
+
+[INFO] 22:51:59:236 FileSystem/(3774:3774): valor: 
+[ERROR] 22:51:59:236 FileSystem/(3774:3774): Error al conectar (a Memoria)
+
+[INFO] 22:51:59:236 FileSystem/(3774:3774): hilo principal esta ejecutando
+[INFO] 22:51:59:236 FileSystem/(3774:3775): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:51:59:236 FileSystem/(3774:3775): Esperando cliente... (FileSystem)
+
+[INFO] 22:53:20:948 FileSystem/(3793:3793): valor: -489872400
+[ERROR] 22:53:20:948 FileSystem/(3793:3793): Error al conectar (a Memoria)
+
+[INFO] 22:53:20:948 FileSystem/(3793:3793): hilo principal esta ejecutando
+[INFO] 22:53:20:948 FileSystem/(3793:3794): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:53:20:948 FileSystem/(3793:3794): Esperando cliente... (FileSystem)
+
+[INFO] 22:53:30:948 FileSystem/(3793:3793): hilo principal esta ejecutando
+[INFO] 22:53:49:892 FileSystem/(3808:3808): valor: 0.000000
+[ERROR] 22:53:49:892 FileSystem/(3808:3808): Error al conectar (a Memoria)
+
+[INFO] 22:53:49:892 FileSystem/(3808:3808): hilo principal esta ejecutando
+[INFO] 22:53:49:892 FileSystem/(3808:3809): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:53:49:892 FileSystem/(3808:3809): Esperando cliente... (FileSystem)
+
+[INFO] 22:54:28:028 FileSystem/(3820:3820): valor: 763108704
+[ERROR] 22:54:28:028 FileSystem/(3820:3820): Error al conectar (a Memoria)
+
+[INFO] 22:54:28:028 FileSystem/(3820:3820): hilo principal esta ejecutando
+[INFO] 22:54:28:028 FileSystem/(3820:3821): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:54:28:028 FileSystem/(3820:3821): Esperando cliente... (FileSystem)
+
+[INFO] 22:54:38:032 FileSystem/(3820:3820): hilo principal esta ejecutando
+[INFO] 22:55:39:284 FileSystem/(3842:3842): valor: -183318192
+[INFO] 22:55:39:284 FileSystem/(3842:3842): valor: -183310000
+[ERROR] 22:55:39:284 FileSystem/(3842:3842): Error al conectar (a Memoria)
+
+[INFO] 22:55:39:284 FileSystem/(3842:3842): hilo principal esta ejecutando
+[INFO] 22:55:39:284 FileSystem/(3842:3843): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:55:39:284 FileSystem/(3842:3843): Esperando cliente... (FileSystem)
+
+[INFO] 22:55:48:420 FileSystem/(3847:3847): valor: 661616240
+[INFO] 22:55:48:420 FileSystem/(3847:3847): valor: 661624432
+[ERROR] 22:55:48:420 FileSystem/(3847:3847): Error al conectar (a Memoria)
+
+[INFO] 22:55:48:420 FileSystem/(3847:3847): hilo principal esta ejecutando
+[INFO] 22:55:48:420 FileSystem/(3847:3848): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:55:48:420 FileSystem/(3847:3848): Esperando cliente... (FileSystem)
+
+[INFO] 22:58:57:508 FileSystem/(3863:3863): valor: -1335260144
+[INFO] 22:58:57:508 FileSystem/(3863:3863): valor: 
+[ERROR] 22:58:57:508 FileSystem/(3863:3863): Error al conectar (a Memoria)
+
+[INFO] 22:58:57:508 FileSystem/(3863:3863): hilo principal esta ejecutando
+[INFO] 22:58:57:508 FileSystem/(3863:3864): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:58:57:508 FileSystem/(3863:3864): Esperando cliente... (FileSystem)
+
+[INFO] 22:59:07:508 FileSystem/(3863:3863): hilo principal esta ejecutando
+[INFO] 22:59:17:509 FileSystem/(3863:3863): hilo principal esta ejecutando
+[INFO] 22:59:21:396 FileSystem/(3881:3881): valor: 561720416
+[INFO] 22:59:21:396 FileSystem/(3881:3881): valor: 0.000000
+[ERROR] 22:59:21:396 FileSystem/(3881:3881): Error al conectar (a Memoria)
+
+[INFO] 22:59:21:396 FileSystem/(3881:3881): hilo principal esta ejecutando
+[INFO] 22:59:21:396 FileSystem/(3881:3882): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 22:59:21:396 FileSystem/(3881:3882): Esperando cliente... (FileSystem)
+
+[INFO] 22:59:31:396 FileSystem/(3881:3881): hilo principal esta ejecutando
+[INFO] 22:59:41:397 FileSystem/(3881:3881): hilo principal esta ejecutando
+[INFO] 22:59:51:397 FileSystem/(3881:3881): hilo principal esta ejecutando
+[INFO] 23:00:05:979 FileSystem/(3897:3897): valor: 0.000000
+[INFO] 23:00:05:979 FileSystem/(3897:3897): valor: 0.000000
+[ERROR] 23:00:05:980 FileSystem/(3897:3897): Error al conectar (a Memoria)
+
+[INFO] 23:00:05:980 FileSystem/(3897:3897): hilo principal esta ejecutando
+[INFO] 23:00:05:980 FileSystem/(3897:3898): Escuchando en 0.0.0.0:35003 (FileSystem)
+
+[INFO] 23:00:05:980 FileSystem/(3897:3898): Esperando cliente... (FileSystem)
+

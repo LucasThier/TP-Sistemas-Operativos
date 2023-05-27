@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
 
 	//leer las config
 	LeerConfigs(argv[1],argv[2]);
+	LevantarArchivos();
 
 	InicializarConexiones();
 
@@ -33,7 +34,7 @@ int main(int argc, char* argv[])
 }
 
 //Crea un hilo de escucha para el kernel
-int InicializarConexiones()
+void InicializarConexiones()
 {
 	SocketMemoria = conectar_servidor(FS_Logger, "Memoria", IP_MEMORIA , PUERTO_MEMORIA);
 
@@ -42,6 +43,7 @@ int InicializarConexiones()
     if (pthread_create(&HiloEscucha, NULL, EscuchaKernel, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
+
 }
 
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
@@ -71,6 +73,7 @@ void* EscuchaKernel()
 		}
 	}
 	liberar_conexion(SocketFileSystem);
+	LiberarMemoria();
 	return EXIT_FAILURE;
 }
 
@@ -95,4 +98,53 @@ void LeerConfigs(char* path, char* path_superbloque)
 	if(config_has_property(configSB, "BLOCK_COUNT"))
 		BLOCK_COUNT = config_get_string_value(configSB, "BLOCK_COUNT");
 
+}
+
+void LevantarArchivos(){
+	int cantBloques = atoi(BLOCK_COUNT);
+	int TamBloques = atoi(BLOCK_SIZE);
+	// Abrir el archivo de bloques en modo escritura binaria
+	BLOQUES = fopen("Bloques.dat", "wb+");
+
+	if (BLOQUES == NULL) {
+		printf("Error al abrir el archivo de bloques.\n");
+		return EXIT_FAILURE;
+	}
+
+	// Crear un bloque de datos
+	unsigned char bloque[TamBloques];  // Definir un arreglo de tamaño BLOCK_SIZE
+
+	// Escribir datos en el bloque (por ejemplo, llenarlo con ceros)
+	memset(bloque, 0, TamBloques);
+
+	// Escribir el bloque en el archivo de bloques
+	fwrite(bloque, sizeof(unsigned char), TamBloques, BLOQUES);
+
+	// Abrir el archivo de bitmap de bloques en modo escritura binaria
+	BITMAP = fopen("bitmap.dat", "wb+");
+
+	if (BITMAP == NULL) {
+		printf("Error al abrir el archivo de bitmap de bloques.\n");
+		return EXIT_FAILURE;
+	}
+
+	// Crear el bitmap de bloques
+	unsigned char bitmap[cantBloques / 8];  // Un byte por cada 8 bloques
+
+	// Inicializar todos los bits del bitmap como libres (false)
+	memset(bitmap, 0, cantBloques / 8);
+
+	// Escribir el bitmap en el archivo de bitmap de bloques
+	fwrite(bitmap, sizeof(unsigned char), cantBloques / 8, BITMAP);
+
+	fread(bitmap,sizeof(unsigned char), cantBloques / 8, BITMAP);
+	log_info(FS_Logger,"Bitmap inicializado en: %f",bitmap);
+	log_info(FS_Logger,"Bloques inicializado en : %f",bloque);
+}
+
+void LiberarMemoria(){
+	// Cerrar el archivo de bloques
+	fclose(BLOQUES);
+	// Cerrar el archivo de bitmap
+	fclose(BITMAP);
 }
