@@ -33,6 +33,8 @@ int GRADO_MULTIPROGRAMACION;
 char* ALGORITMO_PLANIFICACION;
 int ESTIMACION_INICIAL;
 float HRRN_ALFA;
+char** RECURSOS;
+char** G_INSTANCIAS_RECURSOS;
 void LeerConfigs(char* path);
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -76,6 +78,7 @@ typedef struct
     int socketConsolaAsociada;
     int PID;
     int programCounter;
+    char* recursoBloqueante;
     t_registrosCPU* registrosCPU;
     t_list* tablaDeSegmentos;
     double tiempoUltimaRafaga;
@@ -90,6 +93,7 @@ t_list* g_Lista_READY;
 t_PCB* g_EXEC;
 t_list* g_Lista_BLOCKED;
 t_list* g_Lista_EXIT;
+t_list* g_Lista_RECOURSE_BLOCKED;
 
 t_PCB* CrearPCB(t_list* instrucciones, int socketConsola);
 
@@ -113,6 +117,8 @@ sem_t m_READY;
 sem_t m_EXEC;
 sem_t m_BLOCKED;
 sem_t m_EXIT;
+sem_t m_RECURSOS;
+sem_t m_BLOCKED_RECURSOS;
 sem_t c_MultiProg;
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

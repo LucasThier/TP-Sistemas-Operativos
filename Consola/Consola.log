@@ -37190,3 +37190,6 @@
 
 [INFO] 00:39:50:118 CONSOLA/(40383:40383): Cliente conectado en 0.0.0.0:33668 (a Kernel)
 
+[ERROR] 02:08:40:663 CONSOLA/(41749:41749): Error al conectar (a Kernel)
+
+[ERROR] 02:08:40:664 CONSOLA/(41749:41749): No se pudo conectar con el Kernel

@@ -72481,3 +72481,65 @@
 [INFO] 01:28:27:163 KERNEL/(40375:40375): hilo principal esta ejecutando
 [INFO] 01:28:37:164 KERNEL/(40375:40375): hilo principal esta ejecutando
 [INFO] 01:28:47:164 KERNEL/(40375:40375): hilo principal esta ejecutando
+[ERROR] 02:11:26:180 KERNEL/(41838:41838): Error al conectar (a CPU)
+
+[ERROR] 02:11:26:181 KERNEL/(41838:41838): Error al conectar (a FileSystem)
+
+[ERROR] 02:11:26:181 KERNEL/(41838:41838): Error al conectar (a Memoria)
+
+[INFO] 02:11:26:181 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:11:26:183 KERNEL/(41838:41841): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 02:11:26:183 KERNEL/(41838:41841): Esperando cliente... (KERNEL)
+
+[INFO] 02:11:36:181 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:11:46:182 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:11:56:183 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:12:06:185 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:12:16:185 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:12:26:185 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:12:36:186 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:12:46:187 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:12:56:188 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:13:06:188 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:13:16:189 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:13:26:189 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:13:36:189 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:13:46:190 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:13:56:190 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:14:06:191 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:14:16:191 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:14:26:191 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:14:36:192 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:14:46:192 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:14:56:193 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:15:06:193 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:15:16:193 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:15:26:194 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:15:36:194 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:15:46:195 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:15:56:195 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:16:06:195 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:16:16:195 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:16:26:196 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:16:36:196 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:16:46:196 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:16:56:196 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:17:06:197 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:17:16:197 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:17:26:197 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:17:36:197 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:17:46:198 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:17:56:199 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:18:06:200 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:18:16:200 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:18:26:200 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:18:36:201 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:18:46:201 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:18:56:202 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:19:06:202 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:19:16:203 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:19:26:203 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:19:36:203 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:19:46:204 KERNEL/(41838:41838): hilo principal esta ejecutando
+[INFO] 02:19:56:204 KERNEL/(41838:41838): hilo principal esta ejecutando

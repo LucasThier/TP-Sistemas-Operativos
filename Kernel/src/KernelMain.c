@@ -68,6 +68,10 @@ void LeerConfigs(char* path)
 	ESTIMACION_INICIAL = config_get_int_value(config, "ESTIMACION_INICIAL");
 	
 	HRRN_ALFA = config_get_double_value(config, "HRRN_ALFA");
+
+	RECURSOS = config_get_array_value(config, "RECURSOS");
+
+	G_INSTANCIAS_RECURSOS = config_get_array_value(config, "INSTANCIAS_RECURSOS");
 }
 
 //Inicializa los semaforos
@@ -79,6 +83,8 @@ void InicializarSemaforos()
 	sem_init(&m_EXEC, 0, 1);
 	sem_init(&m_EXIT, 0, 1);
 	sem_init(&m_BLOCKED, 0, 1);
+	sem_init(&m_RECURSOS, 0, 1);
+	SemInit(&m_BLOCKED_RECURSOS, 0, 0);
 	sem_init(&c_MultiProg, 0, GRADO_MULTIPROGRAMACION);
 }
 
@@ -331,8 +337,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			return (void)0;
 		}
 		pthread_detach(HiloEntradaSalida);
-
-
 	}
 
 	else if(strcmp(respuesta, "EXIT\n")== 0)
@@ -357,6 +361,76 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		sem_post(&m_EXIT);
 
 		sem_post(&c_MultiProg);		
+	}
+	
+	else if(strcmp(respuesta, "WAIT\n")== 0)
+	{
+		char* Recurso = (char*) recibir_paquete(SocketCPU);
+		Recibir_Y_Actualizar_PCB();
+
+		bool cont = true;
+		int aux = 0;
+		int pos = -1;
+		while (cont)
+		{
+			if(RECURSOS[aux] == NULL)
+				cont = false;
+			else if(strcmp(RECURSOS[aux], Recurso) == 0)
+			{
+				pos = aux;
+				cont = false;
+			}
+			else
+				aux++;
+		}
+
+		//Si idio un recurso que no existe -> Terminar el proceso
+		if(pos == -1)
+		{
+			EnviarMensage("RECHAZADO", SocketCPU);
+			
+			Recibir_Y_Actualizar_PCB();
+
+			//Agregar PCB a la cola de EXIT
+			sem_wait(&m_EXEC);
+			sem_wait(&m_EXIT);
+			list_add(g_Lista_EXIT, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_EXIT);
+
+			sem_post(&c_MultiProg);
+		}
+		//Si existe el recurso
+		else
+		{
+			sem_wait(&m_RECURSOS);
+			int aux = atoi(G_INSTANCIAS_RECURSOS[pos]) - 1;
+			sprintf(G_INSTANCIAS_RECURSOS[pos], "%d", aux);
+			sem_post(&m_RECURSOS);
+
+			//Si no hay recursos disponibles,
+			//agrego el recurso a la lista de bloqueados por Recursos
+			if(aux < 0)
+			{
+				EnviarMensage("RECHAZADO", SocketCPU);
+
+				Recibir_Y_Actualizar_PCB();
+
+				sem_wait(&m_EXEC);
+				sem_wait(&m_BLOCKED_RECURSOS);
+				g_EXEC->recursoBloqueante = Recurso;
+				list_add(g_Lista_RECOURSE_BLOCKED, g_EXEC);
+				g_EXEC = NULL;
+				sem_post(&m_EXEC);
+				sem_post(&m_BLOCKED_RECURSOS);
+			}
+			//si hay recursos disponibles
+			else
+				EnviarMensage("ACEPTADO", SocketCPU);
+		}
+
+		sem_wait(&m_RECURSOS);
 	}
 }
 
@@ -401,9 +475,11 @@ void ImprimirRegistrosPCB(t_PCB* PCB_Registos_A_Imprimir)
 void Recibir_Y_Actualizar_PCB()
 {
 	t_list* PCB_A_Actualizar = recibir_paquete(SocketCPU);
+	sem_wait(&m_EXEC);
 	g_EXEC->programCounter = *(int*) list_remove(PCB_A_Actualizar, 0);
 	g_EXEC->registrosCPU = ObtenerRegistrosDelPaquete(PCB_A_Actualizar);
 	g_EXEC->tiempoUltimaRafaga = *(double*) list_remove(PCB_A_Actualizar, 0);
+	sem_post(&m_EXEC);
 }
 
 t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
@@ -505,7 +581,6 @@ void* AdministradorDeModulo(void* arg)
 		list_add(g_Lista_NEW, PCBConsola);
 		sem_post(&m_NEW);
 	}
-
 	return NULL;
 }
 
