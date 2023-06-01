@@ -140,6 +140,9 @@ void* EscuchaKernel()
 					{
 						PC++;
 						EnviarMensage("WAIT\n", SocketKernel);
+						char* RecursoSolicitado = strtok(NULL, " ");
+						EnviarMensage(RecursoSolicitado, SocketKernel);
+
 						char* Respuesta = (char*) recibir_paquete(SocketCPU);
 						if(strcmp(Respuesta, "RECHAZADO\n")==0)
 						{
@@ -151,6 +154,16 @@ void* EscuchaKernel()
 					else if(strcmp(Instruccion_A_Ejecutar, "SIGNAL\n")==0)
 					{
 						PC++;
+						EnviarMensage("SIGNAL\n", SocketKernel);
+						char* RecursoLiberado = strtok(NULL, " ");
+						EnviarMensage(RecursoLiberado, SocketKernel);
+
+						char* Respuesta = (char*) recibir_paquete(SocketCPU);
+						if(strcmp(Respuesta, "RECHAZADO\n")==0)
+						{
+							Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+							SeguirEjecutando = false;
+						}
 					}
 
 					else if(strcmp(Instruccion_A_Ejecutar, "MOV_IN\n")==0)

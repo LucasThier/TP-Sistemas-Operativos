@@ -366,7 +366,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 	else if(strcmp(respuesta, "WAIT\n")== 0)
 	{
 		char* Recurso = (char*) recibir_paquete(SocketCPU);
-		Recibir_Y_Actualizar_PCB();
 
 		bool cont = true;
 		int aux = 0;
@@ -429,8 +428,94 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			else
 				EnviarMensage("ACEPTADO", SocketCPU);
 		}
+	}
 
-		sem_wait(&m_RECURSOS);
+	else if(strcmp(respuesta, "SIGNAL\n")== 0)
+	{
+		char* Recurso = (char*) recibir_paquete(SocketCPU);
+
+		bool cont = true;
+		int aux = 0;
+		int pos = -1;
+		while (cont)
+		{
+			if(RECURSOS[aux] == NULL)
+				cont = false;
+			else if(strcmp(RECURSOS[aux], Recurso) == 0)
+			{
+				pos = aux;
+				cont = false;
+			}
+			else
+				aux++;
+		}
+
+		//Si idio un recurso que no existe -> Terminar el proceso
+		if(pos == -1)
+		{
+			EnviarMensage("RECHAZADO", SocketCPU);
+			
+			Recibir_Y_Actualizar_PCB();
+
+			//Agregar PCB a la cola de EXIT
+			sem_wait(&m_EXEC);
+			sem_wait(&m_EXIT);
+			list_add(g_Lista_EXIT, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_EXIT);
+
+			sem_post(&c_MultiProg);
+		}
+		//Si existe el recurso
+		else
+		{
+			EnviarMensage("ACEPTADO", SocketCPU);
+			
+			//busco algun proceso que este esperando que el recurso se livere
+			if(list_size(g_Lista_RECOURSE_BLOCKED) > 0)
+			{
+				int i = 0;
+
+				while (cont)
+				{
+					//si no hay ninguno esperandolo,
+					//sumo uno a la cantidad de instancias disponibles de ese recurso
+					if(i >= list_size(g_Lista_RECOURSE_BLOCKED))
+					{
+						sem_wait(&m_RECURSOS);
+						int aux = atoi(G_INSTANCIAS_RECURSOS[pos]) + 1;
+						sprintf(G_INSTANCIAS_RECURSOS[pos], "%d", aux);
+						sem_post(&m_RECURSOS);
+
+						break;
+					}
+					
+					t_PCB* PCB = list_get(g_Lista_RECOURSE_BLOCKED, i);
+
+					//si hay uno esperando el recurso, lo paso a ready y dejo de buscar
+					if(strcmp(PCB->recursoBloqueante, Recurso) == 0)
+					{
+						sem_wait(&m_READY);
+						sem_wait(&m_BLOCKED_RECURSOS);
+						list_add(g_Lista_READY, PCB);
+						list_remove(g_Lista_RECOURSE_BLOCKED, i);
+						sem_post(&m_READY);
+						sem_post(&m_BLOCKED_RECURSOS);
+
+						break;
+					}
+					
+				}
+			}
+			else
+			{				
+				sem_wait(&m_RECURSOS);
+				int aux = atoi(G_INSTANCIAS_RECURSOS[pos]) + 1;
+				sprintf(G_INSTANCIAS_RECURSOS[pos], "%d", aux);
+				sem_post(&m_RECURSOS);		
+			}
+		}
 	}
 }
 
