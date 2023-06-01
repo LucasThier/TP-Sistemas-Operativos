@@ -84,7 +84,7 @@ void InicializarSemaforos()
 	sem_init(&m_EXIT, 0, 1);
 	sem_init(&m_BLOCKED, 0, 1);
 	sem_init(&m_RECURSOS, 0, 1);
-	SemInit(&m_BLOCKED_RECURSOS, 0, 0);
+	sem_init(&m_BLOCKED_RECURSOS, 0, 0);
 	sem_init(&c_MultiProg, 0, GRADO_MULTIPROGRAMACION);
 }
 
