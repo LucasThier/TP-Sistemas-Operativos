@@ -309,6 +309,32 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		sem_post(&m_EXEC);
 	}
 
+	else if(strcmp(respuesta, "I/O\n")== 0){
+
+		int tiempo = atoi((char*) recibir_paquete(SocketCPU));
+		Recibir_Y_Actualizar_PCB();
+
+		sem_wait(&m_EXEC);
+		sem_wait(&m_BLOCKED);
+		list_add(g_Lista_BLOCKED, g_EXEC);
+		t_PCB* PCB_aux = g_EXEC;
+		g_EXEC = NULL;
+		sem_post(&m_EXEC);
+		sem_post(&m_BLOCKED);
+
+		t_list* ListaAux = list_create();
+		list_add(ListaAux, PCB_aux);
+		list_add(ListaAux, (void*)(intptr_t)tiempo);
+
+		pthread_t HiloEntradaSalida;
+		if (pthread_create(&HiloEntradaSalida, NULL, EsperarEntradaSalida, (void*)ListaAux) != 0) {
+			return (void)0;
+		}
+		pthread_detach(HiloEntradaSalida);
+
+
+	}
+
 	else if(strcmp(respuesta, "EXIT\n")== 0)
 	{
 		Recibir_Y_Actualizar_PCB();
@@ -332,6 +358,25 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 		sem_post(&c_MultiProg);		
 	}
+}
+
+void* EsperarEntradaSalida(void* arg)
+{
+	//recibo los argumentos
+	t_list* ListaAux = (t_list*) arg;
+	t_PCB* PCB_aux = (t_PCB*) list_get(ListaAux, 0);
+	int Tiempo = (int)(intptr_t)list_get(ListaAux, 1);
+
+	//Simulo la espera de la entrada/salida
+	sleep(Tiempo);
+
+	//cuando termina el tiempo agrego el PCB a la cola de READY
+	sem_wait(&m_READY);
+	AgregarAReady(PCB_aux);
+	sem_post(&m_READY);
+
+	list_destroy(ListaAux);
+	return (void*)0;
 }
 
 void ImprimirRegistrosPCB(t_PCB* PCB_Registos_A_Imprimir)
@@ -424,6 +469,8 @@ void* EscucharConexiones()
 				if (pthread_create(&HiloAdministradorDeMensajes, NULL, AdministradorDeModulo, (void*)&SocketCliente) != 0) {
 					exit(EXIT_FAILURE);
 				}
+				pthread_detach(HiloAdministradorDeMensajes);
+
 			}
 		}
 	}
@@ -433,48 +480,33 @@ void* EscucharConexiones()
 	return (void*)EXIT_FAILURE;
 }
 
-//Funcion que se ejecuta para cada consola conectada
+//Funcion que se ejecuta para cada consola cuando se conecta
 void* AdministradorDeModulo(void* arg)
 {
 	int* SocketClienteConectado = (int*)arg;
-
-	//--------------------------------------------------------------------------------------------------------------------------------------------------
-	//Acciones a realizar para cada consola conectado:
 	 
 	t_list* instruccionesRecibidas = (t_list*)recibir_paquete(*SocketClienteConectado);
-
-	printf("Cantidad de instrucciones recibidas: %d\n", list_size(instruccionesRecibidas));
-
-	//itera la lista y hace lo que este en la funcion para cada elemento
-	list_iterate(instruccionesRecibidas, (void*) ForEach_Instrucciones);
 
 	t_PCB* PCBConsola = CrearPCB(instruccionesRecibidas, *SocketClienteConectado);
 
 	//Verificar si el grado de multiprogramacion lo permite, si lo permite, pasar a ready directamente
 	if(sem_trywait(&c_MultiProg) == 0)
 	{
-		printf("agregando a ready ya que el grado de multiprogramacion lo permite");
+		printf("agregando a ready ya que el grado de multiprogramacion lo permite\n");
 		sem_wait(&m_READY);
 		list_add(g_Lista_READY, PCBConsola);
 		sem_post(&m_READY);
 	}
-	//pasar a new
+	//si no, pasar a new
 	else
 	{
-		printf("agregando a new ya que el grado de multiprogramacion no lo permite");
+		printf("agregando a new ya que el grado de multiprogramacion no lo permite\n");
 		sem_wait(&m_NEW);
 		list_add(g_Lista_NEW, PCBConsola);
 		sem_post(&m_NEW);
 	}
 
-	//--------------------------------------------------------------------------------------------------------------------------------------------------
 	return NULL;
-}
-
-//Repite el contenido de la funcion para cada instruccion en la lista
-void ForEach_Instrucciones(char* value)
-{
-	log_info(Kernel_Logger,"Instruccion Recibida: %s", value);
 }
 
 //Crea un PCB con los datos recibidos

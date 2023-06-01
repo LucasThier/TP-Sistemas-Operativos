@@ -69941,3 +69941,2543 @@
 
 [INFO] 22:40:18:474 KERNEL/(3352:3355): Esperando cliente... (KERNEL)
 
+[ERROR] 18:32:02:092 KERNEL/(35364:35364): Error al conectar (a CPU)
+
+[ERROR] 18:32:02:093 KERNEL/(35364:35364): Error al conectar (a FileSystem)
+
+[ERROR] 18:32:02:093 KERNEL/(35364:35364): Error al conectar (a Memoria)
+
+[INFO] 18:32:02:093 KERNEL/(35364:35364): hilo principal esta ejecutando
+[INFO] 18:32:02:098 KERNEL/(35364:35367): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 18:32:02:098 KERNEL/(35364:35367): Esperando cliente... (KERNEL)
+
+[ERROR] 18:32:47:972 KERNEL/(35430:35430): Error al conectar (a CPU)
+
+[ERROR] 18:32:47:972 KERNEL/(35430:35430): Error al conectar (a FileSystem)
+
+[ERROR] 18:32:47:972 KERNEL/(35430:35430): Error al conectar (a Memoria)
+
+[INFO] 18:32:47:972 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:32:47:972 KERNEL/(35430:35433): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 18:32:47:972 KERNEL/(35430:35433): Esperando cliente... (KERNEL)
+
+[INFO] 18:32:57:972 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:33:07:973 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:33:17:973 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:33:27:973 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:33:37:974 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:33:47:974 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:33:57:975 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:34:07:976 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:34:17:976 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:34:27:977 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:34:37:977 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:34:47:977 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:34:57:977 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:35:07:978 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:35:17:979 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:35:27:979 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:35:37:979 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:35:47:980 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:35:57:980 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:36:00:947 KERNEL/(35430:35433): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 18:36:00:947 KERNEL/(35430:35433): Esperando cliente... (KERNEL)
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: SET CX CKCK
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: SET BX CHAU
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: SET AX HOLA
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 18:36:00:954 KERNEL/(35430:35481): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:955 KERNEL/(35430:35481): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 18:36:00:956 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:956 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:956 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:956 KERNEL/(35430:35481): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 18:36:00:956 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:956 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:956 KERNEL/(35430:35481): Instruccion Recibida: YIELD
+
+[INFO] 18:36:00:956 KERNEL/(35430:35481): Instruccion Recibida: SET DX KCKC
+
+[INFO] 18:36:00:957 KERNEL/(35430:35481): Instruccion Recibida: EXIT
+
+[INFO] 18:36:07:980 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:36:17:981 KERNEL/(35430:35430): hilo principal esta ejecutando
+[INFO] 18:36:34:159 KERNEL/(35523:35523): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 18:36:34:160 KERNEL/(35523:35523): Error al conectar (a FileSystem)
+
+[ERROR] 18:36:34:172 KERNEL/(35523:35523): Error al conectar (a Memoria)
+
+[INFO] 18:36:34:174 KERNEL/(35523:35523): hilo principal esta ejecutando
+[ERROR] 18:36:34:178 KERNEL/(35523:35526): Error al bindear el socket servidor (KERNEL)
+
+[INFO] 18:37:48:705 KERNEL/(35544:35544): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 18:37:48:706 KERNEL/(35544:35544): Error al conectar (a FileSystem)
+
+[ERROR] 18:37:48:706 KERNEL/(35544:35544): Error al conectar (a Memoria)
+
+[INFO] 18:37:48:706 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:37:48:706 KERNEL/(35544:35547): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 18:37:48:706 KERNEL/(35544:35547): Esperando cliente... (KERNEL)
+
+[INFO] 18:37:58:706 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:38:08:707 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:38:18:707 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:38:28:707 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:38:38:707 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:38:48:708 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:38:58:708 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:39:08:708 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:39:18:709 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:39:28:709 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:39:37:699 KERNEL/(35544:35547): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 18:39:37:699 KERNEL/(35544:35547): Esperando cliente... (KERNEL)
+
+[INFO] 18:39:37:702 KERNEL/(35544:35564): Instruccion Recibida: SET CX CKCK
+
+[INFO] 18:39:37:702 KERNEL/(35544:35564): Instruccion Recibida: SET BX CHAU
+
+[INFO] 18:39:37:702 KERNEL/(35544:35564): Instruccion Recibida: SET AX HOLA
+
+[INFO] 18:39:37:702 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:702 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:702 KERNEL/(35544:35564): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 18:39:37:706 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: YIELD
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: SET DX KCKC
+
+[INFO] 18:39:37:707 KERNEL/(35544:35564): Instruccion Recibida: EXIT
+
+[INFO] 18:39:38:710 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:39:48:710 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:39:58:710 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:40:08:711 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:40:18:711 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:40:23:858 KERNEL/(35544:35547): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 18:40:23:858 KERNEL/(35544:35547): Esperando cliente... (KERNEL)
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: SET CX CKCK
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: SET BX CHAU
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: SET AX HOLA
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 18:40:23:862 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:863 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:864 KERNEL/(35544:35572): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 18:40:23:864 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:864 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:864 KERNEL/(35544:35572): Instruccion Recibida: YIELD
+
+[INFO] 18:40:23:864 KERNEL/(35544:35572): Instruccion Recibida: SET DX KCKC
+
+[INFO] 18:40:23:864 KERNEL/(35544:35572): Instruccion Recibida: EXIT
+
+[INFO] 18:40:28:711 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:40:38:711 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:40:48:712 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:40:58:712 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:41:08:712 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:41:18:713 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:41:28:713 KERNEL/(35544:35544): hilo principal esta ejecutando
+[INFO] 18:51:45:318 KERNEL/(36044:36044): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 18:51:45:322 KERNEL/(36044:36044): Error al conectar (a FileSystem)
+
+[ERROR] 18:51:45:322 KERNEL/(36044:36044): Error al conectar (a Memoria)
+
+[INFO] 18:51:45:322 KERNEL/(36044:36044): hilo principal esta ejecutando
+[INFO] 18:51:45:326 KERNEL/(36044:36047): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 18:51:45:329 KERNEL/(36044:36047): Esperando cliente... (KERNEL)
+
+[INFO] 18:51:55:323 KERNEL/(36044:36044): hilo principal esta ejecutando
+[INFO] 18:52:05:323 KERNEL/(36044:36044): hilo principal esta ejecutando
+[ERROR] 18:59:21:109 KERNEL/(36341:36341): Error al conectar (a CPU)
+
+[ERROR] 18:59:21:109 KERNEL/(36341:36341): Error al conectar (a FileSystem)
+
+[ERROR] 18:59:21:112 KERNEL/(36341:36341): Error al conectar (a Memoria)
+
+[INFO] 18:59:21:112 KERNEL/(36341:36341): hilo principal esta ejecutando
+[INFO] 18:59:21:118 KERNEL/(36341:36344): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 18:59:21:118 KERNEL/(36341:36344): Esperando cliente... (KERNEL)
+
+[INFO] 18:59:30:620 KERNEL/(36370:36370): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 18:59:30:620 KERNEL/(36370:36370): Error al conectar (a FileSystem)
+
+[ERROR] 18:59:30:620 KERNEL/(36370:36370): Error al conectar (a Memoria)
+
+[INFO] 18:59:30:620 KERNEL/(36370:36370): hilo principal esta ejecutando
+[INFO] 18:59:30:620 KERNEL/(36370:36373): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 18:59:30:621 KERNEL/(36370:36373): Esperando cliente... (KERNEL)
+
+[INFO] 18:59:38:592 KERNEL/(36370:36373): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 18:59:38:592 KERNEL/(36370:36373): Esperando cliente... (KERNEL)
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: SET CX CKCK
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: SET BX CHAU
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: SET AX HOLA
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:598 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:599 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:600 KERNEL/(36370:36375): Instruccion Recibida: YIELD
+
+[INFO] 18:59:38:600 KERNEL/(36370:36375): Instruccion Recibida: SET DX KCKC
+
+[INFO] 18:59:38:600 KERNEL/(36370:36375): Instruccion Recibida: EXIT
+
+[INFO] 18:59:39:217 KERNEL/(36370:36373): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 18:59:39:218 KERNEL/(36370:36373): Esperando cliente... (KERNEL)
+
+[INFO] 18:59:39:219 KERNEL/(36370:36377): Instruccion Recibida: SET CX CKCK
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: SET BX CHAU
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: SET AX HOLA
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: I/O 10
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:220 KERNEL/(36370:36377): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:221 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:222 KERNEL/(36370:36377): Instruccion Recibida: YIELD
+
+[INFO] 18:59:39:222 KERNEL/(36370:36377): Instruccion Recibida: SET DX KCKC
+
+[INFO] 18:59:39:222 KERNEL/(36370:36377): Instruccion Recibida: EXIT
+
+[INFO] 18:59:40:620 KERNEL/(36370:36370): hilo principal esta ejecutando
+[INFO] 19:03:11:469 KERNEL/(36487:36487): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 19:03:11:469 KERNEL/(36487:36487): Error al conectar (a FileSystem)
+
+[ERROR] 19:03:11:470 KERNEL/(36487:36487): Error al conectar (a Memoria)
+
+[INFO] 19:03:11:470 KERNEL/(36487:36487): hilo principal esta ejecutando
+[INFO] 19:03:11:470 KERNEL/(36487:36490): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 19:03:11:470 KERNEL/(36487:36490): Esperando cliente... (KERNEL)
+
+[INFO] 19:03:17:270 KERNEL/(36487:36490): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 19:03:17:270 KERNEL/(36487:36490): Esperando cliente... (KERNEL)
+
+[INFO] 19:03:17:272 KERNEL/(36487:36492): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:03:17:272 KERNEL/(36487:36492): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:03:17:272 KERNEL/(36487:36492): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:03:17:272 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:272 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:272 KERNEL/(36487:36492): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:03:17:272 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:272 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: I/O 10
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:273 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:274 KERNEL/(36487:36492): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:03:17:275 KERNEL/(36487:36492): Instruccion Recibida: EXIT
+
+[INFO] 19:03:17:604 KERNEL/(36487:36490): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 19:03:17:604 KERNEL/(36487:36490): Esperando cliente... (KERNEL)
+
+[INFO] 19:03:17:606 KERNEL/(36487:36494): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:03:17:606 KERNEL/(36487:36494): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:03:17:606 KERNEL/(36487:36494): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:03:17:606 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:03:17:608 KERNEL/(36487:36494): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:609 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:610 KERNEL/(36487:36494): Instruccion Recibida: YIELD
+
+[INFO] 19:03:17:610 KERNEL/(36487:36494): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:03:17:610 KERNEL/(36487:36494): Instruccion Recibida: EXIT
+
+[INFO] 19:03:21:470 KERNEL/(36487:36487): hilo principal esta ejecutando
+[INFO] 19:05:38:249 KERNEL/(36609:36609): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 19:05:38:254 KERNEL/(36609:36609): Error al conectar (a FileSystem)
+
+[ERROR] 19:05:38:254 KERNEL/(36609:36609): Error al conectar (a Memoria)
+
+[INFO] 19:05:38:254 KERNEL/(36609:36609): hilo principal esta ejecutando
+[INFO] 19:05:38:254 KERNEL/(36609:36612): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 19:05:38:254 KERNEL/(36609:36612): Esperando cliente... (KERNEL)
+
+[INFO] 19:05:44:531 KERNEL/(36609:36612): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 19:05:44:532 KERNEL/(36609:36612): Esperando cliente... (KERNEL)
+
+[INFO] 19:05:44:536 KERNEL/(36609:36616): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:05:44:536 KERNEL/(36609:36616): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:05:44:536 KERNEL/(36609:36616): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:05:44:536 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: I/O 10
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:538 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:539 KERNEL/(36609:36616): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:05:44:540 KERNEL/(36609:36616): Instruccion Recibida: EXIT
+
+[INFO] 19:05:44:876 KERNEL/(36609:36612): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 19:05:44:876 KERNEL/(36609:36612): Esperando cliente... (KERNEL)
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:877 KERNEL/(36609:36618): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:878 KERNEL/(36609:36618): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:05:44:879 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:879 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:879 KERNEL/(36609:36618): Instruccion Recibida: YIELD
+
+[INFO] 19:05:44:879 KERNEL/(36609:36618): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:05:44:879 KERNEL/(36609:36618): Instruccion Recibida: EXIT
+
+[INFO] 19:05:48:254 KERNEL/(36609:36609): hilo principal esta ejecutando
+[INFO] 19:07:30:447 KERNEL/(36682:36682): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 19:07:30:447 KERNEL/(36682:36682): Error al conectar (a FileSystem)
+
+[ERROR] 19:07:30:448 KERNEL/(36682:36682): Error al conectar (a Memoria)
+
+[INFO] 19:07:30:449 KERNEL/(36682:36682): hilo principal esta ejecutando
+[INFO] 19:07:30:454 KERNEL/(36682:36685): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 19:07:30:454 KERNEL/(36682:36685): Esperando cliente... (KERNEL)
+
+[INFO] 19:07:40:449 KERNEL/(36682:36682): hilo principal esta ejecutando
+[INFO] 19:07:45:534 KERNEL/(36682:36685): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 19:07:45:534 KERNEL/(36682:36685): Esperando cliente... (KERNEL)
+
+[INFO] 19:07:45:535 KERNEL/(36682:36687): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: I/O 10
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:07:45:536 KERNEL/(36682:36687): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:537 KERNEL/(36682:36687): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:538 KERNEL/(36682:36687): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:07:45:538 KERNEL/(36682:36687): Instruccion Recibida: EXIT
+
+[INFO] 19:07:45:867 KERNEL/(36682:36685): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 19:07:45:868 KERNEL/(36682:36685): Esperando cliente... (KERNEL)
+
+[INFO] 19:07:45:869 KERNEL/(36682:36689): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:870 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:871 KERNEL/(36682:36689): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:07:45:872 KERNEL/(36682:36689): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:07:45:872 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:872 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:872 KERNEL/(36682:36689): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:07:45:872 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:872 KERNEL/(36682:36689): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:07:45:872 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:874 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:874 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:878 KERNEL/(36682:36689): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:07:45:878 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:878 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:878 KERNEL/(36682:36689): Instruccion Recibida: YIELD
+
+[INFO] 19:07:45:878 KERNEL/(36682:36689): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:07:45:878 KERNEL/(36682:36689): Instruccion Recibida: EXIT
+
+[INFO] 19:07:50:449 KERNEL/(36682:36682): hilo principal esta ejecutando
+[INFO] 19:09:39:032 KERNEL/(36789:36789): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 19:09:39:032 KERNEL/(36789:36789): Error al conectar (a FileSystem)
+
+[ERROR] 19:09:39:032 KERNEL/(36789:36789): Error al conectar (a Memoria)
+
+[INFO] 19:09:39:033 KERNEL/(36789:36789): hilo principal esta ejecutando
+[INFO] 19:09:39:033 KERNEL/(36789:36792): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 19:09:39:034 KERNEL/(36789:36792): Esperando cliente... (KERNEL)
+
+[INFO] 19:09:49:033 KERNEL/(36789:36789): hilo principal esta ejecutando
+[INFO] 19:09:55:986 KERNEL/(36789:36792): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 19:09:55:986 KERNEL/(36789:36792): Esperando cliente... (KERNEL)
+
+[INFO] 19:09:55:988 KERNEL/(36789:36794): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:09:55:988 KERNEL/(36789:36794): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:09:55:988 KERNEL/(36789:36794): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:09:55:988 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:988 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:988 KERNEL/(36789:36794): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:09:55:988 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:988 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: I/O 10
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:989 KERNEL/(36789:36794): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:09:55:990 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:990 KERNEL/(36789:36794): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:09:55:990 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:990 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:990 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:990 KERNEL/(36789:36794): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:09:55:990 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:990 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:992 KERNEL/(36789:36794): Instruccion Recibida: YIELD
+
+[INFO] 19:09:55:992 KERNEL/(36789:36794): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:09:55:992 KERNEL/(36789:36794): Instruccion Recibida: EXIT
+
+[INFO] 19:09:56:303 KERNEL/(36789:36792): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 19:09:56:303 KERNEL/(36789:36792): Esperando cliente... (KERNEL)
+
+[INFO] 19:09:56:307 KERNEL/(36789:36796): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:09:56:307 KERNEL/(36789:36796): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:09:56:307 KERNEL/(36789:36796): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:09:56:307 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:307 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:307 KERNEL/(36789:36796): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:09:56:308 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:308 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:308 KERNEL/(36789:36796): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:09:56:308 KERNEL/(36789:36796): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:09:56:308 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:309 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:309 KERNEL/(36789:36796): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:09:56:309 KERNEL/(36789:36796): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:09:56:309 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:309 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:309 KERNEL/(36789:36796): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:09:56:310 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:310 KERNEL/(36789:36796): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:09:56:310 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:310 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:312 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:312 KERNEL/(36789:36796): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:09:56:312 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:312 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:312 KERNEL/(36789:36796): Instruccion Recibida: YIELD
+
+[INFO] 19:09:56:312 KERNEL/(36789:36796): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:09:56:312 KERNEL/(36789:36796): Instruccion Recibida: EXIT
+
+[INFO] 19:09:59:033 KERNEL/(36789:36789): hilo principal esta ejecutando
+[INFO] 19:16:12:537 KERNEL/(36980:36980): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 19:16:12:537 KERNEL/(36980:36980): Error al conectar (a FileSystem)
+
+[ERROR] 19:16:12:538 KERNEL/(36980:36980): Error al conectar (a Memoria)
+
+[INFO] 19:16:12:538 KERNEL/(36980:36980): hilo principal esta ejecutando
+[INFO] 19:16:12:538 KERNEL/(36980:36983): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 19:16:12:538 KERNEL/(36980:36983): Esperando cliente... (KERNEL)
+
+[INFO] 19:16:22:538 KERNEL/(36980:36980): hilo principal esta ejecutando
+[INFO] 19:16:22:597 KERNEL/(36980:36983): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 19:16:22:597 KERNEL/(36980:36983): Esperando cliente... (KERNEL)
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: I/O 10
+
+[INFO] 19:16:22:607 KERNEL/(36980:36993): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:16:22:608 KERNEL/(36980:36993): Instruccion Recibida: EXIT
+
+[INFO] 19:16:22:893 KERNEL/(36980:36983): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 19:16:22:894 KERNEL/(36980:36983): Esperando cliente... (KERNEL)
+
+[INFO] 19:16:22:907 KERNEL/(36980:36995): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:16:22:907 KERNEL/(36980:36995): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:16:22:907 KERNEL/(36980:36995): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:16:22:907 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:907 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:908 KERNEL/(36980:36995): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:16:22:909 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:910 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:910 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:910 KERNEL/(36980:36995): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:16:22:910 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:910 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:910 KERNEL/(36980:36995): Instruccion Recibida: YIELD
+
+[INFO] 19:16:22:910 KERNEL/(36980:36995): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:16:22:910 KERNEL/(36980:36995): Instruccion Recibida: EXIT
+
+[INFO] 19:17:37:133 KERNEL/(37055:37055): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 19:17:37:133 KERNEL/(37055:37055): Error al conectar (a FileSystem)
+
+[ERROR] 19:17:37:133 KERNEL/(37055:37055): Error al conectar (a Memoria)
+
+[INFO] 19:17:37:133 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:17:37:133 KERNEL/(37055:37058): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 19:17:37:133 KERNEL/(37055:37058): Esperando cliente... (KERNEL)
+
+[INFO] 19:17:41:201 KERNEL/(37055:37058): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 19:17:41:201 KERNEL/(37055:37058): Esperando cliente... (KERNEL)
+
+[INFO] 19:17:41:207 KERNEL/(37055:37060): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:17:41:207 KERNEL/(37055:37060): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:17:41:207 KERNEL/(37055:37060): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:17:41:207 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:208 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:208 KERNEL/(37055:37060): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:17:41:208 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:208 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:208 KERNEL/(37055:37060): Instruccion Recibida: I/O 10
+
+[INFO] 19:17:41:208 KERNEL/(37055:37060): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:17:41:208 KERNEL/(37055:37060): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:209 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:210 KERNEL/(37055:37060): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:17:41:210 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:210 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:210 KERNEL/(37055:37060): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:210 KERNEL/(37055:37060): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:17:41:210 KERNEL/(37055:37060): Instruccion Recibida: EXIT
+
+[INFO] 19:17:41:530 KERNEL/(37055:37058): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 19:17:41:531 KERNEL/(37055:37058): Esperando cliente... (KERNEL)
+
+[INFO] 19:17:41:534 KERNEL/(37055:37062): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:17:41:534 KERNEL/(37055:37062): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:17:41:536 KERNEL/(37055:37062): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:17:41:536 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:537 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:537 KERNEL/(37055:37062): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:17:41:537 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:537 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:538 KERNEL/(37055:37062): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:17:41:538 KERNEL/(37055:37062): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:542 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:543 KERNEL/(37055:37062): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:17:41:543 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:543 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:543 KERNEL/(37055:37062): Instruccion Recibida: YIELD
+
+[INFO] 19:17:41:543 KERNEL/(37055:37062): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:17:41:543 KERNEL/(37055:37062): Instruccion Recibida: EXIT
+
+[INFO] 19:17:47:134 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:17:57:134 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:18:07:134 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:18:17:134 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:18:27:135 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:18:32:431 KERNEL/(37055:37058): Nuevo Cliente conectado! (KERNEL) 10
+
+[INFO] 19:18:32:431 KERNEL/(37055:37058): Esperando cliente... (KERNEL)
+
+[INFO] 19:18:32:435 KERNEL/(37055:37065): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:18:32:435 KERNEL/(37055:37065): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:18:32:435 KERNEL/(37055:37065): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:18:32:435 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:435 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:435 KERNEL/(37055:37065): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:18:32:435 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:436 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:436 KERNEL/(37055:37065): Instruccion Recibida: I/O 10
+
+[INFO] 19:18:32:436 KERNEL/(37055:37065): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:18:32:436 KERNEL/(37055:37065): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:18:32:436 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:436 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:436 KERNEL/(37055:37065): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:18:32:436 KERNEL/(37055:37065): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:18:32:437 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:437 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:437 KERNEL/(37055:37065): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:18:32:437 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:437 KERNEL/(37055:37065): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:18:32:437 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:438 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:438 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:438 KERNEL/(37055:37065): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:18:32:438 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:438 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:438 KERNEL/(37055:37065): Instruccion Recibida: YIELD
+
+[INFO] 19:18:32:438 KERNEL/(37055:37065): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:18:32:438 KERNEL/(37055:37065): Instruccion Recibida: EXIT
+
+[INFO] 19:18:37:135 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:18:47:135 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:18:57:136 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:19:07:136 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:19:17:136 KERNEL/(37055:37055): hilo principal esta ejecutando
+[INFO] 19:19:25:932 KERNEL/(37163:37163): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 19:19:25:932 KERNEL/(37163:37163): Error al conectar (a FileSystem)
+
+[ERROR] 19:19:25:932 KERNEL/(37163:37163): Error al conectar (a Memoria)
+
+[INFO] 19:19:25:933 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:19:25:933 KERNEL/(37163:37166): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 19:19:25:933 KERNEL/(37163:37166): Esperando cliente... (KERNEL)
+
+[INFO] 19:19:30:258 KERNEL/(37163:37166): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 19:19:30:258 KERNEL/(37163:37166): Esperando cliente... (KERNEL)
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:262 KERNEL/(37163:37168): Instruccion Recibida: I/O 10
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:19:30:263 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: YIELD
+
+[INFO] 19:19:30:264 KERNEL/(37163:37168): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:19:30:265 KERNEL/(37163:37168): Instruccion Recibida: EXIT
+
+[INFO] 19:19:35:933 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:19:45:934 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:19:55:934 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:20:02:570 KERNEL/(37163:37166): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 19:20:02:570 KERNEL/(37163:37166): Esperando cliente... (KERNEL)
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: I/O 10
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:20:02:572 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:573 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:574 KERNEL/(37163:37171): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:20:02:574 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:574 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:574 KERNEL/(37163:37171): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:574 KERNEL/(37163:37171): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:20:02:574 KERNEL/(37163:37171): Instruccion Recibida: EXIT
+
+[INFO] 19:20:02:884 KERNEL/(37163:37166): Nuevo Cliente conectado! (KERNEL) 10
+
+[INFO] 19:20:02:886 KERNEL/(37163:37166): Esperando cliente... (KERNEL)
+
+[INFO] 19:20:02:888 KERNEL/(37163:37173): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:20:02:889 KERNEL/(37163:37173): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:20:02:891 KERNEL/(37163:37173): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:20:02:891 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:892 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:896 KERNEL/(37163:37173): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:20:02:896 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:896 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:896 KERNEL/(37163:37173): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:20:02:896 KERNEL/(37163:37173): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:20:02:896 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: YIELD
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:20:02:898 KERNEL/(37163:37173): Instruccion Recibida: EXIT
+
+[INFO] 19:20:05:934 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:20:15:934 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:20:25:934 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:20:35:935 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:20:45:935 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:20:55:935 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:21:00:942 KERNEL/(37163:37166): Nuevo Cliente conectado! (KERNEL) 11
+
+[INFO] 19:21:00:942 KERNEL/(37163:37166): Esperando cliente... (KERNEL)
+
+[INFO] 19:21:00:946 KERNEL/(37163:37242): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:21:00:946 KERNEL/(37163:37242): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: I/O 10
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:21:00:947 KERNEL/(37163:37242): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:21:00:948 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:949 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:949 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:949 KERNEL/(37163:37242): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:21:00:949 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:949 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:949 KERNEL/(37163:37242): Instruccion Recibida: YIELD
+
+[INFO] 19:21:00:949 KERNEL/(37163:37242): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:21:00:949 KERNEL/(37163:37242): Instruccion Recibida: EXIT
+
+[INFO] 19:21:01:224 KERNEL/(37163:37166): Nuevo Cliente conectado! (KERNEL) 12
+
+[INFO] 19:21:01:225 KERNEL/(37163:37166): Esperando cliente... (KERNEL)
+
+[INFO] 19:21:01:234 KERNEL/(37163:37244): Instruccion Recibida: SET CX CKCK
+
+[INFO] 19:21:01:234 KERNEL/(37163:37244): Instruccion Recibida: SET BX CHAU
+
+[INFO] 19:21:01:235 KERNEL/(37163:37244): Instruccion Recibida: SET AX HOLA
+
+[INFO] 19:21:01:235 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:235 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:239 KERNEL/(37163:37244): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 19:21:01:239 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:239 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:239 KERNEL/(37163:37244): Instruccion Recibida: I/O 10
+
+[INFO] 19:21:01:239 KERNEL/(37163:37244): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 19:21:01:240 KERNEL/(37163:37244): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 19:21:01:240 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:240 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:240 KERNEL/(37163:37244): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 19:21:01:242 KERNEL/(37163:37244): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 19:21:01:242 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:242 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:242 KERNEL/(37163:37244): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 19:21:01:242 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:242 KERNEL/(37163:37244): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 19:21:01:242 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:243 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:243 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:243 KERNEL/(37163:37244): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 19:21:01:243 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:243 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:243 KERNEL/(37163:37244): Instruccion Recibida: YIELD
+
+[INFO] 19:21:01:243 KERNEL/(37163:37244): Instruccion Recibida: SET DX KCKC
+
+[INFO] 19:21:01:243 KERNEL/(37163:37244): Instruccion Recibida: EXIT
+
+[INFO] 19:21:05:936 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:21:15:936 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:21:25:936 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:21:35:937 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:21:45:937 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 19:21:55:937 KERNEL/(37163:37163): hilo principal esta ejecutando
+[INFO] 00:08:46:885 KERNEL/(38605:38605): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 00:08:46:885 KERNEL/(38605:38605): Error al conectar (a FileSystem)
+
+[ERROR] 00:08:46:885 KERNEL/(38605:38605): Error al conectar (a Memoria)
+
+[INFO] 00:08:46:885 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:08:46:890 KERNEL/(38605:38608): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 00:08:46:890 KERNEL/(38605:38608): Esperando cliente... (KERNEL)
+
+[INFO] 00:08:56:885 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:08:59:931 KERNEL/(38605:38608): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 00:08:59:932 KERNEL/(38605:38608): Esperando cliente... (KERNEL)
+
+[INFO] 00:08:59:934 KERNEL/(38605:38611): Instruccion Recibida: SET CX CKCK
+
+[INFO] 00:08:59:934 KERNEL/(38605:38611): Instruccion Recibida: SET BX CHAU
+
+[INFO] 00:08:59:934 KERNEL/(38605:38611): Instruccion Recibida: SET AX HOLA
+
+[INFO] 00:08:59:934 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:934 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:934 KERNEL/(38605:38611): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 00:08:59:934 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:934 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: I/O 10
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 00:08:59:935 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:936 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:936 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:936 KERNEL/(38605:38611): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 00:08:59:936 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:938 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:938 KERNEL/(38605:38611): Instruccion Recibida: YIELD
+
+[INFO] 00:08:59:938 KERNEL/(38605:38611): Instruccion Recibida: SET DX KCKC
+
+[INFO] 00:08:59:938 KERNEL/(38605:38611): Instruccion Recibida: EXIT
+
+[INFO] 00:09:00:824 KERNEL/(38605:38608): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 00:09:00:824 KERNEL/(38605:38608): Esperando cliente... (KERNEL)
+
+[INFO] 00:09:00:825 KERNEL/(38605:38613): Instruccion Recibida: SET CX CKCK
+
+[INFO] 00:09:00:825 KERNEL/(38605:38613): Instruccion Recibida: SET BX CHAU
+
+[INFO] 00:09:00:825 KERNEL/(38605:38613): Instruccion Recibida: SET AX HOLA
+
+[INFO] 00:09:00:825 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:825 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:825 KERNEL/(38605:38613): Instruccion Recibida: SET RBX BCDEFGHIJKLMNOPQ
+
+[INFO] 00:09:00:825 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:826 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:826 KERNEL/(38605:38613): Instruccion Recibida: I/O 10
+
+[INFO] 00:09:00:826 KERNEL/(38605:38613): Instruccion Recibida: SET EAX 01234567
+
+[INFO] 00:09:00:826 KERNEL/(38605:38613): Instruccion Recibida: SET ECX 23456789
+
+[INFO] 00:09:00:826 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:826 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: SET EBX 12345678
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: SET EDX 34567890
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: SET RDX DEFGHIJKLMNOPQRS
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: SET RAX ABCDEFGHIJKLMNOP
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: SET RCX CDEFGHIJKLMNOPQR
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:827 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:828 KERNEL/(38605:38613): Instruccion Recibida: YIELD
+
+[INFO] 00:09:00:828 KERNEL/(38605:38613): Instruccion Recibida: SET DX KCKC
+
+[INFO] 00:09:00:828 KERNEL/(38605:38613): Instruccion Recibida: EXIT
+
+[INFO] 00:09:06:886 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:09:16:886 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:09:26:886 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:09:36:886 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:09:46:887 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:09:56:888 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:10:06:888 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:10:16:888 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:10:26:888 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:10:36:889 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:10:46:889 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:10:56:890 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:11:06:890 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:11:16:891 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:11:26:891 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:11:36:891 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:11:46:891 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:11:56:892 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:12:06:892 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:12:16:893 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:12:26:894 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:12:36:898 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:12:46:898 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:12:56:898 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:13:06:899 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:13:16:899 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:13:26:899 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:13:36:900 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:13:46:900 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:13:56:900 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:14:06:901 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:14:16:901 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:14:26:901 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:14:36:902 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:14:46:902 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:14:56:903 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:15:06:903 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:15:16:903 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:15:26:904 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:15:36:904 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:15:46:904 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:15:56:905 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:16:06:905 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:16:16:906 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:16:26:906 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:16:36:907 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:16:46:907 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:16:56:907 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:17:06:908 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:17:16:909 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:17:26:913 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:17:36:914 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:17:46:915 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:17:56:917 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:18:06:917 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:18:16:918 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:18:26:918 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:18:36:918 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:18:46:918 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:18:56:919 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:19:06:919 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:19:16:919 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:19:26:920 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:19:36:920 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:19:46:920 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:19:56:922 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:20:06:922 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:20:16:923 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:20:26:923 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:20:36:923 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:20:46:924 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:20:56:925 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:21:06:925 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:21:16:925 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:21:26:926 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:21:36:926 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:21:46:929 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:21:56:936 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:22:06:936 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:22:16:939 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:22:26:939 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:22:36:940 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:22:46:941 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:22:56:941 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:23:06:942 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:23:16:943 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:23:26:943 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:23:36:943 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:23:46:943 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:23:56:944 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:24:06:944 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:24:16:944 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:24:26:944 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:24:36:945 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:24:46:945 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:24:56:946 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:25:06:946 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:25:16:947 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:25:26:947 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:25:36:947 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:25:46:948 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:25:56:949 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:26:06:950 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:26:16:950 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:26:26:951 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:26:36:951 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:26:46:952 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:26:56:952 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:27:06:952 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:27:16:953 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:27:26:954 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:27:36:955 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:27:46:955 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:27:56:955 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:28:06:955 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:28:16:956 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:28:26:956 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:28:36:956 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:28:46:957 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:28:56:957 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:29:06:957 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:29:16:958 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:29:26:959 KERNEL/(38605:38605): hilo principal esta ejecutando
+[INFO] 00:34:21:774 KERNEL/(40045:40045): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 00:34:21:775 KERNEL/(40045:40045): Error al conectar (a FileSystem)
+
+[ERROR] 00:34:21:775 KERNEL/(40045:40045): Error al conectar (a Memoria)
+
+[INFO] 00:34:21:775 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:34:21:778 KERNEL/(40045:40048): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 00:34:21:778 KERNEL/(40045:40048): Esperando cliente... (KERNEL)
+
+[INFO] 00:34:31:775 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:34:41:775 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:34:51:776 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:35:01:776 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:35:03:522 KERNEL/(40045:40048): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 00:35:03:522 KERNEL/(40045:40048): Esperando cliente... (KERNEL)
+
+[INFO] 00:35:03:526 KERNEL/(40045:40062): Instruccion Recibida: SET AX AAAA
+
+[INFO] 00:35:03:526 KERNEL/(40045:40062): Instruccion Recibida: SET BX BBBB
+
+[INFO] 00:35:03:526 KERNEL/(40045:40062): Instruccion Recibida: SET CX CCCC
+
+[INFO] 00:35:03:526 KERNEL/(40045:40062): Instruccion Recibida: SET DX DDDD
+
+[INFO] 00:35:03:526 KERNEL/(40045:40062): Instruccion Recibida: SET EAX AAAAAAAA
+
+[INFO] 00:35:03:526 KERNEL/(40045:40062): Instruccion Recibida: SET EBX BBBBBBBB
+
+[INFO] 00:35:03:526 KERNEL/(40045:40062): Instruccion Recibida: SET ECX CCCCCCCC
+
+[INFO] 00:35:03:526 KERNEL/(40045:40062): Instruccion Recibida: SET EDX DDDDDDDD
+
+[INFO] 00:35:03:527 KERNEL/(40045:40062): Instruccion Recibida: SET RAX AAAAAAAAAAAAAAAA
+
+[INFO] 00:35:03:527 KERNEL/(40045:40062): Instruccion Recibida: SET RBX BBBBBBBBBBBBBBBB
+
+[INFO] 00:35:03:527 KERNEL/(40045:40062): Instruccion Recibida: SET RCX CCCCCCCCCCCCCCCC
+
+[INFO] 00:35:03:527 KERNEL/(40045:40062): Instruccion Recibida: SET RDX DDDDDDDDDDDDDDDD
+
+[INFO] 00:35:03:527 KERNEL/(40045:40062): Instruccion Recibida: YIELD
+
+[INFO] 00:35:03:527 KERNEL/(40045:40062): Instruccion Recibida: SET RAX TCHOUAMENIAFUERA
+
+[INFO] 00:35:03:527 KERNEL/(40045:40062): Instruccion Recibida: SET RBX SEGUNDO_FRANCIA_
+
+[INFO] 00:35:03:527 KERNEL/(40045:40062): Instruccion Recibida: EXIT
+
+[INFO] 00:35:04:634 KERNEL/(40045:40048): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 00:35:04:634 KERNEL/(40045:40048): Esperando cliente... (KERNEL)
+
+[INFO] 00:35:04:637 KERNEL/(40045:40064): Instruccion Recibida: SET AX ARG0
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: YIELD
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: SET AX ARG1
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: YIELD
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: YIELD
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: SET BX FRA1
+
+[INFO] 00:35:04:638 KERNEL/(40045:40064): Instruccion Recibida: YIELD
+
+[INFO] 00:35:04:639 KERNEL/(40045:40064): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:35:04:639 KERNEL/(40045:40064): Instruccion Recibida: SET BX FRA2
+
+[INFO] 00:35:04:639 KERNEL/(40045:40064): Instruccion Recibida: YIELD
+
+[INFO] 00:35:04:639 KERNEL/(40045:40064): Instruccion Recibida: SET AX ARG3
+
+[INFO] 00:35:04:639 KERNEL/(40045:40064): Instruccion Recibida: SET BX FRA2
+
+[INFO] 00:35:04:639 KERNEL/(40045:40064): Instruccion Recibida: YIELD
+
+[INFO] 00:35:04:639 KERNEL/(40045:40064): Instruccion Recibida: SET AX ARG3
+
+[INFO] 00:35:04:639 KERNEL/(40045:40064): Instruccion Recibida: SET BX FRA3
+
+[INFO] 00:35:04:640 KERNEL/(40045:40064): Instruccion Recibida: YIELD
+
+[INFO] 00:35:04:640 KERNEL/(40045:40064): Instruccion Recibida: SET RDX VAMOSALOSPENALES
+
+[INFO] 00:35:04:640 KERNEL/(40045:40064): Instruccion Recibida: YIELD
+
+[INFO] 00:35:04:640 KERNEL/(40045:40064): Instruccion Recibida: SET RAX ARGENTINACAMPEON
+
+[INFO] 00:35:04:640 KERNEL/(40045:40064): Instruccion Recibida: EXIT
+
+[INFO] 00:35:05:842 KERNEL/(40045:40048): Nuevo Cliente conectado! (KERNEL) 10
+
+[INFO] 00:35:05:842 KERNEL/(40045:40048): Esperando cliente... (KERNEL)
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: SET AX ARG0
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: YIELD
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: SET AX ARG1
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: YIELD
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: YIELD
+
+[INFO] 00:35:05:843 KERNEL/(40045:40066): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: SET BX FRA1
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: YIELD
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: SET BX FRA2
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: YIELD
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: SET AX ARG3
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: SET BX FRA2
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: YIELD
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: SET AX ARG3
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: SET BX FRA3
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: YIELD
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: SET RDX VAMOSALOSPENALES
+
+[INFO] 00:35:05:844 KERNEL/(40045:40066): Instruccion Recibida: YIELD
+
+[INFO] 00:35:05:845 KERNEL/(40045:40066): Instruccion Recibida: SET RAX ARGENTINACAMPEON
+
+[INFO] 00:35:05:845 KERNEL/(40045:40066): Instruccion Recibida: EXIT
+
+[INFO] 00:35:11:776 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:35:21:776 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:35:31:777 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:35:41:777 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:35:51:777 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:36:01:777 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:36:11:777 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:36:21:777 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:36:31:778 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:36:41:778 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:36:49:095 KERNEL/(40045:40048): Nuevo Cliente conectado! (KERNEL) 11
+
+[INFO] 00:36:49:095 KERNEL/(40045:40048): Esperando cliente... (KERNEL)
+
+[INFO] 00:36:49:098 KERNEL/(40045:40068): Instruccion Recibida: SET AX AAAA
+
+[INFO] 00:36:49:098 KERNEL/(40045:40068): Instruccion Recibida: SET BX BBBB
+
+[INFO] 00:36:49:098 KERNEL/(40045:40068): Instruccion Recibida: SET CX CCCC
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET DX DDDD
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET EAX AAAAAAAA
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET EBX BBBBBBBB
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET ECX CCCCCCCC
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET EDX DDDDDDDD
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET RAX AAAAAAAAAAAAAAAA
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET RBX BBBBBBBBBBBBBBBB
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET RCX CCCCCCCCCCCCCCCC
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET RDX DDDDDDDDDDDDDDDD
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET RAX TCHOUAMENIAFUERA
+
+[INFO] 00:36:49:099 KERNEL/(40045:40068): Instruccion Recibida: SET RBX SEGUNDO_FRANCIA_
+
+[INFO] 00:36:49:100 KERNEL/(40045:40068): Instruccion Recibida: EXIT
+
+[INFO] 00:36:49:896 KERNEL/(40045:40048): Nuevo Cliente conectado! (KERNEL) 12
+
+[INFO] 00:36:49:897 KERNEL/(40045:40048): Esperando cliente... (KERNEL)
+
+[INFO] 00:36:49:899 KERNEL/(40045:40070): Instruccion Recibida: SET AX ARG0
+
+[INFO] 00:36:49:899 KERNEL/(40045:40070): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:36:49:899 KERNEL/(40045:40070): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:899 KERNEL/(40045:40070): Instruccion Recibida: SET AX ARG1
+
+[INFO] 00:36:49:899 KERNEL/(40045:40070): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:36:49:899 KERNEL/(40045:40070): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: SET BX FRA1
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: SET BX FRA2
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: SET AX ARG3
+
+[INFO] 00:36:49:900 KERNEL/(40045:40070): Instruccion Recibida: SET BX FRA2
+
+[INFO] 00:36:49:901 KERNEL/(40045:40070): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:901 KERNEL/(40045:40070): Instruccion Recibida: SET AX ARG3
+
+[INFO] 00:36:49:901 KERNEL/(40045:40070): Instruccion Recibida: SET BX FRA3
+
+[INFO] 00:36:49:901 KERNEL/(40045:40070): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:901 KERNEL/(40045:40070): Instruccion Recibida: SET RDX VAMOSALOSPENALES
+
+[INFO] 00:36:49:901 KERNEL/(40045:40070): Instruccion Recibida: YIELD
+
+[INFO] 00:36:49:901 KERNEL/(40045:40070): Instruccion Recibida: SET RAX ARGENTINACAMPEON
+
+[INFO] 00:36:49:901 KERNEL/(40045:40070): Instruccion Recibida: EXIT
+
+[INFO] 00:36:51:013 KERNEL/(40045:40048): Nuevo Cliente conectado! (KERNEL) 13
+
+[INFO] 00:36:51:013 KERNEL/(40045:40048): Esperando cliente... (KERNEL)
+
+[INFO] 00:36:51:014 KERNEL/(40045:40072): Instruccion Recibida: SET AX ARG0
+
+[INFO] 00:36:51:014 KERNEL/(40045:40072): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:36:51:014 KERNEL/(40045:40072): Instruccion Recibida: YIELD
+
+[INFO] 00:36:51:014 KERNEL/(40045:40072): Instruccion Recibida: SET AX ARG1
+
+[INFO] 00:36:51:014 KERNEL/(40045:40072): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: YIELD
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET BX FRA0
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: YIELD
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET BX FRA1
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: YIELD
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET AX ARG2
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET BX FRA2
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: YIELD
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET AX ARG3
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET BX FRA2
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: YIELD
+
+[INFO] 00:36:51:015 KERNEL/(40045:40072): Instruccion Recibida: SET AX ARG3
+
+[INFO] 00:36:51:016 KERNEL/(40045:40072): Instruccion Recibida: SET BX FRA3
+
+[INFO] 00:36:51:016 KERNEL/(40045:40072): Instruccion Recibida: YIELD
+
+[INFO] 00:36:51:016 KERNEL/(40045:40072): Instruccion Recibida: SET RDX VAMOSALOSPENALES
+
+[INFO] 00:36:51:016 KERNEL/(40045:40072): Instruccion Recibida: YIELD
+
+[INFO] 00:36:51:016 KERNEL/(40045:40072): Instruccion Recibida: SET RAX ARGENTINACAMPEON
+
+[INFO] 00:36:51:016 KERNEL/(40045:40072): Instruccion Recibida: EXIT
+
+[INFO] 00:36:51:778 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:37:01:779 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:37:11:779 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:37:21:779 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:37:31:779 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:37:41:780 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:37:51:780 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:38:01:781 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:38:11:782 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:38:21:783 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:38:31:783 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:38:41:783 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:38:51:784 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:39:01:784 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:39:11:784 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:39:21:785 KERNEL/(40045:40045): hilo principal esta ejecutando
+[INFO] 00:39:37:027 KERNEL/(40375:40375): Cliente conectado en 0.0.0.0:35001 (a CPU)
+
+[ERROR] 00:39:37:027 KERNEL/(40375:40375): Error al conectar (a FileSystem)
+
+[ERROR] 00:39:37:028 KERNEL/(40375:40375): Error al conectar (a Memoria)
+
+[INFO] 00:39:37:028 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:39:37:030 KERNEL/(40375:40378): Escuchando en 0.0.0.0:33668 (KERNEL)
+
+[INFO] 00:39:37:030 KERNEL/(40375:40378): Esperando cliente... (KERNEL)
+
+[INFO] 00:39:47:028 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:39:48:270 KERNEL/(40375:40378): Nuevo Cliente conectado! (KERNEL) 8
+
+[INFO] 00:39:48:270 KERNEL/(40375:40378): Esperando cliente... (KERNEL)
+
+[INFO] 00:39:48:714 KERNEL/(40375:40378): Nuevo Cliente conectado! (KERNEL) 9
+
+[INFO] 00:39:48:715 KERNEL/(40375:40378): Esperando cliente... (KERNEL)
+
+[INFO] 00:39:50:118 KERNEL/(40375:40378): Nuevo Cliente conectado! (KERNEL) 10
+
+[INFO] 00:39:50:118 KERNEL/(40375:40378): Esperando cliente... (KERNEL)
+
+[INFO] 00:39:57:028 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:40:07:028 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:40:17:029 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:40:27:029 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:40:37:029 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:40:47:029 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:40:57:029 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:41:07:030 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:41:17:030 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:41:27:031 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:41:37:032 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:41:47:032 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:41:57:032 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:42:07:032 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:42:17:033 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:42:27:033 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:42:37:033 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:42:47:034 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:42:57:034 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:43:07:035 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:43:17:035 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:43:27:035 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:43:37:035 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:43:47:036 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:43:57:036 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:44:07:036 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:44:17:036 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:44:27:037 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:44:37:037 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:44:47:037 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:44:57:038 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:45:07:038 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:45:17:040 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:45:27:041 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:45:37:041 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:45:47:047 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:45:57:048 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:46:07:048 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:46:17:049 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:46:27:049 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:46:37:049 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:46:47:074 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:46:57:075 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:47:07:075 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:47:17:076 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:47:27:077 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:47:37:078 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:47:47:078 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:47:57:079 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:48:07:079 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:48:17:079 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:48:27:080 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:48:37:081 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:48:47:081 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:48:57:082 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:49:07:083 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:49:17:083 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:49:27:084 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:49:37:085 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:49:47:086 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:49:57:086 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:50:07:086 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:50:17:087 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:50:27:088 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:50:37:089 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:50:47:089 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:50:57:090 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:51:07:091 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:51:17:091 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:51:27:091 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:51:37:092 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:51:47:092 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:51:57:092 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:52:07:093 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:52:17:093 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:52:27:093 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:52:37:094 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:52:47:094 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:52:57:095 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:53:07:095 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:53:17:095 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:53:27:095 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:53:37:096 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:53:47:096 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:53:57:096 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:54:07:096 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:54:17:097 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:54:27:097 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:54:37:097 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:54:47:097 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:54:57:098 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:55:07:098 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:55:17:098 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:55:27:099 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:55:37:099 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:55:47:099 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:55:57:100 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:56:07:100 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:56:17:100 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:56:27:100 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:56:37:101 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:56:47:101 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:56:57:101 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:57:07:101 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:57:17:102 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:57:27:103 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:57:37:103 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:57:47:103 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:57:57:104 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:58:07:104 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:58:17:104 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:58:27:104 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:58:37:105 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:58:47:105 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:58:57:105 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:59:07:106 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:59:17:106 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:59:27:106 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:59:37:107 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:59:47:107 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 00:59:57:107 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:00:07:108 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:00:17:108 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:00:27:108 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:00:37:109 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:00:47:109 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:00:57:109 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:01:07:109 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:01:17:110 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:01:27:110 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:01:37:110 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:01:47:111 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:01:57:111 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:02:07:111 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:02:17:111 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:02:27:112 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:02:37:112 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:02:47:112 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:02:57:112 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:03:07:113 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:03:17:113 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:03:27:113 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:03:37:113 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:03:47:114 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:03:57:114 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:04:07:115 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:04:17:115 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:04:27:115 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:04:37:116 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:04:47:116 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:04:57:116 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:05:07:116 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:05:17:116 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:05:27:118 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:05:37:118 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:05:47:118 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:05:57:119 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:06:07:119 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:06:17:119 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:06:27:120 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:06:37:120 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:06:47:121 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:06:57:121 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:07:07:121 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:07:17:121 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:07:27:122 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:07:37:122 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:07:47:122 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:07:57:123 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:08:07:123 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:08:17:124 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:08:27:124 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:08:37:124 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:08:47:125 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:08:57:125 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:09:07:125 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:09:17:126 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:09:27:126 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:09:37:126 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:09:47:127 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:09:57:127 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:10:07:127 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:10:17:128 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:10:27:128 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:10:37:128 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:10:47:128 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:10:57:129 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:11:07:129 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:11:17:129 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:11:27:130 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:11:37:130 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:11:47:130 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:11:57:130 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:12:07:131 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:12:17:131 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:12:27:131 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:12:37:132 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:12:47:132 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:12:57:132 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:13:07:132 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:13:17:133 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:13:27:133 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:13:37:133 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:13:47:134 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:13:57:135 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:14:07:135 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:14:17:135 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:14:27:135 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:14:37:136 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:14:47:136 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:14:57:136 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:15:07:137 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:15:17:137 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:15:27:137 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:15:37:137 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:15:47:138 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:15:57:138 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:16:07:139 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:16:17:139 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:16:27:139 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:16:37:140 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:16:47:140 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:16:57:141 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:17:07:141 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:17:17:141 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:17:27:142 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:17:37:142 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:17:47:143 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:17:57:143 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:18:07:143 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:18:17:144 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:18:27:144 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:18:37:144 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:18:47:145 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:18:57:146 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:19:07:146 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:19:17:146 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:19:27:147 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:19:37:147 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:19:47:147 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:19:57:147 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:20:07:148 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:20:17:148 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:20:27:148 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:20:37:148 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:20:47:149 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:20:57:149 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:21:07:149 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:21:17:149 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:21:27:150 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:21:37:150 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:21:47:151 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:21:57:151 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:22:07:151 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:22:17:151 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:22:27:152 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:22:37:152 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:22:47:152 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:22:57:153 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:23:07:153 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:23:17:154 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:23:27:154 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:23:37:155 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:23:47:155 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:23:57:155 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:24:07:155 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:24:17:156 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:24:27:156 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:24:37:156 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:24:47:157 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:24:57:157 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:25:07:157 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:25:17:157 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:25:27:158 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:25:37:158 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:25:47:159 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:25:57:159 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:26:07:159 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:26:17:159 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:26:27:160 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:26:37:160 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:26:47:160 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:26:57:161 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:27:07:161 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:27:17:161 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:27:27:161 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:27:37:162 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:27:47:162 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:27:57:163 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:28:07:163 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:28:17:163 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:28:27:163 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:28:37:164 KERNEL/(40375:40375): hilo principal esta ejecutando
+[INFO] 01:28:47:164 KERNEL/(40375:40375): hilo principal esta ejecutando

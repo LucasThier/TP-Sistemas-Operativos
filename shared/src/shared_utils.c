@@ -245,6 +245,15 @@ void* recibir_paquete(int socket_cliente)
     return 0;
 }
 
+void EnviarMensage(char* Mensage, int SocketDestino)
+{
+	t_paquete* Msg = crear_paquete(MENSAGE);
+	agregar_a_paquete(Msg, Mensage, strlen(Mensage)+1);
+	enviar_paquete(Msg, SocketDestino);
+	eliminar_paquete(Msg);
+}
+
+
 void eliminar_paquete(t_paquete *paquete)
 {
     free(paquete->buffer->stream);

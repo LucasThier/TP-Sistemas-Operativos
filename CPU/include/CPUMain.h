@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+
 int InicializarConexiones();
 void* EscuchaKernel();
 
@@ -14,6 +15,7 @@ t_config* config;
 char* IP_MEMORIA;
 char* PUERTO_MEMORIA;
 char* PUERTO_ESCUCHA;
+int RETARDO_INSTRUCCION;
 
 char NOMBRE_PROCESO[4] = "CPU";
 
@@ -38,6 +40,5 @@ typedef struct
 t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista);
 void Enviar_PCB_A_Kernel(int ProgramCounter, t_registrosCPU* Registros_A_Enviar, int SocketKernel);
 char* ObrenerRegistro(char* NombreRegistro, t_registrosCPU* Registros);
-void EnviarMensageKernel(char* Mensage, int SocketKernel);
 
 #endif

@@ -134,6 +134,8 @@ double EstimacionProximaRafaga(t_PCB* PCB);
 void AgregarAReady(t_PCB* PCB);
 void RealizarRespuestaDelCPU(char* respuesta);
 
+void* EsperarEntradaSalida(void* arg);
+
 void TerminarModulo();
 
 char NOMBRE_PROCESO[7] = "KERNEL";

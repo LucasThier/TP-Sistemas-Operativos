@@ -91,7 +91,7 @@ void* EscuchaKernel()
 					if(strcmp(Instruccion_A_Ejecutar, "YIELD\n")==0)
 					{
 						PC++;
-						EnviarMensageKernel("YIELD\n", SocketKernel);
+						EnviarMensage("YIELD\n", SocketKernel);
 						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 						SeguirEjecutando = false;
 					}
@@ -99,25 +99,41 @@ void* EscuchaKernel()
 					else if(strcmp(Instruccion_A_Ejecutar, "SET")==0)
 					{
 						PC++;
+						
+						//aplicar el retardo de instruccion al hacer el set
+						//Los milisegundos indicados en las config
+						struct timespec tiempoespera;
+						tiempoespera.tv_sec = RETARDO_INSTRUCCION / 1000;
+						tiempoespera.tv_nsec = (RETARDO_INSTRUCCION % 1000) * 1000000;
+						nanosleep(&tiempoespera, NULL);
 
-						//obtengo los parametros del 
+						//obtengo los parametros del SET
 						char* Reg_A_Setear = strtok(NULL, " ");
 						char* Valor_A_Setear = strtok(NULL, " ");
 						
+						//obtener el registro a modificar y setear el valor
 						strncpy(ObrenerRegistro(Reg_A_Setear, Registros), Valor_A_Setear, strlen(Valor_A_Setear)-1);	
 					}
 
 					else if(strcmp(Instruccion_A_Ejecutar, "EXIT\n")==0)
 					{
 						PC++;
-						EnviarMensageKernel("EXIT\n", SocketKernel);
+						EnviarMensage("EXIT\n", SocketKernel);
 						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 						SeguirEjecutando = false;
 					}
 
-					else if(strcmp(Instruccion_A_Ejecutar, "I/O\n")==0)
+					else if(strcmp(Instruccion_A_Ejecutar, "I/O")==0)
 					{
 						PC++;
+						
+						char* Mensage = "I/O\n";
+						char* Tiempo = strtok(NULL, " ");
+
+						EnviarMensage(Mensage, SocketKernel);
+						EnviarMensage(Tiempo, SocketKernel);
+						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+						SeguirEjecutando = false;
 					}
 
 					else if(strcmp(Instruccion_A_Ejecutar, "WAIT\n")==0)
@@ -277,24 +293,16 @@ char* ObrenerRegistro(char* NombreRegistro, t_registrosCPU* Registros)
 		return NULL;
 }
 
-void EnviarMensageKernel(char* Mensage, int SocketKernel)
-{
-	t_paquete* Msg = crear_paquete(MENSAGE);
-	agregar_a_paquete(Msg, Mensage, strlen(Mensage)+1);
-	enviar_paquete(Msg, SocketKernel);
-	eliminar_paquete(Msg);
-}
 
 void LeerConfigs(char* path)
 {	
     config = config_create(path);
 
-    if(config_has_property(config, "IP_MEMORIA"))
-        IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
+	IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
 
-    if(config_has_property(config, "PUERTO_MEMORIA"))
-        PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
+	PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
 
-    if(config_has_property(config, "PUERTO_ESCUCHA"))
-        PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
+	PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
+
+	RETARDO_INSTRUCCION = config_get_int_value(config, "RETARDO_INSTRUCCION");
 }
