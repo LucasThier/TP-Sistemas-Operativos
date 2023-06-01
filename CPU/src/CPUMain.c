@@ -139,6 +139,13 @@ void* EscuchaKernel()
 					else if(strcmp(Instruccion_A_Ejecutar, "WAIT\n")==0)
 					{
 						PC++;
+						EnviarMensage("WAIT\n", SocketKernel);
+						char* Respuesta = (char*) recibir_paquete(SocketCPU);
+						if(strcmp(Respuesta, "RECHAZADO\n")==0)
+						{
+							Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+							SeguirEjecutando = false;
+						}
 					}
 
 					else if(strcmp(Instruccion_A_Ejecutar, "SIGNAL\n")==0)
