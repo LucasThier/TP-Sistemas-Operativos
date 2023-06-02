@@ -37,6 +37,7 @@ int InicializarConexiones()
     if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
+	return 1;
 }
 
 //Inicia un servidor en el que escucha por modulos permanentemente y cuando recibe uno crea un hilo para administrar esaa conexion
@@ -63,7 +64,7 @@ void* EscucharConexiones()
 	}
 
 	liberar_conexion(SocketMemoria);
-	return EXIT_FAILURE;
+	return (void*)EXIT_FAILURE;
 }
 
 //Funcion que se ejecuta para cada consola conectada
@@ -82,9 +83,10 @@ void* AdministradorDeModulo(void* arg)
 	}while(recibido != 0);
 
 	//--------------------------------------------------------------------------------------------------------------------------------------------------
-	liberar_conexion(SocketClienteConectado);
-	return;
+	liberar_conexion(*SocketClienteConectado);
+	return NULL;
 }
+
 
 void LeerConfigs(char* path)
 {
