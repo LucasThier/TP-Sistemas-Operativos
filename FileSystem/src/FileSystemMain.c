@@ -11,7 +11,6 @@ void sighandler(int s) {
 	exit(0);
 }
 
-
 int main(int argc, char* argv[])
 {
 	signal(SIGINT, sighandler);
@@ -69,12 +68,12 @@ void* EscuchaKernel()
 
 			//--------------------------------------------------------------------------------------------------------------------------------------------------
 			liberar_conexion(SocketKernel);
-			return;
+			return NULL;
 		}
 	}
 	liberar_conexion(SocketFileSystem);
 	LiberarMemoria();
-	return EXIT_FAILURE;
+	return (void*)EXIT_FAILURE;
 }
 
 void LeerConfigs(char* path, char* path_superbloque)
@@ -108,7 +107,7 @@ void LevantarArchivos(){
 
 	if (BLOQUES == NULL) {
 		printf("Error al abrir el archivo de bloques.\n");
-		return EXIT_FAILURE;
+		return (void)EXIT_FAILURE;
 	}
 
 	// Crear un bloque de datos
@@ -125,7 +124,7 @@ void LevantarArchivos(){
 
 	if (BITMAP == NULL) {
 		printf("Error al abrir el archivo de bitmap de bloques.\n");
-		return EXIT_FAILURE;
+		return (void)EXIT_FAILURE;
 	}
 
 	// Crear el bitmap de bloques
@@ -138,8 +137,8 @@ void LevantarArchivos(){
 	fwrite(bitmap, sizeof(unsigned char), cantBloques / 8, BITMAP);
 
 	fread(bitmap,sizeof(unsigned char), cantBloques / 8, BITMAP);
-	log_info(FS_Logger,"Bitmap inicializado en: %f",bitmap);
-	log_info(FS_Logger,"Bloques inicializado en : %f",bloque);
+	log_info(FS_Logger,"Bitmap inicializado en: %s",bitmap);
+	log_info(FS_Logger,"Bloques inicializado en : %s",bloque);
 }
 
 void LiberarMemoria(){
