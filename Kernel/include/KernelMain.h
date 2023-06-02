@@ -133,7 +133,7 @@ void PlanificadorCortoPlazoFIFO();
 
 void PlanificadorCortoPlazoHRRN();
 
-double TiempoEsperadoEnReady(t_PCB* PCB);
+double TiempoEsperadoEnReady(t_PCB * PCB, time_t tiempoActual);
 double EstimacionProximaRafaga(t_PCB* PCB);
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

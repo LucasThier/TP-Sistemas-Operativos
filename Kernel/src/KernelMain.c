@@ -84,7 +84,7 @@ void InicializarSemaforos()
 	sem_init(&m_EXIT, 0, 1);
 	sem_init(&m_BLOCKED, 0, 1);
 	sem_init(&m_RECURSOS, 0, 1);
-	sem_init(&m_BLOCKED_RECURSOS, 0, 0);
+	sem_init(&m_BLOCKED_RECURSOS, 0, 1);
 	sem_init(&c_MultiProg, 0, GRADO_MULTIPROGRAMACION);
 }
 
@@ -96,6 +96,7 @@ int InicializarPlanificadores()
 	g_EXEC = NULL;
 	g_Lista_EXIT = list_create();
 	g_Lista_BLOCKED = list_create();
+	g_Lista_BLOCKED_RECURSOS = list_create();
 
 	pthread_t HiloPlanificadorDeLargoPlazo;//FIFO
 	if (pthread_create(&HiloPlanificadorDeLargoPlazo, NULL, PlanificadorLargoPlazo, NULL) != 0) {
@@ -159,7 +160,6 @@ void PlanificadorCortoPlazoFIFO()
 		//Si no hay ningun proceso ejecutando y hay procesos esperando en ready,
 		//obtener el primero de la cola de READY y mandarlo a EXEC
 		if(g_EXEC == NULL && list_size(g_Lista_READY) != 0){
-
 			sem_wait(&m_READY);
 			sem_wait(&m_EXEC);
 			//obtener PCB de la cola de READY
@@ -193,6 +193,7 @@ void PlanificadorCortoPlazoHRRN()
 
 			double RatioMasAlto = 0;
 			int IndiceListaRatioMasAlto = 0;
+			time_t tiempoActual= time(NULL);
 
 			sem_wait(&m_READY);
 			for(int i = 0; i < list_size(g_Lista_READY); i++)
@@ -209,7 +210,7 @@ void PlanificadorCortoPlazoHRRN()
 				else
 				{
 					//calculo el ratio
-					double Ratio = (TiempoEsperadoEnReady(aux) + EstimacionProximaRafaga(aux)) / EstimacionProximaRafaga(aux);
+					double Ratio = (TiempoEsperadoEnReady(aux, tiempoActual) + EstimacionProximaRafaga(aux)) / EstimacionProximaRafaga(aux);
 					
 					//guardo la estimacion de la ultima rafaga para la proxima que calcule el ratio
 					aux->estimacionUltimaRafaga = EstimacionProximaRafaga(aux);
@@ -238,9 +239,9 @@ void PlanificadorCortoPlazoHRRN()
 			Enviar_PCB_A_CPU(PCB);
 
 			//Recibir respuesta de CPU
-			printf("PID del proceso enviado a la CPU: %d\n", g_EXEC->PID);
+			//printf("PID del proceso enviado a la CPU: %d\n", g_EXEC->PID);
 			char* respuesta = (char*) recibir_paquete(SocketCPU);
-			printf("Respuesta de CPU: %s \n", respuesta);
+			//printf("Respuesta de CPU: %s \n", respuesta);
 			
 			RealizarRespuestaDelCPU(respuesta);
 		}
@@ -248,9 +249,9 @@ void PlanificadorCortoPlazoHRRN()
 }
 
 //devuelve el tiempo que paso desde que el proceso llego a ready
-double TiempoEsperadoEnReady(t_PCB * PCB)
+double TiempoEsperadoEnReady(t_PCB * PCB, time_t tiempoActual)
 {
-	return difftime(time(NULL), PCB->tiempoLlegadaRedy);
+	return difftime(tiempoActual, PCB->tiempoLlegadaRedy);
 }
 
 //calcula y devuelve la estimacion de la proxima rafaga de un PCB
@@ -342,6 +343,7 @@ void LoguearCambioDeEstado(t_PCB* PCB, char* EstadoAnterior, char* EstadoActual)
 //Realiza la Accion correspondiente a la respuesta del CPU
 void RealizarRespuestaDelCPU(char* respuesta)
 {
+	//printf("Respuesta recibida: %s", respuesta);
 	if(strcmp(respuesta, "YIELD\n")== 0)
 	{
 		Recibir_Y_Actualizar_PCB();
@@ -411,11 +413,13 @@ void RealizarRespuestaDelCPU(char* respuesta)
 	
 	else if(strcmp(respuesta, "WAIT\n")== 0)
 	{
-		char* Recurso = (char*) recibir_paquete(SocketCPU);
+
+		char* Recurso = strtok(((char*) recibir_paquete(SocketCPU)),"\n");
 
 		bool cont = true;
 		int aux = 0;
 		int pos = -1;
+
 		while (cont)
 		{
 			if(RECURSOS[aux] == NULL)
@@ -459,7 +463,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 			log_info(Kernel_Logger, "PID: [%d] - Wait: %s - Instancias: %d", g_EXEC->PID, Recurso, aux);
 
-
 			//Si no hay recursos disponibles,
 			//agrego el proceso a la lista de bloqueados por Recursos
 			if(aux < 0)
@@ -481,18 +484,28 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			}
 			//si hay recursos disponibles
 			else
+			{
 				EnviarMensage("ACEPTADO", SocketCPU);
+
+				//Recibir respuesta de CPU
+				char* rta = (char*) recibir_paquete(SocketCPU);
+				//printf("Respuesta de CPU: %s\n", rta);
+				
+				RealizarRespuestaDelCPU(rta);
+
+			}
 
 		}
 	}
 
 	else if(strcmp(respuesta, "SIGNAL\n")== 0)
 	{
-		char* Recurso = (char*) recibir_paquete(SocketCPU);
-
+		char* Recurso = strtok(((char*) recibir_paquete(SocketCPU)),"\n");
+		
 		bool cont = true;
 		int aux = 0;
 		int pos = -1;
+
 		while (cont)
 		{
 			if(RECURSOS[aux] == NULL)
@@ -529,9 +542,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		//Si existe el recurso
 		else
 		{
-			EnviarMensage("ACEPTADO", SocketCPU);
-			log_info(Kernel_Logger, "PID: [%d] - Signal: %s - Instancias: %d", g_EXEC->PID, Recurso, atoi(G_INSTANCIAS_RECURSOS[pos]) + 1);
-			
 			//busco algun proceso que este esperando que el recurso se libere
 			if(list_size(g_Lista_BLOCKED_RECURSOS) > 0)
 			{
@@ -571,13 +581,20 @@ void RealizarRespuestaDelCPU(char* respuesta)
 				}
 			}
 			else
-			{				
+			{
 				sem_wait(&m_RECURSOS);
 				int aux = atoi(G_INSTANCIAS_RECURSOS[pos]) + 1;
 				sprintf(G_INSTANCIAS_RECURSOS[pos], "%d", aux);
-				sem_post(&m_RECURSOS);		
+				sem_post(&m_RECURSOS);	
 			}
+
+			EnviarMensage("ACEPTADO", SocketCPU);
+			log_info(Kernel_Logger, "PID: [%d] - Signal: %s - Instancias: %d", g_EXEC->PID, Recurso, atoi(G_INSTANCIAS_RECURSOS[pos]) + 1);
+			//Recibir respuesta de CPU
+			char* rta = (char*) recibir_paquete(SocketCPU);
+			//printf("Respuesta de CPU: %s\n", rta);
 			
+			RealizarRespuestaDelCPU(rta);
 		}
 	}
 }
@@ -624,6 +641,7 @@ void ImprimirRegistrosPCB(t_PCB* PCB_Registos_A_Imprimir)
 void Recibir_Y_Actualizar_PCB()
 {
 	t_list* PCB_A_Actualizar = recibir_paquete(SocketCPU);
+
 	sem_wait(&m_EXEC);
 	g_EXEC->programCounter = *(int*) list_remove(PCB_A_Actualizar, 0);
 	g_EXEC->registrosCPU = ObtenerRegistrosDelPaquete(PCB_A_Actualizar);

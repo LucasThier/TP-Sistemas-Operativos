@@ -134,30 +134,32 @@ void* EscuchaKernel()
 						SeguirEjecutando = false;
 					}
 
-					else if(strcmp(Instruccion_A_Ejecutar, "WAIT\n")==0)
+					else if(strcmp(Instruccion_A_Ejecutar, "WAIT")==0)
 					{
 						PC++;
 						EnviarMensage("WAIT\n", SocketKernel);
 						char* RecursoSolicitado = strtok(NULL, " ");
 						EnviarMensage(RecursoSolicitado, SocketKernel);
 
-						char* Respuesta = (char*) recibir_paquete(SocketCPU);
-						if(strcmp(Respuesta, "RECHAZADO\n")==0)
+						char* Respuesta = (char*) recibir_paquete(SocketKernel);
+
+						if(strcmp(Respuesta, "RECHAZADO")==0)
 						{
+							printf("wait rechazado enviando pcb\n");
 							Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 							SeguirEjecutando = false;
 						}
 					}
 
-					else if(strcmp(Instruccion_A_Ejecutar, "SIGNAL\n")==0)
+					else if(strcmp(Instruccion_A_Ejecutar, "SIGNAL")==0)
 					{
 						PC++;
 						EnviarMensage("SIGNAL\n", SocketKernel);
 						char* RecursoLiberado = strtok(NULL, " ");
 						EnviarMensage(RecursoLiberado, SocketKernel);
 
-						char* Respuesta = (char*) recibir_paquete(SocketCPU);
-						if(strcmp(Respuesta, "RECHAZADO\n")==0)
+						char* Respuesta = (char*) recibir_paquete(SocketKernel);
+						if(strcmp(Respuesta, "RECHAZADO")==0)
 						{
 							Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 							SeguirEjecutando = false;
