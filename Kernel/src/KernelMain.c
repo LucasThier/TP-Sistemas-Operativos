@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 {
 	signal(SIGINT, sighandler);
 	
-	LeerConfigs("Kernel.cfg"/*argv[1]*/);
+	LeerConfigs(argv[1]);
 
 	InicializarSemaforos();
 
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 	//temporal
 	while(true){
 		log_info(Kernel_Logger, "hilo principal esta ejecutando");
-		sleep(10);
+		sleep(20);
 	}
 
 	TerminarModulo();
@@ -123,12 +123,14 @@ void* PlanificadorLargoPlazo()
 		{
 			sem_wait(&c_MultiProg);
 
+			
 			sem_wait(&m_NEW);
 			sem_wait(&m_READY);
 			t_PCB* PCB = (t_PCB*) list_remove(g_Lista_NEW, 0);
 			AgregarAReady(PCB);
 			sem_post(&m_NEW);
 			sem_post(&m_READY);
+			LoguearCambioDeEstado(PCB, "NEW", "READY");
 		}
 		sleep(2);
 	}
@@ -166,14 +168,15 @@ void PlanificadorCortoPlazoFIFO()
 			g_EXEC = PCB;
 			sem_post(&m_READY);
 			sem_post(&m_EXEC);
+			LoguearCambioDeEstado(PCB, "READY", "EXEC");
 
 			//Enviar PCB a CPU
 			Enviar_PCB_A_CPU(PCB);
 
 			//Recibir respuesta de CPU
-			printf("PID del proceso enviado a la CPU: %d\n", g_EXEC->PID);
+			//printf("PID del proceso enviado a la CPU: %d\n", g_EXEC->PID);
 			char* respuesta = (char*) recibir_paquete(SocketCPU);
-			printf("Respuesta de CPU: %s\n", respuesta);
+			//printf("Respuesta de CPU: %s\n", respuesta);
 			
 			RealizarRespuestaDelCPU(respuesta);
 		}
@@ -229,6 +232,8 @@ void PlanificadorCortoPlazoHRRN()
 			sem_post(&m_READY);
 			sem_post(&m_EXEC);
 
+			LoguearCambioDeEstado(PCB, "READY", "EXEC");
+
 			//Enviar PCB a CPU
 			Enviar_PCB_A_CPU(PCB);
 
@@ -261,6 +266,9 @@ void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR)
 
 	//Agrega el Program Counter
 	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->programCounter), sizeof(int));
+
+	//Agrega el PID
+	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->PID), sizeof(int));
 
 	//Agrega los registros de la CPU
 	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->AX), sizeof(g_EXEC->registrosCPU->AX));
@@ -297,6 +305,38 @@ void AgregarAReady(t_PCB* PCB)
 {
 	PCB->tiempoLlegadaRedy = time(NULL);
 	list_add(g_Lista_READY, PCB);
+
+	int Tamanio = list_size(g_Lista_READY) * 10;
+
+	char Cola[Tamanio];
+	int i=0;
+	t_PCB* aux;
+	aux = (t_PCB*) list_get(g_Lista_READY, 0);
+	sprintf(Cola, "%d", aux->PID);
+	i++;
+	while(i < list_size(g_Lista_READY) && (strlen(Cola) + 2) < Tamanio)
+	{
+		aux = (t_PCB*) list_get(g_Lista_READY, i);
+		sprintf(Cola + strlen(Cola), ", %d", aux->PID);
+		i++;
+	}
+
+	log_info(Kernel_Logger, "Cola de READY (%s): [%s]", ALGORITMO_PLANIFICACION, Cola);
+	
+}
+
+void TerminarProceso(t_PCB* PCB, char* Motivo)
+{
+	log_info(Kernel_Logger, "Finaliza el proceso [%d] - Motivo: %s", PCB->PID, Motivo);
+
+	char Mensaje[60];
+	sprintf(Mensaje, "Proceso Finalizado - Motivo: %s", Motivo);
+	EnviarMensage(Mensaje, PCB->socketConsolaAsociada);
+}
+
+void LoguearCambioDeEstado(t_PCB* PCB, char* EstadoAnterior, char* EstadoActual)
+{
+	log_info(Kernel_Logger, "PID: [%d] - Estado Anterior: %s - Estado Actual: %s", PCB->PID, EstadoAnterior, EstadoActual);
 }
 
 //Realiza la Accion correspondiente a la respuesta del CPU
@@ -306,6 +346,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 	{
 		Recibir_Y_Actualizar_PCB();
 
+		LoguearCambioDeEstado(g_EXEC, "EXEC", "READY");		
 		//Agregar PCB a la cola de READY
 		sem_wait(&m_READY);
 		sem_wait(&m_EXEC);
@@ -313,12 +354,17 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		g_EXEC = NULL;
 		sem_post(&m_READY);
 		sem_post(&m_EXEC);
+		
 	}
 
 	else if(strcmp(respuesta, "I/O\n")== 0){
 
 		int tiempo = atoi((char*) recibir_paquete(SocketCPU));
 		Recibir_Y_Actualizar_PCB();
+
+		LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+		log_info(Kernel_Logger, "PID: [%d] - Bloqueado por: I/O", g_EXEC->PID);
+		log_info(Kernel_Logger, "PID: [%d] - Ejecuta IO: %d", g_EXEC->PID, tiempo);
 
 		sem_wait(&m_EXEC);
 		sem_wait(&m_BLOCKED);
@@ -344,13 +390,13 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		Recibir_Y_Actualizar_PCB();
 
 		//Notificar a la consola que el proceso termino exitosamente
-		t_paquete* MSGFinalizacion = crear_paquete(MENSAGE);
-		agregar_a_paquete(MSGFinalizacion, "Proceso finalizo correctamente\n", strlen("Proceso finalizo correctamente")+1);
-		enviar_paquete(MSGFinalizacion, g_EXEC->socketConsolaAsociada);
-		eliminar_paquete(MSGFinalizacion);
+		TerminarProceso(g_EXEC, "SUCCESS");
 
 		//imprimir los valores del registro
 		ImprimirRegistrosPCB(g_EXEC);
+
+		LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
+		TerminarProceso(g_EXEC, "SUCCESS");
 
 		//Agregar PCB a la cola de EXIT
 		sem_wait(&m_EXEC);
@@ -390,6 +436,9 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			
 			Recibir_Y_Actualizar_PCB();
 
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
+			TerminarProceso(g_EXEC, "SEG_FAULT");
+
 			//Agregar PCB a la cola de EXIT
 			sem_wait(&m_EXEC);
 			sem_wait(&m_EXIT);
@@ -408,18 +457,24 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			sprintf(G_INSTANCIAS_RECURSOS[pos], "%d", aux);
 			sem_post(&m_RECURSOS);
 
+			log_info(Kernel_Logger, "PID: [%d] - Wait: %s - Instancias: %d", g_EXEC->PID, Recurso, aux);
+
+
 			//Si no hay recursos disponibles,
-			//agrego el recurso a la lista de bloqueados por Recursos
+			//agrego el proceso a la lista de bloqueados por Recursos
 			if(aux < 0)
 			{
 				EnviarMensage("RECHAZADO", SocketCPU);
 
 				Recibir_Y_Actualizar_PCB();
 
+				LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+				log_info(Kernel_Logger, "PID: [%d] - Bloqueado por: %s", g_EXEC->PID, Recurso);
+
 				sem_wait(&m_EXEC);
 				sem_wait(&m_BLOCKED_RECURSOS);
 				g_EXEC->recursoBloqueante = Recurso;
-				list_add(g_Lista_RECOURSE_BLOCKED, g_EXEC);
+				list_add(g_Lista_BLOCKED_RECURSOS, g_EXEC);
 				g_EXEC = NULL;
 				sem_post(&m_EXEC);
 				sem_post(&m_BLOCKED_RECURSOS);
@@ -427,6 +482,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			//si hay recursos disponibles
 			else
 				EnviarMensage("ACEPTADO", SocketCPU);
+
 		}
 	}
 
@@ -450,12 +506,15 @@ void RealizarRespuestaDelCPU(char* respuesta)
 				aux++;
 		}
 
-		//Si idio un recurso que no existe -> Terminar el proceso
+		//Si libero un recurso que no existe -> Terminar el proceso
 		if(pos == -1)
 		{
 			EnviarMensage("RECHAZADO", SocketCPU);
 			
 			Recibir_Y_Actualizar_PCB();
+
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
+			TerminarProceso(g_EXEC, "SEG_FAULT");
 
 			//Agregar PCB a la cola de EXIT
 			sem_wait(&m_EXEC);
@@ -471,17 +530,18 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		else
 		{
 			EnviarMensage("ACEPTADO", SocketCPU);
+			log_info(Kernel_Logger, "PID: [%d] - Signal: %s - Instancias: %d", g_EXEC->PID, Recurso, atoi(G_INSTANCIAS_RECURSOS[pos]) + 1);
 			
-			//busco algun proceso que este esperando que el recurso se livere
-			if(list_size(g_Lista_RECOURSE_BLOCKED) > 0)
+			//busco algun proceso que este esperando que el recurso se libere
+			if(list_size(g_Lista_BLOCKED_RECURSOS) > 0)
 			{
 				int i = 0;
 
-				while (cont)
+				while (true)
 				{
 					//si no hay ninguno esperandolo,
 					//sumo uno a la cantidad de instancias disponibles de ese recurso
-					if(i >= list_size(g_Lista_RECOURSE_BLOCKED))
+					if(i >= list_size(g_Lista_BLOCKED_RECURSOS))
 					{
 						sem_wait(&m_RECURSOS);
 						int aux = atoi(G_INSTANCIAS_RECURSOS[pos]) + 1;
@@ -491,15 +551,17 @@ void RealizarRespuestaDelCPU(char* respuesta)
 						break;
 					}
 					
-					t_PCB* PCB = list_get(g_Lista_RECOURSE_BLOCKED, i);
+					t_PCB* PCB = list_get(g_Lista_BLOCKED_RECURSOS, i);
 
 					//si hay uno esperando el recurso, lo paso a ready y dejo de buscar
 					if(strcmp(PCB->recursoBloqueante, Recurso) == 0)
 					{
+						LoguearCambioDeEstado(PCB, "BLOQUEADO", "READY");
+
 						sem_wait(&m_READY);
 						sem_wait(&m_BLOCKED_RECURSOS);
-						list_add(g_Lista_READY, PCB);
-						list_remove(g_Lista_RECOURSE_BLOCKED, i);
+						AgregarAReady(PCB);
+						list_remove(g_Lista_BLOCKED_RECURSOS, i);
 						sem_post(&m_READY);
 						sem_post(&m_BLOCKED_RECURSOS);
 
@@ -515,6 +577,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 				sprintf(G_INSTANCIAS_RECURSOS[pos], "%d", aux);
 				sem_post(&m_RECURSOS);		
 			}
+			
 		}
 	}
 }
@@ -529,6 +592,7 @@ void* EsperarEntradaSalida(void* arg)
 	//Simulo la espera de la entrada/salida
 	sleep(Tiempo);
 
+	LoguearCambioDeEstado(PCB_aux, "BLOQUEADO", "READY");
 	//cuando termina el tiempo agrego el PCB a la cola de READY
 	sem_wait(&m_READY);
 	AgregarAReady(PCB_aux);
@@ -598,12 +662,10 @@ int InicializarConexiones()
 	SocketMemoria = conectar_servidor(Kernel_Logger, "FileSystem", IP_MEMORIA, PUERTO_MEMORIA);
 	SocketFileSystem = conectar_servidor(Kernel_Logger, "Memoria", IP_FILESYSTEM, PUERTO_FILESYSTEM);
 
-	printf("inicializar conexiones \n");
-
 	//Crear hilo escucha
 	pthread_t HiloEscucha;
     if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
-		printf("Error creando hilo escucha \n");
+		log_error(Kernel_Logger, "Error creando hilo escucha\n");
         return 0;
     }
 	return 1;
@@ -612,7 +674,6 @@ int InicializarConexiones()
 //Inicia un servidor en el que escucha consolas permanentemente y crea un hilo que la administre cuando recibe una
 void* EscucharConexiones()
 {
-	printf("Escuchar Conexiones\n");
 	SocketKernel = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	
 	if(SocketKernel != 0)
@@ -620,7 +681,6 @@ void* EscucharConexiones()
 		//Escuchar por consolas en bucle
 		while(true)
 		{
-			printf("Creando socket Cliente\n");
 			int SocketCliente = esperar_cliente(Kernel_Logger, NOMBRE_PROCESO, SocketKernel);
 			
 			if(SocketCliente != 0)
@@ -631,12 +691,10 @@ void* EscucharConexiones()
 					exit(EXIT_FAILURE);
 				}
 				pthread_detach(HiloAdministradorDeMensajes);
-
 			}
 		}
 	}
-
-	printf("error al crear socket kernel\n");
+	log_error(Kernel_Logger, "error al crear socket kernel\n");
 	liberar_conexion(SocketKernel);
 	return (void*)EXIT_FAILURE;
 }
@@ -653,15 +711,14 @@ void* AdministradorDeModulo(void* arg)
 	//Verificar si el grado de multiprogramacion lo permite, si lo permite, pasar a ready directamente
 	if(sem_trywait(&c_MultiProg) == 0)
 	{
-		printf("agregando a ready ya que el grado de multiprogramacion lo permite\n");
+		LoguearCambioDeEstado(PCBConsola, "NEW", "READY");
 		sem_wait(&m_READY);
-		list_add(g_Lista_READY, PCBConsola);
+		AgregarAReady(PCBConsola);		
 		sem_post(&m_READY);
 	}
 	//si no, pasar a new
 	else
 	{
-		printf("agregando a new ya que el grado de multiprogramacion no lo permite\n");
 		sem_wait(&m_NEW);
 		list_add(g_Lista_NEW, PCBConsola);
 		sem_post(&m_NEW);
@@ -683,6 +740,8 @@ t_PCB* CrearPCB(t_list* instrucciones, int socketConsola)
 	pcb->programCounter = 0;
 	pcb->socketConsolaAsociada = socketConsola;
 	pcb->listaInstrucciones = instrucciones;
+
+	log_info(Kernel_Logger, "Se crea el proceso PID: [%d] en NEW", pcb->PID);
 
 	return pcb;
 }

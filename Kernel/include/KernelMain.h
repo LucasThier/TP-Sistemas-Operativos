@@ -93,7 +93,7 @@ t_list* g_Lista_READY;
 t_PCB* g_EXEC;
 t_list* g_Lista_BLOCKED;
 t_list* g_Lista_EXIT;
-t_list* g_Lista_RECOURSE_BLOCKED;
+t_list* g_Lista_BLOCKED_RECURSOS;
 
 t_PCB* CrearPCB(t_list* instrucciones, int socketConsola);
 
@@ -138,6 +138,9 @@ double EstimacionProximaRafaga(t_PCB* PCB);
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 void AgregarAReady(t_PCB* PCB);
+void TerminarProceso(t_PCB* PCB, char* Motivo);
+void LoguearCambioDeEstado(t_PCB* PCB, char* EstadoAnterior, char* EstadoActual);
+
 void RealizarRespuestaDelCPU(char* respuesta);
 
 void* EsperarEntradaSalida(void* arg);

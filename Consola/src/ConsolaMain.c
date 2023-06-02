@@ -42,8 +42,6 @@ int main(int argc, char* argv[])
 		}
 		//agregar la linea al paquete
 		agregar_a_paquete(paquete, linea, strlen(linea) + 1);
-
-        printf("linea agregada: %s", linea);        
     }
 	fclose(archivo);
 
@@ -51,10 +49,11 @@ int main(int argc, char* argv[])
 	enviar_paquete(paquete, SocketKernel);
 	eliminar_paquete(paquete);
 
+	log_info(Consola_Logger, "Se envio el archivo de pseudocodigo al Kernel");
+
+	//esperar respuesta del kernel
 	char* respuesta = (char*) recibir_paquete(SocketKernel);
-	printf("Respuesta de Kernel: %s", respuesta);
-
-
+	log_info(Consola_Logger, "%s", respuesta);
 
 	liberar_conexion(SocketKernel);
 	return EXIT_SUCCESS;

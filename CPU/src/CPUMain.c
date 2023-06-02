@@ -68,10 +68,9 @@ void* EscuchaKernel()
 				//guarda el tiempo en que empezo a ejecutar para calcular el tiempo de ejecucion mas tarde
 				time(&tiempoInicio);
 
-				printf("Datos recibidos:\n");
-				//"pop" del Program Counter
 				int PC = *(int*)list_remove(DatosRecibidos, 0);
-				printf("PC: %d\n", PC);
+
+				int PID = *(int*)list_remove(DatosRecibidos, 0);
 
 				//guarda los registros en una estructura
 				t_registrosCPU* Registros = ObtenerRegistrosDelPaquete(DatosRecibidos);
@@ -82,8 +81,7 @@ void* EscuchaKernel()
 					//obtiene la instruccion a ejecutar
 					char* Linea_A_Ejecutar = (char*)list_get(DatosRecibidos, PC);
 					
-					printf("Linea a ejecutar: %s", Linea_A_Ejecutar);
-					printf("PC Actual: %d\n\n", PC);
+					log_info(CPU_Logger, "PID: [%d] - Ejecutando: %s", PID, Linea_A_Ejecutar);
 
 					//divide la linea en instruccion y los parametros
 					char* Instruccion_A_Ejecutar = strtok(Linea_A_Ejecutar, " ");

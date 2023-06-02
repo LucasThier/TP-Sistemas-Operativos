@@ -22,14 +22,14 @@ int iniciar_servidor(t_log* logger, const char* nombreProceso, char* ip, char* p
 		socket_servidor = socket(aux->ai_family, aux->ai_socktype, aux->ai_protocol);
         
 		if (socket_servidor == -1){
-            log_error(logger,"Error al crear el socket servidor (%s)\n", nombreProceso);
+            log_error(logger,"Error al crear el socket servidor");
             continue;
         }
 
         if (bind(socket_servidor, aux->ai_addr, aux->ai_addrlen) == -1)
         {
         	liberar_conexion(socket_servidor);
-            log_error(logger,"Error al bindear el socket servidor (%s)\n", nombreProceso);
+            log_error(logger,"Error al bindear el socket servidor");
             close(socket_servidor);
             continue;
         }
@@ -44,7 +44,7 @@ int iniciar_servidor(t_log* logger, const char* nombreProceso, char* ip, char* p
     }
 
     listen(socket_servidor, SOMAXCONN);
-    log_info(logger, "Escuchando en %s:%s (%s)\n", ip, puerto, nombreProceso);
+    log_info(logger, "Escuchando en %s:%s", ip, puerto);
 
     freeaddrinfo(infoServer);
 
@@ -56,14 +56,14 @@ int esperar_cliente(t_log* logger, const char* nombreProceso, int socket_servido
     struct sockaddr_in dir_cliente;
     socklen_t tam_direccion = sizeof(struct sockaddr_in);
 
-    log_info(logger, "Esperando cliente... (%s)\n", nombreProceso);
+    log_info(logger, "Esperando cliente...");
 
     int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
     if(socket_cliente == -1){
-        log_error(logger,"Error al aceptar cliente (%s)\n", nombreProceso);
+        log_error(logger,"Error al aceptar cliente");
         return 0;
     }else
-        log_info(logger, "Nuevo Cliente conectado! (%s) %d\n", nombreProceso, socket_cliente);
+        log_info(logger, "Nuevo Cliente conectado!");
 
     return socket_cliente;
 }
@@ -93,11 +93,11 @@ int conectar_servidor(t_log* logger, const char* nombre_servidor, char* ip, char
 
     // Error al conectar con el servidor
     if(connect(socket_servidor, infoServer->ai_addr, infoServer->ai_addrlen) == -1) {
-		log_error(logger, "Error al conectar (a %s)\n", nombre_servidor);
+		log_error(logger, "Error al conectar a %s", nombre_servidor);
         freeaddrinfo(infoServer);
         return 0;
     } else
-        log_info(logger, "Cliente conectado en %s:%s (a %s)\n", ip, puerto, nombre_servidor);
+        log_info(logger, "Cliente conectado a %s en %s:%s", nombre_servidor, ip, puerto);
 
 
     freeaddrinfo(infoServer);
@@ -109,7 +109,7 @@ int conectar_servidor(t_log* logger, const char* nombre_servidor, char* ip, char
 //envia un int (Temporal para probar las conexiones)
 void enviar_int(t_log* logger, const char* nombreProceso, int socket_destino, int int_a_enviar)
 {
-    log_info(logger, "Numero enviado: %d\n", int_a_enviar);
+    log_info(logger, "Numero enviado: %d", int_a_enviar);
     send(socket_destino, &int_a_enviar, sizeof(int), 0);
 }
 
@@ -186,7 +186,7 @@ void* recibir_paquete(int socket_cliente)
     int tamanio;
 
     if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) == -1)
-        printf("Error al recibir el codigo de operacion\n");
+        printf("Error al recibir el codigo de operacio");
 
     switch (cod_op)
     {
