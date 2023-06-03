@@ -692,7 +692,7 @@ int InicializarConexiones()
 //Inicia un servidor en el que escucha consolas permanentemente y crea un hilo que la administre cuando recibe una
 void* EscucharConexiones()
 {
-	SocketKernel = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
+	SocketKernel = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "127.0.0.1", PUERTO_ESCUCHA);
 	
 	if(SocketKernel != 0)
 	{
