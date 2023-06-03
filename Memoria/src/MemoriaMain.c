@@ -43,7 +43,7 @@ int InicializarConexiones()
 //Inicia un servidor en el que escucha por modulos permanentemente y cuando recibe uno crea un hilo para administrar esaa conexion
 void* EscucharConexiones()
 {
-	SocketMemoria = iniciar_servidor(Memoria_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
+	SocketMemoria = iniciar_servidor(Memoria_Logger, NOMBRE_PROCESO, "127.0.0.1", PUERTO_ESCUCHA);
 	
 	if(SocketMemoria != 0)
 	{
