@@ -49,7 +49,7 @@ int InicializarConexiones()
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
 void* EscuchaKernel()
 {
-	SocketCPU = iniciar_servidor(CPU_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
+	SocketCPU = iniciar_servidor(CPU_Logger, NOMBRE_PROCESO, "127.0.0.1", PUERTO_ESCUCHA);
 	
 	if(SocketCPU != 0)
 	{
