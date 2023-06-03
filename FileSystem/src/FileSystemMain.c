@@ -48,7 +48,7 @@ void InicializarConexiones()
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
 void* EscuchaKernel()
 {
-	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
+	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "127.0.0.1", PUERTO_ESCUCHA);
 	
 	if(SocketFileSystem != 0)
 	{
