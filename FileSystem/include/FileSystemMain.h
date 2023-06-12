@@ -10,11 +10,17 @@
 
 void InicializarConexiones();
 void* EscuchaKernel();
-void LeerConfigs(char* p, char* p2);
-void LevantarArchivos();
+void LeerConfigs(char*, char*);
 void LiberarMemoria();
 
 t_config *config, *configSB;
+
+typedef struct {
+	char* nombreArchivo;
+	int tamanoArchivo;
+	uint32_t* punteroDirecto;
+	uint32_t* punteroIndirecto;
+}FCB;
 
 
 char* IP_MEMORIA;
@@ -23,7 +29,7 @@ char* PUERTO_ESCUCHA;
 char* BLOCK_SIZE;
 char* BLOCK_COUNT;
 FILE* BLOQUES;
-FILE* BITMAP;
+
 
 
 
