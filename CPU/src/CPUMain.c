@@ -314,6 +314,17 @@ char* ObrenerRegistro(char* NombreRegistro, t_registrosCPU* Registros)
 }
 
 
+int[2] TraducirDireccion(char* DirLogica)
+{
+	int DirLogica = atoi(DirLogica);
+
+	int NumSegmento - floor(DirLogica/TAM_MAX_SEGMENTO);
+	int DesplazamientoSegmento = DirLogica%TAM_MAX_SEGMENTO;
+
+	return {NumSegmento, Desplazamient};
+}
+
+
 void LeerConfigs(char* path)
 {	
     config = config_create(path);
@@ -325,4 +336,6 @@ void LeerConfigs(char* path)
 	PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 
 	RETARDO_INSTRUCCION = config_get_int_value(config, "RETARDO_INSTRUCCION");
+
+	TAM_MAX_SEGMENTO = config_get_int_value(config, "TAM_MAX_SEGMENTO");
 }
