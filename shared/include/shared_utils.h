@@ -20,6 +20,7 @@
 #include <fcntl.h>
 #include <time.h>
 #include <unistd.h>
+#include <math.h>
 
 //El resto no se si se usan(habria que chequear):
 #include <commons/process.h>

@@ -49,7 +49,7 @@ int InicializarConexiones()
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
 void* EscuchaKernel()
 {
-	SocketCPU = iniciar_servidor(CPU_Logger, NOMBRE_PROCESO, "127.0.0.1", PUERTO_ESCUCHA);
+	SocketCPU = iniciar_servidor(CPU_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	
 	if(SocketCPU != 0)
 	{
@@ -313,15 +313,12 @@ char* ObrenerRegistro(char* NombreRegistro, t_registrosCPU* Registros)
 		return NULL;
 }
 
-
-int[2] TraducirDireccion(char* DirLogica)
+void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* DesplazamientoSegmento)
 {
-	int DirLogica = atoi(DirLogica);
+	int DirLogica = atoi(CharDirLogica);
 
-	int NumSegmento - floor(DirLogica/TAM_MAX_SEGMENTO);
-	int DesplazamientoSegmento = DirLogica%TAM_MAX_SEGMENTO;
-
-	return {NumSegmento, Desplazamient};
+	*NumSegmento = floor((DirLogica/ TAM_MAX_SEGMENTO));
+	*DesplazamientoSegmento = DirLogica%TAM_MAX_SEGMENTO;
 }
 
 
