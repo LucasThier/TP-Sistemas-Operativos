@@ -19,6 +19,8 @@ int main(int argc, char* argv[])
 	
 	LeerConfigs(argv[1]);
 
+	inicializarMemoria(MEMORIA);
+
 	InicializarSemaforos();
 
 	InicializarConexiones();
@@ -196,7 +198,7 @@ void inicializarMemoria(Memoria* memoria) {
     // Crear segmento compartido (segmento 0)
     memoria->tablaSegmentos.segmentos[0].idSegmento = 0;
     memoria->tablaSegmentos.segmentos[0].direccionBase = memoria->espacioUsuario;
-    memoria->tablaSegmentos.segmentos[0].tamano = TAM_SEGMENTO_0;
+    memoria->tablaSegmentos.segmentos[0].limite = TAM_SEGMENTO_0;
 }
 
 void crearSegmento(Memoria* memoria, int idSegmento, int tamanoSegmento) {

@@ -6,26 +6,6 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-int InicializarConexiones();
-void* EscucharConexiones();
-void* AdministradorDeModulo(void*);
-void LeerConfigs(char*);
-void crearSegmento(Memoria*, int, int);
-void eliminarSegmento(Memoria*, int);
-void compactarSegmentos(Memoria*);
-void inicializarMemoria(Memoria*);
-
-
-t_config* config;
-char* PUERTO_ESCUCHA;
-int TAM_MEMORIA;
-int TAM_SEGMENTO_0;
-int CANT_SEGMENTOS;
-int RETARDO_MEMORIA;
-int RETARDO_COMPACTACION;
-char* ALGORITMO_ASIGNACION;
-
-
 typedef struct {
     int idSegmento;
     void* direccionBase;
@@ -41,6 +21,25 @@ typedef struct {
     void* espacioUsuario;
     TablaSegmentos tablaSegmentos;
 } Memoria;
+
+t_config* config;
+char* PUERTO_ESCUCHA;
+int TAM_MEMORIA;
+int TAM_SEGMENTO_0;
+int CANT_SEGMENTOS;
+int RETARDO_MEMORIA;
+int RETARDO_COMPACTACION;
+char* ALGORITMO_ASIGNACION;
+Memoria* MEMORIA;
+
+int InicializarConexiones();
+void* EscucharConexiones();
+void* AdministradorDeModulo(void*);
+void LeerConfigs(char*);
+void crearSegmento(Memoria*, int, int);
+void eliminarSegmento(Memoria*, int);
+void compactarSegmentos(Memoria*);
+void inicializarMemoria(Memoria*);
 
 
 char NOMBRE_PROCESO[8] = "Memoria";

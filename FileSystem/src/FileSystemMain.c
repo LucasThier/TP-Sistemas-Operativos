@@ -108,8 +108,5 @@ void LeerConfigs(char* path, char* path_superbloque)
 
 
 void LiberarMemoria(){
-	// Cerrar el archivo de bloques
-	fclose(BLOQUES);
-
 	free(bitmap);
 }

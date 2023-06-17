@@ -15,6 +15,12 @@ void LiberarMemoria();
 
 t_config *config, *configSB;
 
+typedef struct{
+	char* nombreArchivo;
+		int tamanoArchivo;
+
+}BLOQUE;
+
 typedef struct {
 	char* nombreArchivo;
 	int tamanoArchivo;
@@ -28,9 +34,6 @@ char* PUERTO_MEMORIA;
 char* PUERTO_ESCUCHA;
 char* BLOCK_SIZE;
 char* BLOCK_COUNT;
-FILE* BLOQUES;
-
-
 
 
 char NOMBRE_PROCESO[11] = "FileSystem";
