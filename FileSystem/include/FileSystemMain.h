@@ -8,19 +8,6 @@
 #include <sys/mman.h>
 
 
-void InicializarConexiones();
-void* EscuchaKernel();
-void LeerConfigs(char*, char*);
-void LiberarMemoria();
-
-t_config *config, *configSB;
-
-typedef struct{
-	char* nombreArchivo;
-		int tamanoArchivo;
-
-}BLOQUE;
-
 typedef struct {
 	char* nombreArchivo;
 	int tamanoArchivo;
@@ -28,13 +15,22 @@ typedef struct {
 	uint32_t* punteroIndirecto;
 }FCB;
 
-
+t_config *config, *configSB;
 char* IP_MEMORIA;
 char* PUERTO_MEMORIA;
 char* PUERTO_ESCUCHA;
 char* BLOCK_SIZE;
 char* BLOCK_COUNT;
+void* BLOQUES;
+char* PATH_FCB;
+char* PATH_BLOQUES;
+int fd;
 
+void InicializarConexiones();
+void* EscuchaKernel();
+void LeerConfigs(char*, char*);
+void LiberarMemoria();
+void CrearArchivo(char*);
 
 char NOMBRE_PROCESO[11] = "FileSystem";
 

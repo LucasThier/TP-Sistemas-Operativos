@@ -21,13 +21,19 @@ int main(int argc, char* argv[])
 	//leer las config
 	LeerConfigs(argv[1],argv[2]);
 
+
 	char* bitarray;
 	int cantBloques = atoi(BLOCK_COUNT);
 	int tamBloques = atoi(BLOCK_SIZE);
+
+	fd = open("Bloques.dat", O_RDWR, 0666);
+	BLOQUES = mmap(NULL, cantBloques*tamBloques, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+
 	t_bitarray* bitmap[cantBloques];
-	FCB* FCBs[cantBloques];
 
 	for (int i = 0; i < cantBloques; i++) bitmap[i] = bitarray_create(bitarray, tamBloques);
+
+	//CrearArchivo("make");
 
 	InicializarConexiones();
 
@@ -85,28 +91,52 @@ void* EscuchaKernel()
 
 void LeerConfigs(char* path, char* path_superbloque)
 {
-    config = config_create(path);
+	config = config_create(path);
 
-    if(config_has_property(config, "IP_MEMORIA"))
-        IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
 
-    if(config_has_property(config, "PUERTO_MEMORIA"))
-        PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
+	IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
 
-    if(config_has_property(config, "PUERTO_ESCUCHA"))
-        PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
+	PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
 
-   configSB = config_create(path_superbloque);
+	PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 
-	if(config_has_property(configSB, "BLOCK_SIZE"))
-		BLOCK_SIZE = config_get_string_value(configSB, "BLOCK_SIZE");
+	PATH_FCB = config_get_string_value(config, "PATH_FCB");
 
-	if(config_has_property(configSB, "BLOCK_COUNT"))
-		BLOCK_COUNT = config_get_string_value(configSB, "BLOCK_COUNT");
+	PATH_BLOQUES = config_get_string_value(config, "PATH_BLOQUES");
+
+
+	configSB = config_create(path_superbloque);
+
+	BLOCK_SIZE = config_get_string_value(configSB, "BLOCK_SIZE");
+
+	BLOCK_COUNT = config_get_string_value(configSB, "BLOCK_COUNT");
 
 }
 
+void CrearArchivo(char* nombreArchivo){
+	FILE *archivo;
+	char* path_archivo= strcat(strcat(strcat(PATH_FCB,"/"),nombreArchivo),".dat");
+
+	archivo = fopen(path_archivo, "w");
+	if (archivo == NULL) {
+	        log_info(FS_Logger,"No se pudo crear el archivo.\n");
+	}
+	else{
+		log_info(FS_Logger,"Crear Archivo:%s.dat",nombreArchivo);
+	/*	char* key;
+		strcpy(key,"NOMBRE_ARCHIVO=");
+		char* nom=strcat(key,nombreArchivo);
+		fputs(nom,archivo);
+	*/
+	}
+
+	fclose(archivo);
+
+}
+void TruncarArchivo(){
+
+}
 
 void LiberarMemoria(){
-	free(bitmap);
+//	free(bitmap);
 }
