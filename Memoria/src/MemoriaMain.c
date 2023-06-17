@@ -83,7 +83,7 @@ void* AdministradorDeModulo(void* arg)
 		char* Pedido = strtok(PeticionRecibida, " ");
 
 		//crear estructuras administrativas y enviar la tabla de segmentos
-		if(strcmp(Pedido, "CREAR_PROESO")==0)
+		if(strcmp(Pedido, "CREAR_PROCESO")==0)
 		{
 			//PID del proceso a inicializar
 			char* PID = strtok(NULL, " ");
@@ -161,6 +161,26 @@ void LeerConfigs(char* path)
     config = config_create(path);
 
     PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
+
+	char *tam_memoria = config_get_string_value(config, "TAM_MEMORIA");
+	TAM_MEMORIA= atoi(tam_memoria);
+
+	char *tam_segmento_0 = config_get_string_value(config, "TAM_SEGMENTO_0");
+	TAM_SEGMENTO_0= atoi(tam_segmento_0);
+
+	char *cant_segmentos = config_get_string_value(config, "CANT_SEGMENTOS");
+	CANT_SEGMENTOS= atoi(cant_segmentos);
+
+	char *retardo_memoria = config_get_string_value(config, "RETARDO_MEMORIA");
+	RETARDO_MEMORIA= atoi(retardo_memoria);
+
+	char *retardo_compactacion = config_get_string_value(config, "RETARDO_COMPACTACION");
+	RETARDO_COMPACTACION= atoi(retardo_compactacion);
+
+	ALGORITMO_ASIGNACION = config_get_string_value(config, "ALGORITMO_ASIGNACION");
+
+
+
 }
 
 //Inicializa los semaforos
@@ -168,3 +188,33 @@ void InicializarSemaforos()
 {
 	sem_init(&m_UsoDeMemoria, 0, 1);
 }
+
+void inicializarMemoria(Memoria* memoria) {
+    // Asignar memoria para el espacio de usuario
+    memoria->espacioUsuario = malloc(TAM_MEMORIA);
+
+    // Crear segmento compartido (segmento 0)
+    memoria->tablaSegmentos.segmentos[0].idSegmento = 0;
+    memoria->tablaSegmentos.segmentos[0].direccionBase = memoria->espacioUsuario;
+    memoria->tablaSegmentos.segmentos[0].tamano = TAM_SEGMENTO_0;
+}
+
+void crearSegmento(Memoria* memoria, int idSegmento, int tamanoSegmento) {
+    // Buscar espacio contiguo disponible para el segmento
+    // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
+
+    // Actualizar la tabla de segmentos con la información del nuevo segmento
+}
+
+void eliminarSegmento(Memoria* memoria, int idSegmento) {
+    // Marcar el segmento como libre en la tabla de segmentos
+
+    // Consolidar huecos libres aledaños si los hay
+}
+
+void compactarSegmentos(Memoria* memoria) {
+    // Mover los segmentos para eliminar los huecos libres
+
+    // Actualizar la tabla de segmentos con las nuevas direcciones bases
+}
+

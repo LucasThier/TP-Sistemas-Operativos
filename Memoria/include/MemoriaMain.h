@@ -8,11 +8,39 @@
 
 int InicializarConexiones();
 void* EscucharConexiones();
-void* AdministradorDeModulo(void* arg);
+void* AdministradorDeModulo(void*);
+void LeerConfigs(char*);
+void crearSegmento(Memoria*, int, int);
+void eliminarSegmento(Memoria*, int);
+void compactarSegmentos(Memoria*);
+void inicializarMemoria(Memoria*);
+
 
 t_config* config;
 char* PUERTO_ESCUCHA;
-void LeerConfigs(char* path);
+int TAM_MEMORIA;
+int TAM_SEGMENTO_0;
+int CANT_SEGMENTOS;
+int RETARDO_MEMORIA;
+int RETARDO_COMPACTACION;
+char* ALGORITMO_ASIGNACION;
+
+
+typedef struct {
+    int idSegmento;
+    void* direccionBase;
+    int limite;
+} Segmento;
+
+typedef struct {
+    Segmento* segmentos;
+    int cantidadSegmentos;
+} TablaSegmentos;
+
+typedef struct {
+    void* espacioUsuario;
+    TablaSegmentos tablaSegmentos;
+} Memoria;
 
 
 char NOMBRE_PROCESO[8] = "Memoria";
