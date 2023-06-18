@@ -40,7 +40,8 @@ typedef struct
 
 t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista);
 void Enviar_PCB_A_Kernel(int ProgramCounter, t_registrosCPU* Registros_A_Enviar, int SocketKernel);
-char* ObrenerRegistro(char* NombreRegistro, t_registrosCPU* Registros);
+char* ObtenerRegistro(char* NombreRegistro, t_registrosCPU* Registros);
+int ObtenerTamanoRegistro(char* NombreRegistro);
 
-void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* DesplazamientoSegmento);
+void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* Offset);
 #endif

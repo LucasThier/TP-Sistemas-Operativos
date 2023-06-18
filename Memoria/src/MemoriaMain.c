@@ -103,27 +103,33 @@ void* AdministradorDeModulo(void* arg)
 		//enviar el valor empezando desde la direccion recibida y con la longitud recibida
 		else if(strcmp(Pedido, "MOV_IN")==0)
 		{
+			//PID del proceso
+			char* PID = strtok(NULL, " ");
 			//direccion donde buscar el contenido
-			char* Direccion = strtok(NULL, " ");
+			char* NumSegmento = strtok(NULL, " ");
+			char* Desplazamiento = strtok(NULL, " ");
 			//longitud del contenido a buscar
 			char* Longitud = strtok(NULL, " ");	
 
 			
 			char*  Contenido;// = leer_contenido(Direccion, Longitud);
 
-			//enviar el contenido encontrado
+			//enviar el contenido encontrado o SEG_FAULT en caso de error
 			EnviarMensage(Contenido, *SocketClienteConectado);
 		}
 		//guardar el valor recibido en la direccion recibida
 		else if(strcmp(Pedido, "MOV_OUT")==0)
 		{
-			//valor a guardar
+			//PID del proceso
+			char* PID = strtok(NULL, " ");
+			//direccion donde guardar el contenido
+			char* NumSegmento = strtok(NULL, " ");
+			char* Desplazamiento = strtok(NULL, " ");
+			//valor a guardar TERMINADO EN \0
 			char* Valor = strtok(NULL, " ");
-			//direccion donde guardarlo
-			char* Direccion = strtok(NULL, " ");
 
 			//guardar_contenido(Valor, Direccion);
-			//no enviar nada al kernel, solo guardar el contenido
+			//eviar SEG_FAULT en caso de error sino enviar cualquier otra cadena de caracteres
 		}
 		//crear un segmento para un proceso
 		else if(strcmp(Pedido, "CREATE_SEGMENT")==0)

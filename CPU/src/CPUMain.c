@@ -110,7 +110,7 @@ void* EscuchaKernel()
 						char* Valor_A_Setear = strtok(NULL, " ");
 						
 						//obtener el registro a modificar y setear el valor
-						strncpy(ObrenerRegistro(Reg_A_Setear, Registros), Valor_A_Setear, strlen(Valor_A_Setear)-1);	
+						strncpy(ObtenerRegistro(Reg_A_Setear, Registros), Valor_A_Setear, strlen(Valor_A_Setear)-1);	
 					}
 
 					else if(strcmp(Instruccion_A_Ejecutar, "EXIT\n")==0)
@@ -145,7 +145,6 @@ void* EscuchaKernel()
 
 						if(strcmp(Respuesta, "RECHAZADO")==0)
 						{
-							printf("wait rechazado enviando pcb\n");
 							Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 							SeguirEjecutando = false;
 						}
@@ -166,14 +165,83 @@ void* EscuchaKernel()
 						}
 					}
 
-					else if(strcmp(Instruccion_A_Ejecutar, "MOV_IN\n")==0)
+					else if(strcmp(Instruccion_A_Ejecutar, "MOV_IN")==0)
 					{
 						PC++;
+
+						char* Reg_A_Setear = strtok(NULL, " ");
+						char* DirLogica = strtok(NULL, " ");
+
+						char* Registro = ObtenerRegistro(Reg_A_Setear, Registros);
+						int tamano = ObtenerTamanoRegistro(Reg_A_Setear);
+						
+						int NumSegmento;
+						int Offset;
+						TraducirDireccion(DirLogica, &NumSegmento, &Offset);
+
+						if(Offset + tamano > TAM_MAX_SEGMENTO)
+						{
+							EnviarMensage("SEG_FAULT", SocketKernel);
+							SeguirEjecutando = false;
+						}
+						else
+						{
+							char* Mensage = malloc(100);
+							sprintf(Mensage,"MOV_IN %d %d %d %d\0", PID, NumSegmento, Offset, tamano);
+							EnviarMensage(Mensage, SocketMemoria);
+							free(Mensage);
+
+							char* Respuesta = (char*) recibir_paquete(SocketMemoria);
+							if(strcmp(Respuesta, "SEG_FAULT")==0)
+							{
+								EnviarMensage("SEG_FAULT", SocketKernel);
+								SeguirEjecutando = false;
+							}
+							else
+							{
+								memcpy(Registro, Respuesta, tamano);
+							}	
+						}						
 					}
 
-					else if(strcmp(Instruccion_A_Ejecutar, "MOV_OUT\n")==0)
+					else if(strcmp(Instruccion_A_Ejecutar, "MOV_OUT")==0)
 					{
 						PC++;
+
+						char* DirLogica = strtok(NULL, " ");
+						char* Reg_A_Buscar = strtok(NULL, " ");
+						
+						int tamano = ObtenerTamanoRegistro(Reg_A_Buscar);
+						char* Valor = malloc(tamano+1);
+
+						strncpy(Valor, ObtenerRegistro(Reg_A_Buscar, Registros), tamano);
+						Valor[tamano] = '\0';
+
+						int NumSegmento;
+						int Offset;
+						TraducirDireccion(DirLogica, &NumSegmento, &Offset);
+
+						if(Offset + tamano > TAM_MAX_SEGMENTO)
+						{
+							EnviarMensage("SEG_FAULT", SocketKernel);
+							SeguirEjecutando = false;
+						}
+						else
+						{
+							char* Mensage = malloc(30+tamano);
+							sprintf(Mensage,"MOV_OUT %d %d %d %s\0", PID, NumSegmento, Offset, Valor);
+							EnviarMensage(Mensage, SocketMemoria);
+							free(Mensage);
+							free(Valor);
+
+							char* Respuesta = (char*) recibir_paquete(SocketMemoria);
+							if(strcmp(Respuesta, "SEG_FAULT")==0)
+							{
+								EnviarMensage("SEG_FAULT", SocketKernel);
+								SeguirEjecutando = false;
+							}
+						}	
+
 					}
 
 					else if(strcmp(Instruccion_A_Ejecutar, "F_OPEN\n")==0)
@@ -283,7 +351,7 @@ void Enviar_PCB_A_Kernel(int ProgramCounter, t_registrosCPU* Registros_A_Enviar,
 }
 
 //devuelve un puntero a un registro por su nombre
-char* ObrenerRegistro(char* NombreRegistro, t_registrosCPU* Registros)
+char* ObtenerRegistro(char* NombreRegistro, t_registrosCPU* Registros)
 {
 	if(strcmp(NombreRegistro, "AX")==0)
 		return Registros->AX;
@@ -313,12 +381,40 @@ char* ObrenerRegistro(char* NombreRegistro, t_registrosCPU* Registros)
 		return NULL;
 }
 
-void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* DesplazamientoSegmento)
+//devuelve el tamaño de un registro por su nombre
+int ObtenerTamanoRegistro(char* NombreRegistro)
+{
+	if
+	(
+		strcmp(NombreRegistro, "AX")==0 ||
+		strcmp(NombreRegistro, "BX")==0 ||
+		strcmp(NombreRegistro, "CX")==0 ||
+		strcmp(NombreRegistro, "DX")==0
+	)return 4;
+	else if
+	(
+		strcmp(NombreRegistro, "EAX")==0 ||
+		strcmp(NombreRegistro, "EBX")==0 ||
+		strcmp(NombreRegistro, "ECX")==0 ||
+		strcmp(NombreRegistro, "EDX")==0
+	)return 8;
+	else if
+	(
+		strcmp(NombreRegistro, "RAX")==0 ||
+		strcmp(NombreRegistro, "RBX")==0 ||
+		strcmp(NombreRegistro, "RCX")==0 ||
+		strcmp(NombreRegistro, "RDX")==0
+	)return 16;
+	else
+		return 0;
+}
+
+void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* Offset)
 {
 	int DirLogica = atoi(CharDirLogica);
 
-	*NumSegmento = floor((DirLogica/ TAM_MAX_SEGMENTO));
-	*DesplazamientoSegmento = DirLogica%TAM_MAX_SEGMENTO;
+	*NumSegmento = (int)floor((DirLogica/ TAM_MAX_SEGMENTO));
+	*Offset = DirLogica%TAM_MAX_SEGMENTO;
 }
 
 
