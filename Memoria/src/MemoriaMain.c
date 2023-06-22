@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	
 	LeerConfigs(argv[1]);
 
-	inicializarMemoria(MEMORIA);
+	inicializarMemoria();
 
 	InicializarSemaforos();
 
@@ -185,9 +185,11 @@ void LeerConfigs(char* path)
 	char *retardo_compactacion = config_get_string_value(config, "RETARDO_COMPACTACION");
 	RETARDO_COMPACTACION= atoi(retardo_compactacion);
 
-	ALGORITMO_ASIGNACION = config_get_string_value(config, "ALGORITMO_ASIGNACION");
-
-
+	char* alg_asig = config_get_string_value(config, "ALGORITMO_ASIGNACION");
+	ALGORITMO_ASIGNACION = atoi(alg_asig);
+	if(alg_asig=="BEST")ALGORITMO_ASIGNACION=0;
+	else if(alg_asig=="WORST")ALGORITMO_ASIGNACION=1;
+	else ALGORITMO_ASIGNACION=2;
 
 }
 
@@ -197,32 +199,122 @@ void InicializarSemaforos()
 	sem_init(&m_UsoDeMemoria, 0, 1);
 }
 
-void inicializarMemoria(Memoria* memoria) {
-    // Asignar memoria para el espacio de usuario
-    memoria->espacioUsuario = malloc(TAM_MEMORIA);
+void inicializarMemoria() {
+	MEMORIA=malloc(sizeof(Memoria));
 
-    // Crear segmento compartido (segmento 0)
-    memoria->tablaSegmentos.segmentos[0].idSegmento = 0;
-    memoria->tablaSegmentos.segmentos[0].direccionBase = memoria->espacioUsuario;
-    memoria->tablaSegmentos.segmentos[0].limite = TAM_SEGMENTO_0;
+	TABLA_SEGMENTOS=list_create();  // Establecer la cantidad de segmentos
+	Segmento* seg= malloc(sizeof(Segmento*));
+
+
+
+    // Asignar memoria para el espacio de usuario
+    MEMORIA->espacioUsuario = (void *) malloc(TAM_MEMORIA);
+    memset(MEMORIA->espacioUsuario,'0',TAM_MEMORIA);
+    log_info(Memoria_Logger,"la direccion base del seg0 es: %p",MEMORIA->espacioUsuario);
+
+    seg->PID=-1;
+	seg->idSegmento=0;
+	seg->direccionBase=MEMORIA->espacioUsuario;
+	seg->limite=TAM_SEGMENTO_0;
+	list_add(TABLA_SEGMENTOS,seg);
+
+	/*
+	//memset(seg->direccionBase,'1', seg->limite);
+	log_info(Memoria_Logger,"la direccion base del seg0 es: %p",seg->direccionBase);
+
+	// Obtener un puntero al tipo de datos deseado (por ejemplo, char*)
+	char* datos = (char*)seg->direccionBase;
+
+	// Acceder y leer los datos asignados
+	for (int i = 0; i < seg->limite +5; i++) {
+	    log_info(Memoria_Logger,"dato %c, posicion %p", datos[i],(seg->direccionBase)+i);
+	}
+	*/
+
 }
 
-void crearSegmento(Memoria* memoria, int idSegmento, int tamanoSegmento) {
+int validarSegmento(int idSeg,int desplazamientoSegmento){
+	//valida la existencia del segmento y checkea que el desplazamiento no tire seg_fault
+	int aux=0;
+	Segmento* seg=list_get(TABLA_SEGMENTOS,aux);
+
+
+	while(list_size(TABLA_SEGMENTOS)>aux){
+		log_info(Memoria_Logger,"idSegmento %d",seg->idSegmento);
+		log_info(Memoria_Logger,"db %p",seg->direccionBase);
+		log_info(Memoria_Logger,"lim %d",seg->limite);
+		log_info(Memoria_Logger,"tam tabla y aux %d %d",list_size(TABLA_SEGMENTOS),aux);
+		if(seg->idSegmento==idSeg) {
+			if(((int) seg->direccionBase + seg->limite) >= ((int) seg->direccionBase + desplazamientoSegmento)) return 1;
+			else return 0;
+		}
+		aux++;
+		log_info(Memoria_Logger,"tam tabla y aux %d %d",list_size(TABLA_SEGMENTOS),aux);
+		if(list_size(TABLA_SEGMENTOS)>aux)seg=list_get(TABLA_SEGMENTOS,aux);
+
+	}
+
+
+	return 0;
+}
+
+void crearSegmento(int PID, int idSeg, int tamanoSegmento) {
     // Buscar espacio contiguo disponible para el segmento
     // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
+	if(list_size(TABLA_HUECOS)!=0){
+		switch(ALGORITMO_ASIGNACION){
+			case 0:
+				BestFit();
+				break;
+			case 1:
+				WorstFit();
+				break;
+			case 2:
+				FirstFit();
+				break;
+		}
+		}else if(list_size(TABLA_SEGMENTOS)!=1) {
+			Segmento* lastSeg =list_get(TABLA_SEGMENTOS,list_size(TABLA_SEGMENTOS));
+			AgregarSegmento(lastSeg,PID,tamanoSegmento,idSeg);
+
+		}else{
+			void* seg0=list_get(TABLA_SEGMENTOS,0);
+			AgregarSegmento(seg0,PID,tamanoSegmento,idSeg);
+		}
 
     // Actualizar la tabla de segmentos con la información del nuevo segmento
+	//list_add(TABLA_SEGMENTOS,seg);
+}
+void AgregarSegmento(Segmento* lastSeg,int PID,int tamanoSegmento,int idSeg){
+	Segmento* seg;
+	seg->PID=PID;
+	seg->direccionBase=(lastSeg->direccionBase) + (lastSeg->limite+1);
+	seg->limite=tamanoSegmento;
+	seg->idSegmento=idSeg;
+	list_add(TABLA_SEGMENTOS,seg);
+	memset(seg->direccionBase,'\0',seg->limite);
 }
 
-void eliminarSegmento(Memoria* memoria, int idSegmento) {
+void eliminarSegmento( int idSegmento) {
     // Marcar el segmento como libre en la tabla de segmentos
 
     // Consolidar huecos libres aledaños si los hay
 }
 
-void compactarSegmentos(Memoria* memoria) {
+void compactarSegmentos() {
     // Mover los segmentos para eliminar los huecos libres
 
     // Actualizar la tabla de segmentos con las nuevas direcciones bases
 }
 
+void BestFit(){
+
+}
+
+void WorstFit(){
+
+}
+
+void FirstFit(){
+
+}
