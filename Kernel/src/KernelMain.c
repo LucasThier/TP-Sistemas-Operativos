@@ -152,7 +152,6 @@ void* PlanificadorCortoPlazo()
 	return (void*) EXIT_FAILURE;
 }
 
-
 void PlanificadorCortoPlazoFIFO()
 {
 	while(true)
@@ -259,7 +258,6 @@ double EstimacionProximaRafaga(t_PCB* PCB)
 {
 	return (HRRN_ALFA * PCB->tiempoUltimaRafaga) + ((1 - HRRN_ALFA) * PCB->estimacionUltimaRafaga);
 }
-
 
 void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR)
 {
@@ -595,6 +593,42 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			//printf("Respuesta de CPU: %s\n", rta);
 			
 			RealizarRespuestaDelCPU(rta);
+		}
+	}
+
+	else if(strcmp(respuesta, "CREATE_SEGMENT")== 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+		char* Mensage = maloc(100);
+
+		sprintf(Mensage, "%s %s\0", respuesta , Parametros);
+
+		EnviarMensage(Mensage, SocketMemoria);
+		log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
+
+		char* RespuestaMemoria = strtok((char*)recibir_paquete(SocketMemoria), " ");
+
+		if (strcmp(RespuestaMemoria, "OUT_OF_MEMORY") == 0)
+		{
+			EnviarMensage("RECHAZADO", SocketCPU);
+		}
+		else if (strcmp(RespuestaMemoria, "COMPACTAR") == 0)
+		{
+			char* tipo = strtok(NULL, " ");
+			if (strcmp(RespuestaMemoria, "OCUPADO") == 0)
+			{
+				log_info(Kernel_Logger, "Compactación: Esperando Fin de Operaciones de FS");
+				recibir_paquete(SocketMemoria);
+				log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
+			}
+			
+			//Esperar las tablas de segmentos actualizadas de todos los procesos
+
+		}
+		else
+		{
+
+
 		}
 	}
 }

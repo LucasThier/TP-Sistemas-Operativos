@@ -40,8 +40,6 @@ void LeerConfigs(char* path);
 
 //PCB---------------------------------
 
-int g_PIDCounter = 0;
-
 typedef struct
 {
     char AX[4];
@@ -62,13 +60,6 @@ typedef struct
 
 typedef struct
 {
-    int id;
-    int direccionBase;
-    int tamanoSegmento;
-} t_tablaSegmentos;
-
-typedef struct
-{
     char* pathArchivoAbierto;
     int posicionPuntero;
 } t_tablaArchivosAbiertos;
@@ -80,7 +71,7 @@ typedef struct
     int programCounter;
     char* recursoBloqueante;
     t_registrosCPU* registrosCPU;
-    t_list* tablaDeSegmentos;
+    t_list* tablasDeSegmentos;
     double tiempoUltimaRafaga;
     double estimacionUltimaRafaga;
     time_t tiempoLlegadaRedy;
@@ -88,6 +79,7 @@ typedef struct
     t_list* listaInstrucciones;
 } t_PCB;
 
+int g_PIDCounter = 0;
 t_list* g_Lista_NEW;
 t_list* g_Lista_READY;
 t_PCB* g_EXEC;

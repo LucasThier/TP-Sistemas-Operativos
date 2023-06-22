@@ -50,252 +50,261 @@ int InicializarConexiones()
 void* EscuchaKernel()
 {
 	SocketCPU = iniciar_servidor(CPU_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
-	
-	if(SocketCPU != 0)
+	if(SocketCPU == 0)
 	{
-		int SocketKernel = esperar_cliente(CPU_Logger, NOMBRE_PROCESO, SocketCPU);
-
-		if(SocketKernel != 0)
-		{
-			//--------------------------------------------------------------------------------------------------------------------------------------------------
-			//Acciones a realizar cuando se conecta el kernel:
-			while(true)
-			{
-				bool SeguirEjecutando = true;
-				//recive una lista con todos los datos del PCB
-				t_list* DatosRecibidos = (t_list*)recibir_paquete(SocketKernel);
-
-				//guarda el tiempo en que empezo a ejecutar para calcular el tiempo de ejecucion mas tarde
-				time(&tiempoInicio);
-
-				int PC = *(int*)list_remove(DatosRecibidos, 0);
-
-				int PID = *(int*)list_remove(DatosRecibidos, 0);
-
-				//guarda los registros en una estructura
-				t_registrosCPU* Registros = ObtenerRegistrosDelPaquete(DatosRecibidos);
-				
-				//loopea por las instrucciones y las realiza una por una hasta que alguna requiera desalojar
-				while (SeguirEjecutando)
-				{
-					//obtiene la instruccion a ejecutar
-					char* Linea_A_Ejecutar = (char*)list_get(DatosRecibidos, PC);
-					
-					log_info(CPU_Logger, "PID: [%d] - Ejecutando: %s", PID, Linea_A_Ejecutar);
-
-					//divide la linea en instruccion y los parametros
-					char* Instruccion_A_Ejecutar = strtok(Linea_A_Ejecutar, " ");
-
-					if(strcmp(Instruccion_A_Ejecutar, "YIELD\n")==0)
-					{
-						PC++;
-						EnviarMensage("YIELD\n", SocketKernel);
-						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
-						SeguirEjecutando = false;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "SET")==0)
-					{
-						PC++;
-						
-						//aplicar el retardo de instruccion al hacer el set
-						//Los milisegundos indicados en las config
-						struct timespec tiempoespera;
-						tiempoespera.tv_sec = RETARDO_INSTRUCCION / 1000;
-						tiempoespera.tv_nsec = (RETARDO_INSTRUCCION % 1000) * 1000000;
-						nanosleep(&tiempoespera, NULL);
-
-						//obtengo los parametros del SET
-						char* Reg_A_Setear = strtok(NULL, " ");
-						char* Valor_A_Setear = strtok(NULL, " ");
-						
-						//obtener el registro a modificar y setear el valor
-						strncpy(ObtenerRegistro(Reg_A_Setear, Registros), Valor_A_Setear, strlen(Valor_A_Setear)-1);	
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "EXIT\n")==0)
-					{
-						PC++;
-						EnviarMensage("EXIT\n", SocketKernel);
-						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
-						SeguirEjecutando = false;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "I/O")==0)
-					{
-						PC++;
-						
-						char* Mensage = "I/O\n";
-						char* Tiempo = strtok(NULL, " ");
-
-						EnviarMensage(Mensage, SocketKernel);
-						EnviarMensage(Tiempo, SocketKernel);
-						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
-						SeguirEjecutando = false;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "WAIT")==0)
-					{
-						PC++;
-						EnviarMensage("WAIT\n", SocketKernel);
-						char* RecursoSolicitado = strtok(NULL, " ");
-						EnviarMensage(RecursoSolicitado, SocketKernel);
-
-						char* Respuesta = (char*) recibir_paquete(SocketKernel);
-
-						if(strcmp(Respuesta, "RECHAZADO")==0)
-						{
-							Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
-							SeguirEjecutando = false;
-						}
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "SIGNAL")==0)
-					{
-						PC++;
-						EnviarMensage("SIGNAL\n", SocketKernel);
-						char* RecursoLiberado = strtok(NULL, " ");
-						EnviarMensage(RecursoLiberado, SocketKernel);
-
-						char* Respuesta = (char*) recibir_paquete(SocketKernel);
-						if(strcmp(Respuesta, "RECHAZADO")==0)
-						{
-							Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
-							SeguirEjecutando = false;
-						}
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "MOV_IN")==0)
-					{
-						PC++;
-
-						char* Reg_A_Setear = strtok(NULL, " ");
-						char* DirLogica = strtok(NULL, " ");
-
-						char* Registro = ObtenerRegistro(Reg_A_Setear, Registros);
-						int tamano = ObtenerTamanoRegistro(Reg_A_Setear);
-						
-						int NumSegmento;
-						int Offset;
-						TraducirDireccion(DirLogica, &NumSegmento, &Offset);
-
-						if(Offset + tamano > TAM_MAX_SEGMENTO)
-						{
-							EnviarMensage("SEG_FAULT", SocketKernel);
-							SeguirEjecutando = false;
-						}
-						else
-						{
-							char* Mensage = malloc(100);
-							sprintf(Mensage,"MOV_IN %d %d %d %d\0", PID, NumSegmento, Offset, tamano);
-							EnviarMensage(Mensage, SocketMemoria);
-							free(Mensage);
-
-							char* Respuesta = (char*) recibir_paquete(SocketMemoria);
-							if(strcmp(Respuesta, "SEG_FAULT")==0)
-							{
-								EnviarMensage("SEG_FAULT", SocketKernel);
-								SeguirEjecutando = false;
-							}
-							else
-							{
-								memcpy(Registro, Respuesta, tamano);
-							}	
-						}						
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "MOV_OUT")==0)
-					{
-						PC++;
-
-						char* DirLogica = strtok(NULL, " ");
-						char* Reg_A_Buscar = strtok(NULL, " ");
-						
-						int tamano = ObtenerTamanoRegistro(Reg_A_Buscar);
-						char* Valor = malloc(tamano+1);
-
-						strncpy(Valor, ObtenerRegistro(Reg_A_Buscar, Registros), tamano);
-						Valor[tamano] = '\0';
-
-						int NumSegmento;
-						int Offset;
-						TraducirDireccion(DirLogica, &NumSegmento, &Offset);
-
-						if(Offset + tamano > TAM_MAX_SEGMENTO)
-						{
-							EnviarMensage("SEG_FAULT", SocketKernel);
-							SeguirEjecutando = false;
-						}
-						else
-						{
-							char* Mensage = malloc(30+tamano);
-							sprintf(Mensage,"MOV_OUT %d %d %d %s\0", PID, NumSegmento, Offset, Valor);
-							EnviarMensage(Mensage, SocketMemoria);
-							free(Mensage);
-							free(Valor);
-
-							char* Respuesta = (char*) recibir_paquete(SocketMemoria);
-							if(strcmp(Respuesta, "SEG_FAULT")==0)
-							{
-								EnviarMensage("SEG_FAULT", SocketKernel);
-								SeguirEjecutando = false;
-							}
-						}	
-
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "F_OPEN\n")==0)
-					{
-						PC++;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "F_CLOSE\n")==0)
-					{
-						PC++;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "F_SEEK\n")==0)
-					{
-						PC++;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "F_READ\n")==0)
-					{
-						PC++;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "F_WRITE\n")==0)
-					{
-						PC++;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "F_TRUNCATE\n")==0)
-					{
-						PC++;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "CREATE_SEGMENT\n")==0)
-					{
-						PC++;
-					}
-
-					else if(strcmp(Instruccion_A_Ejecutar, "DELETE_SEGMENT\n")==0)
-					{
-						PC++;
-					}
-				}
-				list_destroy(DatosRecibidos);
-				sleep(1);
-			}
-			//--------------------------------------------------------------------------------------------------------------------------------------------------
-			liberar_conexion(SocketKernel);
-			return (void*)EXIT_SUCCESS;
-		}
+		liberar_conexion(SocketCPU);
+		return (void*)EXIT_FAILURE;
 	}
-	liberar_conexion(SocketCPU);
-	return (void*)EXIT_FAILURE;
-}
+	int SocketKernel = esperar_cliente(CPU_Logger, NOMBRE_PROCESO, SocketCPU);
 
+	if(SocketKernel == 0)
+	{
+		liberar_conexion(SocketCPU);
+		return (void*)EXIT_FAILURE;
+	}
+
+	while(true)
+	{
+		bool SeguirEjecutando = true;
+		//recive una lista con todos los datos del PCB
+		t_list* DatosRecibidos = (t_list*)recibir_paquete(SocketKernel);
+
+		//guarda el tiempo en que empezo a ejecutar para calcular el tiempo de ejecucion mas tarde
+		time(&tiempoInicio);
+
+		int PC = *(int*)list_remove(DatosRecibidos, 0);
+
+		int PID = *(int*)list_remove(DatosRecibidos, 0);
+
+		//guarda los registros en una estructura
+		t_registrosCPU* Registros = ObtenerRegistrosDelPaquete(DatosRecibidos);
+		
+		//loopea por las instrucciones y las realiza una por una hasta que alguna requiera desalojar
+		while (SeguirEjecutando)
+		{
+			//obtiene la instruccion a ejecutar
+			char* Linea_A_Ejecutar = (char*)list_get(DatosRecibidos, PC);
+			
+			log_info(CPU_Logger, "PID: [%d] - Ejecutando: %s", PID, Linea_A_Ejecutar);
+
+			//divide la linea en instruccion y los parametros
+			char* Instruccion_A_Ejecutar = strtok(Linea_A_Ejecutar, " ");
+
+			if(strcmp(Instruccion_A_Ejecutar, "YIELD\n")==0)
+			{
+				PC++;
+				EnviarMensage("YIELD\n", SocketKernel);
+				Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+				SeguirEjecutando = false;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "SET")==0)
+			{
+				PC++;
+				
+				//aplicar el retardo de instruccion al hacer el set
+				//Los milisegundos indicados en las config
+				struct timespec tiempoespera;
+				tiempoespera.tv_sec = RETARDO_INSTRUCCION / 1000;
+				tiempoespera.tv_nsec = (RETARDO_INSTRUCCION % 1000) * 1000000;
+				nanosleep(&tiempoespera, NULL);
+
+				//obtengo los parametros del SET
+				char* Reg_A_Setear = strtok(NULL, " ");
+				char* Valor_A_Setear = strtok(NULL, " ");
+				
+				//obtener el registro a modificar y setear el valor
+				strncpy(ObtenerRegistro(Reg_A_Setear, Registros), Valor_A_Setear, strlen(Valor_A_Setear)-1);	
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "EXIT\n")==0)
+			{
+				PC++;
+				EnviarMensage("EXIT\n", SocketKernel);
+				Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+				SeguirEjecutando = false;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "I/O")==0)
+			{
+				PC++;
+				
+				char* Mensage = "I/O\n";
+				char* Tiempo = strtok(NULL, " ");
+
+				EnviarMensage(Mensage, SocketKernel);
+				EnviarMensage(Tiempo, SocketKernel);
+				Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+				SeguirEjecutando = false;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "WAIT")==0)
+			{
+				PC++;
+				EnviarMensage("WAIT\n", SocketKernel);
+				char* RecursoSolicitado = strtok(NULL, " ");
+				EnviarMensage(RecursoSolicitado, SocketKernel);
+
+				char* Respuesta = (char*) recibir_paquete(SocketKernel);
+
+				if(strcmp(Respuesta, "RECHAZADO")==0)
+				{
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+					SeguirEjecutando = false;
+				}
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "SIGNAL")==0)
+			{
+				PC++;
+				EnviarMensage("SIGNAL\n", SocketKernel);
+				char* RecursoLiberado = strtok(NULL, " ");
+				EnviarMensage(RecursoLiberado, SocketKernel);
+
+				char* Respuesta = (char*) recibir_paquete(SocketKernel);
+				if(strcmp(Respuesta, "RECHAZADO")==0)
+				{
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+					SeguirEjecutando = false;
+				}
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "MOV_IN")==0)
+			{
+				PC++;
+
+				char* Reg_A_Setear = strtok(NULL, " ");
+				char* DirLogica = strtok(NULL, " ");
+
+				char* Registro = ObtenerRegistro(Reg_A_Setear, Registros);
+				int tamano = ObtenerTamanoRegistro(Reg_A_Setear);
+				
+				int NumSegmento;
+				int Offset;
+				TraducirDireccion(DirLogica, &NumSegmento, &Offset);
+
+				if(Offset + tamano > TAM_MAX_SEGMENTO)
+				{
+					EnviarMensage("SEG_FAULT", SocketKernel);
+					SeguirEjecutando = false;
+				}
+				else
+				{
+					char* Mensage = malloc(100);
+					sprintf(Mensage,"MOV_IN %d %d %d %d\0", PID, NumSegmento, Offset, tamano);
+					EnviarMensage(Mensage, SocketMemoria);
+					free(Mensage);
+
+					char* Respuesta = (char*) recibir_paquete(SocketMemoria);
+					if(strcmp(Respuesta, "SEG_FAULT")==0)
+					{
+						EnviarMensage("SEG_FAULT", SocketKernel);
+						SeguirEjecutando = false;
+					}
+					else
+					{
+						memcpy(Registro, Respuesta, tamano);
+					}	
+				}						
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "MOV_OUT")==0)
+			{
+				PC++;
+
+				char* DirLogica = strtok(NULL, " ");
+				char* Reg_A_Buscar = strtok(NULL, " ");
+				
+				int tamano = ObtenerTamanoRegistro(Reg_A_Buscar);
+				char* Valor = malloc(tamano+1);
+
+				strncpy(Valor, ObtenerRegistro(Reg_A_Buscar, Registros), tamano);
+				Valor[tamano] = '\0';
+
+				int NumSegmento;
+				int Offset;
+				TraducirDireccion(DirLogica, &NumSegmento, &Offset);
+
+				if(Offset + tamano > TAM_MAX_SEGMENTO)
+				{
+					EnviarMensage("SEG_FAULT", SocketKernel);
+					SeguirEjecutando = false;
+				}
+				else
+				{
+					char* Mensage = malloc(30+tamano);
+					sprintf(Mensage,"MOV_OUT %d %d %d %s\0", PID, NumSegmento, Offset, Valor);
+					EnviarMensage(Mensage, SocketMemoria);
+					free(Mensage);
+					free(Valor);
+
+					char* Respuesta = (char*) recibir_paquete(SocketMemoria);
+					if(strcmp(Respuesta, "SEG_FAULT")==0)
+					{
+						EnviarMensage("SEG_FAULT", SocketKernel);
+						SeguirEjecutando = false;
+					}
+				}	
+
+			}
+			
+			else if(strcmp(Instruccion_A_Ejecutar, "CREATE_SEGMENT")==0)
+			{
+				PC++;
+				
+				EnviarMensage("CREATE_SEGMENT", SocketKernel);
+
+				char* IdSegmento = strtok(NULL, " ");
+				char* Tamano = strtok(NULL, " ");
+
+				char* Mensage = malloc(100);
+				sprintf(Mensage,"%d %s %s\0", PID, IdSegmento, Tamano);
+				EnviarMensage(Mensage, SocketKernel);
+				free(Mensage);		
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "DELETE_SEGMENT\n")==0)
+			{
+				PC++;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "F_OPEN\n")==0)
+			{
+				PC++;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "F_CLOSE\n")==0)
+			{
+				PC++;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "F_SEEK\n")==0)
+			{
+				PC++;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "F_READ\n")==0)
+			{
+				PC++;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "F_WRITE\n")==0)
+			{
+				PC++;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "F_TRUNCATE\n")==0)
+			{
+				PC++;
+			}
+
+		}
+		list_destroy(DatosRecibidos);
+	}
+
+	liberar_conexion(SocketCPU);
+	return (void*)EXIT_SUCCESS;
+}
 
 //funcion que recibe una lista con los datos del PCB y los guarda en una estructura
 t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
