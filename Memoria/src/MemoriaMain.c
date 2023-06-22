@@ -19,7 +19,9 @@ int main(int argc, char* argv[])
 	
 	LeerConfigs(argv[1]);
 
-	inicializarMemoria(MEMORIA);
+	inicializarMemoria();
+
+	log_info(Memoria_Logger,"es valido %d",validarSegmento(1,128));
 
 	InicializarSemaforos();
 
@@ -197,30 +199,67 @@ void InicializarSemaforos()
 	sem_init(&m_UsoDeMemoria, 0, 1);
 }
 
-void inicializarMemoria(Memoria* memoria) {
-    // Asignar memoria para el espacio de usuario
-    memoria->espacioUsuario = malloc(TAM_MEMORIA);
+void inicializarMemoria() {
+	MEMORIA=malloc(sizeof(Memoria));
 
-    // Crear segmento compartido (segmento 0)
-    memoria->tablaSegmentos.segmentos[0].idSegmento = 0;
-    memoria->tablaSegmentos.segmentos[0].direccionBase = memoria->espacioUsuario;
-    memoria->tablaSegmentos.segmentos[0].limite = TAM_SEGMENTO_0;
+	TABLA_SEGMENTOS=list_create();  // Establecer la cantidad de segmentos
+	Segmento* seg= malloc(sizeof(Segmento*));
+
+
+
+    // Asignar memoria para el espacio de usuario
+    MEMORIA->espacioUsuario = (void *) malloc(TAM_MEMORIA);
+    memset(MEMORIA->espacioUsuario,'\0',TAM_MEMORIA);
+    log_info(Memoria_Logger,"la direccion base del seg0 es: %p",MEMORIA->espacioUsuario);
+
+	seg->idSegmento=0;
+	seg->direccionBase=MEMORIA->espacioUsuario;
+	seg->limite=TAM_SEGMENTO_0;
+	list_add(TABLA_SEGMENTOS,seg);
+
+	log_info(Memoria_Logger,"la direccion base del seg0 es: %p",seg->direccionBase);
+
 }
 
-void crearSegmento(Memoria* memoria, int idSegmento, int tamanoSegmento) {
+int validarSegmento(int idSeg,int desplazamientoSegmento){
+	//valida la existencia del segmento y checkea que el desplazamiento no tire seg_fault
+	int aux=0;
+	Segmento* seg=list_get(TABLA_SEGMENTOS,aux);
+
+
+	while(list_size(TABLA_SEGMENTOS)>aux){
+		log_info(Memoria_Logger,"idSegmento %d",seg->idSegmento);
+		log_info(Memoria_Logger,"db %p",seg->direccionBase);
+		log_info(Memoria_Logger,"lim %d",seg->limite);
+		log_info(Memoria_Logger,"tam tabla y aux %d %d",list_size(TABLA_SEGMENTOS),aux);
+		if(seg->idSegmento==idSeg) {
+			if(((int) seg->direccionBase + seg->limite) >= ((int) seg->direccionBase + desplazamientoSegmento)) return 1;
+			else return 0;
+		}
+		aux++;
+		log_info(Memoria_Logger,"tam tabla y aux %d %d",list_size(TABLA_SEGMENTOS),aux);
+		if(list_size(TABLA_SEGMENTOS)>aux)seg=list_get(TABLA_SEGMENTOS,aux);
+
+	}
+
+
+	return 0;
+}
+
+void crearSegmento(int idSegmento, int tamanoSegmento) {
     // Buscar espacio contiguo disponible para el segmento
     // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
 
     // Actualizar la tabla de segmentos con la información del nuevo segmento
 }
 
-void eliminarSegmento(Memoria* memoria, int idSegmento) {
+void eliminarSegmento( int idSegmento) {
     // Marcar el segmento como libre en la tabla de segmentos
 
     // Consolidar huecos libres aledaños si los hay
 }
 
-void compactarSegmentos(Memoria* memoria) {
+void compactarSegmentos() {
     // Mover los segmentos para eliminar los huecos libres
 
     // Actualizar la tabla de segmentos con las nuevas direcciones bases
