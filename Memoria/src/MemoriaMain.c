@@ -21,8 +21,6 @@ int main(int argc, char* argv[])
 
 	inicializarMemoria();
 
-	log_info(Memoria_Logger,"es valido %d",validarSegmento(1,128));
-
 	InicializarSemaforos();
 
 	InicializarConexiones();
@@ -187,9 +185,11 @@ void LeerConfigs(char* path)
 	char *retardo_compactacion = config_get_string_value(config, "RETARDO_COMPACTACION");
 	RETARDO_COMPACTACION= atoi(retardo_compactacion);
 
-	ALGORITMO_ASIGNACION = config_get_string_value(config, "ALGORITMO_ASIGNACION");
-
-
+	char* alg_asig = config_get_string_value(config, "ALGORITMO_ASIGNACION");
+	ALGORITMO_ASIGNACION = atoi(alg_asig);
+	if(alg_asig=="BEST")ALGORITMO_ASIGNACION=0;
+	else if(alg_asig=="WORST")ALGORITMO_ASIGNACION=1;
+	else ALGORITMO_ASIGNACION=2;
 
 }
 
@@ -209,15 +209,27 @@ void inicializarMemoria() {
 
     // Asignar memoria para el espacio de usuario
     MEMORIA->espacioUsuario = (void *) malloc(TAM_MEMORIA);
-    memset(MEMORIA->espacioUsuario,'\0',TAM_MEMORIA);
+    memset(MEMORIA->espacioUsuario,'0',TAM_MEMORIA);
     log_info(Memoria_Logger,"la direccion base del seg0 es: %p",MEMORIA->espacioUsuario);
 
+    seg->PID=-1;
 	seg->idSegmento=0;
 	seg->direccionBase=MEMORIA->espacioUsuario;
 	seg->limite=TAM_SEGMENTO_0;
 	list_add(TABLA_SEGMENTOS,seg);
 
+	/*
+	//memset(seg->direccionBase,'1', seg->limite);
 	log_info(Memoria_Logger,"la direccion base del seg0 es: %p",seg->direccionBase);
+
+	// Obtener un puntero al tipo de datos deseado (por ejemplo, char*)
+	char* datos = (char*)seg->direccionBase;
+
+	// Acceder y leer los datos asignados
+	for (int i = 0; i < seg->limite +5; i++) {
+	    log_info(Memoria_Logger,"dato %c, posicion %p", datos[i],(seg->direccionBase)+i);
+	}
+	*/
 
 }
 
@@ -246,11 +258,41 @@ int validarSegmento(int idSeg,int desplazamientoSegmento){
 	return 0;
 }
 
-void crearSegmento(int idSegmento, int tamanoSegmento) {
+void crearSegmento(int PID, int idSeg, int tamanoSegmento) {
     // Buscar espacio contiguo disponible para el segmento
     // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
+	if(list_size(TABLA_HUECOS)!=0){
+		switch(ALGORITMO_ASIGNACION){
+			case 0:
+				BestFit();
+				break;
+			case 1:
+				WorstFit();
+				break;
+			case 2:
+				FirstFit();
+				break;
+		}
+		}else if(list_size(TABLA_SEGMENTOS)!=1) {
+			Segmento* lastSeg =list_get(TABLA_SEGMENTOS,list_size(TABLA_SEGMENTOS));
+			AgregarSegmento(lastSeg,PID,tamanoSegmento,idSeg);
+
+		}else{
+			void* seg0=list_get(TABLA_SEGMENTOS,0);
+			AgregarSegmento(seg0,PID,tamanoSegmento,idSeg);
+		}
 
     // Actualizar la tabla de segmentos con la información del nuevo segmento
+	//list_add(TABLA_SEGMENTOS,seg);
+}
+void AgregarSegmento(Segmento* lastSeg,int PID,int tamanoSegmento,int idSeg){
+	Segmento* seg;
+	seg->PID=PID;
+	seg->direccionBase=(lastSeg->direccionBase) + (lastSeg->limite+1);
+	seg->limite=tamanoSegmento;
+	seg->idSegmento=idSeg;
+	list_add(TABLA_SEGMENTOS,seg);
+	memset(seg->direccionBase,'\0',seg->limite);
 }
 
 void eliminarSegmento( int idSegmento) {
@@ -265,3 +307,14 @@ void compactarSegmentos() {
     // Actualizar la tabla de segmentos con las nuevas direcciones bases
 }
 
+void BestFit(){
+
+}
+
+void WorstFit(){
+
+}
+
+void FirstFit(){
+
+}

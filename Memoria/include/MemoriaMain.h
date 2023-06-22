@@ -7,7 +7,13 @@
 #include <pthread.h>
 
 typedef struct {
+    void* direccionBase;
+    int limite;
+} Hueco;
+
+typedef struct {
     int idSegmento;
+    int PID;
     void* direccionBase;
     int limite;
 } Segmento;
@@ -23,19 +29,21 @@ int TAM_SEGMENTO_0;
 int CANT_SEGMENTOS;
 int RETARDO_MEMORIA;
 int RETARDO_COMPACTACION;
-char* ALGORITMO_ASIGNACION;
+int ALGORITMO_ASIGNACION;
 Memoria* MEMORIA;
 t_list* TABLA_SEGMENTOS;
+t_list* TABLA_HUECOS;
 
 int InicializarConexiones();
 void* EscucharConexiones();
 void* AdministradorDeModulo(void*);
 void LeerConfigs(char*);
-void crearSegmento(int, int);
+void crearSegmento(int,int, int);
 void eliminarSegmento(int);
 void compactarSegmentos();
 void inicializarMemoria();
 int validarSegmento(int,int);
+void AgregarSegmento(Segmento*,int,int,int);
 
 
 char NOMBRE_PROCESO[8] = "Memoria";
