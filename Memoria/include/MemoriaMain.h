@@ -39,11 +39,15 @@ void* EscucharConexiones();
 void* AdministradorDeModulo(void*);
 void LeerConfigs(char*);
 void crearSegmento(int,int, int);
-void eliminarSegmento(int);
+void eliminarSegmento(int,int);
 void compactarSegmentos();
 void inicializarMemoria();
 int validarSegmento(int,int);
 void AgregarSegmento(Segmento*,int,int,int);
+char* leerSegmento(int,int,int,int);
+int buscarSegmento(int,int);
+char* leerSegmento(int, int, int, int);
+char* escribirSegmento(int, int, int, int, char*);
 
 
 char NOMBRE_PROCESO[8] = "Memoria";

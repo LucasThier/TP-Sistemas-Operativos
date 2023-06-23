@@ -111,7 +111,6 @@ void* AdministradorDeModulo(void* arg)
 			//longitud del contenido a buscar
 			char* Longitud = strtok(NULL, " ");	
 
-			
 			char*  Contenido;// = leer_contenido(Direccion, Longitud);
 
 			//enviar el contenido encontrado o SEG_FAULT en caso de error
@@ -200,37 +199,33 @@ void InicializarSemaforos()
 }
 
 void inicializarMemoria() {
-	MEMORIA=malloc(sizeof(Memoria));
-
 	TABLA_SEGMENTOS=list_create();  // Establecer la cantidad de segmentos
+	TABLA_HUECOS=list_create();  // Establecer la cantidad de segmentos
+
 	Segmento* seg= malloc(sizeof(Segmento*));
 
-
-
     // Asignar memoria para el espacio de usuario
-    MEMORIA->espacioUsuario = (void *) malloc(TAM_MEMORIA);
-    memset(MEMORIA->espacioUsuario,'0',TAM_MEMORIA);
-    log_info(Memoria_Logger,"la direccion base del seg0 es: %p",MEMORIA->espacioUsuario);
+    MEMORIA = (void *) malloc(TAM_MEMORIA);
+    memset(MEMORIA,'0',TAM_MEMORIA);
+    log_info(Memoria_Logger,"la direccion base del seg0 es: %p",MEMORIA);
 
     seg->PID=-1;
 	seg->idSegmento=0;
-	seg->direccionBase=MEMORIA->espacioUsuario;
+	seg->direccionBase=MEMORIA;
 	seg->limite=TAM_SEGMENTO_0;
 	list_add(TABLA_SEGMENTOS,seg);
 
-	/*
-	//memset(seg->direccionBase,'1', seg->limite);
-	log_info(Memoria_Logger,"la direccion base del seg0 es: %p",seg->direccionBase);
+	
+	// memset(seg->direccionBase,'1', seg->limite);
+	// log_info(Memoria_Logger,"la direccion base del seg0 es: %p",seg->direccionBase);
 
-	// Obtener un puntero al tipo de datos deseado (por ejemplo, char*)
-	char* datos = (char*)seg->direccionBase;
+	// //Obtener un puntero al tipo de datos deseado (por ejemplo, char*)
+	// char* datos = (char*)seg->direccionBase;
 
-	// Acceder y leer los datos asignados
-	for (int i = 0; i < seg->limite +5; i++) {
-	    log_info(Memoria_Logger,"dato %c, posicion %p", datos[i],(seg->direccionBase)+i);
-	}
-	*/
-
+	// //Acceder y leer los datos asignados
+	// for (int i = 0; i < seg->limite +5; i++) {
+	//     log_info(Memoria_Logger,"dato %c, posicion %p", datos[i],(seg->direccionBase)+i);
+	// }
 }
 
 int validarSegmento(int idSeg,int desplazamientoSegmento){
@@ -238,12 +233,7 @@ int validarSegmento(int idSeg,int desplazamientoSegmento){
 	int aux=0;
 	Segmento* seg=list_get(TABLA_SEGMENTOS,aux);
 
-
 	while(list_size(TABLA_SEGMENTOS)>aux){
-		log_info(Memoria_Logger,"idSegmento %d",seg->idSegmento);
-		log_info(Memoria_Logger,"db %p",seg->direccionBase);
-		log_info(Memoria_Logger,"lim %d",seg->limite);
-		log_info(Memoria_Logger,"tam tabla y aux %d %d",list_size(TABLA_SEGMENTOS),aux);
 		if(seg->idSegmento==idSeg) {
 			if(((int) seg->direccionBase + seg->limite) >= ((int) seg->direccionBase + desplazamientoSegmento)) return 1;
 			else return 0;
@@ -251,14 +241,12 @@ int validarSegmento(int idSeg,int desplazamientoSegmento){
 		aux++;
 		log_info(Memoria_Logger,"tam tabla y aux %d %d",list_size(TABLA_SEGMENTOS),aux);
 		if(list_size(TABLA_SEGMENTOS)>aux)seg=list_get(TABLA_SEGMENTOS,aux);
-
 	}
-
 
 	return 0;
 }
 
-void crearSegmento(int PID, int idSeg, int tamanoSegmento) {
+void crearSegmento(int idSeg, int tamanoSegmento, int PID) {
     // Buscar espacio contiguo disponible para el segmento
     // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
 	if(list_size(TABLA_HUECOS)!=0){
@@ -295,10 +283,70 @@ void AgregarSegmento(Segmento* lastSeg,int PID,int tamanoSegmento,int idSeg){
 	memset(seg->direccionBase,'\0',seg->limite);
 }
 
-void eliminarSegmento( int idSegmento) {
-    // Marcar el segmento como libre en la tabla de segmentos
+void eliminarSegmento(int idSegmento, int PID){
+	int indice = buscarSegmento(PID, idSegmento);
 
-    // Consolidar huecos libres aledaños si los hay
+	if(indice != -1) {
+		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
+
+		memset(seg->direccionBase,'\0',seg->limite);
+		list_remove(TABLA_SEGMENTOS,indice);
+		list_add(TABLA_HUECOS,seg);
+		log_info(Memoria_Logger,"Eliminado con exito");	
+	}
+	else 
+		log_info(Memoria_Logger,"SEG_FAULT");	
+}
+
+char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud){
+	int indice = buscarSegmento(PID, IdSeg);
+
+	if(indice != -1) {
+		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
+
+		char buffer[Longitud];
+		if(validarSegmento(IdSeg,(Offset + Longitud)) == 1){
+			memcpy(buffer,(seg->direccionBase + Offset),Longitud);
+			log_info(Memoria_Logger,"dato es: %s",buffer);	
+			return buffer;
+		}
+		else{
+			log_info(Memoria_Logger,"error");	
+			return "SEG_FAULT";
+		} 
+	}
+}
+
+char* escribirSegmento(int PID, int IdSeg, int Offset, int Longitud, char* datos){
+	int indice = buscarSegmento(PID, IdSeg);
+
+	log_info(Memoria_Logger,"dato es: %s",datos);	
+
+	if(indice != -1) {
+		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
+
+		char buffer[Longitud];
+		if(validarSegmento(IdSeg,(Offset + Longitud)) == 1){
+			for(int i = 0; i < Longitud; i ++)
+				memset(seg->direccionBase,datos,Longitud);
+
+			return "OK";
+		}
+		else
+			return "SEG_FAULT";
+	}
+}
+
+int buscarSegmento(int PID, int idSeg){
+	int aux=0;
+	Segmento* seg=list_get(TABLA_SEGMENTOS,aux);
+
+	while(list_size(TABLA_SEGMENTOS)>aux){
+		if(seg->idSegmento==idSeg && seg->PID == PID) return aux;
+		aux++;
+		if(list_size(TABLA_SEGMENTOS)>aux)seg=list_get(TABLA_SEGMENTOS,aux);
+	}
+	return -1;
 }
 
 void compactarSegmentos() {
