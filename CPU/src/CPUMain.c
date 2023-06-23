@@ -78,6 +78,8 @@ void* EscuchaKernel()
 
 		//guarda los registros en una estructura
 		t_registrosCPU* Registros = ObtenerRegistrosDelPaquete(DatosRecibidos);
+
+		t_tablaSegmentos* TablaSegmentos = ObtenerTablaSegmentosDelPaquete(DatosRecibidos);
 		
 		//loopea por las instrucciones y las realiza una por una hasta que alguna requiera desalojar
 		while (SeguirEjecutando)
@@ -191,6 +193,7 @@ void* EscuchaKernel()
 				else
 				{
 					char* Mensage = malloc(100);
+					//AGREGAR IF SI SE INTENTA ESCRIBIR EN EL SEGMENTO 0
 					sprintf(Mensage,"MOV_IN %d %d %d %d\0", PID, NumSegmento, Offset, tamano);
 					EnviarMensage(Mensage, SocketMemoria);
 					free(Mensage);
@@ -233,6 +236,7 @@ void* EscuchaKernel()
 				else
 				{
 					char* Mensage = malloc(30+tamano);
+					//AGREGAR IF SI SE INTENTA ESCRIBIR EN EL SEGMENTO 0
 					sprintf(Mensage,"MOV_OUT %d %d %d %s\0", PID, NumSegmento, Offset, Valor);
 					EnviarMensage(Mensage, SocketMemoria);
 					free(Mensage);

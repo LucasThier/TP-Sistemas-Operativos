@@ -122,8 +122,6 @@ typedef struct
 t_tablaSegmentos* CrearTablaSegmentos(int PID, t_Segmento* segmento0);
 void EliminarTablaSegmentos(t_tablaSegmentos* tabla);
 
-//
-
 /**
  * Crea un segmento, lo agrega a la tabla y lo retorna
  * @param tabla Pasar NULL si no se quiere agregar a ninguna tabla

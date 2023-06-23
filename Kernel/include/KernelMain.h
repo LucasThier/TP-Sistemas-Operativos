@@ -71,7 +71,7 @@ typedef struct
     int programCounter;
     char* recursoBloqueante;
     t_registrosCPU* registrosCPU;
-    t_list* tablasDeSegmentos;
+    t_list* tablaDeSegmentos;
     double tiempoUltimaRafaga;
     double estimacionUltimaRafaga;
     time_t tiempoLlegadaRedy;

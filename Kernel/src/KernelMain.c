@@ -264,32 +264,35 @@ void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR)
 	t_paquete* Paquete_PCB_Actual = crear_paquete(CPU_PCB);
 
 	//Agrega el Program Counter
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->programCounter), sizeof(int));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->programCounter), sizeof(int));
 
 	//Agrega el PID
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->PID), sizeof(int));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->PID), sizeof(int));
 
 	//Agrega los registros de la CPU
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->AX), sizeof(g_EXEC->registrosCPU->AX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->BX), sizeof(g_EXEC->registrosCPU->BX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->CX), sizeof(g_EXEC->registrosCPU->CX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->DX), sizeof(g_EXEC->registrosCPU->DX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->AX), sizeof(PCB_A_ENVIAR->registrosCPU->AX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->BX), sizeof(PCB_A_ENVIAR->registrosCPU->BX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->CX), sizeof(PCB_A_ENVIAR->registrosCPU->CX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->DX), sizeof(PCB_A_ENVIAR->registrosCPU->DX));
 
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->EAX), sizeof(g_EXEC->registrosCPU->EAX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->EBX), sizeof(g_EXEC->registrosCPU->EBX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->ECX), sizeof(g_EXEC->registrosCPU->ECX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->EDX), sizeof(g_EXEC->registrosCPU->EDX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->EAX), sizeof(PCB_A_ENVIAR->registrosCPU->EAX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->EBX), sizeof(PCB_A_ENVIAR->registrosCPU->EBX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->ECX), sizeof(PCB_A_ENVIAR->registrosCPU->ECX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->EDX), sizeof(PCB_A_ENVIAR->registrosCPU->EDX));
 
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->RAX), sizeof(g_EXEC->registrosCPU->RAX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->RBX), sizeof(g_EXEC->registrosCPU->RBX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->RCX), sizeof(g_EXEC->registrosCPU->RCX));
-	agregar_a_paquete(Paquete_PCB_Actual, &(g_EXEC->registrosCPU->RDX), sizeof(g_EXEC->registrosCPU->RDX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->RAX), sizeof(PCB_A_ENVIAR->registrosCPU->RAX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->RBX), sizeof(PCB_A_ENVIAR->registrosCPU->RBX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->RCX), sizeof(PCB_A_ENVIAR->registrosCPU->RCX));
+	agregar_a_paquete(Paquete_PCB_Actual, &(PCB_A_ENVIAR->registrosCPU->RDX), sizeof(PCB_A_ENVIAR->registrosCPU->RDX));
+
+	//Agregar tabla de instrucciones
+	AgregarTablaSegmentosAlPaquete(Paquete_PCB_Actual, PCB_A_ENVIAR->tablaDeSegmentos);
 
 	//Agrega las instrucciones
 	//como pueden ser n instrucciones, las agrego ultimas;
-	for(int i=0; i < list_size(g_EXEC->listaInstrucciones); i++)
+	for(int i=0; i < list_size(PCB_A_ENVIAR->listaInstrucciones); i++)
 	{
-		char* instruccion = (char*) list_get(g_EXEC->listaInstrucciones, i);
+		char* instruccion = (char*) list_get(PCB_A_ENVIAR->listaInstrucciones, i);
 					
 		agregar_a_paquete(Paquete_PCB_Actual, instruccion, strlen(instruccion)+1);
 	}
@@ -618,17 +621,15 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			if (strcmp(RespuestaMemoria, "OCUPADO") == 0)
 			{
 				log_info(Kernel_Logger, "Compactación: Esperando Fin de Operaciones de FS");
-				recibir_paquete(SocketMemoria);
+				recibir_paquete(SocketMemoria); //ESPERO UN MENSAJE PARA SABER QUE TERMINO LA OPERACION DE 
 				log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
 			}
 			
-			//Esperar las tablas de segmentos actualizadas de todos los procesos
-
+			//ESPERO AVISO DE QUE FINALIZO LA COMPACTACION
 		}
 		else
 		{
-
-
+			//ESPERO LA TABLA DE SEGMENTOS ACTUALIZADA DEL PROCESO
 		}
 	}
 }
