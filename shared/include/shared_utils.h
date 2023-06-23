@@ -104,3 +104,39 @@ int recibir_int(int socket_origen);
 
 
 #endif
+
+#pragma region TablasDeSegmentos
+typedef struct
+{
+    int id;
+    int direccionBase;
+    int limite;
+} t_Segmento;
+
+typedef struct
+{
+    int PID;
+    t_list* Segmentos;
+} t_tablaSegmentos;
+
+t_tablaSegmentos* CrearTablaSegmentos(int PID, t_Segmento* segmento0);
+void EliminarTablaSegmentos(t_tablaSegmentos* tabla);
+
+//
+
+/**
+ * Crea un segmento, lo agrega a la tabla y lo retorna
+ * @param tabla Pasar NULL si no se quiere agregar a ninguna tabla
+ */
+t_Segmento* CrearSegmento(t_tablaSegmentos* tabla, int id, int direccionBase, int limite);
+void EliminarSegmento(t_tablaSegmentos* tabla, int id);
+
+t_tablaSegmentos* ObtenerTablaSegmentosDelPaquete(t_list* DatosRecibidos);
+
+/*
+*   Agregar una tabla de segmentos a un paquete. EL PAQUETE DEBE SER DE TIPO PCB_CPU
+*   @param paquete: Si pasas NULL se crea un paquete nuevo
+*/
+t_paquete* AgregarTablaSegmentosAlPaquete(t_paquete* paquete, t_tablaSegmentos* tabla);
+
+#pragma endregion
