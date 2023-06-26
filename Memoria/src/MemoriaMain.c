@@ -90,7 +90,7 @@ void* AdministradorDeModulo(void* arg)
 			//PID del proceso a inicializar
 			char* PID = strtok(NULL, " ");
 			
-			//EnviarTablaDeSegmentos(TablaInicial, *SocketClienteConectado);
+			//Crear estructuras administrativas NO enviar nada a Kernel
 		}
 		else if(strcmp(Pedido, "FINALIZAR_PROCESO")==0)
 		{
@@ -98,7 +98,7 @@ void* AdministradorDeModulo(void* arg)
 			char* PID = strtok(NULL, " ");
 
 			//finalizar_proceso(PID);
-			//no enviar nada al kernel, solo finalizar el proceso
+			//NO enviar nada al kernel, solo borrar las estructuras y liberar la memoria
 		}
 		//enviar el valor empezando desde la direccion recibida y con la longitud recibida
 		else if(strcmp(Pedido, "MOV_IN")==0)
@@ -141,7 +141,13 @@ void* AdministradorDeModulo(void* arg)
 			char* Tamanio = strtok(NULL, " ");
 
 			//crear_segmento(PID, ID, Tamanio);
-			//La pagina 11 detalla lo que tiene que enviar esta funcion al kernel
+			
+			/*enviar la respuesta correspondiente a la situacion, ya sea:
+			OUT_OF_MEMORY
+			COMPACTAR <OCUPADO/cualquier otra cadena si no hay operacion entre FS y Mem>
+			Cualquier otra cadena si hay memoria disponible y no hay que compactar
+			*/
+
 		}
 		//eliminar un segmento de un proceso
 		else if(strcmp(Pedido, "DELETE_SEGMENT")==0)
@@ -152,7 +158,7 @@ void* AdministradorDeModulo(void* arg)
 			char* ID = strtok(NULL, " ");
 
 			//eliminar_segmento(PID, ID);
-			//la funcion debe retornar la tabla de segmentos del proceso actualizada			
+			//enviar SEG_FAULT en caso de error sino enviar cualquier otra cadena de caracteres			
 		}
 
 		//agregar el resto de operaciones entre FS y memoria

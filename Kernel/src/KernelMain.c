@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 	if(InicializarConexiones() == 0)
 		return EXIT_FAILURE;
 	//temporal
-	while(true){
+	while(!ModuloDebeTerminar){
 		log_info(Kernel_Logger, "hilo principal esta ejecutando");
 		sleep(20);
 	}
@@ -92,20 +92,18 @@ int InicializarPlanificadores()
 {
 	g_Lista_NEW = list_create();
 	g_Lista_READY = list_create();
-	g_EXEC = malloc(sizeof(t_PCB));
-	g_EXEC = NULL;
+	/*g_EXEC = malloc(sizeof(t_PCB));
+	g_EXEC = NULL;*/
 	g_Lista_EXIT = list_create();
 	g_Lista_BLOCKED = list_create();
 	g_Lista_BLOCKED_RECURSOS = list_create();
 
-	pthread_t HiloPlanificadorDeLargoPlazo;//FIFO
 	if (pthread_create(&HiloPlanificadorDeLargoPlazo, NULL, PlanificadorLargoPlazo, NULL) != 0) {
 		return 0;
 	}
 
 	planificadorFIFO = strcmp(ALGORITMO_PLANIFICACION, "HRRN") != 0;
 
-	pthread_t HiloPlanificadorDeCortoPlazo;
 	if (pthread_create(&HiloPlanificadorDeCortoPlazo, NULL, PlanificadorCortoPlazo, NULL)) {
 		return 0;
 	}
@@ -116,14 +114,13 @@ int InicializarPlanificadores()
 //Planificador de largo plazo FIFO (New -> Ready)
 void* PlanificadorLargoPlazo()
 {
-	while(true)
+	while(!ModuloDebeTerminar)
 	{
 		//Si hay espacio en la cola de READY y hay procesos esperando en NEW,
 		//obtener el primero de la cola de NEW y mandarlo a READY
 		if(list_size(g_Lista_NEW) != 0)
 		{
 			sem_wait(&c_MultiProg);
-
 			
 			sem_wait(&m_NEW);
 			sem_wait(&m_READY);
@@ -135,6 +132,8 @@ void* PlanificadorLargoPlazo()
 		}
 		sleep(2);
 	}
+
+	return NULL;
 }
 
 //Planificador de corto plazo (Ready -> Exec)
@@ -149,12 +148,12 @@ void* PlanificadorCortoPlazo()
 		PlanificadorCortoPlazoHRRN();
 	}
 
-	return (void*) EXIT_FAILURE;
+	return NULL;
 }
 
 void PlanificadorCortoPlazoFIFO()
 {
-	while(true)
+	while(!ModuloDebeTerminar)
 	{
 		//Si no hay ningun proceso ejecutando y hay procesos esperando en ready,
 		//obtener el primero de la cola de READY y mandarlo a EXEC
@@ -184,7 +183,7 @@ void PlanificadorCortoPlazoFIFO()
 
 void PlanificadorCortoPlazoHRRN()
 {
-	while(true)
+	while(!ModuloDebeTerminar)
 	{
 		//Si no hay ningun proceso ejecutando y hay procesos esperando en ready,
 		//Calcular el proximo que deberia ejecutar
@@ -332,6 +331,10 @@ void TerminarProceso(t_PCB* PCB, char* Motivo)
 	log_info(Kernel_Logger, "Finaliza el proceso [%d] - Motivo: %s", PCB->PID, Motivo);
 
 	char Mensaje[60];
+
+	sprintf(Mensaje, "FINALIZAR_PROCESO %d", PCB->PID);
+	EnviarMensage(Mensaje, SocketMemoria);
+
 	sprintf(Mensaje, "Proceso Finalizado - Motivo: %s", Motivo);
 	EnviarMensage(Mensaje, PCB->socketConsolaAsociada);
 }
@@ -381,7 +384,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		list_add(ListaAux, PCB_aux);
 		list_add(ListaAux, (void*)(intptr_t)tiempo);
 
-		pthread_t HiloEntradaSalida;
 		if (pthread_create(&HiloEntradaSalida, NULL, EsperarEntradaSalida, (void*)ListaAux) != 0) {
 			return (void)0;
 		}
@@ -392,13 +394,12 @@ void RealizarRespuestaDelCPU(char* respuesta)
 	{
 		Recibir_Y_Actualizar_PCB();
 
-		//Notificar a la consola que el proceso termino exitosamente
-		TerminarProceso(g_EXEC, "SUCCESS");
-
 		//imprimir los valores del registro
 		ImprimirRegistrosPCB(g_EXEC);
 
 		LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
+
+		//Notificar a la consola que el proceso termino exitosamente
 		TerminarProceso(g_EXEC, "SUCCESS");
 
 		//Agregar PCB a la cola de EXIT
@@ -602,35 +603,124 @@ void RealizarRespuestaDelCPU(char* respuesta)
 	else if(strcmp(respuesta, "CREATE_SEGMENT")== 0)
 	{
 		char* Parametros = (char*)recibir_paquete(SocketCPU);
-		char* Mensage = maloc(100);
-
+		
+		char* Mensage = malloc(100);
 		sprintf(Mensage, "%s %s\0", respuesta , Parametros);
-
 		EnviarMensage(Mensage, SocketMemoria);
-		log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
+		free(Mensage);
 
 		char* RespuestaMemoria = strtok((char*)recibir_paquete(SocketMemoria), " ");
 
 		if (strcmp(RespuestaMemoria, "OUT_OF_MEMORY") == 0)
 		{
 			EnviarMensage("RECHAZADO", SocketCPU);
+
+			Recibir_Y_Actualizar_PCB();
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
+			TerminarProceso(g_EXEC, "OUT_OF_MEMORY");
+
+			//Agregar PCB a la cola de EXIT
+			sem_wait(&m_EXEC);
+			sem_wait(&m_EXIT);
+			list_add(g_Lista_EXIT, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_EXIT);
+
+			sem_post(&c_MultiProg);
 		}
-		else if (strcmp(RespuestaMemoria, "COMPACTAR") == 0)
+		else 
 		{
-			char* tipo = strtok(NULL, " ");
-			if (strcmp(RespuestaMemoria, "OCUPADO") == 0)
+			if (strcmp(RespuestaMemoria, "COMPACTAR") == 0)
 			{
-				log_info(Kernel_Logger, "Compactación: Esperando Fin de Operaciones de FS");
-				recibir_paquete(SocketMemoria); //ESPERO UN MENSAJE PARA SABER QUE TERMINO LA OPERACION DE 
 				log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
+				char* tipo = strtok(NULL, " ");
+
+				//Si FS y memoria estan ocupados, espero...
+				if (strcmp(tipo, "OCUPADO") == 0)
+				{
+					log_info(Kernel_Logger, "Compactación: Esperando Fin de Operaciones de FS");
+					//ESPERO UN MENSAJE PARA SABER QUE TERMINO LA OPERACION DE FS y MEMORIA
+					recibir_paquete(SocketMemoria);
+					log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
+				}
+				
+				//ESPERO AVISO DE QUE FINALIZO LA COMPACTACION
+				recibir_paquete(SocketMemoria);
 			}
-			
-			//ESPERO AVISO DE QUE FINALIZO LA COMPACTACION
+
+			//saco el PID que no me interesa
+			strtok(Parametros, " ");
+			//obrengo los valores utiles
+			int ID = atoi(strtok(NULL, " "));
+			int Tamanio = atoi(strtok(NULL, " "));
+
+			//creo el segmento en la tabla de segmentos
+			CrearSegmento(g_EXEC->tablaDeSegmentos, ID , Tamanio);
+
+			//envio la tabla de segmentos actualizada al CPU para que pueda seguir ejecutando
+			EnviarMensage("ACEPTADO", SocketCPU);
+			t_paquete* NuevaTabla = AgregarTablaSegmentosAlPaquete(NULL, g_EXEC->tablaDeSegmentos);
+			enviar_paquete(NuevaTabla, SocketCPU);
+			eliminar_paquete(NuevaTabla);
+		}
+	}
+	
+	else if(strcmp(respuesta, "DELETE_SEGMENT")== 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+
+		char* Mensage = malloc(100);
+		sprintf(Mensage, "%s %s\0", respuesta , Parametros);
+		EnviarMensage(Mensage, SocketMemoria);
+		free(Mensage);
+
+		char* RespuestaMemoria = (char*)recibir_paquete(SocketMemoria);
+
+		if(strcmp(RespuestaMemoria, "SEG_FAULT")== 0)
+		{
+			EnviarMensage("RECHAZADO", SocketCPU);
+
+			Recibir_Y_Actualizar_PCB();
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
+			TerminarProceso(g_EXEC, "SEG_FAULT");
+
+			//Agregar PCB a la cola de EXIT
+			sem_wait(&m_EXEC);
+			sem_wait(&m_EXIT);
+			list_add(g_Lista_EXIT, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_EXIT);
+
+			sem_post(&c_MultiProg);
 		}
 		else
 		{
-			//ESPERO LA TABLA DE SEGMENTOS ACTUALIZADA DEL PROCESO
+
+			EnviarMensage("ACEPTADO", SocketCPU);
+
+			//saco el PID que no me interesa
+			strtok(Parametros, " ");
+
+			//obrengo los valores utiles
+			int ID = atoi(strtok(NULL, " "));
+
+			EliminarSegmento(g_EXEC->tablaDeSegmentos, ID);
+
+			//envio la tabla de segmentos actualizada al CPU para que pueda seguir ejecutando
+			t_paquete* NuevaTabla = AgregarTablaSegmentosAlPaquete(NULL, g_EXEC->tablaDeSegmentos);
+			enviar_paquete(NuevaTabla, SocketCPU);
+			eliminar_paquete(NuevaTabla);
 		}
+
+	}
+
+	else if(strcmp(respuesta, "SEG_FAULT")== 0)
+	{
+		Recibir_Y_Actualizar_PCB();
+		LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
+		TerminarProceso(g_EXEC, "SEG_FAULT");
 	}
 }
 
@@ -716,7 +806,6 @@ int InicializarConexiones()
 	SocketFileSystem = conectar_servidor(Kernel_Logger, "Memoria", IP_FILESYSTEM, PUERTO_FILESYSTEM);
 
 	//Crear hilo escucha
-	pthread_t HiloEscucha;
     if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
 		log_error(Kernel_Logger, "Error creando hilo escucha\n");
         return 0;
@@ -727,19 +816,18 @@ int InicializarConexiones()
 //Inicia un servidor en el que escucha consolas permanentemente y crea un hilo que la administre cuando recibe una
 void* EscucharConexiones()
 {
-	SocketKernel = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "127.0.0.1", PUERTO_ESCUCHA);
+	SocketKernel = iniciar_servidor(Kernel_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	
 	if(SocketKernel != 0)
 	{
 		//Escuchar por consolas en bucle
-		while(true)
+		while(!ModuloDebeTerminar)
 		{
 			int SocketCliente = esperar_cliente(Kernel_Logger, NOMBRE_PROCESO, SocketKernel);
 			
 			if(SocketCliente != 0)
 			{	
 				//Crea un hilo para la consola conectada
-				pthread_t HiloAdministradorDeMensajes;
 				if (pthread_create(&HiloAdministradorDeMensajes, NULL, AdministradorDeModulo, (void*)&SocketCliente) != 0) {
 					exit(EXIT_FAILURE);
 				}
@@ -749,7 +837,7 @@ void* EscucharConexiones()
 	}
 	log_error(Kernel_Logger, "error al crear socket kernel\n");
 	liberar_conexion(SocketKernel);
-	return (void*)EXIT_FAILURE;
+	return NULL;
 }
 
 //Funcion que se ejecuta para cada consola cuando se conecta
@@ -794,6 +882,17 @@ t_PCB* CrearPCB(t_list* instrucciones, int socketConsola)
 	pcb->socketConsolaAsociada = socketConsola;
 	pcb->listaInstrucciones = instrucciones;
 
+	//inicializar la tabla de segmentos
+	pcb->tablaDeSegmentos = list_create();
+
+	//pedir a memoria que cree las estructuras necesarias para el proceso
+	char* Msg = malloc(23);
+	sprintf(Msg, "CREAR_PROCESO %d", pcb->PID);
+	EnviarMensage(Msg, SocketMemoria);
+	free(Msg);
+
+	pcb->tablaArchivosAbiertos = list_create();
+
 	log_info(Kernel_Logger, "Se crea el proceso PID: [%d] en NEW", pcb->PID);
 
 	return pcb;
@@ -824,11 +923,6 @@ t_registrosCPU* CrearRegistrosCPU()
 //Funcion que se ejecuta al recibir una señal de finalizacion de programa (Ctrl+C)
 void TerminarModulo()
 {
-	liberar_conexion(SocketKernel);
-	liberar_conexion(SocketCPU);
-	liberar_conexion(SocketMemoria);
-	liberar_conexion(SocketFileSystem);
-
 	log_destroy(Kernel_Logger);
 
 	config_destroy(config);
@@ -841,5 +935,71 @@ void TerminarModulo()
 	sem_destroy(&m_EXIT);
 	sem_destroy(&m_BLOCKED);
 
+	bool cont = true;
+	int aux = 0;
+	while (cont)
+	{
+		if(RECURSOS[aux] == NULL)
+		{
+			printf("No hay mas recursos\n");
+			cont = false;
+		}
+		else
+		{
+			free(RECURSOS[aux]);
+			free(G_INSTANCIAS_RECURSOS[aux]);
+			aux++;
+		}
+	}
+	free(RECURSOS);
+	free(G_INSTANCIAS_RECURSOS);
+
+	LimpiarListaDePCBs(g_Lista_NEW);
+	LimpiarListaDePCBs(g_Lista_READY);
+	LimpiarListaDePCBs(g_Lista_EXIT);
+	LimpiarListaDePCBs(g_Lista_BLOCKED);
+	LimpiarListaDePCBs(g_Lista_BLOCKED_RECURSOS);
+	LimpiarPCB(g_EXEC);
+	
+	liberar_conexion(SocketCPU);
+	liberar_conexion(SocketMemoria);
+	liberar_conexion(SocketFileSystem);
+	liberar_conexion(SocketKernel);
+
 	exit(EXIT_SUCCESS);
+}
+
+void LimpiarListaDePCBs(t_list* lista)
+{
+	while(!list_is_empty(lista))
+	{
+		t_PCB* PCB_A_Liberar = list_remove(lista, 0);
+		LimpiarPCB(PCB_A_Liberar);
+	}
+	list_destroy(lista);
+}
+
+void LimpiarElementosDeTabla(t_list* tabla)
+{
+	while (!list_is_empty(tabla))
+	{
+		void* elemtnto = list_remove(tabla, 0);
+		free(elemtnto);
+	}
+	list_destroy(tabla);
+}
+
+void LimpiarPCB(t_PCB* PCB_A_Liberar)
+{
+	if(PCB_A_Liberar == NULL)
+		return;
+	LimpiarElementosDeTabla(PCB_A_Liberar->tablaDeSegmentos);
+	LimpiarElementosDeTabla(PCB_A_Liberar->listaInstrucciones);
+	LimpiarElementosDeTabla(PCB_A_Liberar->tablaArchivosAbiertos);
+	liberar_conexion(PCB_A_Liberar->socketConsolaAsociada);
+	free(PCB_A_Liberar->registrosCPU);
+	if(PCB_A_Liberar->recursoBloqueante != NULL)
+		free(PCB_A_Liberar->recursoBloqueante);
+
+	free(PCB_A_Liberar);
 }

@@ -1,6 +1,5 @@
 #include "../include/shared_utils.h"
 
-#pragma region Sockets
 int iniciar_servidor(t_log* logger, const char* nombreProceso, char* ip, char* puerto)
 {
     bool conectado = false;
@@ -126,9 +125,7 @@ void liberar_conexion(int socket)
     close(socket);
 }
 
-#pragma endregion
 
-#pragma region Paquetes
 
 t_paquete* crear_paquete(op_code tipoDeOperacion)
 {
@@ -261,84 +258,3 @@ void eliminar_paquete(t_paquete *paquete)
     free(paquete);
 }
 
-#pragma endregion
-
-
-t_tablaSegmentos* CrearTablaSegmentos(int PID, t_Segmento* segmento0)
-{
-    t_tablaSegmentos* tabla = malloc(sizeof(t_tablaSegmentos));
-    tabla->PID = PID;
-    tabla->Segmentos = list_create();
-    if(segmento0 != NULL)
-        list_add(tabla->Segmentos, segmento0);
-    return tabla;
-}
-
-void EliminarTablaSegmentos(t_tablaSegmentos* tabla)
-{
-    list_destroy_and_destroy_elements(tabla->Segmentos, free);
-    free(tabla);
-}
-
-t_Segmento* CrearSegmento(t_tablaSegmentos* tabla, int id, int direccionBase, int limite)
-{
-    t_Segmento* segmento = malloc(sizeof(t_Segmento));
-    segmento->id = id;
-    segmento->direccionBase = direccionBase;
-    segmento->limite = limite;
-    if(tabla->Segmentos != NULL)       
-        list_add(tabla->Segmentos, segmento);
-    return segmento;
-}
-
-
-void EliminarSegmento(t_tablaSegmentos* tabla, int id)
-{
-    for(int i = 0; i < list_size(tabla->Segmentos); i++)
-    { 
-        t_Segmento* segmento = (t_Segmento*)list_get(tabla->Segmentos, i);
-        if(segmento->id == id)
-        {
-            list_remove(tabla->Segmentos, i);
-            free(segmento);
-            break;
-        }
-    }
-}
-
-t_tablaSegmentos* ObtenerTablaSegmentosDelPaquete(t_list* DatosRecibidos)
-{
-    int PID = *(int*)list_remove(DatosRecibidos, 0);
-    t_tablaSegmentos* Tabla = CrearTablaSegmentos(PID, NULL);
-    int CantSegmentos = *(int*)list_remove(DatosRecibidos, 0);
-
-    for(int i=0; i < CantSegmentos; i++)
-    {
-        int ID = *(int*)list_remove(DatosRecibidos, 0);
-        int DireccionBase = *(int*)list_remove(DatosRecibidos, 0);
-        int Limite = *(int*)list_remove(DatosRecibidos, 0);
-
-        CrearSegmento(Tabla, ID, DireccionBase, Limite);
-    }
-    return Tabla;
-}
-
-t_paquete* AgregarTablaSegmentosAlPaquete(t_paquete* paquete, t_tablaSegmentos* tabla)
-{
-    t_paquete* pqt = paquete;
-    if (paquete == NULL)
-        pqt = crear_paquete(CPU_PCB);
-    
-    agregar_a_paquete(pqt, &(tabla->PID), sizeof(int));
-    int cantSegmentos = list_size(tabla->Segmentos);
-    agregar_a_paquete(pqt, &cantSegmentos, sizeof(int));
-
-    for(int i=0; i < cantSegmentos; i++)
-    {
-        t_Segmento* segmento = (t_Segmento*)list_get(tabla->Segmentos, i);
-        agregar_a_paquete(pqt, &(segmento->id), sizeof(int));
-        agregar_a_paquete(pqt, &(segmento->direccionBase), sizeof(int));
-        agregar_a_paquete(pqt, &(segmento->limite), sizeof(int));
-    }
-    return pqt;
-}

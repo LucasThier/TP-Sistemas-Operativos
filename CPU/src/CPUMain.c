@@ -79,7 +79,7 @@ void* EscuchaKernel()
 		//guarda los registros en una estructura
 		t_registrosCPU* Registros = ObtenerRegistrosDelPaquete(DatosRecibidos);
 
-		t_tablaSegmentos* TablaSegmentos = ObtenerTablaSegmentosDelPaquete(DatosRecibidos);
+		t_list* TablaSegmentos = ObtenerTablaSegmentosDelPaquete(DatosRecibidos);
 		
 		//loopea por las instrucciones y las realiza una por una hasta que alguna requiera desalojar
 		while (SeguirEjecutando)
@@ -185,25 +185,43 @@ void* EscuchaKernel()
 				int Offset;
 				TraducirDireccion(DirLogica, &NumSegmento, &Offset);
 
-				if(Offset + tamano > TAM_MAX_SEGMENTO)
+				int TamSegmentoBuscado = ObtenerTamanoSegmento(NumSegmento, TablaSegmentos);
+
+				//chequeo que la direccion donde se quiere leer sea valida
+				if(Offset + tamano > TamSegmentoBuscado || TamSegmentoBuscado == -1)
 				{
 					EnviarMensage("SEG_FAULT", SocketKernel);
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 					SeguirEjecutando = false;
 				}
+				//si es valida pido a memoria que me envie los datos
 				else
 				{
 					char* Mensage = malloc(100);
-					//AGREGAR IF SI SE INTENTA ESCRIBIR EN EL SEGMENTO 0
-					sprintf(Mensage,"MOV_IN %d %d %d %d\0", PID, NumSegmento, Offset, tamano);
+
+					//si esta intentando leer del segmento 0 envio PID -1.
+					if(NumSegmento == 0)
+					{
+						sprintf(Mensage,"MOV_IN -1 %d %d %d\0", NumSegmento, Offset, tamano);
+					}
+					//si no envio el PID del proceso
+					else
+					{
+						sprintf(Mensage,"MOV_IN %d %d %d %d\0", PID, NumSegmento, Offset, tamano);
+					}
+					
 					EnviarMensage(Mensage, SocketMemoria);
 					free(Mensage);
 
+					//en caso de error en la memoria avisar a kernel del error
 					char* Respuesta = (char*) recibir_paquete(SocketMemoria);
 					if(strcmp(Respuesta, "SEG_FAULT")==0)
 					{
 						EnviarMensage("SEG_FAULT", SocketKernel);
+						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 						SeguirEjecutando = false;
 					}
+					//si no, guardo el valor en el registro
 					else
 					{
 						memcpy(Registro, Respuesta, tamano);
@@ -228,26 +246,42 @@ void* EscuchaKernel()
 				int Offset;
 				TraducirDireccion(DirLogica, &NumSegmento, &Offset);
 
-				if(Offset + tamano > TAM_MAX_SEGMENTO)
+				int TamSegmentoBuscado = ObtenerTamanoSegmento(NumSegmento, TablaSegmentos);
+
+				//chequeo que la direccion donde se quiere escribir sea valida
+				if(Offset + tamano > TamSegmentoBuscado || TamSegmentoBuscado == -1)
 				{
 					EnviarMensage("SEG_FAULT", SocketKernel);
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 					SeguirEjecutando = false;
 				}
+				//si es valida pido a memoria que me almacene los datos
 				else
 				{
 					char* Mensage = malloc(30+tamano);
-					//AGREGAR IF SI SE INTENTA ESCRIBIR EN EL SEGMENTO 0
-					sprintf(Mensage,"MOV_OUT %d %d %d %s\0", PID, NumSegmento, Offset, Valor);
+
+					//si esta intentando escribir en el segmento 0 envio PID -1.
+					if(NumSegmento == 0)
+					{
+						sprintf(Mensage,"MOV_OUT -1 %d %d %s\0", NumSegmento, Offset, Valor);
+					}
+					else
+					{
+						sprintf(Mensage,"MOV_OUT %d %d %d %s\0", PID, NumSegmento, Offset, Valor);
+					}
 					EnviarMensage(Mensage, SocketMemoria);
 					free(Mensage);
 					free(Valor);
 
 					char* Respuesta = (char*) recibir_paquete(SocketMemoria);
+
+					//si hubo error en la memoria avisar a kernel del error
 					if(strcmp(Respuesta, "SEG_FAULT")==0)
 					{
 						EnviarMensage("SEG_FAULT", SocketKernel);
+						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 						SeguirEjecutando = false;
-					}
+					}//si no, no hacer nada.
 				}	
 
 			}
@@ -255,21 +289,78 @@ void* EscuchaKernel()
 			else if(strcmp(Instruccion_A_Ejecutar, "CREATE_SEGMENT")==0)
 			{
 				PC++;
-				
-				EnviarMensage("CREATE_SEGMENT", SocketKernel);
 
 				char* IdSegmento = strtok(NULL, " ");
 				char* Tamano = strtok(NULL, " ");
 
-				char* Mensage = malloc(100);
-				sprintf(Mensage,"%d %s %s\0", PID, IdSegmento, Tamano);
-				EnviarMensage(Mensage, SocketKernel);
-				free(Mensage);		
+				if(atoi(Tamano) > TAM_MAX_SEGMENTO)
+				{
+					EnviarMensage("SEG_FAULT", SocketKernel);
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+					SeguirEjecutando = false;
+				}
+				else
+				{
+					EnviarMensage("CREATE_SEGMENT", SocketKernel);
+
+					char* Mensage = malloc(50);
+					sprintf(Mensage,"%d %s %s\0", PID, IdSegmento, Tamano);
+					EnviarMensage(Mensage, SocketKernel);
+					free(Mensage);
+
+					char* Respuesta = (char*) recibir_paquete(SocketKernel);
+					if(strcmp(Respuesta, "RECHAZADO")==0)
+					{
+						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+						SeguirEjecutando = false;
+					}
+					else
+					{
+						t_list* NuevaTabla = ObtenerTablaSegmentosDelPaquete((t_list*)recibir_paquete(SocketKernel));
+						LimpiarElementosDeTabla(TablaSegmentos);
+						TablaSegmentos = NuevaTabla;
+					}
+				}				
 			}
 
 			else if(strcmp(Instruccion_A_Ejecutar, "DELETE_SEGMENT\n")==0)
 			{
 				PC++;
+
+				int IdSegmento = atoi(strtok(NULL, " "));
+
+				int TamSegmentoBuscado = ObtenerTamanoSegmento(IdSegmento, TablaSegmentos);				//chequeo que el segmento exista
+				
+				//si el segmento no existe..
+				if (TamSegmentoBuscado == -1)
+				{
+					EnviarMensage("SEG_FAULT", SocketKernel);
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+					SeguirEjecutando = false;
+				}
+				//si existe..
+				else
+				{
+					EnviarMensage("DELETE_SEGMENT", SocketKernel);
+
+					char* Mensage = malloc(50);
+					sprintf(Mensage,"%d %d\0", PID, IdSegmento);
+					EnviarMensage(Mensage, SocketKernel);
+					free(Mensage);
+
+					char* Respuesta = (char*) recibir_paquete(SocketKernel);
+					if(strcmp(Respuesta, "RECHAZADO")==0)
+					{
+						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+						SeguirEjecutando = false;
+					}
+					else
+					{
+						t_list* NuevaTabla = ObtenerTablaSegmentosDelPaquete((t_list*)recibir_paquete(SocketKernel));
+						LimpiarElementosDeTabla(TablaSegmentos);
+						TablaSegmentos = NuevaTabla;
+					}
+				}				
 			}
 
 			else if(strcmp(Instruccion_A_Ejecutar, "F_OPEN\n")==0)
@@ -444,4 +535,14 @@ void LeerConfigs(char* path)
 	RETARDO_INSTRUCCION = config_get_int_value(config, "RETARDO_INSTRUCCION");
 
 	TAM_MAX_SEGMENTO = config_get_int_value(config, "TAM_MAX_SEGMENTO");
+}
+
+void LimpiarElementosDeTabla(t_list* tabla)
+{
+	while (!list_is_empty(tabla))
+	{
+		void* elemtnto = list_remove(tabla, 0);
+		free(elemtnto);
+	}
+	list_destroy(tabla);
 }

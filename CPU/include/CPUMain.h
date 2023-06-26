@@ -2,6 +2,7 @@
 #define MOD_CPU_H_
 
 #include "../../shared/include/shared_utils.h"
+#include "../../shared/include/shared_Kernel_CPU.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -42,6 +43,8 @@ t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista);
 void Enviar_PCB_A_Kernel(int ProgramCounter, t_registrosCPU* Registros_A_Enviar, int SocketKernel);
 char* ObtenerRegistro(char* NombreRegistro, t_registrosCPU* Registros);
 int ObtenerTamanoRegistro(char* NombreRegistro);
+
+void LimpiarElementosDeTabla(t_list* tabla);
 
 void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* Offset);
 #endif

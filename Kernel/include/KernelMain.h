@@ -2,9 +2,7 @@
 #define MOD_KERNEL_H_
 
 #include "../../shared/include/shared_utils.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
+#include "../../shared/include/shared_Kernel_CPU.h"
 
 void InicializarAdministradorDeCPU();
 
@@ -115,6 +113,12 @@ sem_t c_MultiProg;
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+pthread_t HiloPlanificadorDeLargoPlazo;//FIFO
+pthread_t HiloPlanificadorDeCortoPlazo;
+pthread_t HiloEntradaSalida;
+pthread_t HiloEscucha;
+pthread_t HiloAdministradorDeMensajes;
+
 //PLANIFICADORES--------------------------------
 int InicializarPlanificadores();
 
@@ -138,6 +142,10 @@ void RealizarRespuestaDelCPU(char* respuesta);
 void* EsperarEntradaSalida(void* arg);
 
 void TerminarModulo();
+void LimpiarListaDePCBs(t_list* lista);
+void LimpiarElementosDeTabla(t_list* tabla);
+void LimpiarPCB(t_PCB* PCB_A_Liberar);
+bool ModuloDebeTerminar = false;
 
 char NOMBRE_PROCESO[7] = "KERNEL";
 
