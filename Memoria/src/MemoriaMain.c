@@ -87,17 +87,17 @@ void* AdministradorDeModulo(void* arg)
 		//crear estructuras administrativas y enviar la tabla de segmentos
 		if(strcmp(Pedido, "CREAR_PROCESO")==0)
 		{
-			//PID del proceso a inicializar
 			char* PID = strtok(NULL, " ");
-			
-			//EnviarTablaDeSegmentos(TablaInicial, *SocketClienteConectado);
+			log_info(Memoria_Logger,"Creación de Proceso PID: %d",PID);
+			EnviarMensage("OK", *SocketClienteConectado);
 		}
 		else if(strcmp(Pedido, "FINALIZAR_PROCESO")==0)
 		{
 			//PID del proceso a finalizar
 			char* PID = strtok(NULL, " ");
 
-			//finalizar_proceso(PID);
+			finalizarProceso(PID);
+			log_info(Memoria_Logger,"Eliminación de Proceso PID: %d",PID);
 			//no enviar nada al kernel, solo finalizar el proceso
 		}
 		//enviar el valor empezando desde la direccion recibida y con la longitud recibida
@@ -111,7 +111,7 @@ void* AdministradorDeModulo(void* arg)
 			//longitud del contenido a buscar
 			char* Longitud = strtok(NULL, " ");	
 
-			char*  Contenido;// = leer_contenido(Direccion, Longitud);
+			char*  Contenido = leerSegmento(PID,NumSegmento,Desplazamiento,Longitud);
 
 			//enviar el contenido encontrado o SEG_FAULT en caso de error
 			EnviarMensage(Contenido, *SocketClienteConectado);
@@ -127,8 +127,9 @@ void* AdministradorDeModulo(void* arg)
 			//valor a guardar TERMINADO EN \0
 			char* Valor = strtok(NULL, " ");
 
-			//guardar_contenido(Valor, Direccion);
+			char* Contenido = escribirSegmento(PID,NumSegmento,Desplazamiento,Valor);
 			//eviar SEG_FAULT en caso de error sino enviar cualquier otra cadena de caracteres
+			EnviarMensage(Contenido, *SocketClienteConectado);
 		}
 		//crear un segmento para un proceso
 		else if(strcmp(Pedido, "CREATE_SEGMENT")==0)
@@ -140,7 +141,9 @@ void* AdministradorDeModulo(void* arg)
 			//Tamano del segmento a crear
 			char* Tamanio = strtok(NULL, " ");
 
-			//crear_segmento(PID, ID, Tamanio);
+			char* Contenido = crearSegmento(ID,Tamanio,PID);
+
+			EnviarMensage(Contenido, *SocketClienteConectado);
 			//La pagina 11 detalla lo que tiene que enviar esta funcion al kernel
 		}
 		//eliminar un segmento de un proceso
@@ -151,7 +154,8 @@ void* AdministradorDeModulo(void* arg)
 			//ID del segmento a eliminar
 			char* ID = strtok(NULL, " ");
 
-			//eliminar_segmento(PID, ID);
+			char* Contenido = eliminarSegmento(ID,PID);
+			EnviarMensage(Contenido, *SocketClienteConectado);
 			//la funcion debe retornar la tabla de segmentos del proceso actualizada			
 		}
 
@@ -198,6 +202,26 @@ void InicializarSemaforos()
 	sem_init(&m_UsoDeMemoria, 0, 1);
 }
 
+void VerMem(){		
+	
+	for(int i = 0; i<list_size(TABLA_SEGMENTOS); i++){
+		Segmento* aux = list_get(TABLA_SEGMENTOS,i);
+
+		log_info(Memoria_Logger,"direccion base es: %p",aux->direccionBase);
+		log_info(Memoria_Logger,"ID: %d",aux->idSegmento);
+		log_info(Memoria_Logger,"PID: %d",aux->PID);
+		log_info(Memoria_Logger,"LIMITE: %d",aux->limite);
+
+		//Obtener un puntero al tipo de datos deseado (por ejemplo, char*)
+		char* datos = (char*)aux->direccionBase;
+
+		//Acceder y leer los datos asignados
+		for (int i = 0; i < aux->limite; i++) {
+			log_info(Memoria_Logger,"dato %c, posicion %p", datos[i],(aux->direccionBase)+i);
+		}
+	}
+}
+
 void inicializarMemoria() {
 	TABLA_SEGMENTOS=list_create();  // Establecer la cantidad de segmentos
 	TABLA_HUECOS=list_create();  // Establecer la cantidad de segmentos
@@ -206,26 +230,14 @@ void inicializarMemoria() {
 
     // Asignar memoria para el espacio de usuario
     MEMORIA = (void *) malloc(TAM_MEMORIA);
-    memset(MEMORIA,'0',TAM_MEMORIA);
-    log_info(Memoria_Logger,"la direccion base del seg0 es: %p",MEMORIA);
+    memset(MEMORIA,'\0',TAM_MEMORIA);
 
     seg->PID=-1;
 	seg->idSegmento=0;
 	seg->direccionBase=MEMORIA;
 	seg->limite=TAM_SEGMENTO_0;
+	memset(seg->direccionBase,'\0', seg->limite);
 	list_add(TABLA_SEGMENTOS,seg);
-
-	
-	// memset(seg->direccionBase,'1', seg->limite);
-	// log_info(Memoria_Logger,"la direccion base del seg0 es: %p",seg->direccionBase);
-
-	// //Obtener un puntero al tipo de datos deseado (por ejemplo, char*)
-	// char* datos = (char*)seg->direccionBase;
-
-	// //Acceder y leer los datos asignados
-	// for (int i = 0; i < seg->limite +5; i++) {
-	//     log_info(Memoria_Logger,"dato %c, posicion %p", datos[i],(seg->direccionBase)+i);
-	// }
 }
 
 int validarSegmento(int idSeg,int desplazamientoSegmento){
@@ -239,97 +251,135 @@ int validarSegmento(int idSeg,int desplazamientoSegmento){
 			else return 0;
 		}
 		aux++;
-		log_info(Memoria_Logger,"tam tabla y aux %d %d",list_size(TABLA_SEGMENTOS),aux);
 		if(list_size(TABLA_SEGMENTOS)>aux)seg=list_get(TABLA_SEGMENTOS,aux);
 	}
 
 	return 0;
 }
 
-void crearSegmento(int idSeg, int tamanoSegmento, int PID) {
+char* crearSegmento(int idSeg, int tamanoSegmento, int PID) {
     // Buscar espacio contiguo disponible para el segmento
     // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
-	if(list_size(TABLA_HUECOS)!=0){
+	char* estado = validarMemoria(tamanoSegmento);
+	
+	if(estado == "HUECO"){
 		switch(ALGORITMO_ASIGNACION){
 			case 0:
 				BestFit();
+				return "OK";
 				break;
 			case 1:
 				WorstFit();
+				return "OK";
 				break;
 			case 2:
 				FirstFit();
+				return "OK";
 				break;
 		}
-		}else if(list_size(TABLA_SEGMENTOS)!=1) {
-			Segmento* lastSeg =list_get(TABLA_SEGMENTOS,list_size(TABLA_SEGMENTOS));
-			AgregarSegmento(lastSeg,PID,tamanoSegmento,idSeg);
+	}
+	else if(estado == "CONTIGUO")
+	{
+		Segmento* lastSeg =list_get(TABLA_SEGMENTOS,list_size(TABLA_SEGMENTOS)-1);	
+		AgregarSegmento(lastSeg,PID,tamanoSegmento,idSeg);
+		return "OK";
+	}
 
-		}else{
-			void* seg0=list_get(TABLA_SEGMENTOS,0);
-			AgregarSegmento(seg0,PID,tamanoSegmento,idSeg);
-		}
-
-    // Actualizar la tabla de segmentos con la información del nuevo segmento
-	//list_add(TABLA_SEGMENTOS,seg);
+	return estado;
 }
+
+char* validarMemoria(int Tamano){
+	Segmento* lastSeg = list_get(TABLA_SEGMENTOS,0);	
+	void* maxPos = lastSeg->direccionBase + lastSeg->limite;
+	int TamHuecos = 0;
+
+	for(int i = 0; i < list_size(TABLA_SEGMENTOS); i++){
+		Segmento* Seg = list_get(TABLA_SEGMENTOS,i);	
+		if(maxPos < Seg->direccionBase)
+			maxPos = Seg->direccionBase + Seg->limite;		
+	}
+
+	if(maxPos + 1 + Tamano <= MEMORIA + TAM_MEMORIA)
+		return "CONTIGUO";
+
+	else if(list_size(TABLA_HUECOS) != 0){
+		for(int i = 0; i < list_size(TABLA_HUECOS); i++){
+			Hueco* hueco = list_get(TABLA_HUECOS,i);	
+
+			if(Tamano <= hueco->limite)return "HUECO";
+
+			TamHuecos += hueco->limite;
+		}
+		if(TamHuecos >= Tamano)
+			return "COMPACTAR";
+		else
+			return "OUT_OF_MEMORY";
+	}
+}
+
 void AgregarSegmento(Segmento* lastSeg,int PID,int tamanoSegmento,int idSeg){
-	Segmento* seg;
-	seg->PID=PID;
+	Segmento* seg = malloc(sizeof(Segmento*));
+	seg->PID = PID;
 	seg->direccionBase=(lastSeg->direccionBase) + (lastSeg->limite+1);
 	seg->limite=tamanoSegmento;
 	seg->idSegmento=idSeg;
 	list_add(TABLA_SEGMENTOS,seg);
 	memset(seg->direccionBase,'\0',seg->limite);
+
+	log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tamanoSegmento);
 }
 
-void eliminarSegmento(int idSegmento, int PID){
-	int indice = buscarSegmento(PID, idSegmento);
+char* eliminarSegmento(int idSegmento, int PID){
+	int indice = buscarSegmento(PID, idSegmento,false);
 
 	if(indice != -1) {
 		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
 
+		Hueco* hueco = malloc(sizeof(Hueco*));
+		hueco->direccionBase = seg->direccionBase;
+		hueco->limite = seg->limite;
+
+		list_add(TABLA_HUECOS,hueco);
+
 		memset(seg->direccionBase,'\0',seg->limite);
 		list_remove(TABLA_SEGMENTOS,indice);
-		list_add(TABLA_HUECOS,seg);
-		log_info(Memoria_Logger,"Eliminado con exito");	
+
+		log_info(Memoria_Logger,"PID: %d - Eliminar Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSegmento,seg->direccionBase,seg->limite);
+		return "OK";
 	}
 	else 
-		log_info(Memoria_Logger,"SEG_FAULT");	
+		return "SEG_FAULT";	
 }
 
 char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud){
-	int indice = buscarSegmento(PID, IdSeg);
+	int indice = buscarSegmento(PID, IdSeg,false);
 
 	if(indice != -1) {
 		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
 
 		char buffer[Longitud];
+		char* cont;
 		if(validarSegmento(IdSeg,(Offset + Longitud)) == 1){
 			memcpy(buffer,(seg->direccionBase + Offset),Longitud);
-			log_info(Memoria_Logger,"dato es: %s",buffer);	
-			return buffer;
+			buffer[Longitud] = '\0';
+			cont = buffer;
+			return cont;
 		}
 		else{
-			log_info(Memoria_Logger,"error");	
 			return "SEG_FAULT";
 		} 
 	}
 }
 
-char* escribirSegmento(int PID, int IdSeg, int Offset, int Longitud, char* datos){
-	int indice = buscarSegmento(PID, IdSeg);
-
-	log_info(Memoria_Logger,"dato es: %s",datos);	
+char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos){
+	int indice = buscarSegmento(PID, IdSeg,false);
 
 	if(indice != -1) {
-		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
+		Segmento* seg = list_get(TABLA_SEGMENTOS,indice);
 
-		char buffer[Longitud];
-		if(validarSegmento(IdSeg,(Offset + Longitud)) == 1){
-			for(int i = 0; i < Longitud; i ++)
-				memset(seg->direccionBase,datos,Longitud);
-
+		if(validarSegmento(IdSeg,(Offset + strlen(datos))) == 1){
+			for(int i = 0; i < strlen(datos);i++)
+				memset(seg->direccionBase + Offset + i,datos[i],1);
 			return "OK";
 		}
 		else
@@ -337,11 +387,12 @@ char* escribirSegmento(int PID, int IdSeg, int Offset, int Longitud, char* datos
 	}
 }
 
-int buscarSegmento(int PID, int idSeg){
+int buscarSegmento(int PID, int idSeg,bool Finish){
 	int aux=0;
 	Segmento* seg=list_get(TABLA_SEGMENTOS,aux);
 
 	while(list_size(TABLA_SEGMENTOS)>aux){
+		if(Finish && seg->PID == PID) return aux;
 		if(seg->idSegmento==idSeg && seg->PID == PID) return aux;
 		aux++;
 		if(list_size(TABLA_SEGMENTOS)>aux)seg=list_get(TABLA_SEGMENTOS,aux);
@@ -349,9 +400,20 @@ int buscarSegmento(int PID, int idSeg){
 	return -1;
 }
 
-void compactarSegmentos() {
-    // Mover los segmentos para eliminar los huecos libres
+void finalizarProceso(int PID){
+	int indice = 0;
+	while(indice != -1){
+		indice = buscarSegmento(1,0,true);
+		if(indice != -1){
+			Segmento* seg = list_get(TABLA_SEGMENTOS,indice); 
+			eliminarSegmento(seg->idSegmento,PID);
+		}
+	}
+}
 
+void compactarSegmentos() {
+    // Mover los segmentos para eliminar los huecos libres	
+	log_info(Memoria_Logger,"Solicitud de Compactación");
     // Actualizar la tabla de segmentos con las nuevas direcciones bases
 }
 

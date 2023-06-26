@@ -30,7 +30,7 @@ int CANT_SEGMENTOS;
 int RETARDO_MEMORIA;
 int RETARDO_COMPACTACION;
 int ALGORITMO_ASIGNACION;
-Memoria* MEMORIA;
+void* MEMORIA;
 t_list* TABLA_SEGMENTOS;
 t_list* TABLA_HUECOS;
 
@@ -38,16 +38,17 @@ int InicializarConexiones();
 void* EscucharConexiones();
 void* AdministradorDeModulo(void*);
 void LeerConfigs(char*);
-void crearSegmento(int,int, int);
-void eliminarSegmento(int,int);
+char* crearSegmento(int,int, int);
+char* eliminarSegmento(int,int);
 void compactarSegmentos();
 void inicializarMemoria();
 int validarSegmento(int,int);
 void AgregarSegmento(Segmento*,int,int,int);
 char* leerSegmento(int,int,int,int);
-int buscarSegmento(int,int);
-char* leerSegmento(int, int, int, int);
-char* escribirSegmento(int, int, int, int, char*);
+int buscarSegmento(int,int,bool);
+char* escribirSegmento(int, int, int, char*);
+void VerMem();
+char* validarMemoria(int);
 
 
 char NOMBRE_PROCESO[8] = "Memoria";
