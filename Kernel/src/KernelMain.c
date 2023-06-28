@@ -14,18 +14,22 @@ t_config* config;
 void sighandler(int s) 
 {
 	TerminarModulo();
-	exit(0);	
+	exit(0);
 }
 
 int main(int argc, char* argv[])
 {
 	signal(SIGINT, sighandler);
-	
+	signal(SIGSEGV, sighandler);
+
 	LeerConfigs(argv[1]);
 
 	InicializarSemaforos();
 
 	Kernel_Logger = log_create("Kernel.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
+
+	//inicializar Tabla Global de Archivos Abiertos
+	TablaGlobalArchivosAbiertos = list_create();
 
 	if(InicializarPlanificadores() == 0)
 		return EXIT_FAILURE;
@@ -85,6 +89,7 @@ void InicializarSemaforos()
 	sem_init(&m_BLOCKED, 0, 1);
 	sem_init(&m_RECURSOS, 0, 1);
 	sem_init(&m_BLOCKED_RECURSOS, 0, 1);
+	sem_init(&m_BLOCKED_FS, 0, 1);
 	sem_init(&c_MultiProg, 0, GRADO_MULTIPROGRAMACION);
 }
 
@@ -92,11 +97,10 @@ int InicializarPlanificadores()
 {
 	g_Lista_NEW = list_create();
 	g_Lista_READY = list_create();
-	/*g_EXEC = malloc(sizeof(t_PCB));
-	g_EXEC = NULL;*/
 	g_Lista_EXIT = list_create();
 	g_Lista_BLOCKED = list_create();
 	g_Lista_BLOCKED_RECURSOS = list_create();
+	g_Lista_BLOCKED_FS = list_create();
 
 	if (pthread_create(&HiloPlanificadorDeLargoPlazo, NULL, PlanificadorLargoPlazo, NULL) != 0) {
 		return 0;
@@ -130,6 +134,15 @@ void* PlanificadorLargoPlazo()
 			sem_post(&m_READY);
 			LoguearCambioDeEstado(PCB, "NEW", "READY");
 		}
+
+		//limpiar cola de exit
+		if(!list_is_empty(g_Lista_EXIT))
+		{
+			sem_wait(&m_EXIT);
+			LimpiarListaDePCBs(g_Lista_EXIT);
+			sem_post(&m_EXIT);
+		}
+
 		sleep(2);
 	}
 
@@ -721,8 +734,303 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		Recibir_Y_Actualizar_PCB();
 		LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
 		TerminarProceso(g_EXEC, "SEG_FAULT");
+
+		//Agregar PCB a la cola de EXIT
+		sem_wait(&m_EXEC);
+		sem_wait(&m_EXIT);
+		list_add(g_Lista_EXIT, g_EXEC);
+		g_EXEC = NULL;
+		sem_post(&m_EXEC);
+		sem_post(&m_EXIT);
+
+		sem_post(&c_MultiProg);
+	}
+	
+	else if(strcmp(respuesta, "F_OPEN")== 0)
+	{
+		char* NombreArchivo = (char*)recibir_paquete(SocketCPU);
+		
+		t_ArchivoGlobal* ArchivoBuscado = BuscarEnTablaGlobal(NombreArchivo);
+
+		//agrego el archivo a la tabla de archivos abiertos del pcb
+		t_ArchivoPCB* ArchivoPCB = malloc(sizeof(t_ArchivoPCB));
+		ArchivoPCB->NombreArchivo = malloc(strlen(NombreArchivo) + 1);
+		strcpy(ArchivoPCB->NombreArchivo, NombreArchivo);
+		ArchivoPCB->PosicionPuntero = 0;
+
+		list_add(g_EXEC->tablaArchivosAbiertos, ArchivoPCB);
+
+		//si el archivo buscado existe, entonces alguien lo tiene abierto
+		if(ArchivoBuscado != NULL)
+		{
+			//bloqueo el proceso hasta que el otro proceso termine de usar el archivo			
+			EnviarMensage("EN_USO", SocketCPU);
+			Recibir_Y_Actualizar_PCB();
+
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+
+			sem_wait(&m_EXEC);
+			list_add(ArchivoBuscado->ProcesosBloqueados, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);			
+		}
+		//si no existe...
+		else
+		{
+			//le pido al FS que me diga si el archivo existe en FS
+			char* Mensage = malloc(30);
+			sprintf(Mensage, "ABRIR_ARCHIVO %s\0", NombreArchivo);
+			EnviarMensage(Mensage, SocketFileSystem);
+			free(Mensage);
+
+			char* RespuestaFS = RecibirDeFS();
+			//(char*)recibir_paquete(SocketFileSystem);
+
+			//si el archivo no existe en el FS, le pido que lo cree
+			if(strcmp(RespuestaFS, "OK") != 0)
+			{
+				char* Mensage = malloc(30);
+				sprintf(Mensage, "CREAR_ARCHIVO %s\0", NombreArchivo);
+				EnviarMensage(Mensage, SocketFileSystem);
+				free(Mensage);
+
+				free(RespuestaFS);
+				RespuestaFS = RecibirDeFS();
+				free(RespuestaFS);
+			}
+
+			//creo el archivo en la tabla global
+			ArchivoBuscado = malloc(sizeof(t_ArchivoGlobal));
+			ArchivoBuscado->NombreArchivo = malloc(strlen(NombreArchivo) + 1);
+			strcpy(ArchivoBuscado->NombreArchivo, NombreArchivo);
+			ArchivoBuscado->ProcesosBloqueados = list_create();
+
+			list_add(TablaGlobalArchivosAbiertos, ArchivoBuscado);
+
+			//envio el mensaje de aceptacion
+			EnviarMensage("OK", SocketCPU);
+		}
+
+	}
+
+	else if(strcmp(respuesta, "F_CLOSE")== 0)
+	{
+		char* NombreArchivo = (char*)recibir_paquete(SocketCPU);
+
+
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+		
+		//lo saco de la tabla de archoivos abiertos del proceso
+		if(indice == -1)
+		{
+			//error el archivo no existe
+			ErrorArchivoInexistente(true);
+		}
+		else
+		{
+			t_ArchivoPCB* ArchivoALiberar = (t_ArchivoPCB*) list_remove(g_EXEC->tablaArchivosAbiertos, indice);
+			free(ArchivoALiberar->NombreArchivo);
+			free(ArchivoALiberar);
+
+			t_ArchivoGlobal* ArchivoBuscado = BuscarEnTablaGlobal(NombreArchivo);
+
+			//si no hay nadie esperando por usar el archivo, libero la memoria
+			if(list_is_empty(ArchivoBuscado->ProcesosBloqueados))
+			{
+				free(ArchivoBuscado->NombreArchivo);
+				free(ArchivoBuscado);
+			}
+			//si hay alguien esperando, lo mando a ready
+			else
+			{
+				t_PCB* PCB = (t_PCB*) list_remove(ArchivoBuscado->ProcesosBloqueados, 0);
+				sem_wait(&m_READY);
+				AgregarAReady(PCB);
+				list_add(g_Lista_READY, PCB);
+				sem_post(&m_READY);
+			}
+			
+			EnviarMensage("OK", SocketCPU);
+		}
+	}
+
+	else if(strcmp(respuesta, "F_SEEK")== 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+		char* NombreArchivo = strtok(Parametros, " ");
+		int NuevaPosicionPuntero = atoi(strtok(NULL, " "));
+
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+
+		if(indice == -1)
+		{
+			//error el archivo no existe
+			ErrorArchivoInexistente(true);
+		}
+		else
+		{
+			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_remove(g_EXEC->tablaArchivosAbiertos, indice);
+			ArchivoPCB->PosicionPuntero = NuevaPosicionPuntero;
+			EnviarMensage("OK", SocketCPU);
+		}
+	}
+	
+	else if(strcmp(respuesta, "F_TRUNCATE")== 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+
+		char* NombreArchivo = strtok(Parametros, " ");
+		char* NuevoTamanoArchivo = strtok(NULL, " ");
+
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+
+		if(indice == -1)
+		{
+			//error el archivo no existe
+			ErrorArchivoInexistente(false);
+		}
+		else
+		{
+			char* Mensage = malloc(60);
+			sprintf(Mensage, "TRUNCAR_ARCHIVO %s %s\0", NombreArchivo, NuevoTamanoArchivo);
+			EnviarMensage(Mensage, SocketFileSystem);
+			free(Mensage);
+
+			Recibir_Y_Actualizar_PCB();
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+
+			sem_wait(&m_EXEC);
+			sem_wait(&m_BLOCKED_FS);
+			list_add(g_Lista_BLOCKED_FS, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_BLOCKED_FS);
+		}
+	}
+	
+	else if(strcmp(respuesta, "F_READ")== 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+
+		char* NombreArchivo = strtok(Parametros, " ");
+		char* DireccionFisica = strtok(NULL, " ");
+		char* CantBytesALeer = strtok(NULL, " ");
+		int PosicionPuntero;
+
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+
+		if(indice == -1)
+		{
+			//error el archivo no existe
+			ErrorArchivoInexistente(false);
+		}
+		else
+		{
+			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
+			PosicionPuntero = ArchivoPCB->PosicionPuntero;
+			
+			char* Mensage = malloc(60);
+			sprintf(Mensage, "LEER_ARCHIVO %s %s %s %d\0", NombreArchivo, DireccionFisica, CantBytesALeer, PosicionPuntero);
+			EnviarMensage(Mensage, SocketFileSystem);
+			free(Mensage);
+
+			Recibir_Y_Actualizar_PCB();
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+
+			sem_wait(&m_EXEC);
+			sem_wait(&m_BLOCKED_FS);
+			list_add(g_Lista_BLOCKED_FS, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_BLOCKED_FS);
+		}
+	}
+	
+	else if(strcmp(respuesta, "F_WRITE") == 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+
+		char* NombreArchivo = strtok(Parametros, " ");
+		char* DireccionFisica = strtok(NULL, " ");
+		char* CantBytesALeer = strtok(NULL, " ");
+		int PosicionPuntero;
+
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+
+		if(indice == -1)
+		{
+			//error el archivo no existe
+			ErrorArchivoInexistente(false);
+		}
+		else
+		{
+			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
+			PosicionPuntero = ArchivoPCB->PosicionPuntero;
+			
+			char* Mensage = malloc(60);
+			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %s %s %d\0", NombreArchivo, DireccionFisica, CantBytesALeer, PosicionPuntero);
+			EnviarMensage(Mensage, SocketFileSystem);
+			free(Mensage);
+
+			Recibir_Y_Actualizar_PCB();
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+
+			sem_wait(&m_EXEC);
+			sem_wait(&m_BLOCKED_FS);
+			list_add(g_Lista_BLOCKED_FS, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_BLOCKED_FS);
+		}
+	}	
+}
+
+void DesbloquearPorFS()
+{
+	sem_wait(&m_READY);
+	sem_wait(&m_BLOCKED_FS);
+	t_PCB* PCB = (t_PCB*) list_remove(g_Lista_BLOCKED_FS, 0);
+	AgregarAReady(PCB);
+	list_add(g_Lista_READY, PCB);
+	sem_post(&m_READY);
+	sem_post(&m_BLOCKED_FS);
+}
+
+char* RecibirDeFS()
+{
+	char* MensageFS = (char*)recibir_paquete(SocketFileSystem);
+	
+	if(strcmp(MensageFS, "TERMINO") == 0)
+	{
+		DesbloquearPorFS();
+		return RecibirDeFS();
+	}
+	else
+	{
+		return MensageFS;
 	}
 }
+
+void ErrorArchivoInexistente(bool RequiereEnviarMensage)
+{
+	if(RequiereEnviarMensage)
+		EnviarMensage("ERROR", SocketCPU);
+
+	Recibir_Y_Actualizar_PCB();
+	LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
+	TerminarProceso(g_EXEC, "ERROR_ARCHIVO_INEXISTENTE");
+
+	//Agregar PCB a la cola de EXIT
+	sem_wait(&m_EXEC);
+	sem_wait(&m_EXIT);
+	list_add(g_Lista_EXIT, g_EXEC);
+	g_EXEC = NULL;
+	sem_post(&m_EXEC);
+	sem_post(&m_EXIT);
+
+	sem_post(&c_MultiProg);
+}
+
 
 void* EsperarEntradaSalida(void* arg)
 {
@@ -744,59 +1052,6 @@ void* EsperarEntradaSalida(void* arg)
 	return (void*)0;
 }
 
-void ImprimirRegistrosPCB(t_PCB* PCB_Registos_A_Imprimir)
-{
-	printf("Valores de los registros del proceso PID: %d\n", PCB_Registos_A_Imprimir->PID);
-	printf("Valor de AX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->AX), PCB_Registos_A_Imprimir->registrosCPU->AX);
-	printf("Valor de BX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->BX), PCB_Registos_A_Imprimir->registrosCPU->BX);
-	printf("Valor de CX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->CX), PCB_Registos_A_Imprimir->registrosCPU->CX);
-	printf("Valor de DX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->DX), PCB_Registos_A_Imprimir->registrosCPU->DX);
-	printf("Valor de EAX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->EAX), PCB_Registos_A_Imprimir->registrosCPU->EAX);
-	printf("Valor de EBX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->EBX), PCB_Registos_A_Imprimir->registrosCPU->EBX);
-	printf("Valor de ECX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->ECX), PCB_Registos_A_Imprimir->registrosCPU->ECX);
-	printf("Valor de EDX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->EDX), PCB_Registos_A_Imprimir->registrosCPU->EDX);
-	printf("Valor de RAX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->RAX), PCB_Registos_A_Imprimir->registrosCPU->RAX);
-	printf("Valor de RBX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->RBX), PCB_Registos_A_Imprimir->registrosCPU->RBX);
-	printf("Valor de RCX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->RCX), PCB_Registos_A_Imprimir->registrosCPU->RCX);
-	printf("Valor de RDX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->RDX), PCB_Registos_A_Imprimir->registrosCPU->RDX);
-}
-
-//recibe el paquete conteniendo el nuevo pcb y lo actualiza
-//!!SOLO ACTUALIZA EL PCB DEL PROCESO EN EJECUCION!!
-void Recibir_Y_Actualizar_PCB()
-{
-	t_list* PCB_A_Actualizar = recibir_paquete(SocketCPU);
-
-	sem_wait(&m_EXEC);
-	g_EXEC->programCounter = *(int*) list_remove(PCB_A_Actualizar, 0);
-	g_EXEC->registrosCPU = ObtenerRegistrosDelPaquete(PCB_A_Actualizar);
-	g_EXEC->tiempoUltimaRafaga = *(double*) list_remove(PCB_A_Actualizar, 0);
-	sem_post(&m_EXEC);
-}
-
-t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
-{
-	t_registrosCPU* Registros = malloc(sizeof(t_registrosCPU));
-
-	strncpy(Registros->AX, (char*)list_remove(Lista, 0), sizeof(Registros->AX));
-	strncpy(Registros->BX, (char*)list_remove(Lista, 0), sizeof(Registros->BX));
-	strncpy(Registros->CX, (char*)list_remove(Lista, 0), sizeof(Registros->CX));
-	strncpy(Registros->DX, (char*)list_remove(Lista, 0), sizeof(Registros->DX));
-
-	strncpy(Registros->EAX, (char*)list_remove(Lista, 0), sizeof(Registros->EAX));
-	strncpy(Registros->EBX, (char*)list_remove(Lista, 0), sizeof(Registros->EBX));
-	strncpy(Registros->ECX, (char*)list_remove(Lista, 0), sizeof(Registros->ECX));
-	strncpy(Registros->EDX, (char*)list_remove(Lista, 0), sizeof(Registros->EDX));
-	
-	strncpy(Registros->RAX, (char*)list_remove(Lista, 0), sizeof(Registros->RAX));
-	strncpy(Registros->RBX, (char*)list_remove(Lista, 0), sizeof(Registros->RBX));
-	strncpy(Registros->RCX, (char*)list_remove(Lista, 0), sizeof(Registros->RCX));
-	strncpy(Registros->RDX, (char*)list_remove(Lista, 0), sizeof(Registros->RDX));
-	
-	return Registros;
-}
-
-
 //Conecta con los modulos (CPU, FS, Mem) y luego crea un Hilo que escucha conexiones de consolas
 int InicializarConexiones()
 {
@@ -810,6 +1065,7 @@ int InicializarConexiones()
 		log_error(Kernel_Logger, "Error creando hilo escucha\n");
         return 0;
     }
+
 	return 1;
 }
 
@@ -898,6 +1154,19 @@ t_PCB* CrearPCB(t_list* instrucciones, int socketConsola)
 	return pcb;
 }
 
+//recibe el paquete conteniendo el nuevo pcb y lo actualiza
+//!!SOLO ACTUALIZA EL PCB DEL PROCESO EN EJECUCION!!
+void Recibir_Y_Actualizar_PCB()
+{
+	t_list* PCB_A_Actualizar = recibir_paquete(SocketCPU);
+
+	sem_wait(&m_EXEC);
+	g_EXEC->programCounter = *(int*) list_remove(PCB_A_Actualizar, 0);
+	g_EXEC->registrosCPU = ObtenerRegistrosDelPaquete(PCB_A_Actualizar);
+	g_EXEC->tiempoUltimaRafaga = *(double*) list_remove(PCB_A_Actualizar, 0);
+	sem_post(&m_EXEC);
+}
+
 t_registrosCPU* CrearRegistrosCPU()
 {
 	t_registrosCPU* registrosCPU = malloc(sizeof(t_registrosCPU));
@@ -918,6 +1187,45 @@ t_registrosCPU* CrearRegistrosCPU()
 	strncpy(registrosCPU->RDX, "\0\0\0\0\0\0\0\0\0\0\0\0", sizeof(registrosCPU->RDX));
 
 	return registrosCPU;
+}
+
+t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
+{
+	t_registrosCPU* Registros = malloc(sizeof(t_registrosCPU));
+
+	strncpy(Registros->AX, (char*)list_remove(Lista, 0), sizeof(Registros->AX));
+	strncpy(Registros->BX, (char*)list_remove(Lista, 0), sizeof(Registros->BX));
+	strncpy(Registros->CX, (char*)list_remove(Lista, 0), sizeof(Registros->CX));
+	strncpy(Registros->DX, (char*)list_remove(Lista, 0), sizeof(Registros->DX));
+
+	strncpy(Registros->EAX, (char*)list_remove(Lista, 0), sizeof(Registros->EAX));
+	strncpy(Registros->EBX, (char*)list_remove(Lista, 0), sizeof(Registros->EBX));
+	strncpy(Registros->ECX, (char*)list_remove(Lista, 0), sizeof(Registros->ECX));
+	strncpy(Registros->EDX, (char*)list_remove(Lista, 0), sizeof(Registros->EDX));
+	
+	strncpy(Registros->RAX, (char*)list_remove(Lista, 0), sizeof(Registros->RAX));
+	strncpy(Registros->RBX, (char*)list_remove(Lista, 0), sizeof(Registros->RBX));
+	strncpy(Registros->RCX, (char*)list_remove(Lista, 0), sizeof(Registros->RCX));
+	strncpy(Registros->RDX, (char*)list_remove(Lista, 0), sizeof(Registros->RDX));
+	
+	return Registros;
+}
+
+void ImprimirRegistrosPCB(t_PCB* PCB_Registos_A_Imprimir)
+{
+	printf("Valores de los registros del proceso PID: %d\n", PCB_Registos_A_Imprimir->PID);
+	printf("Valor de AX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->AX), PCB_Registos_A_Imprimir->registrosCPU->AX);
+	printf("Valor de BX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->BX), PCB_Registos_A_Imprimir->registrosCPU->BX);
+	printf("Valor de CX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->CX), PCB_Registos_A_Imprimir->registrosCPU->CX);
+	printf("Valor de DX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->DX), PCB_Registos_A_Imprimir->registrosCPU->DX);
+	printf("Valor de EAX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->EAX), PCB_Registos_A_Imprimir->registrosCPU->EAX);
+	printf("Valor de EBX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->EBX), PCB_Registos_A_Imprimir->registrosCPU->EBX);
+	printf("Valor de ECX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->ECX), PCB_Registos_A_Imprimir->registrosCPU->ECX);
+	printf("Valor de EDX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->EDX), PCB_Registos_A_Imprimir->registrosCPU->EDX);
+	printf("Valor de RAX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->RAX), PCB_Registos_A_Imprimir->registrosCPU->RAX);
+	printf("Valor de RBX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->RBX), PCB_Registos_A_Imprimir->registrosCPU->RBX);
+	printf("Valor de RCX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->RCX), PCB_Registos_A_Imprimir->registrosCPU->RCX);
+	printf("Valor de RDX: %.*s\n", (int) sizeof(PCB_Registos_A_Imprimir->registrosCPU->RDX), PCB_Registos_A_Imprimir->registrosCPU->RDX);
 }
 
 //Funcion que se ejecuta al recibir una señal de finalizacion de programa (Ctrl+C)
@@ -959,6 +1267,7 @@ void TerminarModulo()
 	LimpiarListaDePCBs(g_Lista_EXIT);
 	LimpiarListaDePCBs(g_Lista_BLOCKED);
 	LimpiarListaDePCBs(g_Lista_BLOCKED_RECURSOS);
+	LimpiarListaDePCBs(g_Lista_BLOCKED_FS);
 	LimpiarPCB(g_EXEC);
 	
 	liberar_conexion(SocketCPU);
@@ -1002,4 +1311,34 @@ void LimpiarPCB(t_PCB* PCB_A_Liberar)
 		free(PCB_A_Liberar->recursoBloqueante);
 
 	free(PCB_A_Liberar);
+}
+
+
+t_ArchivoGlobal* BuscarEnTablaGlobal(char* NombreArchivo)
+{	
+	t_ArchivoGlobal* ArchivoBuscado = NULL;
+
+	for(int i = 0; i < list_size(TablaGlobalArchivosAbiertos); i++)
+	{
+		t_ArchivoGlobal* Archivo = (t_ArchivoGlobal*)list_get(TablaGlobalArchivosAbiertos, i);
+		if(strcmp(Archivo->NombreArchivo, NombreArchivo) == 0)
+		{
+			ArchivoBuscado = Archivo;
+			break;
+		}
+	}
+	return ArchivoBuscado;
+}
+
+int BuscarArchivoEnTablaDeProceso(t_list* Tabla, char* NombreArchivo)
+{	
+	for(int i = 0; i < list_size(Tabla); i++)
+	{
+		t_ArchivoPCB* Archivo = (t_ArchivoPCB*)list_get(Tabla, i);
+		if(strcmp(Archivo->NombreArchivo, NombreArchivo) == 0)
+		{
+			return i;	
+		}
+	}
+	return -1;
 }

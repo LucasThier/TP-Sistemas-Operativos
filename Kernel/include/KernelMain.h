@@ -58,9 +58,21 @@ typedef struct
 
 typedef struct
 {
-    char* pathArchivoAbierto;
-    int posicionPuntero;
-} t_tablaArchivosAbiertos;
+    char* NombreArchivo;
+    t_list* ProcesosBloqueados;
+} t_ArchivoGlobal;
+
+t_list* TablaGlobalArchivosAbiertos;
+
+t_ArchivoGlobal* BuscarEnTablaGlobal(char* NombreArchivo);
+
+typedef struct
+{
+    char* NombreArchivo;
+    int PosicionPuntero;
+} t_ArchivoPCB;
+
+int BuscarArchivoEnTablaDeProceso(t_list* Tabla, char* NombreArchivo);
 
 typedef struct
 {
@@ -84,6 +96,7 @@ t_PCB* g_EXEC;
 t_list* g_Lista_BLOCKED;
 t_list* g_Lista_EXIT;
 t_list* g_Lista_BLOCKED_RECURSOS;
+t_list* g_Lista_BLOCKED_FS;
 
 t_PCB* CrearPCB(t_list* instrucciones, int socketConsola);
 
@@ -109,6 +122,7 @@ sem_t m_BLOCKED;
 sem_t m_EXIT;
 sem_t m_RECURSOS;
 sem_t m_BLOCKED_RECURSOS;
+sem_t m_BLOCKED_FS;
 sem_t c_MultiProg;
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -140,6 +154,9 @@ void LoguearCambioDeEstado(t_PCB* PCB, char* EstadoAnterior, char* EstadoActual)
 void RealizarRespuestaDelCPU(char* respuesta);
 
 void* EsperarEntradaSalida(void* arg);
+void DesbloquearPorFS();
+char* RecibirDeFS();
+void ErrorArchivoInexistente(bool RequiereEnviarMensage);
 
 void TerminarModulo();
 void LimpiarListaDePCBs(t_list* lista);
