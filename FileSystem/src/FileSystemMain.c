@@ -61,32 +61,73 @@ void InicializarConexiones()
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
 void* EscuchaKernel()
 {
-	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "127.0.0.1", PUERTO_ESCUCHA);
+	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	
-	if(SocketFileSystem != 0)
+	if(SocketFileSystem == 0)
 	{
-		int SocketKernel = esperar_cliente(FS_Logger, NOMBRE_PROCESO, SocketFileSystem);
+		liberar_conexion(SocketFileSystem);
+		return (void*)EXIT_FAILURE;
+	}
 
-		if(SocketKernel != 0)
-		{	
-			//--------------------------------------------------------------------------------------------------------------------------------------------------
-			//Acciones a realizar cuando se conecta el kernel:
+	int SocketKernel = esperar_cliente(FS_Logger, NOMBRE_PROCESO, SocketFileSystem);
+
+	if (SocketKernel == 0)
+	{
+		liberar_conexion(SocketFileSystem);
+		liberar_conexion(SocketKernel);
+		return (void*)EXIT_FAILURE;
+	}
+	
+	while(true)
+	{
+		char* PeticionRecibida = (char*)recibir_paquete(SocketKernel);
+
+		char* Pedido = strtok(PeticionRecibida, " ");
+
+		if(strcmp(Pedido, "ABRIR_ARCHIVO")==0)
+		{
+			char* NombreArchivo = strtok(NULL, " ");
 			
-			int recibido;
-			do
-			{
-				recibido = recibir_int(SocketKernel);
-				log_info(FS_Logger, "Numero recibido: %d\n", recibido);
-			}while(recibido != 0);
+			//verificar si existe el archivo, si existe envie "OK" si no enviar cualquier otra cadena
+		}
+		else if(strcmp(Pedido, "CREAR_PROCESO")==0)
+		{
+			char* NombreArchivo = strtok(NULL, " ");
 
-			//--------------------------------------------------------------------------------------------------------------------------------------------------
-			liberar_conexion(SocketKernel);
-			LiberarMemoria();
-			return NULL;
+			//crear el archivo y enviar un "OK" al finalizar
+		}
+		else if(strcmp(Pedido, "TRUNCAR_ARCHIVO") == 0)
+		{
+			char* NombreArchivo = strtok(NULL, " ");
+			char* NuevoTamanoArchivo = strtok(NULL, " ");
+			
+			//modificar el tamao del archivo y avisar con un "TERMINO" cuando termine la operacion
+		}
+		else if(strcmp(Pedido, "LEER_ARCHIVO") == 0)
+		{
+			char* NombreArchivo = strtok(NULL, " ");
+			char* DireccionFisica = strtok(NULL, " ");
+			char* CantBytesALeer = strtok(NULL, " ");
+			char* Puntero = strtok(NULL, " ");
+
+			//leer la cantidad de bytes pedidos a partir de la pos del puntero\
+			y gardar lo leido en la direccion fisica de la Memoria.\
+			avisar con un "TERMINO" cuando termine la operacion.
+		}
+		else if(strcmp(Pedido, "ESCRIBIR_ARCHIVO") == 0)
+		{
+			char* NombreArchivo = strtok(NULL, " ");
+			char* DireccionFisica = strtok(NULL, " ");
+			char* CantBytesALeer = strtok(NULL, " ");
+			char* Puntero = strtok(NULL, " ");
+			
+			//leer la cantidad de bytes pedidos en la direccion fisica de la Memoria\
+			y gardar lo leido a partir de la pos del puntero\
+			avisar con un "TERMINO" cuando termine la operacion.
 		}
 	}
-	liberar_conexion(SocketFileSystem);
-	return (void*)EXIT_FAILURE;
+
+	return NULL;	
 }
 
 void LeerConfigs(char* path, char* path_superbloque)
