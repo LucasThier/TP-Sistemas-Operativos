@@ -49,6 +49,9 @@ int buscarSegmento(int,int,bool);
 char* escribirSegmento(int, int, int, char*);
 void VerMem();
 char* validarMemoria(int);
+void BestFit(int,int,int);
+void WorstFit(int,int,int);
+void FirstFit(int,int,int);
 
 
 char NOMBRE_PROCESO[8] = "Memoria";

@@ -21,6 +21,23 @@ int main(int argc, char* argv[])
 
 	inicializarMemoria();
 
+	crearSegmento(1,10,1);
+	crearSegmento(1,5,2);
+	crearSegmento(2,20,1);
+	crearSegmento(2,25,2);
+	crearSegmento(3,8,1);
+	crearSegmento(3,3894,2);
+
+	eliminarSegmento(1,1);
+	eliminarSegmento(2,2);
+	eliminarSegmento(3,1);
+
+	VerHuecos();
+
+	crearSegmento(3,8,4);
+
+	VerHuecos();
+
 	InicializarSemaforos();
 
 	InicializarConexiones();
@@ -199,11 +216,10 @@ void LeerConfigs(char* path)
 	RETARDO_COMPACTACION= atoi(retardo_compactacion);
 
 	char* alg_asig = config_get_string_value(config, "ALGORITMO_ASIGNACION");
-	ALGORITMO_ASIGNACION = atoi(alg_asig);
-	if(alg_asig=="BEST")ALGORITMO_ASIGNACION=0;
-	else if(alg_asig=="WORST")ALGORITMO_ASIGNACION=1;
-	else ALGORITMO_ASIGNACION=2;
 
+	if(strcmp(alg_asig,"BEST")==0)ALGORITMO_ASIGNACION=0;
+	else if(strcmp(alg_asig,"WORST")==0)ALGORITMO_ASIGNACION=1;
+	else ALGORITMO_ASIGNACION=2;
 }
 
 //Inicializa los semaforos
@@ -228,6 +244,18 @@ void VerMem(){
 		//Acceder y leer los datos asignados
 		for (int i = 0; i < aux->limite; i++) {
 			log_info(Memoria_Logger,"dato %c, posicion %p", datos[i],(aux->direccionBase)+i);
+		}
+	}
+}
+
+void VerHuecos(){		
+	
+	if(list_size(TABLA_HUECOS) > 0){
+		for(int i = 0; i<list_size(TABLA_HUECOS); i++){
+			Hueco* aux = list_get(TABLA_HUECOS,i);
+
+			log_info(Memoria_Logger,"direccion base es(HUECO): %p",aux->direccionBase);
+			log_info(Memoria_Logger,"LIMITE(HUECO): %d",aux->limite);
 		}
 	}
 }
@@ -271,19 +299,20 @@ char* crearSegmento(int idSeg, int tamanoSegmento, int PID) {
     // Buscar espacio contiguo disponible para el segmento
     // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
 	char* estado = validarMemoria(tamanoSegmento);
-	
+
 	if(estado == "HUECO"){
 		switch(ALGORITMO_ASIGNACION){
 			case 0:
-				BestFit();
+				BestFit(idSeg,tamanoSegmento,PID);
 				return "OK";
 				break;
 			case 1:
-				WorstFit();
+				WorstFit(idSeg,tamanoSegmento,PID);
 				return "OK";
 				break;
 			case 2:
-				FirstFit();
+				FirstFit(idSeg,tamanoSegmento,PID);
+				log_info(Memoria_Logger,"TERMINO FIRST");
 				return "OK";
 				break;
 		}
@@ -427,14 +456,117 @@ void compactarSegmentos() {
     // Actualizar la tabla de segmentos con las nuevas direcciones bases
 }
 
-void BestFit(){
+void BestFit(int idSeg, int tam, int PID){
+	Hueco* MinHole = malloc(sizeof(Hueco*));
+	Hueco* h = malloc(sizeof(Hueco*));
+	int Diff = INT_MAX;
+	int indice = 0;
+
+	for(int i = 0; i < list_size(TABLA_HUECOS); i++){
+		h = list_get(TABLA_HUECOS,i);
+
+		if(h->limite >= tam && (h->limite - tam) < Diff){
+			Diff = h->limite - tam;
+			MinHole = h;
+			indice = i;
+		} 
+	}
+
+	Segmento* seg = malloc(sizeof(Segmento*));
+	seg->direccionBase = MinHole->direccionBase;
+	seg->idSegmento = idSeg;
+	seg->PID = PID;
+	seg->limite = tam;
+
+	int newHoleLimit = MinHole->limite - tam;
+
+	if(newHoleLimit>0){
+		MinHole->limite = newHoleLimit;
+		MinHole->direccionBase = MinHole->direccionBase + tam + 1;
+
+		list_remove(TABLA_HUECOS,indice);
+		memset(MinHole->direccionBase,'\0',MinHole->limite);
+		list_add(TABLA_HUECOS,MinHole);
+	}
+	else list_remove(TABLA_HUECOS,indice);
+
+	list_add(TABLA_SEGMENTOS,seg);
+	log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
+	memset(seg->direccionBase,'\0',seg->limite);
 
 }
 
-void WorstFit(){
+void WorstFit(int idSeg, int tam, int PID){
+	Hueco* MaxHole = malloc(sizeof(Hueco*));
+	Hueco* h = malloc(sizeof(Hueco*));
+	MaxHole->limite = 0;
+	int indice = 0;
 
+	for(int i = 0; i < list_size(TABLA_HUECOS); i++){
+
+		h = list_get(TABLA_HUECOS,i);
+
+		if(h->limite >= tam && h->limite > MaxHole->limite){
+			MaxHole = h;
+			indice = i;
+		} 
+	}
+
+	Segmento* seg = malloc(sizeof(Segmento*));
+	seg->direccionBase = MaxHole->direccionBase;
+	seg->idSegmento = idSeg;
+	seg->PID = PID;
+	seg->limite = tam;
+
+	int newHoleLimit = MaxHole->limite - tam;
+
+	if(newHoleLimit>0){
+		MaxHole->limite = newHoleLimit;
+		MaxHole->direccionBase = MaxHole->direccionBase + tam + 1;
+
+		list_remove(TABLA_HUECOS,indice);
+		memset(MaxHole->direccionBase,'\0',MaxHole->limite);
+		list_add(TABLA_HUECOS,MaxHole);
+
+	}else list_remove(TABLA_HUECOS,indice);
+
+	list_add(TABLA_SEGMENTOS,seg);
+	log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
+	memset(seg->direccionBase,'\0',seg->limite);
 }
 
-void FirstFit(){
+void FirstFit(int idSeg, int tam, int PID){
+	int aux = 0;
+	bool find = false;
 
+	while(list_size(TABLA_HUECOS)>aux && !find){
+		Hueco* h = list_get(TABLA_HUECOS,aux);
+		Hueco* newHole = malloc(sizeof(Hueco*));
+
+		if(h->limite >= tam){
+			Segmento* seg = malloc(sizeof(Segmento*));
+			seg->direccionBase = h->direccionBase;
+			seg->idSegmento = idSeg;
+			seg->PID = PID;
+			seg->limite = tam;
+
+			int newHoleLimit = h->limite - tam;
+
+			if(newHoleLimit>0){
+				newHole->limite = newHoleLimit;
+				newHole->direccionBase = h->direccionBase + tam + 1;
+
+				list_remove(TABLA_HUECOS,aux);
+				memset(newHole->direccionBase,'\0',newHole->limite);
+				list_add(TABLA_HUECOS,newHole);
+			}
+			else list_remove(TABLA_HUECOS,aux);		
+
+			list_add(TABLA_SEGMENTOS,seg);
+			memset(seg->direccionBase,'\0',seg->limite);
+			log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
+			find = true;
+		}
+		else aux++;
+	};
 }
