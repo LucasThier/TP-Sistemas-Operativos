@@ -13,7 +13,13 @@ t_config* config;
 
 void sighandler(int s) 
 {
+	//ModuloDebeTerminar = true;
 	TerminarModulo();
+	pthread_join(HiloPlanificadorDeLargoPlazo, NULL);
+	pthread_join(HiloPlanificadorDeCortoPlazo, NULL);
+	printf("Terminando Modulo Kernel\n");
+
+	//pthread_join(HiloAdministradorDeCPU, NULL);
 	exit(0);
 }
 
@@ -136,17 +142,17 @@ void* PlanificadorLargoPlazo()
 		}
 
 		//limpiar cola de exit
-		if(!list_is_empty(g_Lista_EXIT))
-		{
-			sem_wait(&m_EXIT);
-			LimpiarListaDePCBs(g_Lista_EXIT);
-			sem_post(&m_EXIT);
+		sem_wait(&m_EXIT);
+		while(!list_is_empty(g_Lista_EXIT))
+		{	
+			t_PCB* PCB_A_Liberar = list_remove(g_Lista_EXIT, 0);
+			LimpiarPCB(PCB_A_Liberar);
 		}
-
+		sem_post(&m_EXIT);
 		sleep(2);
 	}
 
-	return NULL;
+	pthread_exit(NULL);
 }
 
 //Planificador de corto plazo (Ready -> Exec)
@@ -161,7 +167,7 @@ void* PlanificadorCortoPlazo()
 		PlanificadorCortoPlazoHRRN();
 	}
 
-	return NULL;
+	pthread_exit(NULL);
 }
 
 void PlanificadorCortoPlazoFIFO()
@@ -185,11 +191,11 @@ void PlanificadorCortoPlazoFIFO()
 			Enviar_PCB_A_CPU(PCB);
 
 			//Recibir respuesta de CPU
-			//printf("PID del proceso enviado a la CPU: %d\n", g_EXEC->PID);
 			char* respuesta = (char*) recibir_paquete(SocketCPU);
-			//printf("Respuesta de CPU: %s\n", respuesta);
 			
 			RealizarRespuestaDelCPU(respuesta);
+
+			free(respuesta);
 		}
 	}
 }
@@ -255,6 +261,8 @@ void PlanificadorCortoPlazoHRRN()
 			//printf("Respuesta de CPU: %s \n", respuesta);
 			
 			RealizarRespuestaDelCPU(respuesta);
+
+			free(respuesta);
 		}
 	}
 }
@@ -361,7 +369,7 @@ void LoguearCambioDeEstado(t_PCB* PCB, char* EstadoAnterior, char* EstadoActual)
 void RealizarRespuestaDelCPU(char* respuesta)
 {
 	//printf("Respuesta recibida: %s", respuesta);
-	if(strcmp(respuesta, "YIELD\n")== 0)
+	if(strcmp(respuesta, "YIELD\n") == 0)
 	{
 		Recibir_Y_Actualizar_PCB();
 
@@ -376,9 +384,11 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		
 	}
 
-	else if(strcmp(respuesta, "I/O\n")== 0){
-
-		int tiempo = atoi((char*) recibir_paquete(SocketCPU));
+	else if(strcmp(respuesta, "I/O\n")== 0)
+	{
+		char* msg = (char*) recibir_paquete(SocketCPU);
+		int tiempo = atoi(msg);
+		
 		Recibir_Y_Actualizar_PCB();
 
 		LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
@@ -401,6 +411,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			return (void)0;
 		}
 		pthread_detach(HiloEntradaSalida);
+
+		free(msg);
 	}
 
 	else if(strcmp(respuesta, "EXIT\n")== 0)
@@ -428,8 +440,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 	
 	else if(strcmp(respuesta, "WAIT\n")== 0)
 	{
-
-		char* Recurso = strtok(((char*) recibir_paquete(SocketCPU)),"\n");
+		char* msg = (char*) recibir_paquete(SocketCPU);
+		char* Recurso = strtok(msg,"\n");
 
 		bool cont = true;
 		int aux = 0;
@@ -509,13 +521,15 @@ void RealizarRespuestaDelCPU(char* respuesta)
 				RealizarRespuestaDelCPU(rta);
 
 			}
-
 		}
+		free(msg);
+		free(Recurso);
 	}
 
 	else if(strcmp(respuesta, "SIGNAL\n")== 0)
 	{
-		char* Recurso = strtok(((char*) recibir_paquete(SocketCPU)),"\n");
+		char* msg = (char*) recibir_paquete(SocketCPU);
+		char* Recurso = strtok(msg,"\n");
 		
 		bool cont = true;
 		int aux = 0;
@@ -604,25 +618,30 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			}
 
 			EnviarMensage("ACEPTADO", SocketCPU);
+			
 			log_info(Kernel_Logger, "PID: [%d] - Signal: %s - Instancias: %d", g_EXEC->PID, Recurso, atoi(G_INSTANCIAS_RECURSOS[pos]) + 1);
+			
 			//Recibir respuesta de CPU
 			char* rta = (char*) recibir_paquete(SocketCPU);
-			//printf("Respuesta de CPU: %s\n", rta);
 			
 			RealizarRespuestaDelCPU(rta);
+			free(rta);
 		}
+		free(msg);
+		free(Recurso);
 	}
 
 	else if(strcmp(respuesta, "CREATE_SEGMENT")== 0)
 	{
 		char* Parametros = (char*)recibir_paquete(SocketCPU);
-		
+
 		char* Mensage = malloc(100);
 		sprintf(Mensage, "%s %s\0", respuesta , Parametros);
 		EnviarMensage(Mensage, SocketMemoria);
 		free(Mensage);
 
-		char* RespuestaMemoria = strtok((char*)recibir_paquete(SocketMemoria), " ");
+		char* msg = (char*)recibir_paquete(SocketMemoria);
+		char* RespuestaMemoria = strtok(msg, " ");
 
 		if (strcmp(RespuestaMemoria, "OUT_OF_MEMORY") == 0)
 		{
@@ -677,6 +696,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			enviar_paquete(NuevaTabla, SocketCPU);
 			eliminar_paquete(NuevaTabla);
 		}
+		free(msg);
 	}
 	
 	else if(strcmp(respuesta, "DELETE_SEGMENT")== 0)
@@ -1137,6 +1157,7 @@ t_PCB* CrearPCB(t_list* instrucciones, int socketConsola)
 	pcb->programCounter = 0;
 	pcb->socketConsolaAsociada = socketConsola;
 	pcb->listaInstrucciones = instrucciones;
+	pcb->recursoBloqueante = NULL;
 
 	//inicializar la tabla de segmentos
 	pcb->tablaDeSegmentos = list_create();
@@ -1158,13 +1179,23 @@ t_PCB* CrearPCB(t_list* instrucciones, int socketConsola)
 //!!SOLO ACTUALIZA EL PCB DEL PROCESO EN EJECUCION!!
 void Recibir_Y_Actualizar_PCB()
 {
-	t_list* PCB_A_Actualizar = recibir_paquete(SocketCPU);
+	t_list* PCB_A_Actualizar = (t_list*)recibir_paquete(SocketCPU);
 
 	sem_wait(&m_EXEC);
-	g_EXEC->programCounter = *(int*) list_remove(PCB_A_Actualizar, 0);
+	int* PC = (int*) list_remove(PCB_A_Actualizar, 0);
+	g_EXEC->programCounter = *PC;
+	free(PC);
+
+	free(g_EXEC->registrosCPU);
 	g_EXEC->registrosCPU = ObtenerRegistrosDelPaquete(PCB_A_Actualizar);
-	g_EXEC->tiempoUltimaRafaga = *(double*) list_remove(PCB_A_Actualizar, 0);
+
+	double* tiempoUltimaRafaga = (double*) list_remove(PCB_A_Actualizar, 0);
+	g_EXEC->tiempoUltimaRafaga = *tiempoUltimaRafaga;
+	free(tiempoUltimaRafaga);
+
 	sem_post(&m_EXEC);
+
+	list_destroy(PCB_A_Actualizar);
 }
 
 t_registrosCPU* CrearRegistrosCPU()
@@ -1193,21 +1224,49 @@ t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
 {
 	t_registrosCPU* Registros = malloc(sizeof(t_registrosCPU));
 
-	strncpy(Registros->AX, (char*)list_remove(Lista, 0), sizeof(Registros->AX));
-	strncpy(Registros->BX, (char*)list_remove(Lista, 0), sizeof(Registros->BX));
-	strncpy(Registros->CX, (char*)list_remove(Lista, 0), sizeof(Registros->CX));
-	strncpy(Registros->DX, (char*)list_remove(Lista, 0), sizeof(Registros->DX));
+	char* AX = (char*)list_remove(Lista, 0);
+	char* BX = (char*)list_remove(Lista, 0);
+	char* CX = (char*)list_remove(Lista, 0);
+	char* DX = (char*)list_remove(Lista, 0);
 
-	strncpy(Registros->EAX, (char*)list_remove(Lista, 0), sizeof(Registros->EAX));
-	strncpy(Registros->EBX, (char*)list_remove(Lista, 0), sizeof(Registros->EBX));
-	strncpy(Registros->ECX, (char*)list_remove(Lista, 0), sizeof(Registros->ECX));
-	strncpy(Registros->EDX, (char*)list_remove(Lista, 0), sizeof(Registros->EDX));
-	
-	strncpy(Registros->RAX, (char*)list_remove(Lista, 0), sizeof(Registros->RAX));
-	strncpy(Registros->RBX, (char*)list_remove(Lista, 0), sizeof(Registros->RBX));
-	strncpy(Registros->RCX, (char*)list_remove(Lista, 0), sizeof(Registros->RCX));
-	strncpy(Registros->RDX, (char*)list_remove(Lista, 0), sizeof(Registros->RDX));
-	
+	char* EAX = (char*)list_remove(Lista, 0);
+	char* EBX = (char*)list_remove(Lista, 0);
+	char* ECX = (char*)list_remove(Lista, 0);
+	char* EDX = (char*)list_remove(Lista, 0);
+
+	char* RAX = (char*)list_remove(Lista, 0);
+	char* RBX = (char*)list_remove(Lista, 0);
+	char* RCX = (char*)list_remove(Lista, 0);
+	char* RDX = (char*)list_remove(Lista, 0);
+
+	strncpy(Registros->AX, AX, sizeof(Registros->AX));
+	strncpy(Registros->BX, BX, sizeof(Registros->BX));
+	strncpy(Registros->CX, CX, sizeof(Registros->CX));
+	strncpy(Registros->DX, DX, sizeof(Registros->DX));
+
+	strncpy(Registros->EAX, EAX, sizeof(Registros->EAX));
+	strncpy(Registros->EBX, EBX, sizeof(Registros->EBX));
+	strncpy(Registros->ECX, ECX, sizeof(Registros->ECX));
+	strncpy(Registros->EDX, EDX, sizeof(Registros->EDX));
+
+	strncpy(Registros->RAX, RAX, sizeof(Registros->RAX));
+	strncpy(Registros->RBX, RBX, sizeof(Registros->RBX));
+	strncpy(Registros->RCX, RCX, sizeof(Registros->RCX));
+	strncpy(Registros->RDX, RDX, sizeof(Registros->RDX));
+
+	free(AX);
+	free(BX);
+	free(CX);
+	free(DX);
+	free(EAX);
+	free(EBX);
+	free(ECX);
+	free(EDX);
+	free(RAX);
+	free(RBX);
+	free(RCX);
+	free(RDX);
+
 	return Registros;
 }
 
@@ -1249,7 +1308,6 @@ void TerminarModulo()
 	{
 		if(RECURSOS[aux] == NULL)
 		{
-			printf("No hay mas recursos\n");
 			cont = false;
 		}
 		else
@@ -1269,6 +1327,8 @@ void TerminarModulo()
 	LimpiarListaDePCBs(g_Lista_BLOCKED_RECURSOS);
 	LimpiarListaDePCBs(g_Lista_BLOCKED_FS);
 	LimpiarPCB(g_EXEC);
+
+	LimpiarTablaGlobalArchivosAbiertos();
 	
 	liberar_conexion(SocketCPU);
 	liberar_conexion(SocketMemoria);
@@ -1304,13 +1364,35 @@ void LimpiarPCB(t_PCB* PCB_A_Liberar)
 		return;
 	LimpiarElementosDeTabla(PCB_A_Liberar->tablaDeSegmentos);
 	LimpiarElementosDeTabla(PCB_A_Liberar->listaInstrucciones);
-	LimpiarElementosDeTabla(PCB_A_Liberar->tablaArchivosAbiertos);
+	LimpiarTablaDeArchivosDelProceso(PCB_A_Liberar->tablaArchivosAbiertos);
 	liberar_conexion(PCB_A_Liberar->socketConsolaAsociada);
 	free(PCB_A_Liberar->registrosCPU);
 	if(PCB_A_Liberar->recursoBloqueante != NULL)
 		free(PCB_A_Liberar->recursoBloqueante);
 
 	free(PCB_A_Liberar);
+}
+
+void LimpiarTablaGlobalArchivosAbiertos()
+{
+	while(!list_is_empty(TablaGlobalArchivosAbiertos))
+	{
+		t_ArchivoGlobal* Archivo = list_remove(TablaGlobalArchivosAbiertos, 0);
+		free(Archivo->NombreArchivo);
+		free(Archivo);
+	}
+	list_destroy(TablaGlobalArchivosAbiertos);
+}
+
+void LimpiarTablaDeArchivosDelProceso(t_list* Tabla)
+{
+	while(!list_is_empty(Tabla))
+	{
+		t_ArchivoPCB* Archivo = list_remove(Tabla, 0);
+		free(Archivo->NombreArchivo);
+		free(Archivo);
+	}
+	list_destroy(Tabla);
 }
 
 

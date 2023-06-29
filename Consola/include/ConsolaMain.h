@@ -16,6 +16,8 @@ char* PUERTO_KERNEL;
 
 char NOMBRE_PROCESO[7] = "CONSOLA";
 
+void sighandler(int s);
+
 int ConectarConKernel();
 
 #endif

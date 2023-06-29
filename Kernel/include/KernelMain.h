@@ -162,6 +162,8 @@ void TerminarModulo();
 void LimpiarListaDePCBs(t_list* lista);
 void LimpiarElementosDeTabla(t_list* tabla);
 void LimpiarPCB(t_PCB* PCB_A_Liberar);
+void LimpiarTablaDeArchivosDelProceso(t_list* Tabla);
+void LimpiarTablaGlobalArchivosAbiertos();
 bool ModuloDebeTerminar = false;
 
 char NOMBRE_PROCESO[7] = "KERNEL";

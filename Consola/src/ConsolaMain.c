@@ -4,9 +4,16 @@
 
 int SocketKernel;
 
+void sighandler(int s) 
+{
+	liberar_conexion(SocketKernel);
+	exit(0);
+}
+
 int main(int argc, char* argv[])
 {
-
+	signal(SIGINT, sighandler);
+	signal(SIGSEGV, sighandler);
 
 	Consola_Logger = log_create("Consola.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 

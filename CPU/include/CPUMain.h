@@ -47,4 +47,7 @@ int ObtenerTamanoRegistro(char* NombreRegistro);
 void LimpiarElementosDeTabla(t_list* tabla);
 
 void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* Offset);
+
+bool ModuloDebeTerminar = false;
+
 #endif

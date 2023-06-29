@@ -179,12 +179,13 @@ void* recibir_paquete(int socket_cliente)
     int size;
     int desplazamiento = 0;
     void* buffer;
-    t_list* valores = list_create();
     int tamanio;
 
     if(recv(socket_cliente, &cod_op, sizeof(int), MSG_WAITALL) == -1)
         printf("Error al recibir el codigo de operacio");
 
+    t_list* valores = list_create();
+    
     switch (cod_op)
     {
     case INSTRUCCIONES:    
@@ -215,6 +216,7 @@ void* recibir_paquete(int socket_cliente)
             mensage = malloc(tamanio);
             memcpy(mensage, buffer + desplazamiento, tamanio);
             free(buffer);
+            list_destroy(valores);
             return mensage;
 
         break;

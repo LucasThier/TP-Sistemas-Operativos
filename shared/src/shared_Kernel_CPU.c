@@ -29,12 +29,20 @@ void EliminarSegmento(t_list* tabla, int id)
 t_list* ObtenerTablaSegmentosDelPaquete(t_list* DatosRecibidos)
 {
     t_list* Tabla = list_create();
-    int CantSegmentos = *(int*)list_remove(DatosRecibidos, 0);
+
+    int* aux2 = (int*)list_remove(DatosRecibidos, 0);
+    int CantSegmentos = *aux2;
+    free(aux2);
 
     for(int i=0; i < CantSegmentos; i++)
     {
-        int ID = *(int*)list_remove(DatosRecibidos, 0);
-        int Limite = *(int*)list_remove(DatosRecibidos, 0);
+        aux2 = (int*)list_remove(DatosRecibidos, 0);
+        int ID = *aux2;
+        free(aux2);
+
+        aux2 = (int*)list_remove(DatosRecibidos, 0);
+        int Limite = *aux2;
+        free(aux2);
 
         CrearSegmento(Tabla, ID, Limite);
     }

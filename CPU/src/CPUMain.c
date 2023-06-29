@@ -5,11 +5,25 @@ t_log* CPU_Logger;
 
 int SocketCPU;
 int SocketMemoria;
+int SocketKernel;
 time_t tiempoInicio;
 time_t tiempoFinal;
+pthread_t HiloEscucha;
 
-void sighandler(int s) {
-	liberar_conexion(SocketCPU);
+void sighandler(int s)
+{
+	ModuloDebeTerminar = true;
+
+	pthread_cancel(HiloEscucha);
+
+	log_destroy(CPU_Logger);
+
+	config_destroy(config);
+
+	liberar_conexion(SocketKernel);
+	liberar_conexion(SocketCPU);	
+	liberar_conexion(SocketMemoria);
+	
 	exit(0);
 }
 
@@ -17,6 +31,7 @@ void sighandler(int s) {
 int main(int argc, char* argv[])
 {
 	signal(SIGINT, sighandler);
+	signal(SIGSEGV, sighandler);
 
 	LeerConfigs(argv[1]);
 
@@ -37,11 +52,10 @@ int InicializarConexiones()
 {
 	SocketMemoria = conectar_servidor(CPU_Logger, "Memoria", IP_MEMORIA, PUERTO_MEMORIA);
 
-	pthread_t HiloEscucha;
-
     if (pthread_create(&HiloEscucha, NULL, EscuchaKernel, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
+	//pthread_detach(HiloEscucha);
 	return 1;
 }
 
@@ -49,13 +63,14 @@ int InicializarConexiones()
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
 void* EscuchaKernel()
 {
+	printf("HILO ESCUCHA KERNEL\n");
 	SocketCPU = iniciar_servidor(CPU_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	if(SocketCPU == 0)
 	{
 		liberar_conexion(SocketCPU);
 		return (void*)EXIT_FAILURE;
 	}
-	int SocketKernel = esperar_cliente(CPU_Logger, NOMBRE_PROCESO, SocketCPU);
+	SocketKernel = esperar_cliente(CPU_Logger, NOMBRE_PROCESO, SocketCPU);
 
 	if(SocketKernel == 0)
 	{
@@ -63,7 +78,7 @@ void* EscuchaKernel()
 		return (void*)EXIT_FAILURE;
 	}
 
-	while(true)
+	while(!ModuloDebeTerminar)
 	{
 		bool SeguirEjecutando = true;
 		//recive una lista con todos los datos del PCB
@@ -72,15 +87,19 @@ void* EscuchaKernel()
 		//guarda el tiempo en que empezo a ejecutar para calcular el tiempo de ejecucion mas tarde
 		time(&tiempoInicio);
 
-		int PC = *(int*)list_remove(DatosRecibidos, 0);
+		int* aux = (int*)list_remove(DatosRecibidos, 0);
+		int PC = *aux;
+		free(aux);
 
-		int PID = *(int*)list_remove(DatosRecibidos, 0);
-
+		aux = (int*)list_remove(DatosRecibidos, 0);
+		int PID = *aux;
+		free(aux);
+		
 		//guarda los registros en una estructura
 		t_registrosCPU* Registros = ObtenerRegistrosDelPaquete(DatosRecibidos);
 
 		t_list* TablaSegmentos = ObtenerTablaSegmentosDelPaquete(DatosRecibidos);
-		
+
 		//loopea por las instrucciones y las realiza una por una hasta que alguna requiera desalojar
 		while (SeguirEjecutando)
 		{
@@ -89,7 +108,7 @@ void* EscuchaKernel()
 			
 			log_info(CPU_Logger, "PID: [%d] - Ejecutando: %s", PID, Linea_A_Ejecutar);
 
-			//divide la linea en instruccion y los parametros
+			//divide la linea en instruccion y parametros
 			char* Instruccion_A_Ejecutar = strtok(Linea_A_Ejecutar, " ");
 
 			if(strcmp(Instruccion_A_Ejecutar, "YIELD\n")==0)
@@ -176,7 +195,7 @@ void* EscuchaKernel()
 				PC++;
 
 				char* Reg_A_Setear = strtok(NULL, " ");
-				char* DirLogica = strtok(NULL, " ");
+				char* DirLogica = strtok(strtok(NULL, " "), "\n");
 
 				char* Registro = ObtenerRegistro(Reg_A_Setear, Registros);
 				int tamano = ObtenerTamanoRegistro(Reg_A_Setear);
@@ -234,7 +253,7 @@ void* EscuchaKernel()
 				PC++;
 
 				char* DirLogica = strtok(NULL, " ");
-				char* Reg_A_Buscar = strtok(NULL, " ");
+				char* Reg_A_Buscar = strtok(strtok(NULL, " "), "\n");
 				
 				int tamano = ObtenerTamanoRegistro(Reg_A_Buscar);
 				char* Valor = malloc(tamano+1);
@@ -291,7 +310,7 @@ void* EscuchaKernel()
 				PC++;
 
 				char* IdSegmento = strtok(NULL, " ");
-				char* Tamano = strtok(NULL, " ");
+				char* Tamano = strtok(strtok(NULL, " "), "\n");
 
 				if(atoi(Tamano) > TAM_MAX_SEGMENTO)
 				{
@@ -323,7 +342,7 @@ void* EscuchaKernel()
 				}				
 			}
 
-			else if(strcmp(Instruccion_A_Ejecutar, "DELETE_SEGMENT\n")==0)
+			else if(strcmp(Instruccion_A_Ejecutar, "DELETE_SEGMENT")==0)
 			{
 				PC++;
 
@@ -363,63 +382,109 @@ void* EscuchaKernel()
 				}				
 			}
 
-			else if(strcmp(Instruccion_A_Ejecutar, "F_OPEN\n")==0)
+			else if(strcmp(Instruccion_A_Ejecutar, "F_OPEN")==0)
 			{
 				PC++;
 			}
 
-			else if(strcmp(Instruccion_A_Ejecutar, "F_CLOSE\n")==0)
+			else if(strcmp(Instruccion_A_Ejecutar, "F_CLOSE")==0)
 			{
 				PC++;
 			}
 
-			else if(strcmp(Instruccion_A_Ejecutar, "F_SEEK\n")==0)
+			else if(strcmp(Instruccion_A_Ejecutar, "F_SEEK")==0)
 			{
 				PC++;
 			}
 
-			else if(strcmp(Instruccion_A_Ejecutar, "F_READ\n")==0)
+			else if(strcmp(Instruccion_A_Ejecutar, "F_READ")==0)
 			{
 				PC++;
 			}
 
-			else if(strcmp(Instruccion_A_Ejecutar, "F_WRITE\n")==0)
+			else if(strcmp(Instruccion_A_Ejecutar, "F_WRITE")==0)
 			{
 				PC++;
 			}
 
-			else if(strcmp(Instruccion_A_Ejecutar, "F_TRUNCATE\n")==0)
+			else if(strcmp(Instruccion_A_Ejecutar, "F_TRUNCATE")==0)
 			{
 				PC++;
 			}
-
 		}
-		list_destroy(DatosRecibidos);
-	}
 
-	liberar_conexion(SocketCPU);
-	return (void*)EXIT_SUCCESS;
+		free(Registros);
+
+		//liberar memoria TablaSegmentos
+		while (!list_is_empty(TablaSegmentos))
+		{
+			void* elemtnto = list_remove(TablaSegmentos, 0);
+			free(elemtnto);
+		}
+		list_destroy(TablaSegmentos);
+
+		//liberar memoria DatosRecibidos
+		while (!list_is_empty(DatosRecibidos))
+		{
+			void* elemtnto = list_remove(DatosRecibidos, 0);
+			free(elemtnto);
+		}
+		//list_destroy(DatosRecibidos);
+		free(DatosRecibidos);
+	}
+	pthread_exit(NULL);
 }
 
 //funcion que recibe una lista con los datos del PCB y los guarda en una estructura
 t_registrosCPU* ObtenerRegistrosDelPaquete(t_list* Lista)
 {
 	t_registrosCPU* Registros = malloc(sizeof(t_registrosCPU));
-	strncpy(Registros->AX, (char*)list_remove(Lista, 0), sizeof(Registros->AX));
-	strncpy(Registros->BX, (char*)list_remove(Lista, 0), sizeof(Registros->BX));
-	strncpy(Registros->CX, (char*)list_remove(Lista, 0), sizeof(Registros->CX));
-	strncpy(Registros->DX, (char*)list_remove(Lista, 0), sizeof(Registros->DX));
 
-	strncpy(Registros->EAX, (char*)list_remove(Lista, 0), sizeof(Registros->EAX));
-	strncpy(Registros->EBX, (char*)list_remove(Lista, 0), sizeof(Registros->EBX));
-	strncpy(Registros->ECX, (char*)list_remove(Lista, 0), sizeof(Registros->ECX));
-	strncpy(Registros->EDX, (char*)list_remove(Lista, 0), sizeof(Registros->EDX));
-	
-	strncpy(Registros->RAX, (char*)list_remove(Lista, 0), sizeof(Registros->RAX));
-	strncpy(Registros->RBX, (char*)list_remove(Lista, 0), sizeof(Registros->RBX));
-	strncpy(Registros->RCX, (char*)list_remove(Lista, 0), sizeof(Registros->RCX));
-	strncpy(Registros->RDX, (char*)list_remove(Lista, 0), sizeof(Registros->RDX));
-	
+	char* AX = (char*)list_remove(Lista, 0);
+	char* BX = (char*)list_remove(Lista, 0);
+	char* CX = (char*)list_remove(Lista, 0);
+	char* DX = (char*)list_remove(Lista, 0);
+
+	char* EAX = (char*)list_remove(Lista, 0);
+	char* EBX = (char*)list_remove(Lista, 0);
+	char* ECX = (char*)list_remove(Lista, 0);
+	char* EDX = (char*)list_remove(Lista, 0);
+
+	char* RAX = (char*)list_remove(Lista, 0);
+	char* RBX = (char*)list_remove(Lista, 0);
+	char* RCX = (char*)list_remove(Lista, 0);
+	char* RDX = (char*)list_remove(Lista, 0);
+
+	strncpy(Registros->AX, AX, sizeof(Registros->AX));
+	strncpy(Registros->BX, BX, sizeof(Registros->BX));
+	strncpy(Registros->CX, CX, sizeof(Registros->CX));
+	strncpy(Registros->DX, DX, sizeof(Registros->DX));
+
+	strncpy(Registros->EAX, EAX, sizeof(Registros->EAX));
+	strncpy(Registros->EBX, EBX, sizeof(Registros->EBX));
+	strncpy(Registros->ECX, ECX, sizeof(Registros->ECX));
+	strncpy(Registros->EDX, EDX, sizeof(Registros->EDX));
+
+	strncpy(Registros->RAX, RAX, sizeof(Registros->RAX));
+	strncpy(Registros->RBX, RBX, sizeof(Registros->RBX));
+	strncpy(Registros->RCX, RCX, sizeof(Registros->RCX));
+	strncpy(Registros->RDX, RDX, sizeof(Registros->RDX));
+
+	free(AX);
+	free(BX);
+	free(CX);
+	free(DX);
+
+	free(EAX);
+	free(EBX);
+	free(ECX);
+	free(EDX);
+
+	free(RAX);
+	free(RBX);
+	free(RCX);
+	free(RDX);
+
 	return Registros;
 }
 
