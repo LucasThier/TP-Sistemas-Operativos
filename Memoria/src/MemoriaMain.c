@@ -23,20 +23,25 @@ int main(int argc, char* argv[])
 
 	crearSegmento(1,10,1);
 	crearSegmento(1,5,2);
-	crearSegmento(2,20,1);
-	crearSegmento(2,25,2);
+//	crearSegmento(2,20,1);
+//	crearSegmento(2,25,2);
 	crearSegmento(3,8,1);
-	crearSegmento(3,3894,2);
+//	crearSegmento(3,3894,2);
+
 
 	eliminarSegmento(1,1);
-	eliminarSegmento(2,2);
-	eliminarSegmento(3,1);
+//	eliminarSegmento(2,2);
+//	eliminarSegmento(3,1);
 
 	VerHuecos();
 
-	crearSegmento(3,8,4);
+//	crearSegmento(3,8,4);
 
+	compactarSegmentos();
+	VerMem();
 	VerHuecos();
+
+
 
 	InicializarSemaforos();
 
@@ -451,9 +456,46 @@ void finalizarProceso(int PID){
 }
 
 void compactarSegmentos() {
-    // Mover los segmentos para eliminar los huecos libres	
+    // Mover los segmentos para eliminar los huecos libres
 	log_info(Memoria_Logger,"Solicitud de Compactación");
-    // Actualizar la tabla de segmentos con las nuevas direcciones bases
+	t_list* tablaOrdenada= list_create();
+	t_list* tablaSeg= list_duplicate(TABLA_SEGMENTOS);
+	list_clean(TABLA_HUECOS);
+	void* menorBase=MEMORIA+TAM_MEMORIA+1;
+	int indice;
+	Segmento* seg= malloc(sizeof(Segmento*));
+	Segmento* segAnterior= malloc(sizeof(Segmento*));
+	//SEGMENTO 0 no se modifica
+	list_add(tablaOrdenada,list_get(TABLA_SEGMENTOS,0));
+
+	//crea una nueva lista con los segmentos ordenados
+	for(int j=1;j<list_size(TABLA_SEGMENTOS);j++){
+		for(int i=0;i<list_size(tablaSeg);i++){
+			seg=list_get(tablaSeg,i);
+			if(menorBase>seg->direccionBase){
+				menorBase = seg->direccionBase;
+				indice=i+1;
+			}
+		}
+		seg = list_remove(tablaSeg, indice);
+//		log_info(Memoria_Logger,"agrego el segm %d",indice);
+		list_add(tablaOrdenada,seg);
+	}
+
+    // Actualizar la tabla de segmentos ordenada con las nuevas direcciones base
+	for(int i=1;i<list_size(tablaOrdenada);i++){
+		seg=list_get(tablaOrdenada,i);
+//		log_info(Memoria_Logger,"indices %d id%d PID%d",i,seg->idSegmento,seg->PID);
+		segAnterior=list_get(tablaOrdenada,i-1);
+		seg->direccionBase=segAnterior->direccionBase + segAnterior->limite + 1;
+		list_replace(tablaOrdenada,i,seg);
+		log_info(Memoria_Logger,"PID: %d - Cambiar base de Segmento: %d - Base: %p - TAMAÑO: %d",seg->PID,seg->idSegmento,seg->direccionBase,seg->limite);
+	}
+
+	TABLA_SEGMENTOS=list_duplicate(tablaOrdenada);
+	list_destroy(tablaOrdenada);
+	list_destroy(tablaSeg);
+
 }
 
 void BestFit(int idSeg, int tam, int PID){
