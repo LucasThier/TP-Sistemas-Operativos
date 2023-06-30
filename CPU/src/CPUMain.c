@@ -173,6 +173,7 @@ void* EscuchaKernel()
 					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 					SeguirEjecutando = false;
 				}
+				free(Respuesta);
 			}
 
 			else if(strcmp(Instruccion_A_Ejecutar, "SIGNAL")==0)
@@ -188,6 +189,7 @@ void* EscuchaKernel()
 					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 					SeguirEjecutando = false;
 				}
+				free(Respuesta);
 			}
 
 			else if(strcmp(Instruccion_A_Ejecutar, "MOV_IN")==0)
@@ -245,6 +247,7 @@ void* EscuchaKernel()
 					{
 						memcpy(Registro, Respuesta, tamano);
 					}	
+					free(Respuesta);
 				}						
 			}
 
@@ -301,6 +304,7 @@ void* EscuchaKernel()
 						Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 						SeguirEjecutando = false;
 					}//si no, no hacer nada.
+					free(Respuesta);
 				}	
 
 			}
@@ -339,6 +343,7 @@ void* EscuchaKernel()
 						LimpiarElementosDeTabla(TablaSegmentos);
 						TablaSegmentos = NuevaTabla;
 					}
+					free(Respuesta);
 				}				
 			}
 
@@ -379,40 +384,138 @@ void* EscuchaKernel()
 						LimpiarElementosDeTabla(TablaSegmentos);
 						TablaSegmentos = NuevaTabla;
 					}
+					free(Respuesta);
 				}				
 			}
 
 			else if(strcmp(Instruccion_A_Ejecutar, "F_OPEN")==0)
 			{
 				PC++;
+				
+				EnviarMensage("F_OPEN", SocketKernel);
+
+				char* NombreArchivo = strtok(NULL, " ");
+
+				EnviarMensage(NombreArchivo, SocketKernel);
+
+				char* Respuesta = (char*) recibir_paquete(SocketKernel);
+				if(strcmp(Respuesta, "EN_USO")==0)
+				{
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+					SeguirEjecutando = false;
+				}
+				free (Respuesta);
 			}
 
 			else if(strcmp(Instruccion_A_Ejecutar, "F_CLOSE")==0)
 			{
 				PC++;
+
+				EnviarMensage("F_CLOSE", SocketKernel);
+
+				char* NombreArchivo = strtok(NULL, " ");
+
+				EnviarMensage(NombreArchivo, SocketKernel);
+
+				char* Respuesta = (char*) recibir_paquete(SocketKernel);
+				if(strcmp(Respuesta, "ERROR")==0)
+				{
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+					SeguirEjecutando = false;
+				}
+				free (Respuesta);
 			}
 
 			else if(strcmp(Instruccion_A_Ejecutar, "F_SEEK")==0)
 			{
 				PC++;
-			}
 
-			else if(strcmp(Instruccion_A_Ejecutar, "F_READ")==0)
-			{
-				PC++;
-			}
+				EnviarMensage("F_SEEK", SocketKernel);
 
-			else if(strcmp(Instruccion_A_Ejecutar, "F_WRITE")==0)
-			{
-				PC++;
+				char* NombreArchivo = strtok(NULL, " ");
+				int NuevaPosicion = atoi(strtok(NULL, " "));
+				
+				char* Mensage = malloc(60);
+				sprintf(Mensage,"%s %d\0", NombreArchivo, NuevaPosicion);
+				EnviarMensage(Mensage, SocketKernel);
+				free(Mensage);
+
+				char* Respuesta = (char*) recibir_paquete(SocketKernel);
+				if(strcmp(Respuesta, "ERROR")==0)
+				{
+					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+					SeguirEjecutando = false;
+				}
+				free (Respuesta);
 			}
 
 			else if(strcmp(Instruccion_A_Ejecutar, "F_TRUNCATE")==0)
 			{
 				PC++;
+
+				EnviarMensage("F_TRUNCATE", SocketKernel);
+
+				char* NombreArchivo = strtok(NULL, " ");
+				int NuevaPosicion = atoi(strtok(NULL, " "));
+
+				char* Mensage = malloc(60);
+				sprintf(Mensage,"%s %d\0", NombreArchivo, NuevaPosicion);
+				EnviarMensage(Mensage, SocketKernel);
+				free(Mensage);
+				
+				Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+				SeguirEjecutando = false;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "F_READ")==0)
+			{
+				PC++;
+
+				EnviarMensage("F_READ", SocketKernel);
+
+				char* NombreArchivo = strtok(NULL, " ");
+				char* DireccionLogica = strtok(NULL, " ");
+				int CantBytes = atoi(strtok(NULL, " "));
+
+				int NumSegmento;
+				int Offset;
+
+				TraducirDireccion(DireccionLogica, &NumSegmento, &Offset);
+
+				char* Mensage = malloc(100);
+				sprintf(Mensage,"%s %d %d %d\0", NombreArchivo, NumSegmento, Offset, CantBytes);
+				EnviarMensage(Mensage, SocketKernel);
+				free(Mensage);
+
+				Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+				SeguirEjecutando = false;
+			}
+
+			else if(strcmp(Instruccion_A_Ejecutar, "F_WRITE")==0)
+			{
+				PC++;
+
+				EnviarMensage("F_WRITE", SocketKernel);
+
+				char* NombreArchivo = strtok(NULL, " ");
+				char* DireccionLogica = strtok(NULL, " ");
+				int CantBytes = atoi(strtok(NULL, " "));
+
+				int NumSegmento;
+				int Offset;
+
+				TraducirDireccion(DireccionLogica, &NumSegmento, &Offset);
+
+				char* Mensage = malloc(100);
+				sprintf(Mensage,"%s %d %d %d\0", NombreArchivo, NumSegmento, Offset, CantBytes);
+				EnviarMensage(Mensage, SocketKernel);
+				free(Mensage);
+
+				Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
+				SeguirEjecutando = false;
 			}
 		}
-
+		
 		free(Registros);
 
 		//liberar memoria TablaSegmentos

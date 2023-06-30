@@ -381,7 +381,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		g_EXEC = NULL;
 		sem_post(&m_READY);
 		sem_post(&m_EXEC);
-		
 	}
 
 	else if(strcmp(respuesta, "I/O\n")== 0)
@@ -519,11 +518,10 @@ void RealizarRespuestaDelCPU(char* respuesta)
 				//printf("Respuesta de CPU: %s\n", rta);
 				
 				RealizarRespuestaDelCPU(rta);
-
+				free(rta);
 			}
 		}
 		free(msg);
-		free(Recurso);
 	}
 
 	else if(strcmp(respuesta, "SIGNAL\n")== 0)
@@ -628,7 +626,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			free(rta);
 		}
 		free(msg);
-		free(Recurso);
 	}
 
 	else if(strcmp(respuesta, "CREATE_SEGMENT")== 0)
@@ -697,6 +694,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			eliminar_paquete(NuevaTabla);
 		}
 		free(msg);
+		free(Parametros);
 	}
 	
 	else if(strcmp(respuesta, "DELETE_SEGMENT")== 0)
@@ -730,7 +728,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		}
 		else
 		{
-
 			EnviarMensage("ACEPTADO", SocketCPU);
 
 			//saco el PID que no me interesa
@@ -746,7 +743,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			enviar_paquete(NuevaTabla, SocketCPU);
 			eliminar_paquete(NuevaTabla);
 		}
-
+		free(Parametros);
+		free(RespuestaMemoria);
 	}
 
 	else if(strcmp(respuesta, "SEG_FAULT")== 0)
@@ -785,8 +783,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		{
 			//bloqueo el proceso hasta que el otro proceso termine de usar el archivo			
 			EnviarMensage("EN_USO", SocketCPU);
+			
 			Recibir_Y_Actualizar_PCB();
-
 			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
 
 			sem_wait(&m_EXEC);
@@ -804,20 +802,19 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			free(Mensage);
 
 			char* RespuestaFS = RecibirDeFS();
-			//(char*)recibir_paquete(SocketFileSystem);
 
 			//si el archivo no existe en el FS, le pido que lo cree
 			if(strcmp(RespuestaFS, "OK") != 0)
 			{
-				char* Mensage = malloc(30);
+				char* Mensage = malloc(50);
 				sprintf(Mensage, "CREAR_ARCHIVO %s\0", NombreArchivo);
 				EnviarMensage(Mensage, SocketFileSystem);
 				free(Mensage);
 
 				free(RespuestaFS);
-				RespuestaFS = RecibirDeFS();
-				free(RespuestaFS);
+				RespuestaFS = RecibirDeFS();				
 			}
+			free(RespuestaFS);
 
 			//creo el archivo en la tabla global
 			ArchivoBuscado = malloc(sizeof(t_ArchivoGlobal));
@@ -830,13 +827,12 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			//envio el mensaje de aceptacion
 			EnviarMensage("OK", SocketCPU);
 		}
-
+		free(NombreArchivo);
 	}
 
 	else if(strcmp(respuesta, "F_CLOSE")== 0)
 	{
 		char* NombreArchivo = (char*)recibir_paquete(SocketCPU);
-
 
 		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
 		
@@ -872,6 +868,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			
 			EnviarMensage("OK", SocketCPU);
 		}
+		free(NombreArchivo);
 	}
 
 	else if(strcmp(respuesta, "F_SEEK")== 0)
@@ -893,6 +890,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			ArchivoPCB->PosicionPuntero = NuevaPosicionPuntero;
 			EnviarMensage("OK", SocketCPU);
 		}
+		free(Parametros);
 	}
 	
 	else if(strcmp(respuesta, "F_TRUNCATE")== 0)
@@ -926,6 +924,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			sem_post(&m_EXEC);
 			sem_post(&m_BLOCKED_FS);
 		}
+		free(Parametros);
 	}
 	
 	else if(strcmp(respuesta, "F_READ")== 0)
@@ -933,9 +932,9 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		char* Parametros = (char*)recibir_paquete(SocketCPU);
 
 		char* NombreArchivo = strtok(Parametros, " ");
-		char* DireccionFisica = strtok(NULL, " ");
+		char* NumSegmento = strtok(NULL, " ");
+		char* Offset = strtok(NULL, " ");
 		char* CantBytesALeer = strtok(NULL, " ");
-		int PosicionPuntero;
 
 		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
 
@@ -947,10 +946,10 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		else
 		{
 			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
-			PosicionPuntero = ArchivoPCB->PosicionPuntero;
+			int PosicionPuntero = ArchivoPCB->PosicionPuntero;
 			
 			char* Mensage = malloc(60);
-			sprintf(Mensage, "LEER_ARCHIVO %s %s %s %d\0", NombreArchivo, DireccionFisica, CantBytesALeer, PosicionPuntero);
+			sprintf(Mensage, "LEER_ARCHIVO %s %s %s %s %d\0", NombreArchivo, NumSegmento, Offset, CantBytesALeer, PosicionPuntero);
 			EnviarMensage(Mensage, SocketFileSystem);
 			free(Mensage);
 
@@ -964,6 +963,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			sem_post(&m_EXEC);
 			sem_post(&m_BLOCKED_FS);
 		}
+		free(Parametros);
 	}
 	
 	else if(strcmp(respuesta, "F_WRITE") == 0)
@@ -971,7 +971,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		char* Parametros = (char*)recibir_paquete(SocketCPU);
 
 		char* NombreArchivo = strtok(Parametros, " ");
-		char* DireccionFisica = strtok(NULL, " ");
+		char* NumSegmento = strtok(NULL, " ");
+		char* Offset = strtok(NULL, " ");
 		char* CantBytesALeer = strtok(NULL, " ");
 		int PosicionPuntero;
 
@@ -988,7 +989,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			PosicionPuntero = ArchivoPCB->PosicionPuntero;
 			
 			char* Mensage = malloc(60);
-			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %s %s %d\0", NombreArchivo, DireccionFisica, CantBytesALeer, PosicionPuntero);
+			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %s %s %s %d\0", NombreArchivo, NumSegmento, Offset, CantBytesALeer, PosicionPuntero);
 			EnviarMensage(Mensage, SocketFileSystem);
 			free(Mensage);
 
@@ -1002,6 +1003,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			sem_post(&m_EXEC);
 			sem_post(&m_BLOCKED_FS);
 		}
+		free(Parametros);
 	}	
 }
 
