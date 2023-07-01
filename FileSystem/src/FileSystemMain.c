@@ -87,21 +87,39 @@ void* EscuchaKernel()
 		{
 			char* NombreArchivo = strtok(NULL, " ");
 			
-			//verificar si existe el archivo, si existe envie "OK" si no enviar cualquier otra cadena
+			//verificar si existe el archivo,
+			//si existe enviar "OK" si no enviar cualquier otra cadena
+			if(BuscarFCB(NombreArchivo) != NULL)
+			{
+				EnviarMensage("OK", SocketKernel);
+			}
+			else
+			{
+				EnviarMensage("NO", SocketKernel);
+			}			
 		}
-		else if(strcmp(Pedido, "CREAR_PROCESO")==0)
+
+		else if(strcmp(Pedido, "CREAR_ARCHIVO")==0)
 		{
 			char* NombreArchivo = strtok(NULL, " ");
 
 			//crear el archivo y enviar un "OK" al finalizar
+			CrearArchivo(NombreArchivo);
+
+			EnviarMensage("OK", SocketKernel);
 		}
+
 		else if(strcmp(Pedido, "TRUNCAR_ARCHIVO") == 0)
 		{
 			char* NombreArchivo = strtok(NULL, " ");
 			char* NuevoTamanoArchivo = strtok(NULL, " ");
 			
 			//modificar el tamao del archivo y avisar con un "TERMINO" cuando termine la operacion
+			TruncarArchivo(NombreArchivo, atoi(NuevoTamanoArchivo));
+
+			EnviarMensage("TERMINO", SocketKernel);
 		}
+
 		else if(strcmp(Pedido, "LEER_ARCHIVO") == 0)
 		{
 			char* NombreArchivo = strtok(NULL, " ");
@@ -114,6 +132,7 @@ void* EscuchaKernel()
 			y gardar lo leido en la direccion fisica de la Memoria.\
 			avisar con un "TERMINO" cuando termine la operacion.
 		}
+
 		else if(strcmp(Pedido, "ESCRIBIR_ARCHIVO") == 0)
 		{
 			char* NombreArchivo = strtok(NULL, " ");
@@ -252,15 +271,23 @@ bool BitmapEstaLibre(uint32_t i)
 }
 
 //Marca como ocupado un bloque (lo pone en 1)
-void BitmapOcuparBloque(uint32_t i)
+void BitmapOcuparBloque(uint32_t IndiceBloque)
 {
-	bitarray_set_bit(bitmap, i);
+	bitarray_set_bit(bitmap, IndiceBloque);
+
+	//vaciar el bloque
+	char* bloque = ObtenerBloque(IndiceBloque);
+	memset(bloque, 0, TAMANO_BLOQUES);
 }
 
 //Marca como libre un bloque (lo pone en 0)
-void BitmapLiberarBloque(uint32_t i)
+void BitmapLiberarBloque(uint32_t IndiceBloque)
 {
-	bitarray_clean_bit(bitmap, i);
+	bitarray_clean_bit(bitmap, IndiceBloque);
+
+	//vaciar el bloque
+	char* bloque = ObtenerBloque(IndiceBloque);
+	memset(bloque, 0, TAMANO_BLOQUES);
 }
 
 //retorna el "puntero" al bloque vacio
@@ -273,9 +300,8 @@ uint32_t BitmapBuscarBloqueVacio()
 			return i;
 		}
 	}
-	return -1;
+	return 0;
 }
-
 
 
 
@@ -389,6 +415,7 @@ uint32_t LeerBloqueDePunteros(uint32_t IndiceBloque, int IndicePuntero)
 
 
 
+
 int InicializarFCBs()
 {
 	printf("Inicializando FCBs\n");
@@ -489,6 +516,139 @@ void ModificarValorFCB(t_config* FCB, char* KEY, char* Valor)
 }
 
 
+
+
+void CrearArchivo(char* NombreArchivo)
+{
+	uint32_t PunteroDirecto = BitmapBuscarBloqueVacio();
+
+	if(PunteroDirecto == 0)
+	{
+		log_error(FS_Logger, "No hay bloques disponibles para crear el archivo");
+		return;
+	}
+	
+	BitmapOcuparBloque(PunteroDirecto);
+
+	CrearFCB(NombreArchivo, 0, PunteroDirecto, 0);
+}
+
+void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
+{
+	t_config* FCB = BuscarFCB(NombreArchivo);
+	if(FCB == NULL)
+	{
+		log_error(FS_Logger, "No se encontro el archivo %s", NombreArchivo);
+		return;
+	}
+
+	int TamanoActualArchivo = atoi(config_get_string_value(FCB, "TAMANIO_ARCHIVO"));
+	int PunteroIndirecto = atoi(config_get_string_value(FCB, "PUNTERO_INDIRECTO"));
+
+	//determino cuantos bloque esta usando el archivo actualmente
+	int CantBloquesActuales = TamanoActualArchivo / TAMANO_BLOQUES;
+	if((TamanoActualArchivo % TAMANO_BLOQUES != 0) || CantBloquesActuales == 0)
+		CantBloquesActuales++;
+
+	//determino cuantos bloques va a usar el archivo luego del truncado
+	int NuevaCantBloques = NuevoTamanoArchivo / TAMANO_BLOQUES;
+	if((NuevoTamanoArchivo % TAMANO_BLOQUES != 0) || NuevaCantBloques == 0)
+		NuevaCantBloques++;
+	
+
+	//Si hay que agrandar el Archivo, agregar los punteros a los nuevos bloques y ocupar los bloques
+	if(NuevaCantBloques > CantBloquesActuales)
+	{
+		//si no tiene puntero indirecto al bloque de punteros indirectos,
+		//creo el bloque que contendra los punteros
+		if(PunteroIndirecto == 0)
+		{
+			//buscar un bloque vacio
+			uint32_t NuevoPunteroIndirecto = BitmapBuscarBloqueVacio();
+			if(NuevoPunteroIndirecto == 0)
+			{
+				log_error(FS_Logger, "No hay bloques disponibles para truncar el archivo");
+				return;
+			}
+
+			//ocupar el bloque
+			BitmapOcuparBloque(NuevoPunteroIndirecto);
+
+			PunteroIndirecto = NuevoPunteroIndirecto;
+
+			//agregar el bloque al archivo
+			char NuevoPunteroIndirectoChar[15];
+			sprintf(NuevoPunteroIndirectoChar, "%d", NuevoPunteroIndirecto);
+			ModificarValorFCB(FCB, "PUNTERO_INDIRECTO", NuevoPunteroIndirectoChar);
+		}
+
+		//detemino cuantos bloques nuevos necesito
+		int BloquesNecesarios = NuevaCantBloques - CantBloquesActuales;
+
+		//por cada bloque nuevo que necesito agregar creo uno y lo agrego al bloque de punteros indirectos
+		for(int i = 0; i < BloquesNecesarios; i++)
+		{
+			//buscar un bloque vacio
+			uint32_t NuevoPuntero = BitmapBuscarBloqueVacio();
+			if(NuevoPuntero == 0)
+			{
+				log_error(FS_Logger, "No hay bloques disponibles para truncar el archivo");
+				return;
+			}
+
+			//ocupar el bloque
+			BitmapOcuparBloque(NuevoPuntero);
+
+			//agregar el (puntero al nuevo bloque), al bloque de punteros indirectos
+			
+			//buscar en que posicion del bloque de punteros indirectos tengo que agregar el puntero
+			int IndicePuntero = (CantBloquesActuales + i - 1);
+
+			//agrego el puntero al bloque de punteros indirectos
+			EscribirBloqueDePunteros(PunteroIndirecto, IndicePuntero, NuevoPuntero);
+		}
+	}
+	//si hay que achicar el archivo, liberar los bloques que no se usan mas
+	else if(NuevaCantBloques < CantBloquesActuales)
+	{
+		//si no tiene puntero indirecto a un bloque de punteros, Error...
+		if(PunteroIndirecto == 0)
+		{
+			log_error(FS_Logger, "El archivo no tiene bloques de punteros indirectos");
+			return;
+		}
+
+		//por cada bloque que hay que liberar, libero el bloque y lo saco del bloque de punteros indirectos
+		for(int i = CantBloquesActuales; i> NuevaCantBloques; i--)
+		{
+			//obtener el indice del puntero a liberar
+			int IndicePuntero = i - 2;
+
+			//busco el puntero al bloque a liberar
+			uint32_t PunteroBloqueALiberar = LeerBloqueDePunteros(PunteroIndirecto, IndicePuntero);
+
+			//libero el bloque
+			BitmapLiberarBloque(PunteroBloqueALiberar);
+
+			//lo borro de la lista de punteros indirectos
+			EscribirBloqueDePunteros(PunteroIndirecto, IndicePuntero, 0);
+		}
+
+		//si no quedan bloques apuntados por el puntero indirecto,
+		//libero el bloque de punteros indirectos y lo saco del FCB
+		if(NuevaCantBloques == 1)
+		{
+			BitmapLiberarBloque(PunteroIndirecto);
+
+			ModificarValorFCB(FCB, "PUNTERO_INDIRECTO", "0");
+		}
+	}
+
+	//cambiar el tamaño del archivo en el FCB
+	char NuevoTamanoArchivoChar[15];
+	sprintf(NuevoTamanoArchivoChar, "%d", NuevoTamanoArchivo);
+	ModificarValorFCB(FCB, "TAMANO", NuevoTamanoArchivoChar);		
+}
 
 
 

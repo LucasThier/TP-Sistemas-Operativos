@@ -73,6 +73,10 @@ t_config* BuscarFCB(char* NombreArchivo);
 void ModificarValorFCB(t_config* FCB, char* KEY, char* Valor);
 
 
+//Funciones de Archivos
+void CrearArchivo(char* NombreArchivo);
+void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo);
+
 
 //FUNCIONES DE FINALIZACION DEL MODULO
 void TerminarModulo();
