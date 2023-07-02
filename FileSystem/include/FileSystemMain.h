@@ -65,7 +65,7 @@ uint32_t LeerBloqueDePunteros(uint32_t IndiceBloque, int IndicePuntero);
 
 
 //FCBs
-char* PathDirectorioFCBs = "PERSISTIDOS/FCB/";
+const char* PathDirectorioFCBs = "PERSISTIDOS/FCB/";
 t_list* ListaFCBs;
 int InicializarFCBs();
 void CrearFCB(char* NombreArchivo, int TamanoArchivo, uint32_t Puntero_Directo, uint32_t Puntero_Indirecto);
@@ -76,6 +76,7 @@ void ModificarValorFCB(t_config* FCB, char* KEY, char* Valor);
 //Funciones de Archivos
 void CrearArchivo(char* NombreArchivo);
 void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo);
+uint32_t CalcularPunteroABloqueDePunteroArchivo(char* NombreArchivo, int PunteroArchivo, int* DesplazamientoEnBloqueBuscado);
 
 
 //FUNCIONES DE FINALIZACION DEL MODULO

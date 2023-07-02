@@ -21,19 +21,20 @@ int main(int argc, char* argv[])
 
 	inicializarMemoria();
 
-	crearSegmento(1,10,1);
-	crearSegmento(1,5,2);
+	crearSegmento(1,100,1);
+	crearSegmento(1,500,2);
 //	crearSegmento(2,20,1);
 //	crearSegmento(2,25,2);
-	crearSegmento(3,8,1);
+	//crearSegmento(3,8,1);
 //	crearSegmento(3,3894,2);
+	crearSegmento(3,3365,3);
 
 
-	eliminarSegmento(1,1);
+	/*eliminarSegmento(1,1);
 //	eliminarSegmento(2,2);
 //	eliminarSegmento(3,1);
 
-	VerHuecos();
+	VerHuecos();*/
 
 //	crearSegmento(3,8,4);
 
@@ -111,8 +112,7 @@ void* AdministradorDeModulo(void* arg)
 			char* PID = strtok(NULL, " ");
 			
 			//Crear estructuras administrativas NO enviar nada a Kernel
-			log_info(Memoria_Logger,"Creación de Proceso PID: %d",PID);
-			EnviarMensage("OK", *SocketClienteConectado);
+			log_info(Memoria_Logger,"Creación de Proceso PID: %s",PID);
 		}
 		else if(strcmp(Pedido, "FINALIZAR_PROCESO")==0)
 		{
@@ -121,8 +121,8 @@ void* AdministradorDeModulo(void* arg)
 
 			//finalizar_proceso(PID);
 			//NO enviar nada al kernel, solo borrar las estructuras y liberar la memoria
-			finalizarProceso(PID);
-			log_info(Memoria_Logger,"Eliminación de Proceso PID: %d",PID);
+			finalizarProceso(atoi(PID));
+			log_info(Memoria_Logger,"Eliminación de Proceso PID: %s",PID);
 		}
 		//enviar el valor empezando desde la direccion recibida y con la longitud recibida
 		else if(strcmp(Pedido, "MOV_IN")==0)
@@ -134,8 +134,11 @@ void* AdministradorDeModulo(void* arg)
 			char* Desplazamiento = strtok(NULL, " ");
 			//longitud del contenido a buscar
 			char* Longitud = strtok(NULL, " ");	
+			char* Remitente = strtok(NULL, " ");
 
-			char*  Contenido = leerSegmento(PID,NumSegmento,Desplazamiento,Longitud);
+			sem_wait(&m_UsoDeMemoria);
+			char*  Contenido = leerSegmento(atoi(PID),atoi(NumSegmento),atoi(Desplazamiento),atoi(Longitud));
+			sem_post(&m_UsoDeMemoria);
 
 			//enviar el contenido encontrado o SEG_FAULT en caso de error
 			EnviarMensage(Contenido, *SocketClienteConectado);
@@ -150,8 +153,11 @@ void* AdministradorDeModulo(void* arg)
 			char* Desplazamiento = strtok(NULL, " ");
 			//valor a guardar TERMINADO EN \0
 			char* Valor = strtok(NULL, " ");
+			char* Remitente = strtok(NULL, " ");
 
-			char* Contenido = escribirSegmento(PID,NumSegmento,Desplazamiento,Valor);
+			sem_wait(&m_UsoDeMemoria);
+			char* Contenido = escribirSegmento(atoi(PID),atoi(NumSegmento),atoi(Desplazamiento), Valor);
+			sem_post(&m_UsoDeMemoria);
 			//eviar SEG_FAULT en caso de error sino enviar cualquier otra cadena de caracteres
 			EnviarMensage(Contenido, *SocketClienteConectado);
 		}
@@ -164,18 +170,38 @@ void* AdministradorDeModulo(void* arg)
 			char* ID = strtok(NULL, " ");
 			//Tamano del segmento a crear
 			char* Tamanio = strtok(NULL, " ");
-
-			//crear_segmento(PID, ID, Tamanio);
 			
 			/*enviar la respuesta correspondiente a la situacion, ya sea:
 			OUT_OF_MEMORY
 			COMPACTAR <OCUPADO/cualquier otra cadena si no hay operacion entre FS y Mem>
 			Cualquier otra cadena si hay memoria disponible y no hay que compactar
 			*/
+			char* Contenido = crearSegmento(atoi(ID),atoi(Tamanio),atoi(PID));
 
-			char* Contenido = crearSegmento(ID,Tamanio,PID);
+			if(strcmp(Contenido,"COMPACTAR")==0)
+			{
+				if(sem_trywait(&m_UsoDeMemoria) != 0)
+				{
+					EnviarMensage("COMPACTAR LIBRE", *SocketClienteConectado);
+				}
+				else
+				{
+					EnviarMensage("COMPACTAR OCUPADO", *SocketClienteConectado);
+					sem_wait(&m_UsoDeMemoria);
+					EnviarMensage("Se termino de usar la memoria", *SocketClienteConectado);
+				}
 
-			EnviarMensage(Contenido, *SocketClienteConectado);
+				//Espero orden de compactacion
+				recibir_paquete(*SocketClienteConectado);
+
+				compactarSegmentos();
+				crearSegmento(atoi(ID),atoi(Tamanio),atoi(PID));
+				EnviarMensage("COMPACTACION TERMINADA", *SocketClienteConectado);				
+			}
+			else
+			{
+				EnviarMensage(Contenido, *SocketClienteConectado);
+			}			
 		}
 		//eliminar un segmento de un proceso
 		else if(strcmp(Pedido, "DELETE_SEGMENT")==0)
@@ -187,13 +213,10 @@ void* AdministradorDeModulo(void* arg)
 
 			//eliminar_segmento(PID, ID);
 			//enviar SEG_FAULT en caso de error sino enviar cualquier otra cadena de caracteres			
-			char* Contenido = eliminarSegmento(ID,PID);
+			char* Contenido = eliminarSegmento(atoi(ID), atoi(PID));
 			EnviarMensage(Contenido, *SocketClienteConectado);
 		}
-
-		//agregar el resto de operaciones entre FS y memoria
 	}
-
 	liberar_conexion(*SocketClienteConectado);
 	return NULL;
 }
@@ -283,14 +306,18 @@ void inicializarMemoria() {
 	list_add(TABLA_SEGMENTOS,seg);
 }
 
-int validarSegmento(int idSeg,int desplazamientoSegmento){
+//FALTA VALIDAR QUE SEA EL MISMO PID
+int validarSegmento(int PID, int idSeg, int desplazamientoSegmento)
+{
 	//valida la existencia del segmento y checkea que el desplazamiento no tire seg_fault
+
 	int aux=0;
 	Segmento* seg=list_get(TABLA_SEGMENTOS,aux);
 
 	while(list_size(TABLA_SEGMENTOS)>aux){
-		if(seg->idSegmento==idSeg) {
-			if(((int) seg->direccionBase + seg->limite) >= ((int) seg->direccionBase + desplazamientoSegmento)) return 1;
+		if(seg->idSegmento==idSeg && seg->PID==PID)
+		{
+			if(seg->limite > desplazamientoSegmento) return 1;
 			else return 0;
 		}
 		aux++;
@@ -305,7 +332,7 @@ char* crearSegmento(int idSeg, int tamanoSegmento, int PID) {
     // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
 	char* estado = validarMemoria(tamanoSegmento);
 
-	if(estado == "HUECO"){
+	if(strcmp(estado,"HUECO") == 0){
 		switch(ALGORITMO_ASIGNACION){
 			case 0:
 				BestFit(idSeg,tamanoSegmento,PID);
@@ -322,7 +349,7 @@ char* crearSegmento(int idSeg, int tamanoSegmento, int PID) {
 				break;
 		}
 	}
-	else if(estado == "CONTIGUO")
+	else if(strcmp(estado, "CONTIGUO") == 0)
 	{
 		Segmento* lastSeg =list_get(TABLA_SEGMENTOS,list_size(TABLA_SEGMENTOS)-1);	
 		AgregarSegmento(lastSeg,PID,tamanoSegmento,idSeg);
@@ -359,12 +386,13 @@ char* validarMemoria(int Tamano){
 		else
 			return "OUT_OF_MEMORY";
 	}
+	return "OUT_OF_MEMORY";
 }
 
 void AgregarSegmento(Segmento* lastSeg,int PID,int tamanoSegmento,int idSeg){
 	Segmento* seg = malloc(sizeof(Segmento*));
 	seg->PID = PID;
-	seg->direccionBase=(lastSeg->direccionBase) + (lastSeg->limite+1);
+	seg->direccionBase=(lastSeg->direccionBase) + (lastSeg->limite);
 	seg->limite=tamanoSegmento;
 	seg->idSegmento=idSeg;
 	list_add(TABLA_SEGMENTOS,seg);
@@ -403,7 +431,7 @@ char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud){
 
 		char buffer[Longitud];
 		char* cont;
-		if(validarSegmento(IdSeg,(Offset + Longitud)) == 1){
+		if(validarSegmento(PID, IdSeg, (Offset + Longitud)) == 1){
 			memcpy(buffer,(seg->direccionBase + Offset),Longitud);
 			buffer[Longitud] = '\0';
 			cont = buffer;
@@ -413,6 +441,7 @@ char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud){
 			return "SEG_FAULT";
 		} 
 	}
+	return "SEG_FAULT";
 }
 
 char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos){
@@ -421,7 +450,7 @@ char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos){
 	if(indice != -1) {
 		Segmento* seg = list_get(TABLA_SEGMENTOS,indice);
 
-		if(validarSegmento(IdSeg,(Offset + strlen(datos))) == 1){
+		if(validarSegmento(PID, IdSeg, (Offset + strlen(datos))) == 1){
 			for(int i = 0; i < strlen(datos);i++)
 				memset(seg->direccionBase + Offset + i,datos[i],1);
 			return "OK";
@@ -429,6 +458,7 @@ char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos){
 		else
 			return "SEG_FAULT";
 	}
+	return "SEG_FAULT";
 }
 
 int buscarSegmento(int PID, int idSeg,bool Finish){

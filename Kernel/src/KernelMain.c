@@ -673,6 +673,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 					recibir_paquete(SocketMemoria);
 					log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
 				}
+
+				EnviarMensage("COMPACTAR", SocketMemoria);
 				
 				//ESPERO AVISO DE QUE FINALIZO LA COMPACTACION
 				recibir_paquete(SocketMemoria);
@@ -948,8 +950,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
 			int PosicionPuntero = ArchivoPCB->PosicionPuntero;
 			
-			char* Mensage = malloc(60);
-			sprintf(Mensage, "LEER_ARCHIVO %s %s %s %s %d\0", NombreArchivo, NumSegmento, Offset, CantBytesALeer, PosicionPuntero);
+			char* Mensage = malloc(100);
+			sprintf(Mensage, "LEER_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, PosicionPuntero);
 			EnviarMensage(Mensage, SocketFileSystem);
 			free(Mensage);
 
@@ -988,8 +990,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
 			PosicionPuntero = ArchivoPCB->PosicionPuntero;
 			
-			char* Mensage = malloc(60);
-			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %s %s %s %d\0", NombreArchivo, NumSegmento, Offset, CantBytesALeer, PosicionPuntero);
+			char* Mensage = malloc(100);
+			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, PosicionPuntero);
 			EnviarMensage(Mensage, SocketFileSystem);
 			free(Mensage);
 

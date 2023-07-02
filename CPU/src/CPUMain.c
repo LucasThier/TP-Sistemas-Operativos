@@ -223,12 +223,12 @@ void* EscuchaKernel()
 					//si esta intentando leer del segmento 0 envio PID -1.
 					if(NumSegmento == 0)
 					{
-						sprintf(Mensage,"MOV_IN -1 %d %d %d\0", NumSegmento, Offset, tamano);
+						sprintf(Mensage,"MOV_IN -1 %d %d %d CPU\0", NumSegmento, Offset, tamano);
 					}
 					//si no envio el PID del proceso
 					else
 					{
-						sprintf(Mensage,"MOV_IN %d %d %d %d\0", PID, NumSegmento, Offset, tamano);
+						sprintf(Mensage,"MOV_IN %d %d %d %d CPU\0", PID, NumSegmento, Offset, tamano);
 					}
 					
 					EnviarMensage(Mensage, SocketMemoria);
@@ -285,11 +285,11 @@ void* EscuchaKernel()
 					//si esta intentando escribir en el segmento 0 envio PID -1.
 					if(NumSegmento == 0)
 					{
-						sprintf(Mensage,"MOV_OUT -1 %d %d %s\0", NumSegmento, Offset, Valor);
+						sprintf(Mensage,"MOV_OUT -1 %d %d %s CPU\0", NumSegmento, Offset, Valor);
 					}
 					else
 					{
-						sprintf(Mensage,"MOV_OUT %d %d %d %s\0", PID, NumSegmento, Offset, Valor);
+						sprintf(Mensage,"MOV_OUT %d %d %d %s CPU\0", PID, NumSegmento, Offset, Valor);
 					}
 					EnviarMensage(Mensage, SocketMemoria);
 					free(Mensage);

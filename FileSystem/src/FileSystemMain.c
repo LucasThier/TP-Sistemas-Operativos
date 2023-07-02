@@ -123,14 +123,26 @@ void* EscuchaKernel()
 		else if(strcmp(Pedido, "LEER_ARCHIVO") == 0)
 		{
 			char* NombreArchivo = strtok(NULL, " ");
+			char* PID = strtok(NULL, " ");
 			char* NumSegmento = strtok(NULL, " ");
 			char* Offset = strtok(NULL, " ");
 			char* CantBytesALeer = strtok(NULL, " ");
-			char* Puntero = strtok(NULL, " ");
+			char* PunteroArchivo = strtok(NULL, " ");
 
-			//leer la cantidad de bytes pedidos a partir de la pos del puntero\
-			y gardar lo leido en la direccion fisica de la Memoria.\
-			avisar con un "TERMINO" cuando termine la operacion.
+			//leer la cantidad de bytes pedidos a partir de la pos del puntero
+			//y gardar lo leido en la direccion fisica de la Memoria.
+			//avisar con un "TERMINO" cuando termine la operacion.
+			int Desplazamiento;
+
+			uint32_t BloqueBuscado = CalcularPunteroABloqueDePunteroArchivo(NombreArchivo, atoi(PunteroArchivo), &Desplazamiento);
+
+			char* DatosLeidos = LeerBloqueDeChar(BloqueBuscado, Desplazamiento, atoi(CantBytesALeer));
+
+			char Mensaje[500];
+			sprintf(Mensaje, "MOV_OUT %s %s %s %s FS", PID, NumSegmento, Offset, DatosLeidos);
+			EnviarMensage(Mensaje, SocketKernel);
+
+			EnviarMensage("TERMINO", SocketKernel);
 		}
 
 		else if(strcmp(Pedido, "ESCRIBIR_ARCHIVO") == 0)
@@ -141,9 +153,9 @@ void* EscuchaKernel()
 			char* CantBytesALeer = strtok(NULL, " ");
 			char* Puntero = strtok(NULL, " ");
 			
-			//leer la cantidad de bytes pedidos en la direccion fisica de la Memoria\
-			y gardar lo leido a partir de la pos del puntero\
-			avisar con un "TERMINO" cuando termine la operacion.
+			//leer la cantidad de bytes pedidos en la direccion fisica de la Memoria
+			//y gardar lo leido a partir de la pos del puntero
+			//avisar con un "TERMINO" cuando termine la operacion.
 		}
 	}
 
@@ -438,7 +450,7 @@ int InicializarFCBs()
     // Leer las entradas del directorio
     while ((entrada = readdir(dir)) != NULL) {
         // Excluir las entradas "." y ".."
-        if (strcmp(entrada->d_name, ".") != 0 && strcmp(entrada->d_name, "..") != 0) {            
+        if (strcmp(entrada->d_name, ".") != 0 && strcmp(entrada->d_name, "..") != 0 && strcmp(entrada->d_name, "borrar.txt") != 0) {            
 			
 			//armar el path del archivo
 			char path[257];
@@ -446,7 +458,8 @@ int InicializarFCBs()
 
 			//crear el config para ese archivo y agregarlo a la lista
 			t_config* FCB = config_create(path);
-			list_add(ListaFCBs, FCB);
+			if(FCB != NULL)
+				list_add(ListaFCBs, FCB);
         }
     }
 
@@ -461,7 +474,7 @@ void CrearFCB(char* NombreArchivo, int TamanoArchivo, uint32_t Puntero_Directo, 
 	printf("Creando FCB para %s\n", NombreArchivo);
 
 	//armar el path del archivo
-	char path[100];
+	char path[257];
 	sprintf(path, "%s/%s.FCB", PathDirectorioFCBs, NombreArchivo);
 
 	//Si el FCB no existe
@@ -545,7 +558,7 @@ void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
 	int TamanoActualArchivo = atoi(config_get_string_value(FCB, "TAMANIO_ARCHIVO"));
 	int PunteroIndirecto = atoi(config_get_string_value(FCB, "PUNTERO_INDIRECTO"));
 
-	//determino cuantos bloque esta usando el archivo actualmente
+	//determino cuantos bloques esta usando el archivo actualmente
 	int CantBloquesActuales = TamanoActualArchivo / TAMANO_BLOQUES;
 	if((TamanoActualArchivo % TAMANO_BLOQUES != 0) || CantBloquesActuales == 0)
 		CantBloquesActuales++;
@@ -598,8 +611,6 @@ void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
 
 			//ocupar el bloque
 			BitmapOcuparBloque(NuevoPuntero);
-
-			//agregar el (puntero al nuevo bloque), al bloque de punteros indirectos
 			
 			//buscar en que posicion del bloque de punteros indirectos tengo que agregar el puntero
 			int IndicePuntero = (CantBloquesActuales + i - 1);
@@ -650,6 +661,23 @@ void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
 	ModificarValorFCB(FCB, "TAMANO", NuevoTamanoArchivoChar);		
 }
 
+
+uint32_t CalcularPunteroABloqueDePunteroArchivo(char* NombreArchivo, int PunteroArchivo, int* DesplazamientoEnBloqueBuscado)
+{
+	//obtener el FCB del archivo
+	t_config* FCB = BuscarFCB(NombreArchivo);
+	if(FCB == NULL)
+	{
+		log_error(FS_Logger, "No se encontro el archivo %s", NombreArchivo);
+		return 0;
+	}
+
+	uint32_t BloqueBuscado = PunteroArchivo / TAMANO_BLOQUES;
+	
+	*DesplazamientoEnBloqueBuscado = PunteroArchivo % TAMANO_BLOQUES;
+
+	return BloqueBuscado;
+}
 
 
 

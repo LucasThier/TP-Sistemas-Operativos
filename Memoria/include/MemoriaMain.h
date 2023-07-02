@@ -42,16 +42,19 @@ char* crearSegmento(int,int, int);
 char* eliminarSegmento(int,int);
 void compactarSegmentos();
 void inicializarMemoria();
-int validarSegmento(int,int);
+int validarSegmento(int,int,int);
 void AgregarSegmento(Segmento*,int,int,int);
 char* leerSegmento(int,int,int,int);
 int buscarSegmento(int,int,bool);
 char* escribirSegmento(int, int, int, char*);
 void VerMem();
+void VerHuecos();
 char* validarMemoria(int);
 void BestFit(int,int,int);
 void WorstFit(int,int,int);
 void FirstFit(int,int,int);
+void finalizarProceso(int);
+
 
 
 char NOMBRE_PROCESO[8] = "Memoria";
