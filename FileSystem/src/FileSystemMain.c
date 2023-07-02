@@ -132,15 +132,18 @@ void* EscuchaKernel()
 			//leer la cantidad de bytes pedidos a partir de la pos del puntero
 			//y gardar lo leido en la direccion fisica de la Memoria.
 			//avisar con un "TERMINO" cuando termine la operacion.
-			int Desplazamiento;
+			int Desplazamiento = 0;
 
 			uint32_t BloqueBuscado = CalcularPunteroABloqueDePunteroArchivo(NombreArchivo, atoi(PunteroArchivo), &Desplazamiento);
 
-			char* DatosLeidos = LeerBloqueDeChar(BloqueBuscado, Desplazamiento, atoi(CantBytesALeer));
+			if(Desplazamiento != 0)
+			{
+				char* DatosLeidos = LeerBloqueDeChar(BloqueBuscado, Desplazamiento, atoi(CantBytesALeer));
 
-			char Mensaje[500];
-			sprintf(Mensaje, "MOV_OUT %s %s %s %s FS", PID, NumSegmento, Offset, DatosLeidos);
-			EnviarMensage(Mensaje, SocketKernel);
+				char Mensaje[500];
+				sprintf(Mensaje, "MOV_OUT %s %s %s %s FS\0", PID, NumSegmento, Offset, DatosLeidos);
+				EnviarMensage(Mensaje, SocketFileSystem);
+			}
 
 			EnviarMensage("TERMINO", SocketKernel);
 		}
