@@ -948,12 +948,13 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		else
 		{
 			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
-			int PosicionPuntero = ArchivoPCB->PosicionPuntero;
 			
 			char* Mensage = malloc(100);
-			sprintf(Mensage, "LEER_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, PosicionPuntero);
+			sprintf(Mensage, "LEER_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, ArchivoPCB->PosicionPuntero);
 			EnviarMensage(Mensage, SocketFileSystem);
 			free(Mensage);
+
+			ArchivoPCB->PosicionPuntero += atoi(CantBytesALeer);
 
 			Recibir_Y_Actualizar_PCB();
 			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
@@ -976,7 +977,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		char* NumSegmento = strtok(NULL, " ");
 		char* Offset = strtok(NULL, " ");
 		char* CantBytesALeer = strtok(NULL, " ");
-		int PosicionPuntero;
 
 		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
 
@@ -988,12 +988,13 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		else
 		{
 			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
-			PosicionPuntero = ArchivoPCB->PosicionPuntero;
 			
 			char* Mensage = malloc(100);
-			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, PosicionPuntero);
+			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, ArchivoPCB->PosicionPuntero);
 			EnviarMensage(Mensage, SocketFileSystem);
 			free(Mensage);
+
+			ArchivoPCB->PosicionPuntero += atoi(CantBytesALeer);
 
 			Recibir_Y_Actualizar_PCB();
 			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");

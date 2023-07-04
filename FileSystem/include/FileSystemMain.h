@@ -77,6 +77,8 @@ void ModificarValorFCB(t_config* FCB, char* KEY, char* Valor);
 void CrearArchivo(char* NombreArchivo);
 void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo);
 uint32_t CalcularPunteroABloqueDePunteroArchivo(char* NombreArchivo, int PunteroArchivo, int* DesplazamientoEnBloqueBuscado);
+void EscribirArchivo(char* NombreArchivo, int PunteroArchivo, char* ContenidoAEscribir, int CantBytesAEscribir);
+char* LeerArchivo(char* NombreArchivo, int PunteroArchivo, int CantBytesALeer);
 
 
 //FUNCIONES DE FINALIZACION DEL MODULO

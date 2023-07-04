@@ -132,18 +132,13 @@ void* EscuchaKernel()
 			//leer la cantidad de bytes pedidos a partir de la pos del puntero
 			//y gardar lo leido en la direccion fisica de la Memoria.
 			//avisar con un "TERMINO" cuando termine la operacion.
-			int Desplazamiento = 0;
 
-			uint32_t BloqueBuscado = CalcularPunteroABloqueDePunteroArchivo(NombreArchivo, atoi(PunteroArchivo), &Desplazamiento);
+			char* DatosLeidos = LeerArchivo(NombreArchivo, atoi(PunteroArchivo), atoi(CantBytesALeer));
 
-			if(Desplazamiento != 0)
-			{
-				char* DatosLeidos = LeerBloqueDeChar(BloqueBuscado, Desplazamiento, atoi(CantBytesALeer));
-
-				char Mensaje[500];
-				sprintf(Mensaje, "MOV_OUT %s %s %s %s FS\0", PID, NumSegmento, Offset, DatosLeidos);
-				EnviarMensage(Mensaje, SocketFileSystem);
-			}
+			char Mensaje[800];
+			sprintf(Mensaje, "MOV_OUT %s %s %s %s FS\0", PID, NumSegmento, Offset, DatosLeidos);
+			EnviarMensage(Mensaje, SocketMemoria);
+			
 
 			EnviarMensage("TERMINO", SocketKernel);
 		}
@@ -151,17 +146,27 @@ void* EscuchaKernel()
 		else if(strcmp(Pedido, "ESCRIBIR_ARCHIVO") == 0)
 		{
 			char* NombreArchivo = strtok(NULL, " ");
+			char* PID = strtok(NULL, " ");
 			char* NumSegmento = strtok(NULL, " ");
 			char* Offset = strtok(NULL, " ");
-			char* CantBytesALeer = strtok(NULL, " ");
+			char* CantBytesAEscribir = strtok(NULL, " ");
 			char* Puntero = strtok(NULL, " ");
 			
 			//leer la cantidad de bytes pedidos en la direccion fisica de la Memoria
-			//y gardar lo leido a partir de la pos del puntero
+			//y guardar lo leido a partir de la pos del puntero
 			//avisar con un "TERMINO" cuando termine la operacion.
+			
+			char Mensaje[800];
+			sprintf(Mensaje, "MOV_IN %s %s %s %s FS\0", PID, NumSegmento, Offset, CantBytesAEscribir);
+			EnviarMensage(Mensaje, SocketMemoria);
+		
+			char* Contenido = (char*)recibir_paquete(SocketMemoria);
+
+			EscribirArchivo(NombreArchivo, atoi(Puntero), Contenido, atoi(CantBytesAEscribir));
+			
+			EnviarMensage("TERMINO", SocketKernel);
 		}
 	}
-
 	return NULL;	
 }
 
@@ -664,7 +669,7 @@ void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
 	ModificarValorFCB(FCB, "TAMANO", NuevoTamanoArchivoChar);		
 }
 
-
+//busca el puntero(uint32_t) de un bloque en funcion de un puntero de archivo(marca la posicion a modificar dentro del archivo)
 uint32_t CalcularPunteroABloqueDePunteroArchivo(char* NombreArchivo, int PunteroArchivo, int* DesplazamientoEnBloqueBuscado)
 {
 	//obtener el FCB del archivo
@@ -676,11 +681,105 @@ uint32_t CalcularPunteroABloqueDePunteroArchivo(char* NombreArchivo, int Puntero
 	}
 
 	uint32_t BloqueBuscado = PunteroArchivo / TAMANO_BLOQUES;
+
+	if(BloqueBuscado ==  0)
+	{
+		BloqueBuscado = strtoul(config_get_string_value(FCB, "PUNTERO_DIRECTO"), NULL, 10);
+	}
+	else
+	{
+		int IndicePuntero = BloqueBuscado - 1;
+
+		uint32_t PunteroIndirecto = strtoul(config_get_string_value(FCB, "PUNTERO_INDIRECTO"), NULL, 10);
+
+		BloqueBuscado = LeerBloqueDePunteros(PunteroIndirecto, IndicePuntero);
+	}
 	
 	*DesplazamientoEnBloqueBuscado = PunteroArchivo % TAMANO_BLOQUES;
 
 	return BloqueBuscado;
 }
+
+void EscribirArchivo(char* NombreArchivo, int PunteroArchivo, char* ContenidoAEscribir, int CantBytesAEscribir)
+{
+	//obtener el FCB del archivo
+	t_config* FCB = BuscarFCB(NombreArchivo);
+	if(FCB == NULL)
+	{
+		log_error(FS_Logger, "No se encontro el archivo %s", NombreArchivo);
+		return;
+	}
+
+	if(PunteroArchivo + CantBytesAEscribir > atoi(config_get_string_value(FCB, "TAMANIO_ARCHIVO")))
+	{
+		log_error(FS_Logger, "El archivo %s no tiene espacio suficiente para escribir %d bytes", NombreArchivo, CantBytesAEscribir);
+		return;
+	}
+
+	int CantBytesEscritos = 0;
+	int PunteroAux = PunteroArchivo;
+
+	while(CantBytesEscritos < CantBytesAEscribir)
+	{
+		int DesplazamientoEnBloqueBuscado;
+		uint32_t BloqueBuscado = CalcularPunteroABloqueDePunteroArchivo(NombreArchivo, PunteroAux, &DesplazamientoEnBloqueBuscado);
+		
+		int CantBytesAEscribirEnEsteBloque = TAMANO_BLOQUES - DesplazamientoEnBloqueBuscado;
+
+		char ContenidoAEscribirEnEsteBloque[CantBytesAEscribirEnEsteBloque+1];
+		strncpy(ContenidoAEscribirEnEsteBloque, ContenidoAEscribir + CantBytesEscritos, CantBytesAEscribirEnEsteBloque);
+		ContenidoAEscribirEnEsteBloque[CantBytesAEscribirEnEsteBloque] = '\0';
+
+		EscribirBloqueDeChar(BloqueBuscado, DesplazamientoEnBloqueBuscado, ContenidoAEscribirEnEsteBloque);
+
+		PunteroAux = 0;
+		CantBytesEscritos += CantBytesAEscribirEnEsteBloque;
+	}
+	return;
+}
+
+
+char* LeerArchivo(char* NombreArchivo, int PunteroArchivo, int CantBytesALeer)
+{
+	//obtener el FCB del archivo
+	t_config* FCB = BuscarFCB(NombreArchivo);
+	if(FCB == NULL)
+	{
+		log_error(FS_Logger, "No se encontro el archivo %s", NombreArchivo);
+		return NULL;
+	}
+
+	if(PunteroArchivo + CantBytesALeer > atoi(config_get_string_value(FCB, "TAMANIO_ARCHIVO")))
+	{
+		log_error(FS_Logger, "El archivo %s no tiene espacio suficiente para leer %d bytes", NombreArchivo, CantBytesALeer);
+		return NULL;
+	}
+
+	char* ContenidoLeido = malloc(CantBytesALeer+1);
+	ContenidoLeido[CantBytesALeer] = '\0';
+
+	int CantBytesLeidos = 0;
+	int PunteroAux = PunteroArchivo;
+
+	while(CantBytesLeidos < CantBytesALeer)
+	{
+		int DesplazamientoEnBloqueBuscado;
+		uint32_t BloqueBuscado = CalcularPunteroABloqueDePunteroArchivo(NombreArchivo, PunteroAux, &DesplazamientoEnBloqueBuscado);
+		
+		int CantBytesALeerEnEsteBloque = TAMANO_BLOQUES - DesplazamientoEnBloqueBuscado;
+
+		char* ContenidoLeidoEnEsteBloque = LeerBloqueDeChar(BloqueBuscado, DesplazamientoEnBloqueBuscado, CantBytesALeerEnEsteBloque);
+
+		strncpy(ContenidoLeido + CantBytesLeidos, ContenidoLeidoEnEsteBloque, CantBytesALeerEnEsteBloque);
+
+		PunteroAux = 0;
+		CantBytesLeidos += CantBytesALeerEnEsteBloque;
+	}
+
+	return ContenidoLeido;
+}
+
+
 
 
 
