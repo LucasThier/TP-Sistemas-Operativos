@@ -28,6 +28,8 @@ int main(int argc, char* argv[])
 	signal(SIGINT, sighandler);
 	signal(SIGSEGV, sighandler);
 
+	printf("Iniciando Modulo Kernel\n");
+
 	LeerConfigs(argv[1]);
 
 	InicializarSemaforos();
