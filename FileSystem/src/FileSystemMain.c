@@ -54,7 +54,6 @@ void InicializarConexiones()
     if (pthread_create(&HiloEscucha, NULL, EscuchaKernel, NULL) != 0) {
         exit(EXIT_FAILURE);
     }
-
 }
 
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
