@@ -661,15 +661,14 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			if (strcmp(RespuestaMemoria, "COMPACTAR") == 0)
 			{
 				log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
-				char* tipo = strtok(NULL, " ");
-
+				
 				//Si FS y memoria estan ocupados, espero...
-				if (strcmp(tipo, "OCUPADO") == 0)
+				if (!list_is_empty(g_Lista_BLOCKED_FS))
 				{
 					log_info(Kernel_Logger, "Compactación: Esperando Fin de Operaciones de FS");
-					//ESPERO UN MENSAJE PARA SABER QUE TERMINO LA OPERACION DE FS y MEMORIA
-					recibir_paquete(SocketMemoria);
-					log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
+					while(!list_is_empty(g_Lista_BLOCKED_FS))
+					{
+					}
 				}
 
 				EnviarMensage("COMPACTAR", SocketMemoria);

@@ -202,16 +202,7 @@ void* AdministradorDeModulo(void* arg)
 
 			if(strcmp(Contenido,"COMPACTAR")==0)
 			{
-				if(sem_trywait(&m_UsoDeMemoria) != 0)
-				{
-					EnviarMensage("COMPACTAR LIBRE", SocketClienteConectado);
-				}
-				else
-				{
-					EnviarMensage("COMPACTAR OCUPADO", SocketClienteConectado);
-					sem_wait(&m_UsoDeMemoria);
-					EnviarMensage("Se termino de usar la memoria", SocketClienteConectado);
-				}
+				EnviarMensage("COMPACTAR", SocketClienteConectado);
 
 				//Espero orden de compactacion
 				recibir_paquete(SocketClienteConectado);
@@ -263,10 +254,10 @@ void LeerConfigs(char* path)
 	CANT_SEGMENTOS= atoi(cant_segmentos);
 
 	char *retardo_memoria = config_get_string_value(config, "RETARDO_MEMORIA");
-	RETARDO_MEMORIA= atoi(retardo_memoria);
+	RETARDO_MEMORIA= atoi(retardo_memoria)/1000;
 
 	char *retardo_compactacion = config_get_string_value(config, "RETARDO_COMPACTACION");
-	RETARDO_COMPACTACION= atoi(retardo_compactacion);
+	RETARDO_COMPACTACION= atoi(retardo_compactacion)/1000;
 
 	char* alg_asig = config_get_string_value(config, "ALGORITMO_ASIGNACION");
 
@@ -509,7 +500,7 @@ int buscarSegmento(int PID, int idSeg,bool Finish){
 void finalizarProceso(int PID){
 	int indice = 0;
 	while(indice != -1){
-		indice = buscarSegmento(1,0,true);
+		indice = buscarSegmento(PID,0,true);
 		if(indice != -1){
 			Segmento* seg = list_get(TABLA_SEGMENTOS,indice); 
 			eliminarSegmento(seg->idSegmento,PID);

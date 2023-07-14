@@ -7,6 +7,7 @@
 #include <pthread.h>
 #include <sys/mman.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 
 t_log* FS_Logger;
@@ -28,11 +29,14 @@ uint32_t CANTIDAD_BLOQUES;
 void* BLOQUES;
 char* PATH_FCB;
 char* PATH_BLOQUES;
+char* PATH_BITMAP;
+char* PATH_SUPERBLOQUE;
+int RETARDO_ACCESO_BLOQUE;
 int fd;
 
 void InicializarConexiones();
 void* EscuchaKernel();
-void LeerConfigs(char*, char*);
+void LeerConfigs(char*);
 void LiberarMemoria();
 void CrearArchivo(char*);
 

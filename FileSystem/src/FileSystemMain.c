@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 	ListaFCBs = list_create();
 
 	//leer las config
-	LeerConfigs(argv[1],argv[2]);
+	LeerConfigs(argv[1]);
 
 	
 	if(InicializarArchivoDeBloques() == 1)
@@ -166,9 +166,9 @@ void* EscuchaKernel()
 	return NULL;	
 }
 
-void LeerConfigs(char* path, char* path_superbloque)
+void LeerConfigs(char* pathConfig)
 {
-	config = config_create(path);
+	config = config_create(pathConfig);
 
 	IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
 
@@ -180,8 +180,15 @@ void LeerConfigs(char* path, char* path_superbloque)
 
 	PATH_BLOQUES = config_get_string_value(config, "PATH_BLOQUES");
 
+	PATH_SUPERBLOQUE = config_get_string_value(config, "PATH_SUPERBLOQUE");
 
-	configSB = config_create(path_superbloque);
+	PATH_BITMAP = config_get_string_value(config, "PATH_BITMAP");
+
+	RETARDO_ACCESO_BLOQUE = atoi(config_get_string_value(config, "RETARDO_ACCESO_BLOQUE"));
+
+
+
+	configSB = config_create(PATH_SUPERBLOQUE);
 
 	BLOCK_SIZE = config_get_string_value(configSB, "BLOCK_SIZE");
 	TAMANO_BLOQUES = atoi(BLOCK_SIZE);
@@ -377,6 +384,7 @@ void ImprimirBloque(uint32_t IndiceBloque, int Desplazamiento, int CantidadAImpi
 //escribe el contenido de un CHAR en un bloque a partir de un determinado desplazamiento
 void EscribirBloqueDeChar(uint32_t IndiceBloque, int Desplazamiento, char* ContenidoAEscribir)
 {
+	sleep(RETARDO_ACCESO_BLOQUE / 1000);
 	if(strlen(ContenidoAEscribir) > TAMANO_BLOQUES - Desplazamiento)
 	{
 		log_error(FS_Logger, "Intentando escribir mas alla del final del bloque");
@@ -389,6 +397,7 @@ void EscribirBloqueDeChar(uint32_t IndiceBloque, int Desplazamiento, char* Conte
 //lee el contenido de N bytes de un bloque a partir de un determinado desplazamiento
 char* LeerBloqueDeChar(uint32_t IndiceBloque, int Desplazamiento, int CantidadALeer)
 {
+	sleep(RETARDO_ACCESO_BLOQUE / 1000);
 	if(Desplazamiento + CantidadALeer > TAMANO_BLOQUES)
 	{
 		log_error(FS_Logger, "Intentando leer mas alla del bloque");
@@ -404,6 +413,7 @@ char* LeerBloqueDeChar(uint32_t IndiceBloque, int Desplazamiento, int CantidadAL
 //escribe un "puntero" (a un bloque) en un bloque a partir de un determinado desplazamiento
 void EscribirBloqueDePunteros(uint32_t IndiceBloque, int IndicePuntero, uint32_t ContenidoAEscribir)
 {
+	sleep(RETARDO_ACCESO_BLOQUE / 1000);
 	if((IndicePuntero + 1) * sizeof(uint32_t) > TAMANO_BLOQUES)
 	{
 		log_error(FS_Logger, "Intentando escribir mas alla del final del bloque");
@@ -417,6 +427,7 @@ void EscribirBloqueDePunteros(uint32_t IndiceBloque, int IndicePuntero, uint32_t
 //retorna el "puntero" (a un bloque) en un bloque a partir de un determinado desplazamiento
 uint32_t LeerBloqueDePunteros(uint32_t IndiceBloque, int IndicePuntero)
 {
+	sleep(RETARDO_ACCESO_BLOQUE / 1000);
 	if((IndicePuntero + 1) * sizeof(uint32_t) > TAMANO_BLOQUES)
 	{
 		log_error(FS_Logger, "Intentando leer mas alla del bloque");

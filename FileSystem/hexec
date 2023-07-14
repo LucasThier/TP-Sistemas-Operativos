@@ -2,5 +2,5 @@
 FILE=FileSystem
 make $FILE
 if test -f "./$FILE"; then
-    valgrind --tool=helgrind ./$FILE $1 $2
+    valgrind --tool=helgrind ./$FILE $1
 fi
