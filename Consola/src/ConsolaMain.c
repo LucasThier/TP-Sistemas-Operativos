@@ -6,6 +6,9 @@ int SocketKernel;
 
 void sighandler(int s) 
 {
+	config_destroy(config);
+	log_destroy(Consola_Logger);
+	
 	liberar_conexion(SocketKernel);
 	exit(0);
 }
