@@ -13,13 +13,10 @@ t_config* config;
 
 void sighandler(int s) 
 {
-	//ModuloDebeTerminar = true;
-	TerminarModulo();
-	pthread_join(HiloPlanificadorDeLargoPlazo, NULL);
-	pthread_join(HiloPlanificadorDeCortoPlazo, NULL);
 	printf("Terminando Modulo Kernel\n");
+	ModuloDebeTerminar = true;
+	TerminarModulo();
 
-	//pthread_join(HiloAdministradorDeCPU, NULL);
 	exit(0);
 }
 

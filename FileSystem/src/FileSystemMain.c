@@ -17,12 +17,13 @@ int main(int argc, char* argv[])
 	//leer las config
 	LeerConfigs(argv[1],argv[2]);
 
-	if(InicializarBitmap() == 1)
+	
+	if(InicializarArchivoDeBloques() == 1)
 	{
 		return EXIT_FAILURE;
 	}
-
-	if(InicializarArchivoDeBloques() == 1)
+	
+	if(InicializarBitmap() == 1)
 	{
 		return EXIT_FAILURE;
 	}
@@ -31,10 +32,6 @@ int main(int argc, char* argv[])
 	{
 		return EXIT_FAILURE;
 	}
-
-	CrearFCB("HolaQionda", 100, 41, 55);
-	CrearFCB("HolaQionda2", 101, 42, 56);
-	CrearFCB("HolaQionda3", 102, 43, 57);
 
 	InicializarConexiones();
 
@@ -296,6 +293,7 @@ void BitmapOcuparBloque(uint32_t IndiceBloque)
 
 	//vaciar el bloque
 	char* bloque = ObtenerBloque(IndiceBloque);
+	printf("bloque: %s\n", bloque);
 	memset(bloque, 0, TAMANO_BLOQUES);
 }
 
@@ -361,7 +359,7 @@ int InicializarArchivoDeBloques()
 //retorna un puntero al bloque i
 char* ObtenerBloque(uint32_t IndiceBloque)
 {
-	return MapArchivoBloques + (IndiceBloque * TAMANO_BLOQUES);
+	return MapArchivoBloques + ((int)IndiceBloque * TAMANO_BLOQUES);
 }
 
 //imprime el contenido de N bytes de un bloque a partir de un determinado desplazamiento

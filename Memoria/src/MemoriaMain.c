@@ -6,6 +6,14 @@ t_log* Memoria_Logger;
 int SocketMemoria;
 
 void sighandler(int s) {
+	free(MEMORIA);
+
+	log_destroy(Memoria_Logger);
+	config_destroy(config);
+	
+	list_destroy_and_destroy_elements(TABLA_SEGMENTOS, free);
+	list_destroy_and_destroy_elements(TABLA_HUECOS, free);
+
 	liberar_conexion(SocketMemoria);
 	exit(0);
 }
@@ -14,6 +22,7 @@ void sighandler(int s) {
 int main(int argc, char* argv[])
 {
 	signal(SIGINT, sighandler);
+	signal(SIGSEGV, sighandler);
 
 	Memoria_Logger = log_create("Memoria.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 	
@@ -139,11 +148,14 @@ void* AdministradorDeModulo(void* arg)
 			char* Remitente = strtok(NULL, " ");
 
 			sem_wait(&m_UsoDeMemoria);
-			char*  Contenido = leerSegmento(atoi(PID),atoi(NumSegmento),atoi(Desplazamiento),atoi(Longitud));
+			char*  Contenido = leerSegmento(atoi(PID),atoi(NumSegmento),atoi(Desplazamiento),atoi(Longitud), Remitente);
 			sem_post(&m_UsoDeMemoria);
 
 			printf("Contenido: %s\n",Contenido);
 
+			sleep(RETARDO_MEMORIA);
+
+			sleep(RETARDO_MEMORIA);
 			//enviar el contenido encontrado o SEG_FAULT en caso de error
 			EnviarMensage(Contenido, SocketClienteConectado);
 		}
@@ -164,11 +176,11 @@ void* AdministradorDeModulo(void* arg)
 			printf("Valor a escribir en el MOV_OUT: %s\n",Valor);
 
 			sem_wait(&m_UsoDeMemoria);
-			char* Contenido = escribirSegmento(atoi(PID),atoi(NumSegmento),atoi(Desplazamiento), Valor);
+			char* Contenido = escribirSegmento(atoi(PID),atoi(NumSegmento),atoi(Desplazamiento), Valor, Remitente);
 			sem_post(&m_UsoDeMemoria);
 			
+			sleep(RETARDO_MEMORIA);
 			//eviar SEG_FAULT en caso de error sino enviar cualquier otra cadena de caracteres
-
 			EnviarMensage(Contenido, SocketClienteConectado);
 		}
 		//crear un segmento para un proceso
@@ -206,10 +218,12 @@ void* AdministradorDeModulo(void* arg)
 
 				compactarSegmentos();
 				crearSegmento(atoi(ID),atoi(Tamanio),atoi(PID));
+				sleep(RETARDO_COMPACTACION);
 				EnviarMensage("COMPACTACION TERMINADA", SocketClienteConectado);				
 			}
 			else
 			{
+				sleep(RETARDO_MEMORIA);
 				EnviarMensage(Contenido, SocketClienteConectado);
 			}			
 		}
@@ -226,6 +240,7 @@ void* AdministradorDeModulo(void* arg)
 			char* Contenido = eliminarSegmento(atoi(ID), atoi(PID));
 			EnviarMensage(Contenido, SocketClienteConectado);
 		}
+		free(PeticionRecibida);
 	}
 	liberar_conexion(SocketClienteConectado);
 	return NULL;
@@ -302,17 +317,17 @@ void inicializarMemoria() {
 	TABLA_SEGMENTOS=list_create();  // Establecer la cantidad de segmentos
 	TABLA_HUECOS=list_create();  // Establecer la cantidad de segmentos
 
-	Segmento* seg= malloc(sizeof(Segmento*));
+	Segmento* seg = malloc(sizeof(Segmento));
 
     // Asignar memoria para el espacio de usuario
     MEMORIA = (void *) malloc(TAM_MEMORIA);
-    memset(MEMORIA,'\0',TAM_MEMORIA);
+    memset(MEMORIA, 0,TAM_MEMORIA);
 
     seg->PID=-1;
 	seg->idSegmento=0;
 	seg->direccionBase=MEMORIA;
 	seg->limite=TAM_SEGMENTO_0;
-	memset(seg->direccionBase,'\0', seg->limite);
+	memset(seg->direccionBase, 0, seg->limite);
 	list_add(TABLA_SEGMENTOS,seg);
 }
 
@@ -400,7 +415,7 @@ char* validarMemoria(int Tamano){
 }
 
 void AgregarSegmento(Segmento* lastSeg,int PID,int tamanoSegmento,int idSeg){
-	Segmento* seg = malloc(sizeof(Segmento*));
+	Segmento* seg = malloc(sizeof(Segmento));
 	seg->PID = PID;
 	seg->direccionBase=(lastSeg->direccionBase) + (lastSeg->limite);
 	seg->limite=tamanoSegmento;
@@ -417,7 +432,7 @@ char* eliminarSegmento(int idSegmento, int PID){
 	if(indice != -1) {
 		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
 
-		Hueco* hueco = malloc(sizeof(Hueco*));
+		Hueco* hueco = malloc(sizeof(Hueco));
 		hueco->direccionBase = seg->direccionBase;
 		hueco->limite = seg->limite;
 
@@ -433,11 +448,14 @@ char* eliminarSegmento(int idSegmento, int PID){
 		return "SEG_FAULT";	
 }
 
-char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud){
+char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud, char* Remitente){
 	int indice = buscarSegmento(PID, IdSeg,false);
+	Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
+	
+	log_info(Memoria_Logger,"PID: %d - Acción: LEER - Dirección física: %p - Tamaño: %d - Origen: %s",PID,seg->direccionBase,seg->limite,Remitente);
 
 	if(indice != -1) {
-		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
+		
 
 		char* contenido = malloc(Longitud);
 		if(validarSegmento(PID, IdSeg, (Offset + Longitud)) == 1){
@@ -454,12 +472,13 @@ char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud){
 	return "SEG_FAULT";
 }
 
-char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos){
+char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos, char* Remitente){
 	int indice = buscarSegmento(PID, IdSeg,false);
+	Segmento* seg = list_get(TABLA_SEGMENTOS,indice);
 
+	log_info(Memoria_Logger,"PID: %d - Acción: ESCRIBIR- Dirección física: %p - Tamaño: %d - Origen: %s",PID,seg->direccionBase,seg->limite,Remitente);
+	
 	if(indice != -1) {
-		Segmento* seg = list_get(TABLA_SEGMENTOS,indice);
-
 		if(validarSegmento(PID, IdSeg, (Offset + strlen(datos))) == 1){
 			
 			char* segmento = (char*)seg->direccionBase;
@@ -506,8 +525,8 @@ void compactarSegmentos() {
 	list_clean(TABLA_HUECOS);
 	void* menorBase=MEMORIA+TAM_MEMORIA+1;
 	int indice;
-	Segmento* seg= malloc(sizeof(Segmento*));
-	Segmento* segAnterior= malloc(sizeof(Segmento*));
+	Segmento* seg= malloc(sizeof(Segmento));
+	Segmento* segAnterior= malloc(sizeof(Segmento));
 	//SEGMENTO 0 no se modifica
 	list_add(tablaOrdenada,list_get(TABLA_SEGMENTOS,0));
 
@@ -542,8 +561,8 @@ void compactarSegmentos() {
 }
 
 void BestFit(int idSeg, int tam, int PID){
-	Hueco* MinHole = malloc(sizeof(Hueco*));
-	Hueco* h = malloc(sizeof(Hueco*));
+	Hueco* MinHole = malloc(sizeof(Hueco));
+	Hueco* h = malloc(sizeof(Hueco));
 	int Diff = INT_MAX;
 	int indice = 0;
 
@@ -557,7 +576,7 @@ void BestFit(int idSeg, int tam, int PID){
 		} 
 	}
 
-	Segmento* seg = malloc(sizeof(Segmento*));
+	Segmento* seg = malloc(sizeof(Segmento));
 	seg->direccionBase = MinHole->direccionBase;
 	seg->idSegmento = idSeg;
 	seg->PID = PID;
@@ -582,8 +601,8 @@ void BestFit(int idSeg, int tam, int PID){
 }
 
 void WorstFit(int idSeg, int tam, int PID){
-	Hueco* MaxHole = malloc(sizeof(Hueco*));
-	Hueco* h = malloc(sizeof(Hueco*));
+	Hueco* MaxHole = malloc(sizeof(Hueco));
+	Hueco* h = malloc(sizeof(Hueco));
 	MaxHole->limite = 0;
 	int indice = 0;
 
@@ -597,7 +616,7 @@ void WorstFit(int idSeg, int tam, int PID){
 		} 
 	}
 
-	Segmento* seg = malloc(sizeof(Segmento*));
+	Segmento* seg = malloc(sizeof(Segmento));
 	seg->direccionBase = MaxHole->direccionBase;
 	seg->idSegmento = idSeg;
 	seg->PID = PID;
@@ -626,10 +645,10 @@ void FirstFit(int idSeg, int tam, int PID){
 
 	while(list_size(TABLA_HUECOS)>aux && !find){
 		Hueco* h = list_get(TABLA_HUECOS,aux);
-		Hueco* newHole = malloc(sizeof(Hueco*));
+		Hueco* newHole = malloc(sizeof(Hueco));
 
 		if(h->limite >= tam){
-			Segmento* seg = malloc(sizeof(Segmento*));
+			Segmento* seg = malloc(sizeof(Segmento));
 			seg->direccionBase = h->direccionBase;
 			seg->idSegmento = idSeg;
 			seg->PID = PID;

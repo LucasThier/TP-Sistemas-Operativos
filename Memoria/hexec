@@ -2,5 +2,5 @@
 FILE=Memoria
 make $FILE
 if test -f "./$FILE"; then
-    valgrind --tool=helgrind ./$FILE
+    valgrind --tool=helgrind ./$FILE $1
 fi
