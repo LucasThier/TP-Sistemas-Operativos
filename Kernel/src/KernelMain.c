@@ -194,7 +194,7 @@ void PlanificadorCortoPlazoFIFO()
 
 			//Recibir respuesta de CPU
 			char* respuesta = (char*) recibir_paquete(SocketCPU);
-			
+						
 			RealizarRespuestaDelCPU(respuesta);
 
 			free(respuesta);
@@ -370,7 +370,6 @@ void LoguearCambioDeEstado(t_PCB* PCB, char* EstadoAnterior, char* EstadoActual)
 //Realiza la Accion correspondiente a la respuesta del CPU
 void RealizarRespuestaDelCPU(char* respuesta)
 {
-	//printf("Respuesta recibida: %s", respuesta);
 	if(strcmp(respuesta, "YIELD\n") == 0)
 	{
 		Recibir_Y_Actualizar_PCB();
@@ -699,6 +698,9 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		}
 		free(msg);
 		free(Parametros);
+
+		char* NuevoPedido = (char*) recibir_paquete(SocketCPU);
+		RealizarRespuestaDelCPU(NuevoPedido);
 	}
 	
 	else if(strcmp(respuesta, "DELETE_SEGMENT")== 0)
@@ -749,6 +751,9 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		}
 		free(Parametros);
 		free(RespuestaMemoria);
+
+		char* NuevoPedido = (char*) recibir_paquete(SocketCPU);
+		RealizarRespuestaDelCPU(NuevoPedido);
 	}
 
 	else if(strcmp(respuesta, "SEG_FAULT")== 0)
@@ -1084,8 +1089,8 @@ int InicializarConexiones()
 {
 	//Conectar con los modulos
 	SocketCPU = conectar_servidor(Kernel_Logger, "CPU", IP_CPU, PUERTO_CPU);
-	SocketMemoria = conectar_servidor(Kernel_Logger, "FileSystem", IP_MEMORIA, PUERTO_MEMORIA);
-	SocketFileSystem = conectar_servidor(Kernel_Logger, "Memoria", IP_FILESYSTEM, PUERTO_FILESYSTEM);
+	SocketMemoria = conectar_servidor(Kernel_Logger, "Memoria", IP_MEMORIA, PUERTO_MEMORIA);
+	SocketFileSystem = conectar_servidor(Kernel_Logger, "FileSystem", IP_FILESYSTEM, PUERTO_FILESYSTEM);
 
 	//Crear hilo escucha
     if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
