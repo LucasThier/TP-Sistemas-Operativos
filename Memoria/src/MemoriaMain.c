@@ -20,14 +20,14 @@ int main(int argc, char* argv[])
 	LeerConfigs(argv[1]);
 
 	inicializarMemoria();
-
+/*
 	crearSegmento(1,100,1);
 	crearSegmento(1,500,2);
 //	crearSegmento(2,20,1);
 //	crearSegmento(2,25,2);
 	//crearSegmento(3,8,1);
 //	crearSegmento(3,3894,2);
-	crearSegmento(3,3365,3);
+	crearSegmento(3,3365,3);*/
 
 
 	/*eliminarSegmento(1,1);
@@ -37,10 +37,10 @@ int main(int argc, char* argv[])
 	VerHuecos();*/
 
 //	crearSegmento(3,8,4);
-
+/*
 	compactarSegmentos();
 	VerMem();
-	VerHuecos();
+	VerHuecos();*/
 
 
 
@@ -97,13 +97,15 @@ void* EscucharConexiones()
 //Acciones a realizar para cada modulo conectado
 void* AdministradorDeModulo(void* arg)
 {
-	int* SocketClienteConectado = (int*)arg;
+	int SocketClienteConectado = *(int*)arg;
 
 	//bucle que esperara peticiones del modulo conectado
 	//y realiza la operacion
 	while(true)
 	{
-		char* PeticionRecibida = (char*)recibir_paquete(*SocketClienteConectado);
+		char* PeticionRecibida = (char*)recibir_paquete(SocketClienteConectado);
+
+		printf("PeticionRecibida: %s\n",PeticionRecibida);
 
 		char* Pedido = strtok(PeticionRecibida, " ");
 
@@ -140,12 +142,16 @@ void* AdministradorDeModulo(void* arg)
 			char*  Contenido = leerSegmento(atoi(PID),atoi(NumSegmento),atoi(Desplazamiento),atoi(Longitud));
 			sem_post(&m_UsoDeMemoria);
 
+			printf("Contenido: %s\n",Contenido);
+
 			//enviar el contenido encontrado o SEG_FAULT en caso de error
-			EnviarMensage(Contenido, *SocketClienteConectado);
+			EnviarMensage(Contenido, SocketClienteConectado);
 		}
 		//guardar el valor recibido en la direccion recibida
 		else if(strcmp(Pedido, "MOV_OUT")==0)
 		{
+			printf("MOV_OUT\n");
+
 			//PID del proceso
 			char* PID = strtok(NULL, " ");
 			//direccion donde guardar el contenido
@@ -155,11 +161,15 @@ void* AdministradorDeModulo(void* arg)
 			char* Valor = strtok(NULL, " ");
 			char* Remitente = strtok(NULL, " ");
 
+			printf("Valor a escribir en el MOV_OUT: %s\n",Valor);
+
 			sem_wait(&m_UsoDeMemoria);
 			char* Contenido = escribirSegmento(atoi(PID),atoi(NumSegmento),atoi(Desplazamiento), Valor);
 			sem_post(&m_UsoDeMemoria);
+			
 			//eviar SEG_FAULT en caso de error sino enviar cualquier otra cadena de caracteres
-			EnviarMensage(Contenido, *SocketClienteConectado);
+
+			EnviarMensage(Contenido, SocketClienteConectado);
 		}
 		//crear un segmento para un proceso
 		else if(strcmp(Pedido, "CREATE_SEGMENT")==0)
@@ -182,25 +192,25 @@ void* AdministradorDeModulo(void* arg)
 			{
 				if(sem_trywait(&m_UsoDeMemoria) != 0)
 				{
-					EnviarMensage("COMPACTAR LIBRE", *SocketClienteConectado);
+					EnviarMensage("COMPACTAR LIBRE", SocketClienteConectado);
 				}
 				else
 				{
-					EnviarMensage("COMPACTAR OCUPADO", *SocketClienteConectado);
+					EnviarMensage("COMPACTAR OCUPADO", SocketClienteConectado);
 					sem_wait(&m_UsoDeMemoria);
-					EnviarMensage("Se termino de usar la memoria", *SocketClienteConectado);
+					EnviarMensage("Se termino de usar la memoria", SocketClienteConectado);
 				}
 
 				//Espero orden de compactacion
-				recibir_paquete(*SocketClienteConectado);
+				recibir_paquete(SocketClienteConectado);
 
 				compactarSegmentos();
 				crearSegmento(atoi(ID),atoi(Tamanio),atoi(PID));
-				EnviarMensage("COMPACTACION TERMINADA", *SocketClienteConectado);				
+				EnviarMensage("COMPACTACION TERMINADA", SocketClienteConectado);				
 			}
 			else
 			{
-				EnviarMensage(Contenido, *SocketClienteConectado);
+				EnviarMensage(Contenido, SocketClienteConectado);
 			}			
 		}
 		//eliminar un segmento de un proceso
@@ -214,10 +224,10 @@ void* AdministradorDeModulo(void* arg)
 			//eliminar_segmento(PID, ID);
 			//enviar SEG_FAULT en caso de error sino enviar cualquier otra cadena de caracteres			
 			char* Contenido = eliminarSegmento(atoi(ID), atoi(PID));
-			EnviarMensage(Contenido, *SocketClienteConectado);
+			EnviarMensage(Contenido, SocketClienteConectado);
 		}
 	}
-	liberar_conexion(*SocketClienteConectado);
+	liberar_conexion(SocketClienteConectado);
 	return NULL;
 }
 
@@ -429,13 +439,13 @@ char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud){
 	if(indice != -1) {
 		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
 
-		char buffer[Longitud];
-		char* cont;
+		char* contenido = malloc(Longitud);
 		if(validarSegmento(PID, IdSeg, (Offset + Longitud)) == 1){
-			memcpy(buffer,(seg->direccionBase + Offset),Longitud);
-			buffer[Longitud] = '\0';
-			cont = buffer;
-			return cont;
+			
+			char* segmento = (char*)seg->direccionBase;
+			memcpy(contenido,(segmento + Offset),Longitud);
+			contenido[Longitud] = '\0';
+			return contenido;
 		}
 		else{
 			return "SEG_FAULT";
@@ -451,14 +461,17 @@ char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos){
 		Segmento* seg = list_get(TABLA_SEGMENTOS,indice);
 
 		if(validarSegmento(PID, IdSeg, (Offset + strlen(datos))) == 1){
-			for(int i = 0; i < strlen(datos);i++)
-				memset(seg->direccionBase + Offset + i,datos[i],1);
-			return "OK";
+			
+			char* segmento = (char*)seg->direccionBase;
+
+			memcpy(segmento + Offset,datos,strlen(datos));
+
+			return "OK\0";
 		}
 		else
-			return "SEG_FAULT";
+			return "SEG_FAULT\0";
 	}
-	return "SEG_FAULT";
+	return "SEG_FAULT\0";
 }
 
 int buscarSegmento(int PID, int idSeg,bool Finish){
