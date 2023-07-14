@@ -150,11 +150,11 @@ void* EscuchaKernel()
 			{
 				PC++;
 				
-				char* Mensage = "I/O\n";
-				char* Tiempo = strtok(NULL, " ");
+				EnviarMensage("I/O\n", SocketKernel);
 
-				EnviarMensage(Mensage, SocketKernel);
+				char* Tiempo = strtok(NULL, " ");
 				EnviarMensage(Tiempo, SocketKernel);
+
 				Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 				SeguirEjecutando = false;
 			}
@@ -209,7 +209,7 @@ void* EscuchaKernel()
 				int TamSegmentoBuscado = ObtenerTamanoSegmento(NumSegmento, TablaSegmentos);
 
 				//chequeo que la direccion donde se quiere leer sea valida
-				if(Offset + tamano > TamSegmentoBuscado || TamSegmentoBuscado == -1)
+				if((Offset + tamano > TamSegmentoBuscado || TamSegmentoBuscado == -1) && NumSegmento != 0)
 				{
 					EnviarMensage("SEG_FAULT", SocketKernel);
 					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
@@ -271,8 +271,9 @@ void* EscuchaKernel()
 				int TamSegmentoBuscado = ObtenerTamanoSegmento(NumSegmento, TablaSegmentos);
 
 				//chequeo que la direccion donde se quiere escribir sea valida
-				if(Offset + tamano > TamSegmentoBuscado || TamSegmentoBuscado == -1)
+				if((Offset + tamano > TamSegmentoBuscado || TamSegmentoBuscado == -1) && NumSegmento != 0)
 				{
+					printf("SEGMENT FAULT");
 					EnviarMensage("SEG_FAULT", SocketKernel);
 					Enviar_PCB_A_Kernel(PC, Registros, SocketKernel);
 					SeguirEjecutando = false;
@@ -685,8 +686,10 @@ void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* Offset)
 {
 	int DirLogica = atoi(CharDirLogica);
 
-	*NumSegmento = (int)floor((DirLogica/ TAM_MAX_SEGMENTO));
+	*NumSegmento = DirLogica/ TAM_MAX_SEGMENTO;
 	*Offset = DirLogica%TAM_MAX_SEGMENTO;
+
+	//printf("TraducirDireccion: %d, %d\n", *NumSegmento, *Offset);
 }
 
 
