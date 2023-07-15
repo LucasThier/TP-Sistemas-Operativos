@@ -56,7 +56,7 @@ void FirstFit(int,int,int);
 void finalizarProceso(int);
 
 
-
+bool ModuloDebeTerminar = false;
 char NOMBRE_PROCESO[8] = "Memoria";
 
 

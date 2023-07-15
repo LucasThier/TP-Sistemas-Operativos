@@ -3,6 +3,7 @@
 
 #include "../../shared/include/shared_utils.h"
 #include "../../shared/include/shared_Kernel_CPU.h"
+#include <time.h>
 
 void InicializarAdministradorDeCPU();
 

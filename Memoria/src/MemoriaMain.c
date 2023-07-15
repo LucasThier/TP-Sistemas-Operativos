@@ -6,6 +6,8 @@ t_log* Memoria_Logger;
 int SocketMemoria;
 
 void sighandler(int s) {
+	ModuloDebeTerminar = true;
+
 	free(MEMORIA);
 
 	log_destroy(Memoria_Logger);
@@ -29,6 +31,25 @@ int main(int argc, char* argv[])
 	LeerConfigs(argv[1]);
 
 	inicializarMemoria();
+/*
+
+	crearSegmento(1, 128, 0);
+	crearSegmento(1, 64, 1);
+	crearSegmento(2, 64, 1);
+	crearSegmento(3, 64, 1);
+	crearSegmento(4, 64, 1);
+	crearSegmento(5, 64, 1);
+	crearSegmento(6, 64, 1);
+	crearSegmento(7, 64, 1);
+	crearSegmento(8, 64, 1);
+	eliminarSegmento(1, 0);
+	crearSegmento(9, 64, 1);
+	VerHuecos();
+	crearSegmento(1, 256, 2);*/
+	
+
+
+
 /*
 	crearSegmento(1,100,1);
 	crearSegmento(1,500,2);
@@ -84,7 +105,7 @@ void* EscucharConexiones()
 	if(SocketMemoria != 0)
 	{
 		//Escuchar por modulos en bucle
-		while(true)
+		while(!ModuloDebeTerminar)
 		{
 			int SocketCliente = esperar_cliente(Memoria_Logger, NOMBRE_PROCESO, SocketMemoria);
 
@@ -110,7 +131,7 @@ void* AdministradorDeModulo(void* arg)
 
 	//bucle que esperara peticiones del modulo conectado
 	//y realiza la operacion
-	while(true)
+	while(!ModuloDebeTerminar)
 	{
 		char* PeticionRecibida = (char*)recibir_paquete(SocketClienteConectado);
 
@@ -234,7 +255,7 @@ void* AdministradorDeModulo(void* arg)
 		free(PeticionRecibida);
 	}
 	liberar_conexion(SocketClienteConectado);
-	return NULL;
+	pthread_exit(NULL);
 }
 
 
@@ -348,6 +369,8 @@ char* crearSegmento(int idSeg, int tamanoSegmento, int PID) {
     // utilizando el algoritmo de asignación especificado (FIRST, BEST, WORST)
 	char* estado = validarMemoria(tamanoSegmento);
 
+	printf("estado: %s\n",estado);
+
 	if(strcmp(estado,"HUECO") == 0){
 		switch(ALGORITMO_ASIGNACION){
 			case 0:
@@ -360,7 +383,6 @@ char* crearSegmento(int idSeg, int tamanoSegmento, int PID) {
 				break;
 			case 2:
 				FirstFit(idSeg,tamanoSegmento,PID);
-				log_info(Memoria_Logger,"TERMINO FIRST");
 				return "OK";
 				break;
 		}
@@ -378,10 +400,13 @@ char* crearSegmento(int idSeg, int tamanoSegmento, int PID) {
 char* validarMemoria(int Tamano){
 	Segmento* lastSeg = list_get(TABLA_SEGMENTOS,0);	
 	void* maxPos = lastSeg->direccionBase + lastSeg->limite;
-	int TamHuecos = 0;
+	int TamSegmentos = 0;
 
 	for(int i = 0; i < list_size(TABLA_SEGMENTOS); i++){
-		Segmento* Seg = list_get(TABLA_SEGMENTOS,i);	
+		Segmento* Seg = list_get(TABLA_SEGMENTOS,i);
+
+		TamSegmentos += Seg->limite;
+
 		if(maxPos < Seg->direccionBase)
 			maxPos = Seg->direccionBase + Seg->limite;		
 	}
@@ -395,9 +420,9 @@ char* validarMemoria(int Tamano){
 
 			if(Tamano <= hueco->limite)return "HUECO";
 
-			TamHuecos += hueco->limite;
 		}
-		if(TamHuecos >= Tamano)
+		int EspacioLibre = (TAM_MEMORIA - TamSegmentos);
+		if(EspacioLibre >= Tamano)
 			return "COMPACTAR";
 		else
 			return "OUT_OF_MEMORY";

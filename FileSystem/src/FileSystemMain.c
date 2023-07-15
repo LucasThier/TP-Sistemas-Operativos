@@ -168,6 +168,7 @@ void* EscuchaKernel()
 
 void LeerConfigs(char* pathConfig)
 {
+	printf("%s\n", pathConfig);
 	config = config_create(pathConfig);
 
 	IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
@@ -187,7 +188,7 @@ void LeerConfigs(char* pathConfig)
 	RETARDO_ACCESO_BLOQUE = atoi(config_get_string_value(config, "RETARDO_ACCESO_BLOQUE"));
 
 
-
+	printf("%s\n", PATH_SUPERBLOQUE);
 	configSB = config_create(PATH_SUPERBLOQUE);
 
 	BLOCK_SIZE = config_get_string_value(configSB, "BLOCK_SIZE");

@@ -14,7 +14,7 @@ t_config* config;
 void sighandler(int s) 
 {
 	printf("Terminando Modulo Kernel\n");
-	ModuloDebeTerminar = true;
+	//ModuloDebeTerminar = true;
 	TerminarModulo();
 
 	exit(0);
@@ -74,7 +74,7 @@ void LeerConfigs(char* path)
 
 	ALGORITMO_PLANIFICACION = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
 	
-	ESTIMACION_INICIAL = config_get_int_value(config, "ESTIMACION_INICIAL");
+	ESTIMACION_INICIAL = config_get_int_value(config, "ESTIMACION_INICIAL")/1000;
 	
 	HRRN_ALFA = config_get_double_value(config, "HRRN_ALFA");
 
@@ -111,7 +111,7 @@ int InicializarPlanificadores()
 		return 0;
 	}
 
-	planificadorFIFO = strcmp(ALGORITMO_PLANIFICACION, "HRRN") != 0;
+	planificadorFIFO = (strcmp(ALGORITMO_PLANIFICACION, "HRRN") != 0);
 
 	if (pthread_create(&HiloPlanificadorDeCortoPlazo, NULL, PlanificadorCortoPlazo, NULL)) {
 		return 0;
@@ -194,6 +194,8 @@ void PlanificadorCortoPlazoFIFO()
 						
 			RealizarRespuestaDelCPU(respuesta);
 
+			printf("\nFIN DE LA RESPUESTA\n");
+
 			free(respuesta);
 		}
 	}
@@ -210,35 +212,57 @@ void PlanificadorCortoPlazoHRRN()
 			double RatioMasAlto = 0;
 			int IndiceListaRatioMasAlto = 0;
 			time_t tiempoActual= time(NULL);
+			//printf("Tiempo Actual: %d\n", tiempoActual);
 
 			sem_wait(&m_READY);
 			for(int i = 0; i < list_size(g_Lista_READY); i++)
 			{				
 				t_PCB* aux = (t_PCB*) list_get(g_Lista_READY, i);
 
-				//si nunca ejecuto, entonces tomo la estimacion inicial
-				if(aux->programCounter == 0 && RatioMasAlto < ESTIMACION_INICIAL)
+				double Ratio;
+
+				if(aux->programCounter == 0)
 				{
-					RatioMasAlto = ESTIMACION_INICIAL;
+					printf("[%d] (%f + %d)/%d= %f\n", aux->PID, TiempoEsperadoEnReady(aux, tiempoActual), ESTIMACION_INICIAL, ESTIMACION_INICIAL, (TiempoEsperadoEnReady(aux, tiempoActual) + ESTIMACION_INICIAL) / ESTIMACION_INICIAL);
+					Ratio = (TiempoEsperadoEnReady(aux, tiempoActual) + ESTIMACION_INICIAL) / ESTIMACION_INICIAL;
+				}
+				else
+				{
+					printf("[%d] (%f + %f)/%f= %f\n", aux->PID, TiempoEsperadoEnReady(aux, tiempoActual), EstimacionProximaRafaga(aux), EstimacionProximaRafaga(aux), (TiempoEsperadoEnReady(aux, tiempoActual) + EstimacionProximaRafaga(aux)) / EstimacionProximaRafaga(aux));
+					Ratio = (TiempoEsperadoEnReady(aux, tiempoActual) + EstimacionProximaRafaga(aux)) / EstimacionProximaRafaga(aux);
+				}
+				
+				//si el ratio es mas alto que el mas alto encontrado hasta ahora,
+				// entonces lo reemplazo por este
+				log_info(Kernel_Logger, "Ratio HRRN del proceso: [%d] = %f", aux->PID, Ratio);
+				if(Ratio > RatioMasAlto)
+				{
+					RatioMasAlto = Ratio;
 					IndiceListaRatioMasAlto = i;
+				}
+
+
+
+				/*if(aux->programCounter == 0)
+				{
+					aux->estimacionUltimaRafaga = ESTIMACION_INICIAL;
+					log_info(Kernel_Logger, "Estimacion HRRN del proceso: [%d] = %d", aux->PID, ESTIMACION_INICIAL);
+					if(RatioMasAlto < ESTIMACION_INICIAL)
+					{
+						RatioMasAlto = ESTIMACION_INICIAL;
+						IndiceListaRatioMasAlto = i;
+					}
+					
+					
 				}
 				//si ya ejecuto al menos una vez entonces calculo el ratio
 				else
 				{
+					//log_info(Kernel_Logger, "Tiempo Esperado en Ready del proceso: [%d] = %f", aux->PID, TiempoEsperadoEnReady(aux, tiempoActual));
+					//log_info(Kernel_Logger, "Estimacion Proxima Rafaga del proceso: [%d] = %f", aux->PID, EstimacionProximaRafaga(aux));
 					//calculo el ratio
-					double Ratio = (TiempoEsperadoEnReady(aux, tiempoActual) + EstimacionProximaRafaga(aux)) / EstimacionProximaRafaga(aux);
 					
-					//guardo la estimacion de la ultima rafaga para la proxima que calcule el ratio
-					aux->estimacionUltimaRafaga = EstimacionProximaRafaga(aux);
-
-					//si el ratio es mas alto que el mas alto encontrado hasta ahora,
-					// entonces lo reemplazo por este
-					if(Ratio > RatioMasAlto)
-					{
-						RatioMasAlto = Ratio;
-						IndiceListaRatioMasAlto = i;
-					}
-				}
+				}*/
 			}
 
 			sem_wait(&m_EXEC);
@@ -249,7 +273,16 @@ void PlanificadorCortoPlazoHRRN()
 			sem_post(&m_READY);
 			sem_post(&m_EXEC);
 
+
+			if(g_EXEC->programCounter != 0)
+			{
+				//guardo la estimacion de la ultima rafaga para la proxima que calcule el ratio
+				g_EXEC->estimacionUltimaRafaga = EstimacionProximaRafaga(g_EXEC);
+			}
+
 			LoguearCambioDeEstado(PCB, "READY", "EXEC");
+
+			//log_info(Kernel_Logger, "Primer instruccion: %s", list_get(PCB->listaInstrucciones, 0));
 
 			//Enviar PCB a CPU
 			Enviar_PCB_A_CPU(PCB);
@@ -269,12 +302,15 @@ void PlanificadorCortoPlazoHRRN()
 //devuelve el tiempo que paso desde que el proceso llego a ready
 double TiempoEsperadoEnReady(t_PCB * PCB, time_t tiempoActual)
 {
+	//printf("%ld - %ld = %f\n", tiempoActual, PCB->tiempoLlegadaRedy, difftime(tiempoActual, PCB->tiempoLlegadaRedy));
 	return difftime(tiempoActual, PCB->tiempoLlegadaRedy);
 }
 
 //calcula y devuelve la estimacion de la proxima rafaga de un PCB
 double EstimacionProximaRafaga(t_PCB* PCB)
 {
+	//printf("Tiempo Ultima Rafaga: %f\n", PCB->tiempoUltimaRafaga);
+	//printf("Estimacion Ultima Rafaga: %f\n", PCB->estimacionUltimaRafaga);
 	return (HRRN_ALFA * PCB->tiempoUltimaRafaga) + ((1 - HRRN_ALFA) * PCB->estimacionUltimaRafaga);
 }
 
@@ -324,7 +360,7 @@ void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR)
 // asume que ya se hicieron los wait y signal correspondientes
 void AgregarAReady(t_PCB* PCB)
 {
-	PCB->tiempoLlegadaRedy = time(NULL);
+	PCB->tiempoLlegadaRedy = time(&PCB->tiempoLlegadaRedy);
 	list_add(g_Lista_READY, PCB);
 
 	int Tamanio = list_size(g_Lista_READY) * 10;
@@ -440,21 +476,32 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		char* msg = (char*) recibir_paquete(SocketCPU);
 		char* Recurso = strtok(msg,"\n");
 
+		/*printf("\n\nRecursos:\n");
+		int r = 0;
+		while(RECURSOS[r] != NULL)
+		{
+			printf("Recurso %s: %s\n", RECURSOS[r], G_INSTANCIAS_RECURSOS[r]);
+			r++;
+		}
+		printf("\n\n");*/
+
+
 		bool cont = true;
-		int aux = 0;
+		int m = 0;
 		int pos = -1;
 
 		while (cont)
 		{
-			if(RECURSOS[aux] == NULL)
+			if(RECURSOS[m] == NULL)
 				cont = false;
-			else if(strcmp(RECURSOS[aux], Recurso) == 0)
+			else if(strcmp(RECURSOS[m], Recurso) == 0)
 			{
-				pos = aux;
+				pos = m;
 				cont = false;
 			}
 			else
-				aux++;
+				m++;
+
 		}
 
 		//Si idio un recurso que no existe -> Terminar el proceso
@@ -485,6 +532,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			sprintf(G_INSTANCIAS_RECURSOS[pos], "%d", aux);
 			sem_post(&m_RECURSOS);
 
+			printf("Instancias de %s: %d\n", RECURSOS[pos], aux);
+
 			log_info(Kernel_Logger, "PID: [%d] - Wait: %s - Instancias: %d", g_EXEC->PID, Recurso, aux);
 
 			//Si no hay recursos disponibles,
@@ -500,7 +549,10 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 				sem_wait(&m_EXEC);
 				sem_wait(&m_BLOCKED_RECURSOS);
-				g_EXEC->recursoBloqueante = Recurso;
+				
+				g_EXEC->recursoBloqueante = malloc(strlen(Recurso)+1);
+				strcpy(g_EXEC->recursoBloqueante, Recurso);
+
 				list_add(g_Lista_BLOCKED_RECURSOS, g_EXEC);
 				g_EXEC = NULL;
 				sem_post(&m_EXEC);
@@ -524,8 +576,21 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 	else if(strcmp(respuesta, "SIGNAL\n")== 0)
 	{
+		log_info(Kernel_Logger, "SIGNAL RECIBIDO");
 		char* msg = (char*) recibir_paquete(SocketCPU);
 		char* Recurso = strtok(msg,"\n");
+
+
+		/*printf("\n\nRecursos:\n");
+		int r = 0;
+		while(RECURSOS[r] != NULL)
+		{
+			printf("Recurso %s: %s\n", RECURSOS[r], G_INSTANCIAS_RECURSOS[r]);
+			r++;
+		}
+		printf("\n\n");*/
+
+		
 		
 		bool cont = true;
 		int aux = 0;
@@ -543,10 +608,11 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			else
 				aux++;
 		}
-
+printf("1\n");
 		//Si libero un recurso que no existe -> Terminar el proceso
 		if(pos == -1)
 		{
+			printf("2\n");
 			EnviarMensage("RECHAZADO", SocketCPU);
 			
 			Recibir_Y_Actualizar_PCB();
@@ -563,17 +629,21 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			sem_post(&m_EXIT);
 
 			sem_post(&c_MultiProg);
+			printf("3\n");
 		}
 		//Si existe el recurso
 		else
 		{
+			printf("4");
 			//busco algun proceso que este esperando que el recurso se libere
 			if(list_size(g_Lista_BLOCKED_RECURSOS) > 0)
 			{
 				int i = 0;
-
+				printf("5\n");
+				
 				while (true)
 				{
+					
 					//si no hay ninguno esperandolo,
 					//sumo uno a la cantidad de instancias disponibles de ese recurso
 					if(i >= list_size(g_Lista_BLOCKED_RECURSOS))
@@ -585,8 +655,10 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 						break;
 					}
-					
+					printf("adentro del whiletrue\n");
 					t_PCB* PCB = list_get(g_Lista_BLOCKED_RECURSOS, i);
+
+					printf("analizando proceso %d, su recurso bloqueante es: %s y yo quiero desbloquear: %s\n", PCB->PID, PCB->recursoBloqueante, Recurso);
 
 					//si hay uno esperando el recurso, lo paso a ready y dejo de buscar
 					if(strcmp(PCB->recursoBloqueante, Recurso) == 0)
@@ -602,8 +674,9 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 						break;
 					}
-					
+					i++;
 				}
+				printf("6\n");
 			}
 			else
 			{
@@ -615,7 +688,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 			EnviarMensage("ACEPTADO", SocketCPU);
 			
-			log_info(Kernel_Logger, "PID: [%d] - Signal: %s - Instancias: %d", g_EXEC->PID, Recurso, atoi(G_INSTANCIAS_RECURSOS[pos]) + 1);
+			log_info(Kernel_Logger, "PID: [%d] - Signal: %s - Instancias: %d", g_EXEC->PID, Recurso, atoi(G_INSTANCIAS_RECURSOS[pos]));
 			
 			//Recibir respuesta de CPU
 			char* rta = (char*) recibir_paquete(SocketCPU);
@@ -682,6 +755,8 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			//obrengo los valores utiles
 			int ID = atoi(strtok(NULL, " "));
 			int Tamanio = atoi(strtok(NULL, " "));
+
+			log_info(Kernel_Logger, "PID: [%d] - Crear Segmento - Id: %d - Tamaño: %d", g_EXEC->PID, ID, Tamanio);
 
 			//creo el segmento en la tabla de segmentos
 			CrearSegmento(g_EXEC->tablaDeSegmentos, ID , Tamanio);
@@ -1166,6 +1241,8 @@ t_PCB* CrearPCB(t_list* instrucciones, int socketConsola)
 	pcb->socketConsolaAsociada = socketConsola;
 	pcb->listaInstrucciones = instrucciones;
 	pcb->recursoBloqueante = NULL;
+
+	pcb->estimacionUltimaRafaga = ESTIMACION_INICIAL;
 
 	//inicializar la tabla de segmentos
 	pcb->tablaDeSegmentos = list_create();

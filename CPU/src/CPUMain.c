@@ -63,7 +63,6 @@ int InicializarConexiones()
 //Crea un servidor y espera al kernel, luego recibe mensajes del mismo
 void* EscuchaKernel()
 {
-	printf("HILO ESCUCHA KERNEL\n");
 	SocketCPU = iniciar_servidor(CPU_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
 	if(SocketCPU == 0)
 	{
@@ -86,6 +85,7 @@ void* EscuchaKernel()
 
 		//guarda el tiempo en que empezo a ejecutar para calcular el tiempo de ejecucion mas tarde
 		time(&tiempoInicio);
+		printf("Tiempo de inicio: %d\n", tiempoInicio);
 
 		int* aux = (int*)list_remove(DatosRecibidos, 0);
 		int PC = *aux;
@@ -616,6 +616,7 @@ void Enviar_PCB_A_Kernel(int ProgramCounter, t_registrosCPU* Registros_A_Enviar,
 	time(&tiempoFinal);
 	
 	double diferenciaTiempo = difftime(tiempoFinal, tiempoInicio);
+	printf("Tiempo de ejecucion: %f\n", diferenciaTiempo);
 
 	agregar_a_paquete(Paquete_Actualizado_PCB, &diferenciaTiempo, sizeof(double));
 

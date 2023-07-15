@@ -2,5 +2,5 @@
 FILE=Kernel
 make $FILE
 if test -f "./$FILE"; then
-    valgrind -s --tool=memcheck --leak-check=full --show-possibly-lost=no --show-reachable=no --show-leak-kinds=all --num-callers=20 ./$FILE $1
+    valgrind -s --tool=memcheck --leak-check=full --show-possibly-lost=no --show-reachable=no --num-callers=20 ./$FILE $1
 fi
