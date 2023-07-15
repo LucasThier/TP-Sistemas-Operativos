@@ -31,7 +31,9 @@ int main(int argc, char* argv[])
 	LeerConfigs(argv[1]);
 
 	inicializarMemoria();
-/*
+
+
+
 
 	crearSegmento(1, 128, 0);
 	crearSegmento(1, 64, 1);
@@ -42,35 +44,13 @@ int main(int argc, char* argv[])
 	crearSegmento(6, 64, 1);
 	crearSegmento(7, 64, 1);
 	crearSegmento(8, 64, 1);
+	VerHuecos();
 	eliminarSegmento(1, 0);
+	VerHuecos();
 	crearSegmento(9, 64, 1);
 	VerHuecos();
-	crearSegmento(1, 256, 2);*/
-	
-
-
-
-/*
-	crearSegmento(1,100,1);
-	crearSegmento(1,500,2);
-//	crearSegmento(2,20,1);
-//	crearSegmento(2,25,2);
-	//crearSegmento(3,8,1);
-//	crearSegmento(3,3894,2);
-	crearSegmento(3,3365,3);*/
-
-
-	/*eliminarSegmento(1,1);
-//	eliminarSegmento(2,2);
-//	eliminarSegmento(3,1);
-
-	VerHuecos();*/
-
-//	crearSegmento(3,8,4);
-/*
-	compactarSegmentos();
-	VerMem();
-	VerHuecos();*/
+	crearSegmento(1, 256, 2);
+	VerHuecos();
 
 
 
@@ -341,6 +321,12 @@ void inicializarMemoria() {
 	seg->limite=TAM_SEGMENTO_0;
 	memset(seg->direccionBase, 0, seg->limite);
 	list_add(TABLA_SEGMENTOS,seg);
+	Hueco* hueco = malloc(sizeof(Hueco));
+	hueco->direccionBase=seg->direccionBase + seg->limite;
+	hueco->limite= TAM_MEMORIA - seg ->limite;
+	list_add(TABLA_HUECOS,hueco);
+
+
 }
 
 //FALTA VALIDAR QUE SEA EL MISMO PID
@@ -387,38 +373,38 @@ char* crearSegmento(int idSeg, int tamanoSegmento, int PID) {
 				break;
 		}
 	}
-	else if(strcmp(estado, "CONTIGUO") == 0)
+	/*else if(strcmp(estado, "CONTIGUO") == 0)
 	{
 		Segmento* lastSeg =list_get(TABLA_SEGMENTOS,list_size(TABLA_SEGMENTOS)-1);	
 		AgregarSegmento(lastSeg,PID,tamanoSegmento,idSeg);
 		return "OK";
-	}
+	}*/
 
 	return estado;
 }
 
 char* validarMemoria(int Tamano){
-	Segmento* lastSeg = list_get(TABLA_SEGMENTOS,0);	
-	void* maxPos = lastSeg->direccionBase + lastSeg->limite;
+	//Segmento* lastSeg = list_get(TABLA_SEGMENTOS,0);
+	//void* maxPos = lastSeg->direccionBase + lastSeg->limite;
 	int TamSegmentos = 0;
 
-	for(int i = 0; i < list_size(TABLA_SEGMENTOS); i++){
+	/*for(int i = 0; i < list_size(TABLA_SEGMENTOS); i++){
 		Segmento* Seg = list_get(TABLA_SEGMENTOS,i);
 
 		TamSegmentos += Seg->limite;
 
 		if(maxPos < Seg->direccionBase)
 			maxPos = Seg->direccionBase + Seg->limite;		
-	}
+	}*/
 
-	if(maxPos + 1 + Tamano <= MEMORIA + TAM_MEMORIA)
-		return "CONTIGUO";
+	/*if(maxPos + 1 + Tamano <= MEMORIA + TAM_MEMORIA)
+		return "CONTIGUO";*/
 
-	else if(list_size(TABLA_HUECOS) != 0){
-		for(int i = 0; i < list_size(TABLA_HUECOS); i++){
-			Hueco* hueco = list_get(TABLA_HUECOS,i);	
+		if(list_size(TABLA_HUECOS) != 0){
+			for(int i = 0; i < list_size(TABLA_HUECOS); i++){
+				Hueco* hueco = list_get(TABLA_HUECOS,i);
 
-			if(Tamano <= hueco->limite)return "HUECO";
+				if(Tamano <= hueco->limite)return "HUECO";
 
 		}
 		int EspacioLibre = (TAM_MEMORIA - TamSegmentos);
@@ -541,6 +527,7 @@ void compactarSegmentos() {
 	list_clean(TABLA_HUECOS);
 	void* menorBase=MEMORIA+TAM_MEMORIA+1;
 	int indice;
+	int tamanioOcupado=0;
 	Segmento* seg= malloc(sizeof(Segmento));
 	Segmento* segAnterior= malloc(sizeof(Segmento));
 	//SEGMENTO 0 no se modifica
@@ -563,6 +550,7 @@ void compactarSegmentos() {
     // Actualizar la tabla de segmentos ordenada con las nuevas direcciones base
 	for(int i=1;i<list_size(tablaOrdenada);i++){
 		seg=list_get(tablaOrdenada,i);
+		tamanioOcupado+= seg->limite;
 //		log_info(Memoria_Logger,"indices %d id%d PID%d",i,seg->idSegmento,seg->PID);
 		segAnterior=list_get(tablaOrdenada,i-1);
 		seg->direccionBase=segAnterior->direccionBase + segAnterior->limite + 1;
@@ -570,6 +558,14 @@ void compactarSegmentos() {
 		log_info(Memoria_Logger,"PID: %d - Cambiar base de Segmento: %d - Base: %p - TAMAÑO: %d",seg->PID,seg->idSegmento,seg->direccionBase,seg->limite);
 	}
 
+	Segmento* seg1 = malloc(sizeof(Segmento));
+	seg1 = list_get(tablaOrdenada,(list_size(tablaOrdenada)-1));
+	Hueco* hueco = malloc(sizeof(Hueco));
+
+	hueco->direccionBase=seg1->direccionBase + seg1->limite;
+	hueco->limite=  TAM_MEMORIA - tamanioOcupado;
+
+	list_add(TABLA_HUECOS,hueco);
 	TABLA_SEGMENTOS=list_duplicate(tablaOrdenada);
 	list_destroy(tablaOrdenada);
 	list_destroy(tablaSeg);
@@ -659,11 +655,22 @@ void FirstFit(int idSeg, int tam, int PID){
 	int aux = 0;
 	bool find = false;
 
-	while(list_size(TABLA_HUECOS)>aux && !find){
-		Hueco* h = list_get(TABLA_HUECOS,aux);
+	Hueco* hueco= malloc(sizeof(Hueco));
+	void* pos= ((Hueco*)list_get(TABLA_HUECOS,0))->direccionBase;
+	int ind=0;
+	//ordenamiento Huecos
+	for(int j=1;j<list_size(TABLA_HUECOS);j++){
+		hueco=list_get(TABLA_HUECOS,j);
+				if(pos>hueco->direccionBase){
+					pos = hueco->direccionBase;
+					ind=j;
+				}
+		}
+
+		Hueco* h = list_get(TABLA_HUECOS,ind);
 		Hueco* newHole = malloc(sizeof(Hueco));
 
-		if(h->limite >= tam){
+
 			Segmento* seg = malloc(sizeof(Segmento));
 			seg->direccionBase = h->direccionBase;
 			seg->idSegmento = idSeg;
@@ -686,7 +693,9 @@ void FirstFit(int idSeg, int tam, int PID){
 			memset(seg->direccionBase,'\0',seg->limite);
 			log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
 			find = true;
-		}
-		else aux++;
-	};
+
+
+
+
+
 }
