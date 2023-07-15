@@ -95,6 +95,7 @@ void InicializarSemaforos()
 	sem_init(&m_RECURSOS, 0, 1);
 	sem_init(&m_BLOCKED_RECURSOS, 0, 1);
 	sem_init(&m_BLOCKED_FS, 0, 1);
+	sem_init(&m_respuesta_FS, 0, 1);
 	sem_init(&c_MultiProg, 0, GRADO_MULTIPROGRAMACION);
 }
 
@@ -106,6 +107,8 @@ int InicializarPlanificadores()
 	g_Lista_BLOCKED = list_create();
 	g_Lista_BLOCKED_RECURSOS = list_create();
 	g_Lista_BLOCKED_FS = list_create();
+
+	respuestasFS = list_create();
 
 	if (pthread_create(&HiloPlanificadorDeLargoPlazo, NULL, PlanificadorLargoPlazo, NULL) != 0) {
 		return 0;
@@ -176,6 +179,7 @@ void PlanificadorCortoPlazoFIFO()
 		//Si no hay ningun proceso ejecutando y hay procesos esperando en ready,
 		//obtener el primero de la cola de READY y mandarlo a EXEC
 		if(g_EXEC == NULL && list_size(g_Lista_READY) != 0){
+			printf("dentro planificador fifo\n");
 			sem_wait(&m_READY);
 			sem_wait(&m_EXEC);
 			//obtener PCB de la cola de READY
@@ -193,8 +197,6 @@ void PlanificadorCortoPlazoFIFO()
 			char* respuesta = (char*) recibir_paquete(SocketCPU);
 						
 			RealizarRespuestaDelCPU(respuesta);
-
-			printf("\nFIN DE LA RESPUESTA\n");
 
 			free(respuesta);
 		}
@@ -512,7 +514,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			Recibir_Y_Actualizar_PCB();
 
 			LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
-			TerminarProceso(g_EXEC, "SEG_FAULT");
+			TerminarProceso(g_EXEC, "Wait de un recurso inexistente");
 
 			//Agregar PCB a la cola de EXIT
 			sem_wait(&m_EXEC);
@@ -576,7 +578,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 	else if(strcmp(respuesta, "SIGNAL\n")== 0)
 	{
-		log_info(Kernel_Logger, "SIGNAL RECIBIDO");
 		char* msg = (char*) recibir_paquete(SocketCPU);
 		char* Recurso = strtok(msg,"\n");
 
@@ -608,17 +609,16 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			else
 				aux++;
 		}
-printf("1\n");
+
 		//Si libero un recurso que no existe -> Terminar el proceso
 		if(pos == -1)
 		{
-			printf("2\n");
 			EnviarMensage("RECHAZADO", SocketCPU);
 			
 			Recibir_Y_Actualizar_PCB();
 
 			LoguearCambioDeEstado(g_EXEC, "EXEC", "EXIT");
-			TerminarProceso(g_EXEC, "SEG_FAULT");
+			TerminarProceso(g_EXEC, "Signal de un recurso inexistente");
 
 			//Agregar PCB a la cola de EXIT
 			sem_wait(&m_EXEC);
@@ -629,17 +629,14 @@ printf("1\n");
 			sem_post(&m_EXIT);
 
 			sem_post(&c_MultiProg);
-			printf("3\n");
 		}
 		//Si existe el recurso
 		else
 		{
-			printf("4");
 			//busco algun proceso que este esperando que el recurso se libere
 			if(list_size(g_Lista_BLOCKED_RECURSOS) > 0)
 			{
 				int i = 0;
-				printf("5\n");
 				
 				while (true)
 				{
@@ -655,10 +652,7 @@ printf("1\n");
 
 						break;
 					}
-					printf("adentro del whiletrue\n");
 					t_PCB* PCB = list_get(g_Lista_BLOCKED_RECURSOS, i);
-
-					printf("analizando proceso %d, su recurso bloqueante es: %s y yo quiero desbloquear: %s\n", PCB->PID, PCB->recursoBloqueante, Recurso);
 
 					//si hay uno esperando el recurso, lo paso a ready y dejo de buscar
 					if(strcmp(PCB->recursoBloqueante, Recurso) == 0)
@@ -676,7 +670,6 @@ printf("1\n");
 					}
 					i++;
 				}
-				printf("6\n");
 			}
 			else
 			{
@@ -733,7 +726,6 @@ printf("1\n");
 		{
 			if (strcmp(RespuestaMemoria, "COMPACTAR") == 0)
 			{
-				log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
 				
 				//Si FS y memoria estan ocupados, espero...
 				if (!list_is_empty(g_Lista_BLOCKED_FS))
@@ -742,12 +734,17 @@ printf("1\n");
 					while(!list_is_empty(g_Lista_BLOCKED_FS))
 					{
 					}
+
 				}
+
+				log_info(Kernel_Logger, "Compactación: Se solicitó compactación");
+
 
 				EnviarMensage("COMPACTAR", SocketMemoria);
 				
 				//ESPERO AVISO DE QUE FINALIZO LA COMPACTACION
 				recibir_paquete(SocketMemoria);
+				log_info(Kernel_Logger, "Compactación: Finalizó la compactación");
 			}
 
 			//saco el PID que no me interesa
@@ -813,6 +810,8 @@ printf("1\n");
 			//obrengo los valores utiles
 			int ID = atoi(strtok(NULL, " "));
 
+			log_info(Kernel_Logger, "PID: [%d] - Eliminar Segmento - Id: %d", g_EXEC->PID, ID);
+
 			EliminarSegmento(g_EXEC->tablaDeSegmentos, ID);
 
 			//envio la tabla de segmentos actualizada al CPU para que pueda seguir ejecutando
@@ -843,10 +842,12 @@ printf("1\n");
 
 		sem_post(&c_MultiProg);
 	}
-	
+
 	else if(strcmp(respuesta, "F_OPEN")== 0)
 	{
+		printf("F_OPEN\n");
 		char* NombreArchivo = (char*)recibir_paquete(SocketCPU);
+		NombreArchivo = strtok(NombreArchivo, "\n");
 		
 		t_ArchivoGlobal* ArchivoBuscado = BuscarEnTablaGlobal(NombreArchivo);
 
@@ -858,6 +859,85 @@ printf("1\n");
 
 		list_add(g_EXEC->tablaArchivosAbiertos, ArchivoPCB);
 
+		printf("0\n");
+		//si el archivo buscado existe, entonces alguien lo tiene abierto
+		if(ArchivoBuscado != NULL)
+		{
+			//bloqueo el proceso hasta que el otro proceso termine de usar el archivo			
+			EnviarMensage("EN_USO", SocketCPU);
+			
+			Recibir_Y_Actualizar_PCB();
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+
+			sem_wait(&m_EXEC);
+			list_add(ArchivoBuscado->ProcesosBloqueados, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);			
+		}
+		//si no existe...
+		else
+		{
+			printf("1\n");
+			//le pido al FS que me diga si el archivo existe en FS
+			char* Mensage = malloc(30);
+			sprintf(Mensage, "ABRIR_ARCHIVO %s\0", NombreArchivo);
+			EnviarMensage(Mensage, SocketFileSystem);
+			free(Mensage);
+printf("1.1\n");
+			char* RespuestaFS = RecibirDeFS();
+printf("2\n");
+			//si el archivo no existe en el FS, le pido que lo cree
+			if(strcmp(RespuestaFS, "OK") != 0)
+			{
+				char* Mensage = malloc(50);
+				sprintf(Mensage, "CREAR_ARCHIVO %s\0", NombreArchivo);
+				EnviarMensage(Mensage, SocketFileSystem);
+				free(Mensage);
+
+				RespuestaFS = RecibirDeFS();				
+			}
+printf("3\n");
+			//creo el archivo en la tabla global
+			ArchivoBuscado = malloc(sizeof(t_ArchivoGlobal));
+			ArchivoBuscado->NombreArchivo = malloc(strlen(NombreArchivo) + 1);
+			strcpy(ArchivoBuscado->NombreArchivo, NombreArchivo);
+			ArchivoBuscado->ProcesosBloqueados = list_create();
+
+			list_add(TablaGlobalArchivosAbiertos, ArchivoBuscado);
+printf("4\n");
+			//envio el mensaje de aceptacion
+			EnviarMensage("OK", SocketCPU);
+		}
+		free(NombreArchivo);
+
+		char* NuevoPedido = (char*) recibir_paquete(SocketCPU);
+		RealizarRespuestaDelCPU(NuevoPedido);
+	}
+	
+	else if(strcmp(respuesta, "F_OPEN")== 0)
+	{
+		char* NombreArchivo = (char*)recibir_paquete(SocketCPU);
+		NombreArchivo = strtok(NombreArchivo, "\n");
+
+		log_info(Kernel_Logger, "PID: [%d] - Abrir Archivo: %s", g_EXEC->PID, NombreArchivo);
+		
+		t_ArchivoGlobal* ArchivoBuscado = BuscarEnTablaGlobal(NombreArchivo);
+		if(ArchivoBuscado != NULL)
+		{
+			log_info(Kernel_Logger, "PID: [%d] - Archivo: %s - Encontrado en la tabla global", g_EXEC->PID, NombreArchivo);
+		}
+		else
+		{
+			log_info(Kernel_Logger, "PID: [%d] - Archivo: %s - No encontrado en la tabla global", g_EXEC->PID, NombreArchivo);
+		}
+
+		//agrego el archivo a la tabla de archivos abiertos del pcb
+		t_ArchivoPCB* ArchivoPCB = malloc(sizeof(t_ArchivoPCB));
+		ArchivoPCB->NombreArchivo = malloc(strlen(NombreArchivo) + 1);
+		strcpy(ArchivoPCB->NombreArchivo, NombreArchivo);
+		ArchivoPCB->PosicionPuntero = 0;
+
+		list_add(g_EXEC->tablaArchivosAbiertos, ArchivoPCB);
 		//si el archivo buscado existe, entonces alguien lo tiene abierto
 		if(ArchivoBuscado != NULL)
 		{
@@ -882,40 +962,104 @@ printf("1\n");
 			free(Mensage);
 
 			char* RespuestaFS = RecibirDeFS();
+			printf("Respuesta FS de F_OPEN: %s\n", RespuestaFS);
 
 			//si el archivo no existe en el FS, le pido que lo cree
 			if(strcmp(RespuestaFS, "OK") != 0)
 			{
-				char* Mensage = malloc(50);
-				sprintf(Mensage, "CREAR_ARCHIVO %s\0", NombreArchivo);
-				EnviarMensage(Mensage, SocketFileSystem);
-				free(Mensage);
+				printf("el archivo no existe, crearlo\n");
+				char* Mensage2 = malloc(50);
+				sprintf(Mensage2, "CREAR_ARCHIVO %s\0", NombreArchivo);
+				EnviarMensage(Mensage2, SocketFileSystem);
+				free(Mensage2);
 
-				free(RespuestaFS);
+				//free(RespuestaFS);
 				RespuestaFS = RecibirDeFS();				
 			}
-			free(RespuestaFS);
+			/*else
+				free(RespuestaFS);*/
 
 			//creo el archivo en la tabla global
-			ArchivoBuscado = malloc(sizeof(t_ArchivoGlobal));
-			ArchivoBuscado->NombreArchivo = malloc(strlen(NombreArchivo) + 1);
-			strcpy(ArchivoBuscado->NombreArchivo, NombreArchivo);
-			ArchivoBuscado->ProcesosBloqueados = list_create();
+			t_ArchivoGlobal* NuevoArchivo = malloc(sizeof(t_ArchivoGlobal));
+			NuevoArchivo->NombreArchivo = malloc(strlen(NombreArchivo) + 1);
+			strcpy(NuevoArchivo->NombreArchivo, NombreArchivo);
+			NuevoArchivo->ProcesosBloqueados = list_create();
 
-			list_add(TablaGlobalArchivosAbiertos, ArchivoBuscado);
+			list_add(TablaGlobalArchivosAbiertos, NuevoArchivo);
 
 			//envio el mensaje de aceptacion
 			EnviarMensage("OK", SocketCPU);
+
+			char* NuevoPedido = (char*) recibir_paquete(SocketCPU);
+			RealizarRespuestaDelCPU(NuevoPedido);
 		}
 		free(NombreArchivo);
+
 	}
 
 	else if(strcmp(respuesta, "F_CLOSE")== 0)
 	{
 		char* NombreArchivo = (char*)recibir_paquete(SocketCPU);
+		NombreArchivo = strtok(NombreArchivo, "\n");
+
+		log_info(Kernel_Logger, "PID: [%d] - Cerrar Archivo: %s", g_EXEC->PID, NombreArchivo);
 
 		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+		printf("3.A\n");
+		//lo saco de la tabla de archoivos abiertos del proceso
+		if(indice == -1)
+		{
+			printf("3.B.1\n");
+			//error el archivo no existe
+			ErrorArchivoInexistente(true);
+		}
+		else
+		{
+			printf("3.B.2\n");
+			t_ArchivoPCB* ArchivoALiberar = (t_ArchivoPCB*) list_remove(g_EXEC->tablaArchivosAbiertos, indice);
+			free(ArchivoALiberar->NombreArchivo);
+			free(ArchivoALiberar);
+printf("3.C\n");
+			t_ArchivoGlobal* ArchivoBuscado = BuscarEnTablaGlobal(NombreArchivo);
+printf("3.D\n");
+			//si no hay nadie esperando por usar el archivo, libero la memoria
+			if(list_is_empty(ArchivoBuscado->ProcesosBloqueados))
+			{
+				printf("3.E.1\n");
+				//free(ArchivoBuscado->NombreArchivo);
+				free(ArchivoBuscado);
+			}
+			//si hay alguien esperando, lo mando a ready
+			else
+			{
+				printf("3.E.2\n");
+				t_PCB* PCB = (t_PCB*) list_remove(ArchivoBuscado->ProcesosBloqueados, 0);
+				sem_wait(&m_READY);
+				AgregarAReady(PCB);
+				list_add(g_Lista_READY, PCB);
+				sem_post(&m_READY);
+			}
+			
+			EnviarMensage("OK", SocketCPU);
+			printf("3.F\n");
+
+			char* NuevoPedido = (char*) recibir_paquete(SocketCPU);
+			RealizarRespuestaDelCPU(NuevoPedido);
+		}
+		free(NombreArchivo);
+
 		
+	}
+
+	else if(strcmp(respuesta, "F_CLOSE")== 0)
+	{
+		char* NombreArchivo = (char*)recibir_paquete(SocketCPU);
+		NombreArchivo = strtok(NombreArchivo, "\n");
+
+		log_info(Kernel_Logger, "PID: [%d] - Cerrar Archivo: %s", g_EXEC->PID, NombreArchivo);
+
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+
 		//lo saco de la tabla de archoivos abiertos del proceso
 		if(indice == -1)
 		{
@@ -947,6 +1091,9 @@ printf("1\n");
 			}
 			
 			EnviarMensage("OK", SocketCPU);
+
+			char* NuevoPedido = (char*) recibir_paquete(SocketCPU);
+			RealizarRespuestaDelCPU(NuevoPedido);
 		}
 		free(NombreArchivo);
 	}
@@ -956,21 +1103,63 @@ printf("1\n");
 		char* Parametros = (char*)recibir_paquete(SocketCPU);
 		char* NombreArchivo = strtok(Parametros, " ");
 		int NuevaPosicionPuntero = atoi(strtok(NULL, " "));
+		NombreArchivo = strtok(NombreArchivo, "\n");
 
+		log_info(Kernel_Logger, "PID: [%d] - Seek Archivo: %s - Nueva Posicion: %d", g_EXEC->PID, NombreArchivo, NuevaPosicionPuntero);
+printf("1A\n");
 		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
-
+printf("1B\n");
 		if(indice == -1)
 		{
+			printf("1C.1\n");
 			//error el archivo no existe
 			ErrorArchivoInexistente(true);
 		}
 		else
 		{
-			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_remove(g_EXEC->tablaArchivosAbiertos, indice);
+			printf("1C.2\n");
+			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
 			ArchivoPCB->PosicionPuntero = NuevaPosicionPuntero;
 			EnviarMensage("OK", SocketCPU);
+			printf("1D\n");
+			char* NuevoPedido = (char*) recibir_paquete(SocketCPU);
+			RealizarRespuestaDelCPU(NuevoPedido);
+			printf("1E\n");
 		}
 		free(Parametros);
+	}
+
+	else if(strcmp(respuesta, "F_SEEK")== 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+		char* NombreArchivo = strtok(Parametros, " ");
+		int NuevaPosicionPuntero = atoi(strtok(NULL, " "));
+		NombreArchivo = strtok(NombreArchivo, "\n");
+
+		log_info(Kernel_Logger, "PID: [%d] - Seek Archivo: %s - Nueva Posicion: %d", g_EXEC->PID, NombreArchivo, NuevaPosicionPuntero);
+printf("1A\n");
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+
+		printf("INDICE del FSEEK: %d archivo %s", indice, NombreArchivo);
+printf("1B\n");
+		if(indice == -1)
+		{
+			printf("1C.1\n");
+			//error el archivo no existe
+			ErrorArchivoInexistente(true);
+		}
+		else
+		{
+			printf("1C.2\n");
+			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
+			ArchivoPCB->PosicionPuntero = NuevaPosicionPuntero;
+			EnviarMensage("OK", SocketCPU);
+			printf("1D\n");
+			char* NuevoPedido = (char*) recibir_paquete(SocketCPU);
+			RealizarRespuestaDelCPU(NuevoPedido);
+		}
+		//free(Parametros);
+		printf("1E\n");
 	}
 	
 	else if(strcmp(respuesta, "F_TRUNCATE")== 0)
@@ -979,6 +1168,49 @@ printf("1\n");
 
 		char* NombreArchivo = strtok(Parametros, " ");
 		char* NuevoTamanoArchivo = strtok(NULL, " ");
+		NombreArchivo = strtok(NombreArchivo, "\n");
+printf("A\n");
+		log_info(Kernel_Logger, "PID: [%d] - Truncar Archivo: %s - Nuevo Tamano: %s", g_EXEC->PID, NombreArchivo, NuevoTamanoArchivo);
+
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+printf("B\n");
+		if(indice == -1)
+		{
+			printf("C.0\n");
+			//error el archivo no existe
+			ErrorArchivoInexistente(false);
+		}
+		else
+		{
+			printf("C.1\n");
+			char* Mensage = malloc(60);
+			sprintf(Mensage, "TRUNCAR_ARCHIVO %s %s\0", NombreArchivo, NuevoTamanoArchivo);
+			EnviarMensage(Mensage, SocketFileSystem);
+			free(Mensage);
+printf("D\n");
+			Recibir_Y_Actualizar_PCB();
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+printf("E\n");
+			sem_wait(&m_EXEC);
+			sem_wait(&m_BLOCKED_FS);
+			list_add(g_Lista_BLOCKED_FS, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_BLOCKED_FS);
+		}
+		free(Parametros);
+printf("F\n");
+	}
+
+	else if(strcmp(respuesta, "F_TRUNCATE")== 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+
+		char* NombreArchivo = strtok(Parametros, " ");
+		char* NuevoTamanoArchivo = strtok(NULL, " ");
+		NombreArchivo = strtok(NombreArchivo, "\n");
+
+		log_info(Kernel_Logger, "PID: [%d] - Truncar Archivo: %s - Nuevo Tamano: %s", g_EXEC->PID, NombreArchivo, NuevoTamanoArchivo);
 
 		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
 
@@ -992,7 +1224,7 @@ printf("1\n");
 			char* Mensage = malloc(60);
 			sprintf(Mensage, "TRUNCAR_ARCHIVO %s %s\0", NombreArchivo, NuevoTamanoArchivo);
 			EnviarMensage(Mensage, SocketFileSystem);
-			free(Mensage);
+			//free(Mensage);
 
 			Recibir_Y_Actualizar_PCB();
 			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
@@ -1004,7 +1236,7 @@ printf("1\n");
 			sem_post(&m_EXEC);
 			sem_post(&m_BLOCKED_FS);
 		}
-		free(Parametros);
+		//free(Parametros);
 	}
 	
 	else if(strcmp(respuesta, "F_READ")== 0)
@@ -1015,6 +1247,7 @@ printf("1\n");
 		char* NumSegmento = strtok(NULL, " ");
 		char* Offset = strtok(NULL, " ");
 		char* CantBytesALeer = strtok(NULL, " ");
+		NombreArchivo = strtok(NombreArchivo, "\n");
 
 		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
 
@@ -1030,7 +1263,9 @@ printf("1\n");
 			char* Mensage = malloc(100);
 			sprintf(Mensage, "LEER_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, ArchivoPCB->PosicionPuntero);
 			EnviarMensage(Mensage, SocketFileSystem);
-			free(Mensage);
+		//	free(Mensage);
+
+			log_info(Kernel_Logger, "PID: [%d] - Leer Archivo: %s - Puntero: %d - Segmento: %s - Offset: %s - CantBytesALeer: %s", g_EXEC->PID, NombreArchivo, ArchivoPCB->PosicionPuntero, NumSegmento, Offset, CantBytesALeer);
 
 			ArchivoPCB->PosicionPuntero += atoi(CantBytesALeer);
 
@@ -1044,7 +1279,6 @@ printf("1\n");
 			sem_post(&m_EXEC);
 			sem_post(&m_BLOCKED_FS);
 		}
-		free(Parametros);
 	}
 	
 	else if(strcmp(respuesta, "F_WRITE") == 0)
@@ -1055,6 +1289,7 @@ printf("1\n");
 		char* NumSegmento = strtok(NULL, " ");
 		char* Offset = strtok(NULL, " ");
 		char* CantBytesALeer = strtok(NULL, " ");
+		NombreArchivo = strtok(NombreArchivo, "\n");
 
 		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
 
@@ -1065,12 +1300,60 @@ printf("1\n");
 		}
 		else
 		{
+			printf("2A\n");
 			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
 			
 			char* Mensage = malloc(100);
 			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, ArchivoPCB->PosicionPuntero);
 			EnviarMensage(Mensage, SocketFileSystem);
 			free(Mensage);
+
+			printf("2B\n");
+
+			ArchivoPCB->PosicionPuntero += atoi(CantBytesALeer);
+
+			Recibir_Y_Actualizar_PCB();
+			LoguearCambioDeEstado(g_EXEC, "EXEC", "BLOCKED");
+printf("2C\n");
+			sem_wait(&m_EXEC);
+			sem_wait(&m_BLOCKED_FS);
+			list_add(g_Lista_BLOCKED_FS, g_EXEC);
+			g_EXEC = NULL;
+			sem_post(&m_EXEC);
+			sem_post(&m_BLOCKED_FS);
+		}
+		free(Parametros);
+	}
+
+	else if(strcmp(respuesta, "F_WRITE") == 0)
+	{
+		char* Parametros = (char*)recibir_paquete(SocketCPU);
+
+		char* NombreArchivo = strtok(Parametros, " ");
+		char* NumSegmento = strtok(NULL, " ");
+		char* Offset = strtok(NULL, " ");
+		char* CantBytesALeer = strtok(NULL, " ");
+
+		NombreArchivo = strtok(NombreArchivo, "\n");
+		printf("ADENTRO DEL FWRITE\n");
+		int indice = BuscarArchivoEnTablaDeProceso(g_EXEC->tablaArchivosAbiertos, NombreArchivo);
+		printf("INDICE EN EL FWRITE: %d\n", indice);
+		if(indice == -1)
+		{
+			//error el archivo no existe
+			ErrorArchivoInexistente(false);
+			printf("ERROR EN EL FWRITE\n");
+		}
+		else
+		{
+			t_ArchivoPCB* ArchivoPCB = (t_ArchivoPCB*) list_get(g_EXEC->tablaArchivosAbiertos, indice);
+			
+			char* Mensage = malloc(100);
+			sprintf(Mensage, "ESCRIBIR_ARCHIVO %s %d %s %s %s %d\0", NombreArchivo, g_EXEC->PID, NumSegmento, Offset, CantBytesALeer, ArchivoPCB->PosicionPuntero);
+			EnviarMensage(Mensage, SocketFileSystem);
+			free(Mensage);
+
+			log_info(Kernel_Logger, "PID: [%d] - Escribir Archivo: %s - Puntero: %d - Segmento: %s - Offset: %s - CantBytesAEscribir: %s", g_EXEC->PID, NombreArchivo, ArchivoPCB->PosicionPuntero, NumSegmento, Offset, CantBytesALeer);
 
 			ArchivoPCB->PosicionPuntero += atoi(CantBytesALeer);
 
@@ -1099,19 +1382,40 @@ void DesbloquearPorFS()
 	sem_post(&m_BLOCKED_FS);
 }
 
+void* RecibirDeFSBucle()
+{
+	bool alternar = false;
+	while(true)
+	{
+		if(!alternar)
+			sem_wait(&m_respuesta_FS);
+
+		char* MensageFS = (char*)recibir_paquete(SocketFileSystem);
+		if(strcmp(MensageFS, "TERMINO") == 0)
+		{
+			printf("FS : Termino\n");
+			DesbloquearPorFS();
+		}
+		else
+		{
+			printf("respuesta recibida de FS : %s\n", MensageFS);
+			
+			//ultimaResp = MensageFS;
+			list_add(respuestasFS, MensageFS);
+			//printf("respuesta agregada a la lista: %s\n", list_get(respuestasFS, 0));
+			sem_post(&m_respuesta_FS);
+			alternar = true;
+		}
+		//free(MensageFS);
+	}
+}
+
 char* RecibirDeFS()
 {
-	char* MensageFS = (char*)recibir_paquete(SocketFileSystem);
-	
-	if(strcmp(MensageFS, "TERMINO") == 0)
-	{
-		DesbloquearPorFS();
-		return RecibirDeFS();
-	}
-	else
-	{
-		return MensageFS;
-	}
+	sem_wait(&m_respuesta_FS);
+	char* respuesta = (char*) list_remove(respuestasFS, 0);
+	sem_post(&m_respuesta_FS);
+	return respuesta;
 }
 
 void ErrorArchivoInexistente(bool RequiereEnviarMensage)
@@ -1165,6 +1469,12 @@ int InicializarConexiones()
 
 	//Crear hilo escucha
     if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
+		log_error(Kernel_Logger, "Error creando hilo escucha\n");
+        return 0;
+    }
+
+	//Crear hilo escucha
+    if (pthread_create(&HiloEscuchaFS, NULL, RecibirDeFSBucle, NULL) != 0) {
 		log_error(Kernel_Logger, "Error creando hilo escucha\n");
         return 0;
     }
@@ -1405,6 +1715,8 @@ void TerminarModulo()
 	free(RECURSOS);
 	free(G_INSTANCIAS_RECURSOS);
 
+	//list_destroy_and_destroy_elements(respuestasFS, free);
+
 	LimpiarListaDePCBs(g_Lista_NEW);
 	LimpiarListaDePCBs(g_Lista_READY);
 	LimpiarListaDePCBs(g_Lista_EXIT);
@@ -1483,6 +1795,7 @@ void LimpiarTablaDeArchivosDelProceso(t_list* Tabla)
 
 t_ArchivoGlobal* BuscarEnTablaGlobal(char* NombreArchivo)
 {	
+	log_info(Kernel_Logger, "Buscando en tabla global el archivo: %s, el tamano de la lista es%d\n", NombreArchivo, list_size(TablaGlobalArchivosAbiertos));
 	t_ArchivoGlobal* ArchivoBuscado = NULL;
 
 	for(int i = 0; i < list_size(TablaGlobalArchivosAbiertos); i++)
@@ -1499,11 +1812,15 @@ t_ArchivoGlobal* BuscarEnTablaGlobal(char* NombreArchivo)
 
 int BuscarArchivoEnTablaDeProceso(t_list* Tabla, char* NombreArchivo)
 {	
+	printf("el tamao de la tabla del proceso es:%d\n", list_size(Tabla));
 	for(int i = 0; i < list_size(Tabla); i++)
 	{
 		t_ArchivoPCB* Archivo = (t_ArchivoPCB*)list_get(Tabla, i);
+		log_info(Kernel_Logger, "Archivo->NombreArchivo: %s, NombreBuscado: %s\n", Archivo->NombreArchivo, NombreArchivo);
+		log_info(Kernel_Logger, "strcmp(Archivo->NombreArchivo, NombreArchivo): %d\n", strcmp(Archivo->NombreArchivo, NombreArchivo));
 		if(strcmp(Archivo->NombreArchivo, NombreArchivo) == 0)
 		{
+			printf("nombres coinciden\n");
 			return i;	
 		}
 	}

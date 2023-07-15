@@ -57,7 +57,7 @@ void InicializarConexiones()
 void* EscuchaKernel()
 {
 	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
-	
+	printf("paso\n");
 	if(SocketFileSystem == 0)
 	{
 		liberar_conexion(SocketFileSystem);
@@ -83,6 +83,8 @@ void* EscuchaKernel()
 		{
 			char* NombreArchivo = strtok(NULL, " ");
 			
+			log_info(FS_Logger, "Abrir archivo: %s", NombreArchivo);
+
 			//verificar si existe el archivo,
 			//si existe enviar "OK" si no enviar cualquier otra cadena
 			if(BuscarFCB(NombreArchivo) != NULL)
@@ -99,6 +101,8 @@ void* EscuchaKernel()
 		{
 			char* NombreArchivo = strtok(NULL, " ");
 
+			log_info(FS_Logger, "crear archivo: %s", NombreArchivo);
+
 			//crear el archivo y enviar un "OK" al finalizar
 			CrearArchivo(NombreArchivo);
 
@@ -109,10 +113,12 @@ void* EscuchaKernel()
 		{
 			char* NombreArchivo = strtok(NULL, " ");
 			char* NuevoTamanoArchivo = strtok(NULL, " ");
+
+			log_info(FS_Logger, "Truncar archivo: %s - Tamano: %s", NombreArchivo, NuevoTamanoArchivo);
 			
 			//modificar el tamao del archivo y avisar con un "TERMINO" cuando termine la operacion
 			TruncarArchivo(NombreArchivo, atoi(NuevoTamanoArchivo));
-
+			printf("Archivo truncado\n");
 			EnviarMensage("TERMINO", SocketKernel);
 		}
 
@@ -125,6 +131,8 @@ void* EscuchaKernel()
 			char* CantBytesALeer = strtok(NULL, " ");
 			char* PunteroArchivo = strtok(NULL, " ");
 
+			log_info(FS_Logger, "Leer archivo: %s - PunteroArchivo: %s - NumSegmento: %s - Offset: %s - CantBytesALeer: %s", NombreArchivo, PunteroArchivo, NumSegmento, Offset, CantBytesALeer);
+
 			//leer la cantidad de bytes pedidos a partir de la pos del puntero
 			//y gardar lo leido en la direccion fisica de la Memoria.
 			//avisar con un "TERMINO" cuando termine la operacion.
@@ -132,7 +140,14 @@ void* EscuchaKernel()
 			char* DatosLeidos = LeerArchivo(NombreArchivo, atoi(PunteroArchivo), atoi(CantBytesALeer));
 
 			char Mensaje[800];
-			sprintf(Mensaje, "MOV_OUT %s %s %s %s FS\0", PID, NumSegmento, Offset, DatosLeidos);
+			if(NumSegmento == 0)
+			{
+				sprintf(Mensaje, "MOV_OUT -1 %s %s %s FS\0", NumSegmento, Offset, DatosLeidos);
+			}
+			else
+			{
+				sprintf(Mensaje, "MOV_OUT %s %s %s %s FS\0", PID, NumSegmento, Offset, DatosLeidos);
+			}
 			EnviarMensage(Mensaje, SocketMemoria);
 			
 
@@ -147,13 +162,24 @@ void* EscuchaKernel()
 			char* Offset = strtok(NULL, " ");
 			char* CantBytesAEscribir = strtok(NULL, " ");
 			char* Puntero = strtok(NULL, " ");
+
+			log_info(FS_Logger, "Escribir archivo: %s - Puntero: %s - NumSegmento: %s - Offset: %s - CantBytesAEscribir: %s", NombreArchivo, Puntero, NumSegmento, Offset, CantBytesAEscribir);
 			
 			//leer la cantidad de bytes pedidos en la direccion fisica de la Memoria
 			//y guardar lo leido a partir de la pos del puntero
 			//avisar con un "TERMINO" cuando termine la operacion.
 			
 			char Mensaje[800];
-			sprintf(Mensaje, "MOV_IN %s %s %s %s FS\0", PID, NumSegmento, Offset, CantBytesAEscribir);
+
+			if(NumSegmento == 0)
+			{
+				sprintf(Mensaje, "MOV_IN -1 %s %s %s FS\0", NumSegmento, Offset, CantBytesAEscribir);
+			}
+			else
+			{
+				sprintf(Mensaje, "MOV_IN %s %s %s %s FS\0", PID, NumSegmento, Offset, CantBytesAEscribir);
+			}
+			
 			EnviarMensage(Mensaje, SocketMemoria);
 		
 			char* Contenido = (char*)recibir_paquete(SocketMemoria);
@@ -284,7 +310,7 @@ void ImprimirBitmap()
 
 //devuelve true si el bloque esta ocupado, false si esta libre
 bool BitmapEstaOcupado(uint32_t i)
-{
+{	
 	return bitarray_test_bit(bitmap, i);
 }
 
@@ -299,9 +325,10 @@ void BitmapOcuparBloque(uint32_t IndiceBloque)
 {
 	bitarray_set_bit(bitmap, IndiceBloque);
 
+	log_info(FS_Logger, "Acceso a Bitmap - Bloque: %d - Estado: 1", IndiceBloque);
+
 	//vaciar el bloque
 	char* bloque = ObtenerBloque(IndiceBloque);
-	printf("bloque: %s\n", bloque);
 	memset(bloque, 0, TAMANO_BLOQUES);
 }
 
@@ -309,6 +336,8 @@ void BitmapOcuparBloque(uint32_t IndiceBloque)
 void BitmapLiberarBloque(uint32_t IndiceBloque)
 {
 	bitarray_clean_bit(bitmap, IndiceBloque);
+
+	log_info(FS_Logger, "Acceso a Bitmap - Bloque: %d - Estado: 0", IndiceBloque);
 
 	//vaciar el bloque
 	char* bloque = ObtenerBloque(IndiceBloque);
@@ -324,6 +353,7 @@ uint32_t BitmapBuscarBloqueVacio()
 		{
 			return i;
 		}
+
 	}
 	return 0;
 }
@@ -486,10 +516,10 @@ int InicializarFCBs()
 	return 0;
 }
 
-void CrearFCB(char* NombreArchivo, int TamanoArchivo, uint32_t Puntero_Directo, uint32_t Puntero_Indirecto)
+void CrearFCB(char* NomArchivo, int TamanoArchivo, uint32_t Puntero_Directo, uint32_t Puntero_Indirecto)
 {
-	printf("Creando FCB para %s\n", NombreArchivo);
-
+	char* NombreArchivo = strtok(NomArchivo, "\n");
+printf("Creando FCB para %s\n", NombreArchivo);
 	//armar el path del archivo
 	char path[257];
 	sprintf(path, "%s/%s.FCB", PathDirectorioFCBs, NombreArchivo);
@@ -526,6 +556,7 @@ void CrearFCB(char* NombreArchivo, int TamanoArchivo, uint32_t Puntero_Directo, 
 	{
 		log_error(FS_Logger, "El FCB para %s ya existe", NombreArchivo);
 	}
+printf("FCB creado\n");
 }
 
 t_config* BuscarFCB(char* NombreArchivo)
@@ -561,6 +592,7 @@ void CrearArchivo(char* NombreArchivo)
 	BitmapOcuparBloque(PunteroDirecto);
 
 	CrearFCB(NombreArchivo, 0, PunteroDirecto, 0);
+
 }
 
 void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
@@ -573,6 +605,9 @@ void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
 	}
 
 	int TamanoActualArchivo = atoi(config_get_string_value(FCB, "TAMANIO_ARCHIVO"));
+	if(TamanoActualArchivo == NuevoTamanoArchivo)
+		return;
+
 	int PunteroIndirecto = atoi(config_get_string_value(FCB, "PUNTERO_INDIRECTO"));
 
 	//determino cuantos bloques esta usando el archivo actualmente
@@ -593,6 +628,7 @@ void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
 		//creo el bloque que contendra los punteros
 		if(PunteroIndirecto == 0)
 		{
+			printf("No tiene puntero indirecto\n");
 			//buscar un bloque vacio
 			uint32_t NuevoPunteroIndirecto = BitmapBuscarBloqueVacio();
 			if(NuevoPunteroIndirecto == 0)
@@ -675,7 +711,7 @@ void TruncarArchivo(char* NombreArchivo, int NuevoTamanoArchivo)
 	//cambiar el tamaño del archivo en el FCB
 	char NuevoTamanoArchivoChar[15];
 	sprintf(NuevoTamanoArchivoChar, "%d", NuevoTamanoArchivo);
-	ModificarValorFCB(FCB, "TAMANO", NuevoTamanoArchivoChar);		
+	ModificarValorFCB(FCB, "TAMANIO_ARCHIVO", NuevoTamanoArchivoChar);		
 }
 
 //busca el puntero(uint32_t) de un bloque en funcion de un puntero de archivo(marca la posicion a modificar dentro del archivo)
@@ -721,6 +757,7 @@ void EscribirArchivo(char* NombreArchivo, int PunteroArchivo, char* ContenidoAEs
 
 	if(PunteroArchivo + CantBytesAEscribir > atoi(config_get_string_value(FCB, "TAMANIO_ARCHIVO")))
 	{
+		log_info(FS_Logger, "PunteroArchivo: %d + CantBytesAEscribir: %d > TAMANIO_ARCHIVO: %d", PunteroArchivo, CantBytesAEscribir, atoi(config_get_string_value(FCB, "TAMANIO_ARCHIVO")));
 		log_error(FS_Logger, "El archivo %s no tiene espacio suficiente para escribir %d bytes", NombreArchivo, CantBytesAEscribir);
 		return;
 	}
@@ -739,6 +776,7 @@ void EscribirArchivo(char* NombreArchivo, int PunteroArchivo, char* ContenidoAEs
 		strncpy(ContenidoAEscribirEnEsteBloque, ContenidoAEscribir + CantBytesEscritos, CantBytesAEscribirEnEsteBloque);
 		ContenidoAEscribirEnEsteBloque[CantBytesAEscribirEnEsteBloque] = '\0';
 
+		log_info(FS_Logger, "Acceso Bloque - Archivo: %s - Bloque Archivo: %d - Bloque File System %d", NombreArchivo, PunteroArchivo/TAMANO_BLOQUES, BloqueBuscado);
 		EscribirBloqueDeChar(BloqueBuscado, DesplazamientoEnBloqueBuscado, ContenidoAEscribirEnEsteBloque);
 
 		PunteroAux = 0;
@@ -777,6 +815,7 @@ char* LeerArchivo(char* NombreArchivo, int PunteroArchivo, int CantBytesALeer)
 		
 		int CantBytesALeerEnEsteBloque = TAMANO_BLOQUES - DesplazamientoEnBloqueBuscado;
 
+		log_info(FS_Logger, "Acceso Bloque - Archivo: %s - Bloque Archivo: %d - Bloque File System %d", NombreArchivo, PunteroArchivo/TAMANO_BLOQUES, BloqueBuscado);
 		char* ContenidoLeidoEnEsteBloque = LeerBloqueDeChar(BloqueBuscado, DesplazamientoEnBloqueBuscado, CantBytesALeerEnEsteBloque);
 
 		strncpy(ContenidoLeido + CantBytesLeidos, ContenidoLeidoEnEsteBloque, CantBytesALeerEnEsteBloque);

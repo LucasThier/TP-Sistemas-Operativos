@@ -99,6 +99,10 @@ t_list* g_Lista_EXIT;
 t_list* g_Lista_BLOCKED_RECURSOS;
 t_list* g_Lista_BLOCKED_FS;
 
+t_list* respuestasFS;
+char* ultimaResp;
+void* RecibirDeFSBucle();
+
 t_PCB* CrearPCB(t_list* instrucciones, int socketConsola);
 
 void Enviar_PCB_A_CPU(t_PCB* PCB_A_ENVIAR);
@@ -124,6 +128,7 @@ sem_t m_EXIT;
 sem_t m_RECURSOS;
 sem_t m_BLOCKED_RECURSOS;
 sem_t m_BLOCKED_FS;
+sem_t m_respuesta_FS;
 sem_t c_MultiProg;
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -133,6 +138,7 @@ pthread_t HiloPlanificadorDeCortoPlazo;
 pthread_t HiloEntradaSalida;
 pthread_t HiloEscucha;
 pthread_t HiloAdministradorDeMensajes;
+pthread_t HiloEscuchaFS;
 
 //PLANIFICADORES--------------------------------
 int InicializarPlanificadores();

@@ -32,8 +32,18 @@ int main(int argc, char* argv[])
 
 	inicializarMemoria();
 
+/*	VerHuecos();
+	crearSegmento(1, 256, 0);
+	VerHuecos();
+	crearSegmento(2, 256, 0);
+	VerHuecos();
+	crearSegmento(3, 256, 0);
+	VerHuecos();
+	crearSegmento(4, 256, 0);
+	VerHuecos();
+*/
 
-
+/*
 
 	crearSegmento(1, 128, 0);
 	crearSegmento(1, 64, 1);
@@ -50,7 +60,7 @@ int main(int argc, char* argv[])
 	crearSegmento(9, 64, 1);
 	VerHuecos();
 	crearSegmento(1, 256, 2);
-	VerHuecos();
+	VerHuecos();*/
 
 
 
@@ -388,14 +398,11 @@ char* validarMemoria(int Tamano){
 	//void* maxPos = lastSeg->direccionBase + lastSeg->limite;
 	int TamSegmentos = 0;
 
-	/*for(int i = 0; i < list_size(TABLA_SEGMENTOS); i++){
+	for(int i = 0; i < list_size(TABLA_SEGMENTOS); i++){
 		Segmento* Seg = list_get(TABLA_SEGMENTOS,i);
 
-		TamSegmentos += Seg->limite;
-
-		if(maxPos < Seg->direccionBase)
-			maxPos = Seg->direccionBase + Seg->limite;		
-	}*/
+		TamSegmentos += Seg->limite;	
+	}
 
 	/*if(maxPos + 1 + Tamano <= MEMORIA + TAM_MEMORIA)
 		return "CONTIGUO";*/
@@ -408,6 +415,7 @@ char* validarMemoria(int Tamano){
 
 		}
 		int EspacioLibre = (TAM_MEMORIA - TamSegmentos);
+		printf("Espacio libre: %d\n",EspacioLibre);
 		if(EspacioLibre >= Tamano)
 			return "COMPACTAR";
 		else
@@ -653,7 +661,6 @@ void WorstFit(int idSeg, int tam, int PID){
 
 void FirstFit(int idSeg, int tam, int PID){
 	int aux = 0;
-	bool find = false;
 
 	Hueco* hueco= malloc(sizeof(Hueco));
 	void* pos= ((Hueco*)list_get(TABLA_HUECOS,0))->direccionBase;
@@ -692,10 +699,4 @@ void FirstFit(int idSeg, int tam, int PID){
 			list_add(TABLA_SEGMENTOS,seg);
 			memset(seg->direccionBase,'\0',seg->limite);
 			log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
-			find = true;
-
-
-
-
-
 }
