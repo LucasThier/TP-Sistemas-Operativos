@@ -251,25 +251,21 @@ void* AdministradorDeModulo(void* arg)
 
 void LeerConfigs(char* path)
 {
+
+	t_config* ConfigsIps = config_create("cfg/IPs.cfg");
+	PUERTO_ESCUCHA = config_get_string_value(ConfigsIps, "PUERTO_ESCUCHA");
+
     config = config_create(path);
-
-    PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
-
 	char *tam_memoria = config_get_string_value(config, "TAM_MEMORIA");
 	TAM_MEMORIA= atoi(tam_memoria);
-
 	char *tam_segmento_0 = config_get_string_value(config, "TAM_SEGMENTO_0");
 	TAM_SEGMENTO_0= atoi(tam_segmento_0);
-
 	char *cant_segmentos = config_get_string_value(config, "CANT_SEGMENTOS");
 	CANT_SEGMENTOS= atoi(cant_segmentos);
-
 	char *retardo_memoria = config_get_string_value(config, "RETARDO_MEMORIA");
 	RETARDO_MEMORIA= atoi(retardo_memoria)/1000;
-
 	char *retardo_compactacion = config_get_string_value(config, "RETARDO_COMPACTACION");
 	RETARDO_COMPACTACION= atoi(retardo_compactacion)/1000;
-
 	char* alg_asig = config_get_string_value(config, "ALGORITMO_ASIGNACION");
 
 	if(strcmp(alg_asig,"BEST")==0)ALGORITMO_ASIGNACION=0;
@@ -458,27 +454,33 @@ char* eliminarSegmento(int idSegmento, int PID){
 		return "SEG_FAULT";	
 }
 
-char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud, char* Remitente){
+char* leerSegmento(int PID, int IdSeg, int Offset, int Longitud, char* Remitente)
+{
+	printf("Lee segmento\n");
 	int indice = buscarSegmento(PID, IdSeg,false);
+	printf("indice: %d\n",indice);
 	Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
 	
-	log_info(Memoria_Logger,"PID: %d - Acción: LEER - Dirección física: %p - Tamaño: %d - Origen: %s",PID,seg->direccionBase,seg->limite,Remitente);
+	log_info(Memoria_Logger,"PID: %d - Acción: LEER - Dirección física: %p - Tamaño: %d - Origen: %s",PID,seg->direccionBase,Longitud,Remitente);
 
-	if(indice != -1) {
-		
-
+	if(indice != -1)
+	{
+		printf("indice distinto de -1\n");
 		char* contenido = malloc(Longitud);
-		if(validarSegmento(PID, IdSeg, (Offset + Longitud)) == 1){
-			
+		if(validarSegmento(PID, IdSeg, (Offset + Longitud)) == 1)
+		{		
+			printf("validar segmento = 1\n");
 			char* segmento = (char*)seg->direccionBase;
 			memcpy(contenido,(segmento + Offset),Longitud);
 			contenido[Longitud] = '\0';
 			return contenido;
 		}
 		else{
+			printf("validar segmento != 1\n");
 			return "SEG_FAULT";
 		} 
 	}
+	printf("indice igual a -1\n");
 	return "SEG_FAULT";
 }
 
@@ -486,7 +488,7 @@ char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos, char* Remite
 	int indice = buscarSegmento(PID, IdSeg,false);
 	Segmento* seg = list_get(TABLA_SEGMENTOS,indice);
 
-	log_info(Memoria_Logger,"PID: %d - Acción: ESCRIBIR- Dirección física: %p - Tamaño: %d - Origen: %s",PID,seg->direccionBase,seg->limite,Remitente);
+	log_info(Memoria_Logger,"PID: %d - Acción: ESCRIBIR- Dirección física: %p - Tamaño: %ld - Origen: %s",PID,seg->direccionBase,strlen(datos),Remitente);
 	
 	if(indice != -1) {
 		if(validarSegmento(PID, IdSeg, (Offset + strlen(datos))) == 1){
@@ -504,10 +506,12 @@ char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos, char* Remite
 }
 
 int buscarSegmento(int PID, int idSeg,bool Finish){
+	printf("Buscando segmento, finish: %d\n",Finish);
 	int aux=0;
 	Segmento* seg=list_get(TABLA_SEGMENTOS,aux);
 
 	while(list_size(TABLA_SEGMENTOS)>aux){
+		printf("PID: %d - Segmento: %d - Segmento->PID: %d - Segmento->IdSegmento: %d \n",PID,idSeg,seg->PID,seg->idSegmento);
 		if(Finish && seg->PID == PID) return aux;
 		if(seg->idSegmento==idSeg && seg->PID == PID) return aux;
 		aux++;

@@ -57,14 +57,14 @@ void InicializarConexiones()
 void* EscuchaKernel()
 {
 	SocketFileSystem = iniciar_servidor(FS_Logger, NOMBRE_PROCESO, "0.0.0.0", PUERTO_ESCUCHA);
-	printf("paso\n");
+
 	if(SocketFileSystem == 0)
 	{
 		liberar_conexion(SocketFileSystem);
 		return (void*)EXIT_FAILURE;
 	}
 
-	int SocketKernel = esperar_cliente(FS_Logger, NOMBRE_PROCESO, SocketFileSystem);
+	SocketKernel = esperar_cliente(FS_Logger, NOMBRE_PROCESO, SocketFileSystem);
 
 	if (SocketKernel == 0)
 	{
@@ -76,156 +76,180 @@ void* EscuchaKernel()
 	while(true)
 	{
 		char* PeticionRecibida = (char*)recibir_paquete(SocketKernel);
-
-		char* Pedido = strtok(PeticionRecibida, " ");
-
-		if(strcmp(Pedido, "ABRIR_ARCHIVO")==0)
-		{
-			char* NombreArchivo = strtok(NULL, " ");
-			
-			log_info(FS_Logger, "Abrir archivo: %s", NombreArchivo);
-
-			//verificar si existe el archivo,
-			//si existe enviar "OK" si no enviar cualquier otra cadena
-			if(BuscarFCB(NombreArchivo) != NULL)
-			{
-				EnviarMensage("OK", SocketKernel);
-			}
-			else
-			{
-				EnviarMensage("NO", SocketKernel);
-			}			
-		}
-
-		else if(strcmp(Pedido, "CREAR_ARCHIVO")==0)
-		{
-			char* NombreArchivo = strtok(NULL, " ");
-
-			log_info(FS_Logger, "crear archivo: %s", NombreArchivo);
-
-			//crear el archivo y enviar un "OK" al finalizar
-			CrearArchivo(NombreArchivo);
-
-			EnviarMensage("OK", SocketKernel);
-		}
-
-		else if(strcmp(Pedido, "TRUNCAR_ARCHIVO") == 0)
-		{
-			char* NombreArchivo = strtok(NULL, " ");
-			char* NuevoTamanoArchivo = strtok(NULL, " ");
-
-			log_info(FS_Logger, "Truncar archivo: %s - Tamano: %s", NombreArchivo, NuevoTamanoArchivo);
-			
-			//modificar el tamao del archivo y avisar con un "TERMINO" cuando termine la operacion
-			TruncarArchivo(NombreArchivo, atoi(NuevoTamanoArchivo));
-			printf("Archivo truncado\n");
-			EnviarMensage("TERMINO", SocketKernel);
-		}
-
-		else if(strcmp(Pedido, "LEER_ARCHIVO") == 0)
-		{
-			char* NombreArchivo = strtok(NULL, " ");
-			char* PID = strtok(NULL, " ");
-			char* NumSegmento = strtok(NULL, " ");
-			char* Offset = strtok(NULL, " ");
-			char* CantBytesALeer = strtok(NULL, " ");
-			char* PunteroArchivo = strtok(NULL, " ");
-
-			log_info(FS_Logger, "Leer archivo: %s - PunteroArchivo: %s - NumSegmento: %s - Offset: %s - CantBytesALeer: %s", NombreArchivo, PunteroArchivo, NumSegmento, Offset, CantBytesALeer);
-
-			//leer la cantidad de bytes pedidos a partir de la pos del puntero
-			//y gardar lo leido en la direccion fisica de la Memoria.
-			//avisar con un "TERMINO" cuando termine la operacion.
-
-			char* DatosLeidos = LeerArchivo(NombreArchivo, atoi(PunteroArchivo), atoi(CantBytesALeer));
-
-			char Mensaje[800];
-			if(NumSegmento == 0)
-			{
-				sprintf(Mensaje, "MOV_OUT -1 %s %s %s FS\0", NumSegmento, Offset, DatosLeidos);
-			}
-			else
-			{
-				sprintf(Mensaje, "MOV_OUT %s %s %s %s FS\0", PID, NumSegmento, Offset, DatosLeidos);
-			}
-			EnviarMensage(Mensaje, SocketMemoria);
-			
-
-			EnviarMensage("TERMINO", SocketKernel);
-		}
-
-		else if(strcmp(Pedido, "ESCRIBIR_ARCHIVO") == 0)
-		{
-			char* NombreArchivo = strtok(NULL, " ");
-			char* PID = strtok(NULL, " ");
-			char* NumSegmento = strtok(NULL, " ");
-			char* Offset = strtok(NULL, " ");
-			char* CantBytesAEscribir = strtok(NULL, " ");
-			char* Puntero = strtok(NULL, " ");
-
-			log_info(FS_Logger, "Escribir archivo: %s - Puntero: %s - NumSegmento: %s - Offset: %s - CantBytesAEscribir: %s", NombreArchivo, Puntero, NumSegmento, Offset, CantBytesAEscribir);
-			
-			//leer la cantidad de bytes pedidos en la direccion fisica de la Memoria
-			//y guardar lo leido a partir de la pos del puntero
-			//avisar con un "TERMINO" cuando termine la operacion.
-			
-			char Mensaje[800];
-
-			if(NumSegmento == 0)
-			{
-				sprintf(Mensaje, "MOV_IN -1 %s %s %s FS\0", NumSegmento, Offset, CantBytesAEscribir);
-			}
-			else
-			{
-				sprintf(Mensaje, "MOV_IN %s %s %s %s FS\0", PID, NumSegmento, Offset, CantBytesAEscribir);
-			}
-			
-			EnviarMensage(Mensaje, SocketMemoria);
 		
-			char* Contenido = (char*)recibir_paquete(SocketMemoria);
+		printf("Peticion enviada al hilo: %s\n", PeticionRecibida);
 
-			EscribirArchivo(NombreArchivo, atoi(Puntero), Contenido, atoi(CantBytesAEscribir));
-			
-			EnviarMensage("TERMINO", SocketKernel);
-		}
+		if (pthread_create(&HiloAccionKernel, NULL, RealizarPeticion, (void*)PeticionRecibida) != 0) {
+        	exit(EXIT_FAILURE);
+    	}
+		sleep(1);
+		//free(PeticionRecibida);
+		printf("fin While\n");
 	}
 	return NULL;	
 }
 
+void* RealizarPeticion(void* arg)
+{
+	char PeticionRecibida[300];
+	sprintf(PeticionRecibida, "%s\0", (char*)arg);
+
+	printf("Peticion recibida en el hilo: %s\n", PeticionRecibida);
+
+	char* Pedido = strtok(PeticionRecibida, " ");
+
+	if(strcmp(Pedido, "ABRIR_ARCHIVO")==0)
+	{
+		char* NombreArchivo = strtok(NULL, " ");
+		
+		log_info(FS_Logger, "Abrir archivo: %s", NombreArchivo);
+
+		//verificar si existe el archivo,
+		//si existe enviar "OK" si no enviar cualquier otra cadena
+		if(BuscarFCB(NombreArchivo) != NULL)
+		{
+			EnviarMensage("OK", SocketKernel);
+		}
+		else
+		{
+			EnviarMensage("NO", SocketKernel);
+		}			
+	}
+
+	else if(strcmp(Pedido, "CREAR_ARCHIVO")==0)
+	{
+		char* NombreArchivo = strtok(NULL, " ");
+
+		log_info(FS_Logger, "crear archivo: %s", NombreArchivo);
+
+		//crear el archivo y enviar un "OK" al finalizar
+		CrearArchivo(NombreArchivo);
+
+		EnviarMensage("OK", SocketKernel);
+	}
+
+	else if(strcmp(Pedido, "TRUNCAR_ARCHIVO") == 0)
+	{
+		char* NombreArchivo = strtok(NULL, " ");
+		char* NuevoTamanoArchivo = strtok(NULL, " ");
+		char* PID = strtok(NULL, " ");
+
+		log_info(FS_Logger, "Truncar archivo: %s - Tamano: %s", NombreArchivo, NuevoTamanoArchivo);
+		
+		//modificar el tamao del archivo y avisar con un "TERMINO" cuando termine la operacion
+		TruncarArchivo(NombreArchivo, atoi(NuevoTamanoArchivo));
+		sleep(1);
+		printf("Archivo truncado\n");
+
+		char MensajeTermino[20];
+		sprintf(MensajeTermino, "TERMINO %s", PID);
+		EnviarMensage(MensajeTermino, SocketKernel);
+		printf("Mensaje enviado: %s\n", MensajeTermino);
+	}
+
+	else if(strcmp(Pedido, "LEER_ARCHIVO") == 0)
+	{
+		char* NombreArchivo = strtok(NULL, " ");
+		char* PID = strtok(NULL, " ");
+		char* NumSegmento = strtok(NULL, " ");
+		char* Offset = strtok(NULL, " ");
+		char* CantBytesALeer = strtok(NULL, " ");
+		char* PunteroArchivo = strtok(NULL, " ");
+
+		log_info(FS_Logger, "Leer archivo: %s - PunteroArchivo: %s - NumSegmento: %s - Offset: %s - CantBytesALeer: %s", NombreArchivo, PunteroArchivo, NumSegmento, Offset, CantBytesALeer);
+
+		//leer la cantidad de bytes pedidos a partir de la pos del puntero
+		//y gardar lo leido en la direccion fisica de la Memoria.
+		//avisar con un "FINL/E" cuando termine la operacion.
+
+		char* DatosLeidos = LeerArchivo(NombreArchivo, atoi(PunteroArchivo), atoi(CantBytesALeer));
+
+		char Mensaje[800];
+		if(atoi(NumSegmento) == 0)
+		{
+			sprintf(Mensaje, "MOV_OUT -1 %s %s %s FS\0", NumSegmento, Offset, DatosLeidos);
+		}
+		else
+		{
+			sprintf(Mensaje, "MOV_OUT %s %s %s %s FS\0", PID, NumSegmento, Offset, DatosLeidos);
+		}
+		EnviarMensage(Mensaje, SocketMemoria);
+		
+
+		char MensajeFinLE[20];
+		sprintf(MensajeFinLE, "FINL/E %s\0", PID);
+		EnviarMensage(MensajeFinLE, SocketKernel);
+		printf("Mensaje enviado FINL/E\n");
+	}
+
+	else if(strcmp(Pedido, "ESCRIBIR_ARCHIVO") == 0)
+	{
+		char* NombreArchivo = strtok(NULL, " ");
+		char* PID = strtok(NULL, " ");
+		char* NumSegmento = strtok(NULL, " ");
+		char* Offset = strtok(NULL, " ");
+		char* CantBytesAEscribir = strtok(NULL, " ");
+		char* Puntero = strtok(NULL, " ");
+
+		log_info(FS_Logger, "Escribir archivo: %s - Puntero: %s - NumSegmento: %s - Offset: %s - CantBytesAEscribir: %s", NombreArchivo, Puntero, NumSegmento, Offset, CantBytesAEscribir);
+		
+		//leer la cantidad de bytes pedidos en la direccion fisica de la Memoria
+		//y guardar lo leido a partir de la pos del puntero
+		//avisar con un "FINL/E" cuando termine la operacion.
+		
+		char Mensaje[800];
+
+		if(atoi(NumSegmento) == 0)
+		{
+			sprintf(Mensaje, "MOV_IN -1 %s %s %s FS\0", NumSegmento, Offset, CantBytesAEscribir);
+		}
+		else
+		{
+			sprintf(Mensaje, "MOV_IN %s %s %s %s FS\0", PID, NumSegmento, Offset, CantBytesAEscribir);
+		}
+		
+		EnviarMensage(Mensaje, SocketMemoria);
+	
+		char* Contenido = (char*)recibir_paquete(SocketMemoria);
+
+		printf("Contenido a escribir en el archivo: %s\n", Contenido);
+
+		EscribirArchivo(NombreArchivo, atoi(Puntero), Contenido, atoi(CantBytesAEscribir));
+		
+		char MensajeFinLE[15];
+		sprintf(MensajeFinLE, "FINL/E %s", PID);
+		EnviarMensage(MensajeFinLE, SocketKernel);
+	}
+	return NULL;
+}
+
 void LeerConfigs(char* pathConfig)
 {
-	printf("%s\n", pathConfig);
+	t_config* ConfigsIps = config_create("cfg/IPs.cfg");
+	IP_MEMORIA = config_get_string_value(ConfigsIps, "IP_MEMORIA");
+	PUERTO_MEMORIA = config_get_string_value(ConfigsIps, "PUERTO_MEMORIA");
+	PUERTO_ESCUCHA = config_get_string_value(ConfigsIps, "PUERTO_ESCUCHA");
+
+	//printf("%s\n", pathConfig);
 	config = config_create(pathConfig);
-
-	IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
-
+	/*IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
 	PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
-
-	PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
-
-	PATH_FCB = config_get_string_value(config, "PATH_FCB");
-
-	PATH_BLOQUES = config_get_string_value(config, "PATH_BLOQUES");
-
+	PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");*/
+	//PATH_FCB = config_get_string_value(config, "PATH_FCB");
+	//PATH_BLOQUES = config_get_string_value(config, "PATH_BLOQUES");
+	//PATH_BITMAP = config_get_string_value(config, "PATH_BITMAP");
 	PATH_SUPERBLOQUE = config_get_string_value(config, "PATH_SUPERBLOQUE");
-
-	PATH_BITMAP = config_get_string_value(config, "PATH_BITMAP");
-
 	RETARDO_ACCESO_BLOQUE = atoi(config_get_string_value(config, "RETARDO_ACCESO_BLOQUE"));
 
 
-	printf("%s\n", PATH_SUPERBLOQUE);
+	//printf("%s\n", PATH_SUPERBLOQUE);
 	configSB = config_create(PATH_SUPERBLOQUE);
-
 	BLOCK_SIZE = config_get_string_value(configSB, "BLOCK_SIZE");
 	TAMANO_BLOQUES = atoi(BLOCK_SIZE);
-
 	BLOCK_COUNT = config_get_string_value(configSB, "BLOCK_COUNT");
 	CANTIDAD_BLOQUES = strtoul(BLOCK_COUNT, NULL, 10);
-
 	PunterosPorBloque = TAMANO_BLOQUES / sizeof(uint32_t);
 }
-
 
 
 
@@ -358,9 +382,6 @@ uint32_t BitmapBuscarBloqueVacio()
 	return 0;
 }
 
-
-
-
 //crea/abre el archivo y lo mapea
 int InicializarArchivoDeBloques()
 {
@@ -445,6 +466,7 @@ char* LeerBloqueDeChar(uint32_t IndiceBloque, int Desplazamiento, int CantidadAL
 void EscribirBloqueDePunteros(uint32_t IndiceBloque, int IndicePuntero, uint32_t ContenidoAEscribir)
 {
 	sleep(RETARDO_ACCESO_BLOQUE / 1000);
+
 	if((IndicePuntero + 1) * sizeof(uint32_t) > TAMANO_BLOQUES)
 	{
 		log_error(FS_Logger, "Intentando escribir mas alla del final del bloque");
@@ -803,7 +825,7 @@ char* LeerArchivo(char* NombreArchivo, int PunteroArchivo, int CantBytesALeer)
 	}
 
 	char* ContenidoLeido = malloc(CantBytesALeer+1);
-	ContenidoLeido[CantBytesALeer] = '\0';
+	
 
 	int CantBytesLeidos = 0;
 	int PunteroAux = PunteroArchivo;
@@ -813,7 +835,18 @@ char* LeerArchivo(char* NombreArchivo, int PunteroArchivo, int CantBytesALeer)
 		int DesplazamientoEnBloqueBuscado;
 		uint32_t BloqueBuscado = CalcularPunteroABloqueDePunteroArchivo(NombreArchivo, PunteroAux, &DesplazamientoEnBloqueBuscado);
 		
-		int CantBytesALeerEnEsteBloque = TAMANO_BLOQUES - DesplazamientoEnBloqueBuscado;
+		int CantBytesRestantesPorLeer = CantBytesALeer - CantBytesLeidos;
+		
+		int CantBytesALeerEnEsteBloque;
+
+		if (CantBytesRestantesPorLeer < TAMANO_BLOQUES - DesplazamientoEnBloqueBuscado)
+		{
+			CantBytesALeerEnEsteBloque = CantBytesRestantesPorLeer;
+		}
+		else
+		{
+			CantBytesALeerEnEsteBloque = TAMANO_BLOQUES - DesplazamientoEnBloqueBuscado;
+		}
 
 		log_info(FS_Logger, "Acceso Bloque - Archivo: %s - Bloque Archivo: %d - Bloque File System %d", NombreArchivo, PunteroArchivo/TAMANO_BLOQUES, BloqueBuscado);
 		char* ContenidoLeidoEnEsteBloque = LeerBloqueDeChar(BloqueBuscado, DesplazamientoEnBloqueBuscado, CantBytesALeerEnEsteBloque);
@@ -823,7 +856,7 @@ char* LeerArchivo(char* NombreArchivo, int PunteroArchivo, int CantBytesALeer)
 		PunteroAux = 0;
 		CantBytesLeidos += CantBytesALeerEnEsteBloque;
 	}
-
+	ContenidoLeido[CantBytesALeer] = '\0';
 	return ContenidoLeido;
 }
 

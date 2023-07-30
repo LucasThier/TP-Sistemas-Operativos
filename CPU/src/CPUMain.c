@@ -696,16 +696,14 @@ void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* Offset)
 
 void LeerConfigs(char* path)
 {	
+
+	t_config* ConfigsIps = config_create("cfg/IPs.cfg");
+	IP_MEMORIA = config_get_string_value(ConfigsIps, "IP_MEMORIA");
+	PUERTO_MEMORIA = config_get_string_value(ConfigsIps, "PUERTO_MEMORIA");
+	PUERTO_ESCUCHA = config_get_string_value(ConfigsIps, "PUERTO_ESCUCHA");
+
     config = config_create(path);
-
-	IP_MEMORIA = config_get_string_value(config, "IP_MEMORIA");
-
-	PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
-
-	PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
-
 	RETARDO_INSTRUCCION = config_get_int_value(config, "RETARDO_INSTRUCCION");
-
 	TAM_MAX_SEGMENTO = config_get_int_value(config, "TAM_MAX_SEGMENTO");
 }
 

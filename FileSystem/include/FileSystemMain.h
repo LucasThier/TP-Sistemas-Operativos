@@ -17,6 +17,9 @@ int SocketMemoria;
 int SocketKernel;
 
 pthread_t HiloEscucha;
+pthread_t HiloAccionKernel;
+
+void* RealizarPeticion(void* arg);
 
 t_config *config, *configSB;
 char* IP_MEMORIA;

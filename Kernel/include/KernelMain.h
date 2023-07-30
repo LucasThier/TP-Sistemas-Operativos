@@ -130,6 +130,11 @@ sem_t m_BLOCKED_RECURSOS;
 sem_t m_BLOCKED_FS;
 sem_t m_respuesta_FS;
 sem_t c_MultiProg;
+sem_t c_Bloq_FS;
+sem_t c_Msgs_FS;
+sem_t m_Operaciones_FS;
+
+int OperacionesPendientesFS = 0;
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
