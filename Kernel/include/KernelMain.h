@@ -17,6 +17,7 @@ void ForEach_Instrucciones(char* value);
 
 
 //Configuracion-----------------------------
+t_config* ConfigsIps;
 t_config* config;
 
 void LeerConfigs(char* path);

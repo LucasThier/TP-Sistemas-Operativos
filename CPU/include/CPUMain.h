@@ -12,6 +12,7 @@ int InicializarConexiones();
 void* EscuchaKernel();
 
 void LeerConfigs(char* path);
+t_config* ConfigsIps;
 t_config* config;
 char* IP_MEMORIA;
 char* PUERTO_MEMORIA;

@@ -21,6 +21,7 @@ pthread_t HiloAccionKernel;
 
 void* RealizarPeticion(void* arg);
 
+t_config* ConfigsIps;
 t_config *config, *configSB;
 char* IP_MEMORIA;
 char* PUERTO_MEMORIA;

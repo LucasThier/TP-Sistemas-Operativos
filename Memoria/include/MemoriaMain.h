@@ -22,6 +22,7 @@ typedef struct {
     void* espacioUsuario;
 } Memoria;
 
+t_config* ConfigsIps;
 t_config* config;
 char* PUERTO_ESCUCHA;
 int TAM_MEMORIA;

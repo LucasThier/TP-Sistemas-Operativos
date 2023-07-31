@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 //borrar ifs de todos los archivos
 void LeerConfigs(char* path)
 {
-	t_config* ConfigsIps = config_create("cfg/IPs.cfg");
+	ConfigsIps = config_create("cfg/IPs.cfg");
 	IP_MEMORIA = config_get_string_value(ConfigsIps, "IP_MEMORIA");
     PUERTO_MEMORIA = config_get_string_value(ConfigsIps, "PUERTO_MEMORIA");
     IP_FILESYSTEM = config_get_string_value(ConfigsIps, "IP_FILESYSTEM");
@@ -1494,6 +1494,7 @@ void TerminarModulo()
 {
 	log_destroy(Kernel_Logger);
 
+	config_destroy(ConfigsIps);
 	config_destroy(config);
 
 	sem_destroy(&m_PIDCounter);

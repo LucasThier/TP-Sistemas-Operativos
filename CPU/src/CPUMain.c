@@ -18,6 +18,7 @@ void sighandler(int s)
 
 	log_destroy(CPU_Logger);
 
+	config_destroy(ConfigsIps);
 	config_destroy(config);
 
 	liberar_conexion(SocketKernel);
@@ -696,7 +697,7 @@ void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* Offset)
 
 void LeerConfigs(char* path)
 {	
-	t_config* ConfigsIps = config_create("cfg/IPs.cfg");
+	ConfigsIps = config_create("cfg/IPs.cfg");
 	IP_MEMORIA = config_get_string_value(ConfigsIps, "IP_MEMORIA");
 	PUERTO_MEMORIA = config_get_string_value(ConfigsIps, "PUERTO_MEMORIA");
 	PUERTO_ESCUCHA = config_get_string_value(ConfigsIps, "PUERTO_ESCUCHA");

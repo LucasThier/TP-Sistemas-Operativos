@@ -225,7 +225,7 @@ void* RealizarPeticion(void* arg)
 
 void LeerConfigs(char* pathConfig)
 {
-	t_config* ConfigsIps = config_create("cfg/IPs.cfg");
+	ConfigsIps = config_create("cfg/IPs.cfg");
 	IP_MEMORIA = config_get_string_value(ConfigsIps, "IP_MEMORIA");
 	PUERTO_MEMORIA = config_get_string_value(ConfigsIps, "PUERTO_MEMORIA");
 	PUERTO_ESCUCHA = config_get_string_value(ConfigsIps, "PUERTO_ESCUCHA");
@@ -948,6 +948,7 @@ void TerminarModulo()
 
 	pthread_cancel(HiloEscucha);
 	
+	config_destroy(ConfigsIps);
 	config_destroy(config);
 	config_destroy(configSB);
 

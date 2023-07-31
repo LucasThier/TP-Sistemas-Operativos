@@ -11,6 +11,8 @@ void sighandler(int s) {
 	free(MEMORIA);
 
 	log_destroy(Memoria_Logger);
+
+	config_destroy(ConfigsIps);
 	config_destroy(config);
 	
 	list_destroy_and_destroy_elements(TABLA_SEGMENTOS, free);
@@ -252,7 +254,7 @@ void* AdministradorDeModulo(void* arg)
 void LeerConfigs(char* path)
 {
 
-	t_config* ConfigsIps = config_create("cfg/IPs.cfg");
+	ConfigsIps = config_create("cfg/IPs.cfg");
 	PUERTO_ESCUCHA = config_get_string_value(ConfigsIps, "PUERTO_ESCUCHA");
 
     config = config_create(path);
