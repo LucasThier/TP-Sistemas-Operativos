@@ -968,6 +968,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 			else
 			{
 				t_PCB* PCB = (t_PCB*) list_remove(ArchivoBuscado->ProcesosBloqueados, 0);
+				LoguearCambioDeEstado(PCB, "BLOCKED", "READY");
 				sem_wait(&m_READY);
 				AgregarAReady(PCB);
 				list_add(g_Lista_READY, PCB);

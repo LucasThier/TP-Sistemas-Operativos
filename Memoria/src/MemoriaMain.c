@@ -506,12 +506,12 @@ char* escribirSegmento(int PID, int IdSeg, int Offset, char* datos, char* Remite
 }
 
 int buscarSegmento(int PID, int idSeg,bool Finish){
-	printf("Buscando segmento, finish: %d\n",Finish);
+	//printf("Buscando segmento, finish: %d\n",Finish);
 	int aux=0;
 	Segmento* seg=list_get(TABLA_SEGMENTOS,aux);
 
 	while(list_size(TABLA_SEGMENTOS)>aux){
-		printf("PID: %d - Segmento: %d - Segmento->PID: %d - Segmento->IdSegmento: %d \n",PID,idSeg,seg->PID,seg->idSegmento);
+		//printf("PID: %d - Segmento: %d - Segmento->PID: %d - Segmento->IdSegmento: %d \n",PID,idSeg,seg->PID,seg->idSegmento);
 		if(Finish && seg->PID == PID) return aux;
 		if(seg->idSegmento==idSeg && seg->PID == PID) return aux;
 		aux++;

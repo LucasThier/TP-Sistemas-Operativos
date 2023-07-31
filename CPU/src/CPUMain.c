@@ -85,7 +85,7 @@ void* EscuchaKernel()
 
 		//guarda el tiempo en que empezo a ejecutar para calcular el tiempo de ejecucion mas tarde
 		time(&tiempoInicio);
-		printf("Tiempo de inicio: %d\n", tiempoInicio);
+		//printf("Tiempo de inicio: %d\n", tiempoInicio);
 
 		int* aux = (int*)list_remove(DatosRecibidos, 0);
 		int PC = *aux;
@@ -616,7 +616,7 @@ void Enviar_PCB_A_Kernel(int ProgramCounter, t_registrosCPU* Registros_A_Enviar,
 	time(&tiempoFinal);
 	
 	double diferenciaTiempo = difftime(tiempoFinal, tiempoInicio);
-	printf("Tiempo de ejecucion: %f\n", diferenciaTiempo);
+	//printf("Tiempo de ejecucion: %f\n", diferenciaTiempo);
 
 	agregar_a_paquete(Paquete_Actualizado_PCB, &diferenciaTiempo, sizeof(double));
 
@@ -696,7 +696,6 @@ void TraducirDireccion(char* CharDirLogica, int* NumSegmento, int* Offset)
 
 void LeerConfigs(char* path)
 {	
-
 	t_config* ConfigsIps = config_create("cfg/IPs.cfg");
 	IP_MEMORIA = config_get_string_value(ConfigsIps, "IP_MEMORIA");
 	PUERTO_MEMORIA = config_get_string_value(ConfigsIps, "PUERTO_MEMORIA");
