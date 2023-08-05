@@ -333,7 +333,7 @@ void inicializarMemoria() {
 	hueco->direccionBase=seg->direccionBase + seg->limite;
 	hueco->limite= TAM_MEMORIA - seg ->limite;
 	list_add(TABLA_HUECOS,hueco);
-
+	log_info(Memoria_Logger,"BASE SEGMENTO 0 %p",seg->direccionBase);
 	VerHuecos();
 }
 
