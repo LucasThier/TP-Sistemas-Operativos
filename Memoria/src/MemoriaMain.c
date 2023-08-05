@@ -25,8 +25,8 @@ void sighandler(int s) {
 
 int main(int argc, char* argv[])
 {
-	signal(SIGINT, sighandler);
-	signal(SIGSEGV, sighandler);
+	//signal(SIGINT, sighandler);
+	//signal(SIGSEGV, sighandler);
 
 	Memoria_Logger = log_create("Memoria.log", NOMBRE_PROCESO, true, LOG_LEVEL_INFO);
 	
@@ -445,6 +445,7 @@ char* eliminarSegmento(int idSegmento, int PID){
 		hueco->limite = seg->limite;
 		bool encontro = 0;
 		for(int i = 0; i < list_size(TABLA_HUECOS); i++){
+			printf("en el for");
 			Hueco* h = list_get(TABLA_HUECOS,i);
 
 			if(h->direccionBase + h->limite == hueco->direccionBase){
@@ -460,7 +461,7 @@ char* eliminarSegmento(int idSegmento, int PID){
 				encontro = 1;
 			}
 		}
-
+printf("salio del for");
 		if(!encontro)
 			list_add(TABLA_HUECOS,hueco);
 
