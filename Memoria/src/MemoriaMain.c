@@ -453,7 +453,7 @@ log_info(Memoria_Logger,"segmento encontrado");
 				hueco->direccionBase = h->direccionBase;
 				hueco->limite += h->limite;
 				log_info(Memoria_Logger,"ENCONTRO ANTERIOR");
-				list_remove(TABLA_HUECOS,h);
+				list_remove(TABLA_HUECOS,i);
 				list_add(TABLA_HUECOS,hueco);
 				agregado=true;
 			}
@@ -461,7 +461,7 @@ log_info(Memoria_Logger,"segmento encontrado");
 				hueco->limite += h->limite;
 				hueco->direccionBase = h->direccionBase;
 				log_info(Memoria_Logger,"ENCONTRO siguiente");
-				list_remove(TABLA_HUECOS,h);
+				list_remove(TABLA_HUECOS,i);
 				list_add(TABLA_HUECOS,hueco);
 				agregado=true;
 			}
