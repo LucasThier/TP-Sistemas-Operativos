@@ -334,7 +334,7 @@ void inicializarMemoria() {
 	hueco->limite= TAM_MEMORIA - seg ->limite;
 	list_add(TABLA_HUECOS,hueco);
 
-
+	VerHuecos();
 }
 
 //FALTA VALIDAR QUE SEA EL MISMO PID
