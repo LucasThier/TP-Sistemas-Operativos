@@ -470,7 +470,13 @@ log_info(Memoria_Logger,"segmento encontrado");
 			}
 		}
 
-		if(!agregado) list_add(TABLA_HUECOS,hueco);
+		if(!agregado){
+			log_info(Memoria_Logger,"SE VA A AGREGAR EL HUECO");
+			VerHuecos();
+			list_add(TABLA_HUECOS,hueco);
+			log_info(Memoria_Logger,"SE AGREGO EL HUECO");
+			VerHuecos();
+		}
 
 		memset(seg->direccionBase,'\0',seg->limite);
 		list_remove(TABLA_SEGMENTOS,indice);
