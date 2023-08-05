@@ -188,6 +188,23 @@ void PlanificadorCortoPlazoFIFO()
 			sem_post(&m_EXEC);
 			LoguearCambioDeEstado(PCB, "READY", "EXEC");
 
+	int Tamanio = list_size(g_Lista_READY) * 10;
+
+	char Cola[Tamanio];
+	int i=0;
+	t_PCB* aux;
+	aux = (t_PCB*) list_get(g_Lista_READY, 0);
+	sprintf(Cola, "%d", aux->PID);
+	i++;
+	while(i < list_size(g_Lista_READY) && (strlen(Cola) + 2) < Tamanio)
+	{
+		aux = (t_PCB*) list_get(g_Lista_READY, i);
+		sprintf(Cola + strlen(Cola), ", %d", aux->PID);
+		i++;
+	}
+
+	log_info(Kernel_Logger, "Cola de READY (%s): [%s]", ALGORITMO_PLANIFICACION, Cola);
+			
 			//Enviar PCB a CPU
 			Enviar_PCB_A_CPU(PCB);
 
