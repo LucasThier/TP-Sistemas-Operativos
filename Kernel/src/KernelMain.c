@@ -1273,7 +1273,7 @@ int InicializarConexiones()
 	SocketCPU = conectar_servidor(Kernel_Logger, "CPU", IP_CPU, PUERTO_CPU);
 	SocketMemoria = conectar_servidor(Kernel_Logger, "Memoria", IP_MEMORIA, PUERTO_MEMORIA);
 	SocketFileSystem = conectar_servidor(Kernel_Logger, "FileSystem", IP_FILESYSTEM, PUERTO_FILESYSTEM);
-
+	printf("FIlesystem: %s, %s", IP_FILESYSTEM, PUERTO_FILESYSTEM);
 	//Crear hilo escucha
     if (pthread_create(&HiloEscucha, NULL, EscucharConexiones, NULL) != 0) {
 		log_error(Kernel_Logger, "Error creando hilo escucha\n");
