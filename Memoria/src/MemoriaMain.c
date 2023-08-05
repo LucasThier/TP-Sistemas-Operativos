@@ -445,7 +445,7 @@ log_info(Memoria_Logger,"segmento encontrado");
 		hueco->direccionBase = seg->direccionBase;
 		hueco->limite = seg->limite;
 		bool agregado=false;
-		verHuecos();
+		VerHuecos();
 		
 		for(int i = 0; i < list_size(TABLA_HUECOS); i++){
 			Hueco* h = list_get(TABLA_HUECOS,i);
@@ -457,7 +457,7 @@ log_info(Memoria_Logger,"segmento encontrado");
 				list_remove(TABLA_HUECOS,i);
 				list_add(TABLA_HUECOS,hueco);
 				agregado=true;
-				verHuecos();
+				VerHuecos();
 			}
 			else if(hueco->direccionBase + hueco->limite == h->direccionBase){
 				hueco->limite += h->limite;
@@ -466,7 +466,7 @@ log_info(Memoria_Logger,"segmento encontrado");
 				list_remove(TABLA_HUECOS,i);
 				list_add(TABLA_HUECOS,hueco);
 				agregado=true;
-				verHuecos();
+				VerHuecos();
 			}
 		}
 
