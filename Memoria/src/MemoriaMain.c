@@ -444,7 +444,25 @@ char* eliminarSegmento(int idSegmento, int PID){
 		hueco->direccionBase = seg->direccionBase;
 		hueco->limite = seg->limite;
 
-		list_add(TABLA_HUECOS,hueco);
+		for(int i = 0; i < list_size(TABLA_HUECOS); i++){
+			Hueco* h = list_get(TABLA_HUECOS,i);
+
+			if(h->direccionBase + h->limite == hueco->direccionBase){
+				h->limite += hueco->limite;
+				hueco->direccionBase = h->direccionBase;
+				hueco->limite = h->limite;
+			}
+			else if(hueco->direccionBase + hueco->limite == h->direccionBase){
+				h->direccionBase = hueco->direccionBase;
+				hueco->limite = h->limite;
+				hueco->direccionBase = h->direccionBase;
+			}
+			else{
+				list_add(TABLA_HUECOS,hueco);
+			}
+		}
+		
+		//list_add(TABLA_HUECOS,hueco);
 
 		memset(seg->direccionBase,'\0',seg->limite);
 		list_remove(TABLA_SEGMENTOS,indice);
