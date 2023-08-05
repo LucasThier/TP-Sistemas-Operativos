@@ -141,7 +141,7 @@ void* PlanificadorLargoPlazo()
 			sem_post(&m_READY);
 			LoguearCambioDeEstado(PCB, "NEW", "READY");
 		}
-
+/*
 		//limpiar cola de exit
 		sem_wait(&m_EXIT);
 		while(!list_is_empty(g_Lista_EXIT))
@@ -149,7 +149,7 @@ void* PlanificadorLargoPlazo()
 			t_PCB* PCB_A_Liberar = list_remove(g_Lista_EXIT, 0);
 			LimpiarPCB(PCB_A_Liberar);
 		}
-		sem_post(&m_EXIT);
+		sem_post(&m_EXIT);*/
 		sleep(2);
 	}
 
@@ -468,7 +468,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 	else if(strcmp(respuesta, "EXIT\n")== 0)
 	{
-		sem_wait(&m_BLOCKED_FS);
+		//sem_wait(&m_BLOCKED_FS);
 		Recibir_Y_Actualizar_PCB();
 
 		//imprimir los valores del registro
@@ -480,7 +480,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		TerminarProceso(g_EXEC, "SUCCESS");
 
 		//printf("cantidad de elementos bloqueados por FS: %d\n", list_size(g_Lista_BLOCKED_FS));
-		for(int i=0; i< list_size(g_Lista_BLOCKED_FS); i++)
+		/*for(int i=0; i< list_size(g_Lista_BLOCKED_FS); i++)
 		{
 			t_PCB* PCB = (t_PCB*) list_get(g_Lista_BLOCKED_FS, i);
 			if(PCB->PID == g_EXEC->PID)
@@ -488,7 +488,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 				list_remove(g_Lista_BLOCKED_FS, i);
 			}
 		}
-		sem_post(&m_BLOCKED_FS)
+		sem_post(&m_BLOCKED_FS)*/
 		
 		//Agregar PCB a la cola de EXIT
 		sem_wait(&m_EXEC);
@@ -1185,6 +1185,18 @@ void DesbloquearPorFS(int PID)
 	sem_wait(&m_READY);
 	sem_wait(&m_BLOCKED_FS);
 	//printf("cantidad de elementos bloqueados por FS: %d\n", list_size(g_Lista_BLOCKED_FS));
+	
+	for(int i=0; i< list_size(g_Lista_EXIT); i++)
+	{
+		t_PCB* PCB = (t_PCB*) list_get(g_Lista_EXIT, i);
+		if(PCB->PID == PID)
+		{
+			return;
+		}
+	}
+	
+	
+	
 	for(int i=0; i< list_size(g_Lista_BLOCKED_FS); i++)
 	{
 		t_PCB* PCB = (t_PCB*) list_get(g_Lista_BLOCKED_FS, i);
