@@ -698,6 +698,7 @@ void FirstFit(int idSeg, int tam, int PID){
 	void* pos= ((Hueco*)list_get(TABLA_HUECOS,0))->direccionBase;
 	int ind=0;
 	//ordenamiento Huecos
+	VerHuecos();
 	for(int j=1;j<list_size(TABLA_HUECOS);j++){
 		hueco=list_get(TABLA_HUECOS,j);
 				if(pos>hueco->direccionBase){
@@ -705,7 +706,7 @@ void FirstFit(int idSeg, int tam, int PID){
 					ind=j;
 				}
 		}
-
+	VerHuecos();
 		Hueco* h = list_get(TABLA_HUECOS,ind);
 		Hueco* newHole = malloc(sizeof(Hueco));
 
@@ -730,5 +731,6 @@ void FirstFit(int idSeg, int tam, int PID){
 
 			list_add(TABLA_SEGMENTOS,seg);
 			memset(seg->direccionBase,'\0',seg->limite);
+			VerHuecos();	
 			log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
 }
