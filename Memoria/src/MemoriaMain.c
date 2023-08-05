@@ -440,31 +440,34 @@ char* eliminarSegmento(int idSegmento, int PID){
 log_info(Memoria_Logger,"segmento encontrado");
 	if(indice != -1) {
 		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
-log_info(Memoria_Logger,"creando hueco");
+		log_info(Memoria_Logger,"creando hueco");
 		Hueco* hueco = malloc(sizeof(Hueco));
 		hueco->direccionBase = seg->direccionBase;
 		hueco->limite = seg->limite;
-		bool encontro = 0;
+		bool agregado=false;
+		
 		for(int i = 0; i < list_size(TABLA_HUECOS); i++){
-			log_info(Memoria_Logger,"en el for");
 			Hueco* h = list_get(TABLA_HUECOS,i);
 
 			if(h->direccionBase + h->limite == hueco->direccionBase){
-				h->limite += hueco->limite;
 				hueco->direccionBase = h->direccionBase;
-				hueco->limite = h->limite;
-				encontro = 1;
+				hueco->limite += h->limite;
+				log_info(Memoria_Logger,"ENCONTRO ANTERIOR");
+				list_remove(TABLA_HUECOS,h);
+				list_add(TABLA_HUECOS,hueco);
+				agregado=true;
 			}
 			else if(hueco->direccionBase + hueco->limite == h->direccionBase){
-				h->direccionBase = hueco->direccionBase;
-				hueco->limite = h->limite;
+				hueco->limite += h->limite;
 				hueco->direccionBase = h->direccionBase;
-				encontro = 1;
+				log_info(Memoria_Logger,"ENCONTRO siguiente");
+				list_remove(TABLA_HUECOS,h);
+				list_add(TABLA_HUECOS,hueco);
+				agregado=true;
 			}
 		}
-log_info(Memoria_Logger,"salio del for");
-		if(!encontro)
-			list_add(TABLA_HUECOS,hueco);
+
+		if(!agregado) list_add(TABLA_HUECOS,hueco);
 
 		memset(seg->direccionBase,'\0',seg->limite);
 		list_remove(TABLA_SEGMENTOS,indice);
