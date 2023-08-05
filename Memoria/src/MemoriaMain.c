@@ -619,42 +619,42 @@ void compactarSegmentos() {
 }
 
 void BestFit(int idSeg, int tam, int PID){
-	Hueco* MinHole = malloc(sizeof(Hueco));
-	Hueco* h = malloc(sizeof(Hueco));
-	int Diff = INT_MAX;
-	int indice = 0;
+	Hueco* elegido = (Hueco*)list_get(TABLA_HUECOS,0);
+	int j = 0;
+	int diff = INT_MAX;
+	for(int k =0; k < list_size(TABLA_HUECOS); k++)
+	{
+		Hueco* aux = (Hueco*)list_get(TABLA_HUECOS,k);
+		if((aux->limite - tam) < diff && aux->limite >= tam)
+		{
+			elegido = aux;
+			diff = (aux->limite - tam);
+			j = k;
+		}
+	}
+	list_remove(TABLA_HUECOS, j);
 
-	for(int i = 0; i < list_size(TABLA_HUECOS); i++){
-		h = list_get(TABLA_HUECOS,i);
-
-		if(h->limite >= tam && (h->limite - tam) < Diff){
-			Diff = h->limite - tam;
-			MinHole = h;
-			indice = i;
-		} 
+	if(tam < elegido->limite)
+	{
+		Hueco* NuevoHueco = malloc(sizeof(Hueco));
+		NuevoHueco->direccionBase = elegido->direccionBase + tam;
+		NuevoHueco->limite = elegido->limite - tam;
+		memset(NuevoHueco->direccionBase,'\0',NuevoHueco->limite);
+		list_add(TABLA_HUECOS, NuevoHueco);
 	}
 
 	Segmento* seg = malloc(sizeof(Segmento));
-	seg->direccionBase = MinHole->direccionBase;
+	seg->direccionBase = elegido->direccionBase;
 	seg->idSegmento = idSeg;
 	seg->PID = PID;
 	seg->limite = tam;
 
-	int newHoleLimit = MinHole->limite - tam;
-
-	if(newHoleLimit>0){
-		MinHole->limite = newHoleLimit;
-		MinHole->direccionBase = MinHole->direccionBase + tam + 1;
-
-		list_remove(TABLA_HUECOS,indice);
-		memset(MinHole->direccionBase,'\0',MinHole->limite);
-		list_add(TABLA_HUECOS,MinHole);
-	}
-	else list_remove(TABLA_HUECOS,indice);
-
 	list_add(TABLA_SEGMENTOS,seg);
-	log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
 	memset(seg->direccionBase,'\0',seg->limite);
+
+	VerHuecos();
+	
+	log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
 
 }
 
