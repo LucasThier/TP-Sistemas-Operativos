@@ -698,45 +698,39 @@ void WorstFit(int idSeg, int tam, int PID){
 }
 
 void FirstFit(int idSeg, int tam, int PID){
-	int aux = 0;
 
-	Hueco* hueco= malloc(sizeof(Hueco));
-	void* pos= ((Hueco*)list_get(TABLA_HUECOS,0))->direccionBase;
-	int ind=0;
-	//ordenamiento Huecos
-	VerHuecos();
-	for(int j=1;j<list_size(TABLA_HUECOS);j++){
-		hueco=list_get(TABLA_HUECOS,j);
-				if(pos>hueco->direccionBase){
-					pos = hueco->direccionBase;
-					ind=j;
-				}
+	Hueco* elegido = (Hueco*)list_get(TABLA_HUECOS,0);
+	int j = 0;
+	for(int k =0; k < list_size(TABLA_HUECOS); k++)
+	{
+		Hueco* aux = (Hueco*)list_get(TABLA_HUECOS,k);
+		if(aux->direccionBase < elegido->direccionBase && aux->limite >= tam)
+		{
+			elegido = aux;
+			j = k;
 		}
+	}
+	list_remove(TABLA_HUECOS, j);
+
+	if(tam < elegido->limite)
+	{
+		Hueco* NuevoHueco = malloc(sizeof(Hueco));
+		NuevoHueco->direccionBase = elegido->direccionBase + tam;
+		NuevoHueco->limite = elegido->limite - tam;
+		memset(NuevoHueco->direccionBase,'\0',NuevoHueco->limite);
+		list_add(TABLA_HUECOS, NuevoHueco);
+	}
+
+	Segmento* seg = malloc(sizeof(Segmento));
+	seg->direccionBase = elegido->direccionBase;
+	seg->idSegmento = idSeg;
+	seg->PID = PID;
+	seg->limite = tam;
+
+	list_add(TABLA_SEGMENTOS,seg);
+	memset(seg->direccionBase,'\0',seg->limite);
+
 	VerHuecos();
-		Hueco* h = list_get(TABLA_HUECOS,ind);
-		Hueco* newHole = malloc(sizeof(Hueco));
-
-
-			Segmento* seg = malloc(sizeof(Segmento));
-			seg->direccionBase = h->direccionBase;
-			seg->idSegmento = idSeg;
-			seg->PID = PID;
-			seg->limite = tam;
-
-			int newHoleLimit = h->limite - tam;
-
-			if(newHoleLimit>0){
-				newHole->limite = newHoleLimit;
-				newHole->direccionBase = h->direccionBase + tam + 1;
-
-				list_remove(TABLA_HUECOS,aux);
-				memset(newHole->direccionBase,'\0',newHole->limite);
-				list_add(TABLA_HUECOS,newHole);
-			}
-			else list_remove(TABLA_HUECOS,aux);		
-
-			list_add(TABLA_SEGMENTOS,seg);
-			memset(seg->direccionBase,'\0',seg->limite);
-			VerHuecos();	
-			log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
+	
+	log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
 }
