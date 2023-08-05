@@ -178,17 +178,8 @@ void PlanificadorCortoPlazoFIFO()
 		//Si no hay ningun proceso ejecutando y hay procesos esperando en ready,
 		//obtener el primero de la cola de READY y mandarlo a EXEC
 		if(g_EXEC == NULL && list_size(g_Lista_READY) != 0){
-			sem_wait(&m_READY);
-			sem_wait(&m_EXEC);
-			//obtener PCB de la cola de READY
-			t_PCB* PCB = (t_PCB*) list_remove(g_Lista_READY, 0);
-			//Agregar PCB a la cola de EXEC
-			g_EXEC = PCB;
-			sem_post(&m_READY);
-			sem_post(&m_EXEC);
-			LoguearCambioDeEstado(PCB, "READY", "EXEC");
 
-	int Tamanio = list_size(g_Lista_READY) * 10;
+				int Tamanio = list_size(g_Lista_READY) * 10;
 
 	char Cola[Tamanio];
 	int i=0;
@@ -204,6 +195,16 @@ void PlanificadorCortoPlazoFIFO()
 	}
 
 	log_info(Kernel_Logger, "Cola de READY (%s): [%s]", ALGORITMO_PLANIFICACION, Cola);
+			
+			sem_wait(&m_READY);
+			sem_wait(&m_EXEC);
+			//obtener PCB de la cola de READY
+			t_PCB* PCB = (t_PCB*) list_remove(g_Lista_READY, 0);
+			//Agregar PCB a la cola de EXEC
+			g_EXEC = PCB;
+			sem_post(&m_READY);
+			sem_post(&m_EXEC);
+			LoguearCambioDeEstado(PCB, "READY", "EXEC");
 			
 			//Enviar PCB a CPU
 			Enviar_PCB_A_CPU(PCB);
