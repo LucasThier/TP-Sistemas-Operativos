@@ -468,6 +468,7 @@ void RealizarRespuestaDelCPU(char* respuesta)
 
 	else if(strcmp(respuesta, "EXIT\n")== 0)
 	{
+		sem_wait(&m_BLOCKED_FS);
 		Recibir_Y_Actualizar_PCB();
 
 		//imprimir los valores del registro
@@ -478,6 +479,17 @@ void RealizarRespuestaDelCPU(char* respuesta)
 		//Notificar a la consola que el proceso termino exitosamente
 		TerminarProceso(g_EXEC, "SUCCESS");
 
+		//printf("cantidad de elementos bloqueados por FS: %d\n", list_size(g_Lista_BLOCKED_FS));
+		for(int i=0; i< list_size(g_Lista_BLOCKED_FS); i++)
+		{
+			t_PCB* PCB = (t_PCB*) list_get(g_Lista_BLOCKED_FS, i);
+			if(PCB->PID == g_EXEC->PID)
+			{	
+				list_remove(g_Lista_BLOCKED_FS, i);
+			}
+		}
+		sem_post(&m_BLOCKED_FS)
+		
 		//Agregar PCB a la cola de EXIT
 		sem_wait(&m_EXEC);
 		sem_wait(&m_EXIT);
