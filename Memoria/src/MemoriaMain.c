@@ -435,17 +435,18 @@ void AgregarSegmento(Segmento* lastSeg,int PID,int tamanoSegmento,int idSeg){
 }
 
 char* eliminarSegmento(int idSegmento, int PID){
+	log_info(Memoria_Logger,"buscando segmento");
 	int indice = buscarSegmento(PID, idSegmento,false);
-
+log_info(Memoria_Logger,"segmento encontrado");
 	if(indice != -1) {
 		Segmento* seg=list_get(TABLA_SEGMENTOS,indice);
-
+log_info(Memoria_Logger,"creando hueco");
 		Hueco* hueco = malloc(sizeof(Hueco));
 		hueco->direccionBase = seg->direccionBase;
 		hueco->limite = seg->limite;
 		bool encontro = 0;
 		for(int i = 0; i < list_size(TABLA_HUECOS); i++){
-			printf("en el for");
+			log_info(Memoria_Logger,"en el for");
 			Hueco* h = list_get(TABLA_HUECOS,i);
 
 			if(h->direccionBase + h->limite == hueco->direccionBase){
@@ -461,7 +462,7 @@ char* eliminarSegmento(int idSegmento, int PID){
 				encontro = 1;
 			}
 		}
-printf("salio del for");
+log_info(Memoria_Logger,"salio del for");
 		if(!encontro)
 			list_add(TABLA_HUECOS,hueco);
 
