@@ -659,42 +659,42 @@ void BestFit(int idSeg, int tam, int PID){
 }
 
 void WorstFit(int idSeg, int tam, int PID){
-	Hueco* MaxHole = malloc(sizeof(Hueco));
-	Hueco* h = malloc(sizeof(Hueco));
-	MaxHole->limite = 0;
-	int indice = 0;
+	Hueco* elegido = (Hueco*)list_get(TABLA_HUECOS,0);
+	int j = 0;
+	int diff = INT_MAX;
+	for(int k =0; k < list_size(TABLA_HUECOS); k++)
+	{
+		Hueco* aux = (Hueco*)list_get(TABLA_HUECOS,k);
+		if((aux->limite - tam) > diff && aux->limite >= tam)
+		{
+			elegido = aux;
+			diff = (aux->limite - tam);
+			j = k;
+		}
+	}
+	list_remove(TABLA_HUECOS, j);
 
-	for(int i = 0; i < list_size(TABLA_HUECOS); i++){
-
-		h = list_get(TABLA_HUECOS,i);
-
-		if(h->limite >= tam && h->limite > MaxHole->limite){
-			MaxHole = h;
-			indice = i;
-		} 
+	if(tam < elegido->limite)
+	{
+		Hueco* NuevoHueco = malloc(sizeof(Hueco));
+		NuevoHueco->direccionBase = elegido->direccionBase + tam;
+		NuevoHueco->limite = elegido->limite - tam;
+		memset(NuevoHueco->direccionBase,'\0',NuevoHueco->limite);
+		list_add(TABLA_HUECOS, NuevoHueco);
 	}
 
 	Segmento* seg = malloc(sizeof(Segmento));
-	seg->direccionBase = MaxHole->direccionBase;
+	seg->direccionBase = elegido->direccionBase;
 	seg->idSegmento = idSeg;
 	seg->PID = PID;
 	seg->limite = tam;
 
-	int newHoleLimit = MaxHole->limite - tam;
-
-	if(newHoleLimit>0){
-		MaxHole->limite = newHoleLimit;
-		MaxHole->direccionBase = MaxHole->direccionBase + tam + 1;
-
-		list_remove(TABLA_HUECOS,indice);
-		memset(MaxHole->direccionBase,'\0',MaxHole->limite);
-		list_add(TABLA_HUECOS,MaxHole);
-
-	}else list_remove(TABLA_HUECOS,indice);
-
 	list_add(TABLA_SEGMENTOS,seg);
-	log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
 	memset(seg->direccionBase,'\0',seg->limite);
+
+	VerHuecos();
+	
+	log_info(Memoria_Logger,"PID: %d - Crear Segmento: %d - Base: %p - TAMAÑO: %d",PID,idSeg,seg->direccionBase,tam);
 }
 
 void FirstFit(int idSeg, int tam, int PID){
