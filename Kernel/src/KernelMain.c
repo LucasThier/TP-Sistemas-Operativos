@@ -1195,6 +1195,14 @@ void DesbloquearPorFS(int PID)
 		}
 	}
 	
+	for(int i=0; i< list_size(g_Lista_READY); i++)
+	{
+		t_PCB* PCB = (t_PCB*) list_get(g_Lista_READY, i);
+		if(PCB->PID == PID)
+		{
+			return;
+		}
+	}
 	
 	
 	for(int i=0; i< list_size(g_Lista_BLOCKED_FS); i++)
