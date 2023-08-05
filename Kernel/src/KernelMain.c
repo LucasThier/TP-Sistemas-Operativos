@@ -1001,7 +1001,6 @@ void RealizarRespuestaDelCPU(char* respuesta)
 				LoguearCambioDeEstado(PCB, "BLOCKED", "READY");
 				sem_wait(&m_READY);
 				AgregarAReady(PCB);
-				list_add(g_Lista_READY, PCB);
 				sem_post(&m_READY);
 			}
 			
