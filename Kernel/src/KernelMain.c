@@ -22,8 +22,8 @@ void sighandler(int s)
 
 int main(int argc, char* argv[])
 {
-	signal(SIGINT, sighandler);
-	signal(SIGSEGV, sighandler);
+	//signal(SIGINT, sighandler);
+	//signal(SIGSEGV, sighandler);
 
 	printf("Iniciando Modulo Kernel\n");
 
